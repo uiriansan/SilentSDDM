@@ -1,0 +1,12 @@
+[SddmGreeterTheme]
+Name=Silent
+Type=sddm-theme
+Description=Simple and modern, highly customizable SDDM theme.
+License=
+Version=1.0
+ConfigFile=theme.conf
+Theme-Id=silent
+Theme-API=2.0
+MainScript=Main.qml
+Screenshot=preview.jpg
+TranslationsDirectory=translations
