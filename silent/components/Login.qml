@@ -109,7 +109,6 @@ Item {
 				enabled: false
 				scale: overallUiScale / 2
 
-				// TODO: Warn CapsLock
 				function warn(message, type) {
 					text = message
 

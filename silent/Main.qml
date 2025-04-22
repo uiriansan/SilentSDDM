@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtGraphicalEffects 1.0
 import SddmComponents 2.0
+import "components"
 
 Rectangle {
 	id: root
@@ -10,14 +11,14 @@ Rectangle {
 
 	function shouldUseDarkMode() {
 		let useDarkMode = false
-		const autoColorMode = config.autoColorMode === "true" ? true : false
+		const autoColorMode = config.autoColorMode === "true"
 
 		if(autoColorMode) {
 			const hours = new Date().getHours()
 			const isNight = (b >= 0 && b <= 7) || (b >= 19 && b <= 23)
 			useDarkMode = isNight
 		} else
-			useDarkMode = config.colorMode === "dark" ? true : false
+			useDarkMode = config.colorMode === "dark"
 
 		return useDarkMode
 	}
@@ -32,6 +33,7 @@ Rectangle {
 	readonly property string loginPosition: config.loginPosition || "center"
 	readonly property string lockPosition: config.lockPosition || "center"
 	property string background: config.background
+	property string lockScreenBackground: config.lockScreenBackground || background
 	readonly property bool showClock: config.showClock === "false" ? false : true
 	readonly property bool showDate: config.showDate === "false" ? false : true
 	readonly property bool showLangButton: config.showLangButton === "false" ? false : true
@@ -62,7 +64,7 @@ Rectangle {
 	]
 
 	transitions: Transition {
-		enabled: config.animations === "false" ? false : true
+		enabled: !config.animations === "false"
         PropertyAnimation { duration: 150; properties: "opacity"; }
         PropertyAnimation { duration: 400; properties: "radius"; }
 		PropertyAnimation { duration: 200; properties: "scale"; }
