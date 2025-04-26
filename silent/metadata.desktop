@@ -1,8 +1,8 @@
 [SddmGreeterTheme]
 Name=Silent
 Type=sddm-theme
-Description=Simple and modern, highly customizable SDDM theme.
-License=
+Description=A very customizable SDDM theme that actually looks good.
+License=CC-BY-SA
 Version=1.0
 ConfigFile=theme.conf
 Theme-Id=silent

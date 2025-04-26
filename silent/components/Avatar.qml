@@ -1,51 +1,45 @@
-import QtQuick 2.2
+import QtQuick 2.5
 
 Canvas {
-	id: avatarCanvas
+    id: avatar
+    property string source: ""
+    property color m_strokeStyle: "#ffffff"
 
-	property string source: ""
+    signal clicked
 
-	signal clicked()
+    onSourceChanged: delayPaintTimer.running = true
+    onPaint: {
+        var ctx = getContext("2d");
+        ctx.reset(); // Clear previous drawing
+        ctx.beginPath();
+        ctx.ellipse(0, 0, width, height);
+        ctx.clip();
+        if (source === "")
+            source = "icons/user.png";
+        ctx.drawImage(source, 0, 0, width, height);
+    }
 
-	onSourceChanged: delayPaint.running = true
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
+        onEntered: {
+            m_strokeStyle = "#77ffffff";
+            avatar.requestPaint();
+        }
+        onExited: {
+            m_strokeStyle = "#ffffffff";
+            avatar.requestPaint();
+        }
+        onClicked: avatar.clicked()
+    }
 
-	onPaint: {
-		const ctx = getContext("2d")
-		ctx.beginPath()
-
-		switch(avatarShape) {
-			case "square":
-				ctx.rect(0, 0, width, height)
-				break
-			case "squircle":
-				const r = width * 35 / 100
-				ctx.moveTo(width - r, 0)
-				ctx.arcTo(width, 0, width, height, r)
-				ctx.arcTo(width, height, 0, height, r)
-				ctx.arcTo(0, height, 0, 0, r)
-				ctx.arcTo(0, 0, width, 0, r)
-				ctx.closePath()
-				break
-			default:
-				ctx.ellipse(0, 0, width, height)
-		}
-		ctx.clip()
-		ctx.drawImage(source, 0, 0, width, height)
-	}
-
-	MouseArea {
-		anchors.fill: parent
-		hoverEnabled: true
-		onEntered: avatarCanvas.requestPaint()
-        onExited: avatarCanvas.requestPaint()
-        onClicked: avatarCanvas.clicked()
-	}
-
-	Timer {
-		id: delayPaint
-		repeat: false
-		interval: 150
-		onTriggered: avatarCanvas.requestPaint()
-		running: true
-	}
+    // Fixme: paint() not affect event if source is not empty in initialization
+    Timer {
+        id: delayPaintTimer
+        repeat: false
+        interval: 150
+        onTriggered: avatar.requestPaint()
+        running: true
+    }
 }

@@ -1,153 +1,332 @@
-import QtQuick 2.2
-import QtQuick.Controls 2.4
+import QtQuick 2.5
+import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import SddmComponents 2.0
+
 import "."
 
 Item {
-	id: screen
-	signal: closeRequested()
+    id: frame
+    signal needClose
+    property int sessionIndex: sessionModel.lastIndex
+    property string userIndex: userList.currentIndex
+    property string userName: userModel.lastUser
+    property string userIcon: userList.currentItem.iconPath
+    property alias input: passwdInput
+    property alias button: loginButton
 
-	property int session: sessionModel.lastIndex
-	property string username: userModel.lastUser
+    property bool isAuthorizing: false
 
-	// property bool isProcessing: glowAnimation.running
-	/
-	function onLoginSucceeded() {
-		// glowAnimation.running = false
-		warningMessage.clear()
-		// Qt.quit()
-	}
+    function onLoginSucceeded() {
+        spinner.visible = false;
+        Qt.quit();
+    }
 
-	function onLoginFailed() {
-		// glowAnimation.running = false
-		warningMessage.warn(textConstants.loginFailed, "error")
-	}
+    function onLoginFailed() {
+        isAuthorizing = false;
+        spinner.visible = false;
+        loginMessage.warn(textConstants.loginFailed, "error");
+        passwdInput.text = "";
+        passwdInput.focus = true;
+        loginArea.visible = true;
+    }
 
-	Item {
-		id: container
-		anchors.centerIn: parent
-		//width: parent.width
-		//height: parent.height
+    //Connections {
+    //    target: sddm
+    //    onLoginSucceeded: {
+    //        Qt.quit()
+    //    }
+    //    onLoginFailed: {
+    //        passwdInput.echoMode = TextInput.Normal
+    //        passwdInput.text = textConstants.loginFailed
+    //        passwdInput.focus = false
+    //        passwdInput.color = "#e7b222"
+    //    }
+    //}
 
-		Item {
-			id: loginContainer
+    Item {
+        id: loginItem
+        anchors.centerIn: parent
+        width: parent.width
+        height: parent.height
 
-			Avatar {
-				id: avatar
-				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.top: parent.top
-				source: user.avatar
+        User {
+            id: userListContainer
+            width: parent.width
+            height: config.selectedAvatarSize || 120
+            anchors {
+                top: parent.top
+                topMargin: parent.height / 3
+                horizontalCenter: parent.horizontalCenter
+            }
+        }
 
-				readonly property avatarSize = Number(config.avatarSize || 120)
-				width: avatarSize 
-				height: avatarSize
-			}
+        Text {
+            id: userNameText
+            anchors {
+                top: userListContainer.bottom
+                topMargin: 10
+                horizontalCenter: parent.horizontalCenter
+            }
 
-			Text {
-				id: usernameLabel
-				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.top: avatar.bottom
-				anchors.topMargin: 25
-				font.pointSize: Number(config.usernameFontSize || 20)
-				color: fontColor
-				text: username
-			}
+            text: userName
+            font.bold: true
+            font.family: config.font || "RedHatDisplay"
+            color: textColor
+            font.pointSize: 15
+        }
 
-			Item {
-				width: childrenRect.width
-				anchors.top: usernameLabel.bottom
-				anchors.horizontalCenter: parent.horizontalCenter
+        Spinner {
+            id: spinner
+            anchors.top: userNameText.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible: false
+        }
 
-				TextField {
-					id: passwdInput
-					width: Number(config.passwdWidth || 200)
-					height: Number(config.passwdHeight || 30)
-					// anchors.left: parent.left
-					echoMode: TextInput.Password
-					focus: false
-					placeholderText: qsTr("Password")
-					font.bold: true
-					placeholderTextColor: fontColor
-					palette.text: fontColor
-					font.pointSize: Number(config.passwdFontSize || 12)
-					selectByMouse: true
-					background: Rectangle {
-						color: bgColor
-						opacity: bgOpacity
-						radius: borderRadius 
-						width: parent.width
-						height: parent.height
-						anchors.centerIn: parent
-					}
-					onAccepted: {
-						// glowAnimation.running = true
-						sddm.login(username, passwdInput.text, session)
-					}
-				}
-				IconButton {
-					id: loginButton
-					anchors.left: passwdInput.right
-					anchors.leftMargin: 5
-					color: config.enableLoginButtonBg === "true" ? bgColor : "transparent"
+        Item {
+            id: loginArea
+            width: childrenRect.width
+            anchors.top: userNameText.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.topMargin: 20
 
-					icon: Icons.arrowRight
-					onClicked: {
-						// glowAnimation.running = true
-						sddm.login(username, passwdInput.text, session)
-					}
-					//KeyNavigation.tab: shutdownButton
-					//KeyNavigation.backtab: passwdInput
-				}
-			}
+            TextField {
+                id: passwdInput
+                width: 200
+                height: 30
+                anchors.left: parent.left
+                echoMode: TextInput.Password
+                focus: false
+                placeholderText: qsTr("Password")
+                placeholderTextColor: "#fff"
+                palette.text: "#fff"
+                font.family: config.font || "RedHatDisplay"
+                font.pointSize: 8
+                font.italic: true
+                background: Rectangle {
+                    color: "#fff"
+                    opacity: 0.15
+                    radius: 10
+                    width: parent.width
+                    height: parent.height
+                    anchors.centerIn: parent
+                }
+                selectByMouse: true
+                onAccepted: {
+                    spinner.visible = true;
+                    loginArea.visible = false;
+                    isAuthorizing = true;
+                    sddm.login(userName, passwdInput.text, sessionIndex);
+                }
+            }
+            IconButton {
+                id: loginButton
+                height: passwdInput.height
+                width: height
+                anchors.left: (passwdInput.right)
+                anchors.leftMargin: 5
+                icon: "icons/arrow-right.svg"
+                onClicked: {
+                    spinner.visible = true;
+                    loginArea.visible = false;
+                    isAuthorizing = true;
+                    sddm.login(userName, passwdInput.text, sessionIndex);
+                }
+            }
 
-			Text {
-				id: warningMessage
-				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.top: passwdInput.bottom
-				anchors.topMargin: 25
-				enabled: false
-				scale: overallUiScale / 2
+            // ImgButton {
+            // 	id: loginButton
+            // 	height: passwdInput.height
+            // 	width: height
+            // 	anchors.left: (passwdInput.right)
+            // 	anchors.leftMargin: 5
+            // 	normalImg: Icons.arrowRight
+            // 	//normalImg: "icons/login_normal.png"
+            // 	//hoverImg: "icons/login_normal.png"
+            // 	//pressImg: "icons/login_press.png"
+            // 	onClicked: {
 
-				function warn(message, type) {
-					text = message
+            // 		console.log(keyboard.capsLock)
+            // 	}
+            // 	//KeyNavigation.tab: shutdownButton
+            // 	//KeyNavigation.backtab: passwdInput
+            // }
+        }
 
-					enabled = true
-					scale = overallUiScale
+        Text {
+            id: loginMessage
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                top: loginArea.bottom
+                topMargin: 50
+            }
+            font.pointSize: 9
+            font.family: config.font || "RedHatDisplay"
+            color: textColor
+            enabled: false
 
-					let messageColor = "#fff"
-					if(config.decorateWarningMessages === "true") {
-						messageColor = type === "error" ? "#F32013" : "#EED202"
-					}
-					color: messageColor
-				}
-				function clear() {
-					enabled = false
-					scale = overallUiScale / 2
-					text = ""
-				}
+            function warn(message, type) {
+                text = message;
+                enabled = true;
+            }
+            function clear() {
+                enabled = false;
+                text = "";
+            }
 
-				Component.onCompleted: {
-					if(keyboard.capsLock) warningMessage.warn(textConstants.capslockWarning, "warning")
-				}
-			}
-		}
+            Component.onCompleted: {
+                if (keyboard.capsLock)
+                    loginMessage.warn("CapsLock on", "warning");
+            }
+        }
 
-		Item {
-			id: optionsContainer
-		}
-	}
+        Session {
+            id: sessionButton
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.bottomMargin: 50
+            anchors.leftMargin: 50
+        }
 
-	Keys.onEscapePressed: closeRequested()
-	Keys.onPressed: (event) => {
-		if(event.key == Qt.Key_Escape)
-			closeRequested()
-		else if(event.key == Qt.Key_CapsLock)
-			if(keyboard.capsLock)
-				warningMessage.warn(textConstants.capslockWarning, "warning")
-			else
-				warningMessage.clear()
-		else
-			return
-	}
+        Item {
+            id: rightButtons
+            height: childrenRect.height
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+                bottomMargin: 50
+                rightMargin: 50
+            }
+
+            IconButton {
+                id: languageButton
+                height: 30
+                width: 30
+                anchors.right: keyboardButton.left
+                anchors.rightMargin: 10
+                icon: "icons/language.svg"
+                icon_size: 15
+                onClicked: {}
+            }
+
+            IconButton {
+                id: keyboardButton
+                height: 30
+                width: 30
+                anchors.right: powerButton.left
+                anchors.rightMargin: 10
+                icon: "icons/keyboard.svg"
+                icon_size: 15
+                onClicked: {}
+            }
+
+            IconButton {
+                id: powerButton
+                height: 30
+                width: 30
+                anchors.right: parent.right
+                icon: "icons/power.svg"
+                icon_size: 15
+                onClicked: {}
+            }
+        }
+
+        //     Rectangle {
+        //         id: passwdInputRec
+        //         visible: ! isProcessing
+        //         anchors {
+        //             top: userNameText.bottom
+        //             topMargin: 10
+        //             horizontalCenter: parent.horizontalCenter
+        //         }
+        //         width: 250
+        //         height: 35
+        //         radius: 8
+        //color: "#fff"
+        //opacity: 0.1
+        //
+        //         TextInput {
+        //             id: passwdInput
+        //             anchors.fill: parent
+        //             anchors.leftMargin: 8
+        //             anchors.rightMargin: 8 + 36
+        //             clip: true
+        //             focus: false
+        //             color: textColor
+        //             font.pointSize: 12
+        //	selectByMouse: true
+        //             selectionColor: "#a8d6ec"
+        //             echoMode: TextInput.Password
+        //             verticalAlignment: TextInput.AlignVCenter
+        //             onFocusChanged: {
+        //                 if (focus) {
+        //                     color = textColor
+        //                     echoMode = TextInput.Password
+        //                     text = ""
+        //                 }
+        //             }
+        //             onAccepted: {
+        //                 sddm.login(userNameText.text, passwdInput.text, sessionIndex)
+        //             }
+        //             KeyNavigation.backtab: {
+        //                 if (sessionButton.visible) {
+        //                     return sessionButton
+        //                 }
+        //                 else if (userButton.visible) {
+        //                     return userButton
+        //                 }
+        //                 else {
+        //                     return shutdownButton
+        //                 }
+        //             }
+        //             KeyNavigation.tab: loginButton
+        //             //Timer {
+        //             //    interval: 200
+        //             //    running: true
+        //             //    onTriggered: passwdInput.forceActiveFocus()
+        //             //}
+        //         }
+
+        //     }
+
+        Text {
+            anchors {
+                top: parent.top
+                left: parent.left
+                leftMargin: 20
+                topMargin: 20
+            }
+            // text: JSON.stringify(sessionModel.data)
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            enabled: userListContainer.listUsers
+            z: -1  // Put behind everything else
+            onClicked: {
+                userListContainer.listUsers = false;
+            }
+        }
+
+        Keys.onEscapePressed: () => {
+            if (userListContainer.listUsers) {
+                userListContainer.listUsers = false;
+                return;
+            } else if (sessionButton.popupVisible) {
+                sessionButton.popupVisible = false;
+                return;
+            }
+            if (isAuthorizing)
+                return;
+
+            if (config.showLockScreen !== "false")
+                needClose();
+            passwdInput.text = "";
+        }
+        Keys.onPressed: event => {
+            if (event.key == Qt.Key_CapsLock && !isAuthorizing) {
+                loginMessage.warn("CapsLock on", "warning");
+            }
+        }
+    }
 }

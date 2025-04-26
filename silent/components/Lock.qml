@@ -1,63 +1,119 @@
-import QtQuick 2.2
-import QtGraphicalEffects 1.0
+import QtQuick 2.5
+import QtGraphicalEffects 1.12
 
 Item {
-	id: screen
-	signal loginRequested()
+    id: frame
+    signal needLogin
 
-	Item {
-		id: timeContainer
+    Item {
+        id: timeArea
+        visible: !loginFrame.isProcessing
+        height: parent.height
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+        }
+        Text {
+            id: timeText
+            visible: config.showClock === "false" ? false : true
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                top: parent.top
+                topMargin: parent.height / 8
+            }
+            font.pointSize: config.clockFontSize || 60
+            font.bold: true
+            font.family: config.font || "RedHatDisplay"
+            color: config.clockColor || "#FFFFFF"
 
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.verticalCenter: parent.verticalCenter
+            function updateTime() {
+                text = new Date().toLocaleString(Qt.locale("en_US"), config.clockFormat || "hh:mm");
+            }
+        }
 
-		Text {
-			id: clock
-			anchors.horizontalCenter: parent.horizontalCenter
-			anchors.bottomMargin: 5
-			font.pointSize: Number(config.clockFontSize || 70)
-			font.bold: true
-			color: fontColor
-			
-			function updateClock() {
-				text = new Date().toLocaleString(Qt.locale("en_US"), config.clockFormat || "hh:mm")
-			}
-		}
+        Text {
+            id: dateText
+            visible: config.showDate === "false" ? false : true
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                top: timeText.bottom
+                topMargin: -15
+            }
 
-		Text {
-			id: calendar
-			anchors.horizontalCenter: parent.horizontalCenter
-			anchors.top: clock.bottom
-			font.pointSize: Number(config.dateFontSize || 12)
-			color: fontColor
+            font.pointSize: config.dateFontSize || 12
+            font.family: config.font || "RedHatDisplay"
+            color: config.dateColor || "#FFFFFF"
 
-			function updateDate() {
-				text = new Date().toLocaleString(Qt.locale("en_US"), config.dateFormat || "dddd, MMMM dd, yyyy")
-			}
-		}
+            function updateDate() {
+                text = new Date().toLocaleString(Qt.locale("en_US"), config.dateFormat || "dddd, MMMM dd, yyyy");
+            }
+        }
 
-		Timer {
-			interval: 1000
-			repeat: true
-			running: true
-			onTriggered: {
-				clock.updateClock()
-				calendar.updateDate()
-			}
-		}
+        Item {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: lockBottomMessage.top
+            anchors.bottomMargin: 5
+            width: config.pressAnyKeyIconSize || 18
+            height: config.pressAnyKeyIconSize || 18
 
-		Component.onCompleted: {
-			clock.updateClock()
-			calendar.updateDate()
-		}
-	}
+            Image {
+                id: lockIcon
+                visible: config.showPressAnyKey === "false" ? false : true
+                source: "icons/enter.svg"
 
-	Keys.onPressed: (event) => {
-		if(event.key == Qt.Key_Escape) {
-			event.accepted = false
-			return
-		}
-		event.accepted = true
-		loginRequested()
-	}
+                width: config.pressAnyKeyIconSize || 18
+                height: config.pressAnyKeyIconSize || 18
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+            }
+            ColorOverlay {
+                anchors.fill: lockIcon
+                source: lockIcon
+                color: config.pressAnyKeyColor || "#FFFFFF"
+            }
+        }
+        Text {
+            id: lockBottomMessage
+            visible: config.showPressAnyKey === "false" ? false : true
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.bottom
+                bottomMargin: parent.height / 10
+            }
+            font.pointSize: config.pressAnyKeyFontSize || 9
+            font.family: config.font || "RedHatDisplay"
+            color: config.pressAnyKeyColor || "#FFFFFF"
+            text: "Press any key"
+        }
+
+        Timer {
+            interval: 1000
+            repeat: true
+            running: true
+            onTriggered: {
+                timeText.updateTime();
+                dateText.updateDate();
+            }
+        }
+
+        Component.onCompleted: {
+            timeText.updateTime();
+            dateText.updateDate();
+        }
+    }
+
+    MouseArea {
+        z: -1
+        anchors.fill: parent
+        onClicked: needLogin()
+    }
+
+    Keys.onPressed: event => {
+        if (event.key == Qt.Key_Escape) {
+            event.accepted = false;
+            return;
+        } else {
+            event.accepted = true;
+            needLogin();
+        }
+    }
 }
