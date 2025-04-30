@@ -1,20 +1,31 @@
 import QtQuick 2.5
+import QtQuick.Controls 2.5
+import QtGraphicalEffects 1.12
 
 Item {
     id: sessionSelector
     height: 30
 
+    z: 2
+
+    signal sessionChanged(sessionIndex: int)
+    signal click
     // Current session index
     property int currentSessionIndex: sessionModel.lastIndex >= 0 ? sessionModel.lastIndex : 0
     property string sessionName: ""
     property string sessionIconPath: ""
     property bool popupVisible: false
 
+    function close() {
+        sessionPopup.visible = false;
+        popupVisible = false;
+    }
+
     function getSessionIcon(name) {
-        const s = name.split(" ")[0].toLowerCase();
-        const available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway"];
-        if (s && available_session_icons.includes(s)) {
-            return "icons/" + s + "-session.svg";
+        const available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "plasma"];
+        for (let i = 0; i < available_session_icons.length; i++) {
+            if (name && name.toLowerCase().includes(available_session_icons[i]))
+                return "icons/" + available_session_icons[i] + "-session.svg";
         }
         return "icons/default-session.svg";
     }
@@ -22,17 +33,29 @@ Item {
     // Session button
     Rectangle {
         id: sessionButton
+        z: 0
         anchors.left: parent.left
-        width: childrenRect.width
+        width: sessionPopup.width
         height: 30
-        // color: sessionMouseArea.pressed ? "#333333" : (sessionMouseArea.containsMouse ? "#222222" : "#1d1d1d")
         color: "transparent"
         radius: 4
-        // opacity: 0.15
+
+        Rectangle {
+            id: sessionButtonBg
+            anchors.fill: parent
+            color: "#FFFFFF"
+            opacity: popupVisible ? 0.15 : (sessionMouseArea.containsMouse ? 0.15 : 0.0)
+            radius: 5
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 250
+                }
+            }
+        }
 
         Image {
             id: sessionIcon
-            // source: sessionIcon
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 10
@@ -46,7 +69,6 @@ Item {
             id: sessionNameText
             anchors.left: sessionIcon.right
             anchors.leftMargin: 10
-            anchors.rightMargin: 10
             anchors.verticalCenter: sessionButton.verticalCenter
             color: "white"
             font.pixelSize: 10
@@ -56,81 +78,123 @@ Item {
             id: sessionMouseArea
             anchors.fill: parent
             hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+
             onClicked: {
-                sessionPopup.visible = !sessionPopup.visible;
+                click();
             }
         }
     }
 
+    readonly property int listEntryHeight: 30
+
     // Session popup
     Rectangle {
         id: sessionPopup
-        width: childrenRect.width
-        height: Math.min(sessionModel.rowCount() * 40, 300)
+        z: 2
+        width: 200
+        height: Math.min(sessionModel.rowCount() * listEntryHeight, 300)
         visible: popupVisible
-        color: "#2d2d2d"
-        border.color: "#3daee9"
-        border.width: 1
-        radius: 4
+        color: "transparent"
         anchors.bottom: sessionButton.top
         anchors.bottomMargin: 5
+        radius: 5
 
-        // Simple session list without ScrollBar (for compatibility)
-        ListView {
-            id: sessionList
+        Rectangle {
             anchors.fill: parent
-            anchors.margins: 5
-            orientation: ListView.Vertical
-            spacing: 2
-            interactive: false
+            color: "#FFFFFF"
+            opacity: 0.15
+            radius: 5
+        }
 
-            model: sessionModel
-            currentIndex: sessionModel.lastIndex
+        ScrollView {
+            anchors.fill: parent
+            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+            ScrollBar.vertical.interactive: true
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
-            delegate: Rectangle {
-                width: sessionPopup.width - 10
-                height: 40
-                color: index === currentSessionIndex ? "#3daee9" : "black"
-                radius: 3
+            // Simple session list without ScrollBar (for compatibility)
+            ListView {
+                id: sessionList
+                height: sessionPopup.height
+                width: parent.width
+                anchors.fill: parent
+                anchors.margins: 5
+                anchors.rightMargin: 13
+                orientation: ListView.Vertical
+                interactive: true
+                clip: true
+                boundsBehavior: Flickable.StopAtBounds
 
-                Image {
-                    id: sessionListIcon
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        verticalCenter: parent.verticalCenter
+                model: sessionModel
+                currentIndex: sessionModel.lastIndex
+
+                spacing: 2
+
+                delegate: Rectangle {
+                    width: 200
+                    height: listEntryHeight
+                    color: "transparent"
+                    radius: 5
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: "#FFFFFF"
+                        opacity: index === currentSessionIndex ? 0.30 : 0.0
+                        radius: 5
                     }
-                    source: getSessionIcon(name)
-                }
-                // Session name
-                Text {
-                    anchors.left: sessionListIcon.right
-                    anchors.leftMargin: 10
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: name
-                    color: "white"
-                    font.pixelSize: 14
-                }
 
-                Component.onCompleted: {
-                    if (index === sessionList.currentIndex) {
-                        sessionName = name;
-                        sessionNameText.text = (name.length > 25) ? name.slice(0, 24) + '...' : name;
-                        sessionIconPath = getSessionIcon(name);
-                        sessionIcon.source = sessionIconPath;
+                    Image {
+                        id: sessionListIcon
+                        anchors {
+                            left: parent.left
+                            leftMargin: 10
+                            verticalCenter: parent.verticalCenter
+                        }
+                        source: getSessionIcon(name)
+
+                        ColorOverlay {
+                            anchors.fill: sessionListIcon
+                            source: sessionListIcon
+                            color: index === currentSessionIndex ? "#000" : "#FFF"
+                        }
                     }
-                }
+                    // Session name
+                    Text {
+                        anchors.left: sessionListIcon.right
+                        anchors.leftMargin: 10
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: (name.length > 25) ? name.slice(0, 24) + '...' : name
+                        color: index === currentSessionIndex ? "#161617" : "#FFF"
+                        font.pixelSize: 10
+                    }
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        // sessionModel.lastIndex = index
-                        currentSessionIndex = index;
-                        sessionList.currentIndex = index;
-                        sessionName = name;
-                        sessionNameText.text = (name.length > 25) ? name.slice(0, 24) + '...' : name;
-                        popupVisible = false;
-                        sessionPopup.visible = false;
+                    Component.onCompleted: {
+                        if (index === sessionList.currentIndex) {
+                            sessionName = name;
+                            sessionNameText.text = (name.length > 25) ? name.slice(0, 24) + '...' : name;
+                            sessionIconPath = getSessionIcon(name);
+                            sessionIcon.source = sessionIconPath;
+                            sessionChanged(currentSessionIndex);
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
+                        onClicked: {
+                            // sessionModel.lastIndex = index;
+                            currentSessionIndex = index;
+                            sessionList.currentIndex = index;
+                            sessionName = name;
+                            sessionNameText.text = (name.length > 25) ? name.slice(0, 24) + '...' : name;
+                            sessionIconPath = getSessionIcon(name);
+                            sessionIcon.source = sessionIconPath;
+                            // popupVisible = false;
+                            // sessionPopup.visible = false;
+                            sessionChanged(currentSessionIndex);
+                        }
                     }
                 }
             }

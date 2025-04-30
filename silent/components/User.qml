@@ -4,10 +4,14 @@ import QtGraphicalEffects 1.0
 import SddmComponents 2.0
 
 Item {
+    signal click
+    signal userChanged(userIndex: int)
+    signal closeUserList
     property bool listUsers: false
 
     ListView {
         id: userList
+        z: 2
         width: parent.width
         height: config.selectedAvatarSize || 120
         anchors.horizontalCenter: parent.horizontalCenter
@@ -23,13 +27,14 @@ Item {
         highlightRangeMode: ListView.StrictlyEnforceRange
 
         // Animation properties
-        highlightMoveDuration: 300
-        highlightResizeDuration: 300
+        highlightMoveDuration: 200
+        highlightResizeDuration: 200
         highlightMoveVelocity: -1
         highlightFollowsCurrentItem: true
+        boundsBehavior: Flickable.StopAtBounds
 
         // Interactive behavior
-        interactive: true
+        interactive: listUsers
         flickDeceleration: 1500
         maximumFlickVelocity: 2500
 
@@ -37,7 +42,21 @@ Item {
         leftMargin: width / 2 - (config.selectedAvatarSize || 120) / 2
         rightMargin: leftMargin
 
-        function setUser() {
+        onCurrentIndexChanged: index => {
+            userList.changeUser(index);
+        }
+
+        function changeUser(index) {
+            // Collapse the list if the user selects the current one again
+            if (index === userList.currentIndex) {
+                closeUserList();
+            }
+            userList.currentIndex = index;
+            sddm.currentUser = model.name;
+            userName = model.name;
+            userIcon = model.icon;
+            userNameText.text = model.realName ? model.realName : model.name;
+            userChanged(index);
         }
 
         delegate: Rectangle {
@@ -47,7 +66,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             color: "transparent"
 
-            visible: userListContainer.listUsers || index === userList.currentIndex
+            visible: listUsers || index === userList.currentIndex
 
             // Size transition animation
             Behavior on width {
@@ -64,7 +83,7 @@ Item {
             }
 
             // Animate visibility
-            opacity: userListContainer.listUsers || index === userList.currentIndex ? 1.0 : 0.0
+            opacity: listUsers || index === userList.currentIndex ? 1.0 : 0.0
             Behavior on opacity {
                 NumberAnimation {
                     duration: 150
@@ -72,6 +91,7 @@ Item {
             }
 
             Avatar {
+                z: 4
                 width: parent.width
                 height: parent.height
                 source: model.icon
@@ -86,23 +106,11 @@ Item {
                 }
 
                 onClicked: {
-                    if (isAuthorizing)
-                        return;
-
-                    if (!userListContainer.listUsers) {
-                        userListContainer.listUsers = true;
+                    if (!listUsers) {
+                        click();
                         userList.model.reset();
                     } else {
-                        // Collapse the list if the user selects the current one again
-                        if (index === userList.currentIndex) {
-                            userListContainer.listUsers = false;
-                        }
-                        userList.currentIndex = index;
-                        sddm.currentUser = model.name;
-                        userName = model.name;
-                        userIcon = model.icon;
-                        userIndex = index;
-                        userNameText.text = model.realName ? model.realName : model.name;
+                        userList.changeUser(index);
                     }
                 }
             }
@@ -113,13 +121,14 @@ Item {
                 }
             }
         }
-        MouseArea {
-            anchors.fill: parent
-            enabled: userListContainer.listUsers
-            z: -1  // Put behind everything else
-            onClicked: {
-                userListContainer.listUsers = false;
-            }
+    }
+    MouseArea {
+        anchors.fill: parent
+        z: 3
+        enabled: listUsers
+        visible: listUsers
+        onClicked: {
+            closeUserList();
         }
     }
 }

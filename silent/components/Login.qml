@@ -1,12 +1,12 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.0
+import QtGraphicalEffects 1.12
 import SddmComponents 2.0
 
 import "."
 
 Item {
-    id: frame
+    id: loginFrame
     signal needClose
     property int sessionIndex: sessionModel.lastIndex
     property string userIndex: userList.currentIndex
@@ -14,6 +14,8 @@ Item {
     property string userIcon: userList.currentItem.iconPath
     property alias input: passwdInput
     property alias button: loginButton
+
+    property string activeMenu: ""
 
     property bool isAuthorizing: false
 
@@ -31,18 +33,14 @@ Item {
         loginArea.visible = true;
     }
 
-    //Connections {
-    //    target: sddm
-    //    onLoginSucceeded: {
-    //        Qt.quit()
-    //    }
-    //    onLoginFailed: {
-    //        passwdInput.echoMode = TextInput.Normal
-    //        passwdInput.text = textConstants.loginFailed
-    //        passwdInput.focus = false
-    //        passwdInput.color = "#e7b222"
-    //    }
-    //}
+    function isThereAMenuOpened() {
+        return userListContainer.listUsers || sessionButton.popupVisible;
+    }
+
+    function closeAllMenus() {
+        userListContainer.listUsers = false;
+        sessionButton.close();
+    }
 
     Item {
         id: loginItem
@@ -54,10 +52,21 @@ Item {
             id: userListContainer
             width: parent.width
             height: config.selectedAvatarSize || 120
+            listUsers: loginFrame.activeMenu === "user"
+            enabled: loginFrame.activeMenu === "user" || loginFrame.activeMenu === ""
             anchors {
                 top: parent.top
                 topMargin: parent.height / 3
                 horizontalCenter: parent.horizontalCenter
+            }
+            onClick: {
+                loginFrame.activeMenu = "user";
+            }
+            onUserChanged: index => {
+                userIndex = index;
+            }
+            onCloseUserList: {
+                loginFrame.activeMenu = "";
             }
         }
 
@@ -72,14 +81,15 @@ Item {
             text: userName
             font.bold: true
             font.family: config.font || "RedHatDisplay"
-            color: textColor
-            font.pointSize: 15
+            color: config.userNameColor || "#FFFFFF"
+            font.pointSize: config.userNameFontSize || 15
         }
 
         Spinner {
             id: spinner
             anchors.top: userNameText.bottom
             anchors.horizontalCenter: parent.horizontalCenter
+            anchors.topMargin: 10
             visible: false
         }
 
@@ -92,20 +102,21 @@ Item {
 
             TextField {
                 id: passwdInput
-                width: 200
-                height: 30
+                width: config.passwordInputWidth || 200
+                height: config.passwordInputHeight || 30
                 anchors.left: parent.left
                 echoMode: TextInput.Password
+                enabled: loginFrame.activeMenu === ""
                 focus: false
                 placeholderText: qsTr("Password")
-                placeholderTextColor: "#fff"
-                palette.text: "#fff"
+                placeholderTextColor: config.passwordInputTextColor || "#FFFFFF"
+                palette.text: config.passwordInputTextColor || "#FFFFFF"
                 font.family: config.font || "RedHatDisplay"
-                font.pointSize: 8
+                font.pointSize: config.passwordInputFontSize || 8
                 font.italic: true
                 background: Rectangle {
-                    color: "#fff"
-                    opacity: 0.15
+                    color: config.passwordInputBackgroundColor || "#FFFFFF"
+                    opacity: config.passwordInputBackgroundOpacity || 0.15
                     radius: 10
                     width: parent.width
                     height: parent.height
@@ -124,33 +135,23 @@ Item {
                 height: passwdInput.height
                 width: height
                 anchors.left: (passwdInput.right)
-                anchors.leftMargin: 5
+                anchors.leftMargin: config.loginButtonMarginLeft || 5
                 icon: "icons/arrow-right.svg"
+                iconSize: config.loginButtonIconSize || 24
+                iconColor: config.loginButtonIconColor || "#FFFFFF"
+                hoverIconColor: config.loginButtonHoverIconColor || "#FFFFFF"
+                backgroundColor: config.loginButtonBackgroundColor || "#FFFFFF"
+                backgroundOpacity: config.loginButtonBackgroundOpacity || 0.15
+                hoverBackgroundColor: config.loginButtonHoverBackgroundColor || "#FFFFFF"
+                hoverBackgroundOpacity: config.loginButtonHoverBackgroundOpacity || 0.30
                 onClicked: {
+                    closeAllMenus();
                     spinner.visible = true;
                     loginArea.visible = false;
                     isAuthorizing = true;
                     sddm.login(userName, passwdInput.text, sessionIndex);
                 }
             }
-
-            // ImgButton {
-            // 	id: loginButton
-            // 	height: passwdInput.height
-            // 	width: height
-            // 	anchors.left: (passwdInput.right)
-            // 	anchors.leftMargin: 5
-            // 	normalImg: Icons.arrowRight
-            // 	//normalImg: "icons/login_normal.png"
-            // 	//hoverImg: "icons/login_normal.png"
-            // 	//pressImg: "icons/login_press.png"
-            // 	onClicked: {
-
-            // 		console.log(keyboard.capsLock)
-            // 	}
-            // 	//KeyNavigation.tab: shutdownButton
-            // 	//KeyNavigation.backtab: passwdInput
-            // }
         }
 
         Text {
@@ -160,9 +161,9 @@ Item {
                 top: loginArea.bottom
                 topMargin: 50
             }
-            font.pointSize: 9
+            font.pointSize: config.warningMessageSize || 9
             font.family: config.font || "RedHatDisplay"
-            color: textColor
+            color: config.warningMessageColor || "#FFFFFF"
             enabled: false
 
             function warn(message, type) {
@@ -186,6 +187,15 @@ Item {
             anchors.left: parent.left
             anchors.bottomMargin: 50
             anchors.leftMargin: 50
+            visible: config.showSessionButton === "false" ? false : true
+            popupVisible: loginFrame.activeMenu === "session"
+            onClick: {
+                loginFrame.activeMenu = loginFrame.activeMenu === "" ? "session" : "";
+            }
+            onSessionChanged: newSessionIndex => {
+                sessionIndex = newSessionIndex;
+                loginFrame.activeMenu = "";
+            }
         }
 
         Item {
@@ -205,7 +215,7 @@ Item {
                 anchors.right: keyboardButton.left
                 anchors.rightMargin: 10
                 icon: "icons/language.svg"
-                icon_size: 15
+                iconSize: 15
                 onClicked: {}
             }
 
@@ -216,7 +226,7 @@ Item {
                 anchors.right: powerButton.left
                 anchors.rightMargin: 10
                 icon: "icons/keyboard.svg"
-                icon_size: 15
+                iconSize: 15
                 onClicked: {}
             }
 
@@ -226,68 +236,10 @@ Item {
                 width: 30
                 anchors.right: parent.right
                 icon: "icons/power.svg"
-                icon_size: 15
+                iconSize: 15
                 onClicked: {}
             }
         }
-
-        //     Rectangle {
-        //         id: passwdInputRec
-        //         visible: ! isProcessing
-        //         anchors {
-        //             top: userNameText.bottom
-        //             topMargin: 10
-        //             horizontalCenter: parent.horizontalCenter
-        //         }
-        //         width: 250
-        //         height: 35
-        //         radius: 8
-        //color: "#fff"
-        //opacity: 0.1
-        //
-        //         TextInput {
-        //             id: passwdInput
-        //             anchors.fill: parent
-        //             anchors.leftMargin: 8
-        //             anchors.rightMargin: 8 + 36
-        //             clip: true
-        //             focus: false
-        //             color: textColor
-        //             font.pointSize: 12
-        //	selectByMouse: true
-        //             selectionColor: "#a8d6ec"
-        //             echoMode: TextInput.Password
-        //             verticalAlignment: TextInput.AlignVCenter
-        //             onFocusChanged: {
-        //                 if (focus) {
-        //                     color = textColor
-        //                     echoMode = TextInput.Password
-        //                     text = ""
-        //                 }
-        //             }
-        //             onAccepted: {
-        //                 sddm.login(userNameText.text, passwdInput.text, sessionIndex)
-        //             }
-        //             KeyNavigation.backtab: {
-        //                 if (sessionButton.visible) {
-        //                     return sessionButton
-        //                 }
-        //                 else if (userButton.visible) {
-        //                     return userButton
-        //                 }
-        //                 else {
-        //                     return shutdownButton
-        //                 }
-        //             }
-        //             KeyNavigation.tab: loginButton
-        //             //Timer {
-        //             //    interval: 200
-        //             //    running: true
-        //             //    onTriggered: passwdInput.forceActiveFocus()
-        //             //}
-        //         }
-
-        //     }
 
         Text {
             anchors {
@@ -301,19 +253,23 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            enabled: userListContainer.listUsers
-            z: -1  // Put behind everything else
+            z: 1
+            enabled: loginFrame.activeMenu !== "" || isAuthorizing
+            visible: loginFrame.activeMenu !== "" || isAuthorizing
+            hoverEnabled: true
             onClicked: {
-                userListContainer.listUsers = false;
+                if (isAuthorizing)
+                    return;
+                loginFrame.activeMenu = "";
+                passwdInput.forceActiveFocus();
             }
         }
 
+        focus: activeMenu !== ""
         Keys.onEscapePressed: () => {
-            if (userListContainer.listUsers) {
-                userListContainer.listUsers = false;
-                return;
-            } else if (sessionButton.popupVisible) {
-                sessionButton.popupVisible = false;
+            if (loginFrame.activeMenu !== "") {
+                loginFrame.activeMenu = "";
+                passwdInput.forceActiveFocus();
                 return;
             }
             if (isAuthorizing)

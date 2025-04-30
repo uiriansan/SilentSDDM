@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import QtGraphicalEffects 1.0
+import QtGraphicalEffects 1.12
 import SddmComponents 2.0
 import "components"
 
@@ -121,6 +121,8 @@ Rectangle {
                 onNeedLogin: {
                     root.state = "loginState";
                     loginFrame.input.forceActiveFocus();
+                    // print("op1:", config.intValue("LoginScreen/option1"));
+                    // print("op2:", config.intValue("LoginScreen.Buttons/option2"));
                 }
             }
             Login {
