@@ -184,7 +184,6 @@ Item {
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
                         onClicked: {
-                            // sessionModel.lastIndex = index;
                             currentSessionIndex = index;
                             sessionList.currentIndex = index;
                             sessionName = name;

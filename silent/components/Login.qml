@@ -248,7 +248,6 @@ Item {
                 leftMargin: 20
                 topMargin: 20
             }
-            // text: JSON.stringify(sessionModel.data)
         }
 
         MouseArea {

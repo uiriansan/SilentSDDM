@@ -1,0 +1,1 @@
+# Prompt for screen resolution

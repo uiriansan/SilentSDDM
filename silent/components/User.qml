@@ -9,9 +9,10 @@ Item {
     signal closeUserList
     property bool listUsers: false
 
+    z: 2
+
     ListView {
         id: userList
-        z: 2
         width: parent.width
         height: config.selectedAvatarSize || 120
         anchors.horizontalCenter: parent.horizontalCenter
@@ -21,7 +22,8 @@ Item {
         model: userModel
         currentIndex: userModel.lastIndex
 
-        // Center the current item
+        // Center the current avatar
+        // TODO: Sometimes this doesn't work!
         preferredHighlightBegin: width / 2 - (config.selectedAvatarSize || 120) / 2
         preferredHighlightEnd: preferredHighlightBegin
         highlightRangeMode: ListView.StrictlyEnforceRange
@@ -33,30 +35,40 @@ Item {
         highlightFollowsCurrentItem: true
         boundsBehavior: Flickable.StopAtBounds
 
-        // Interactive behavior
         interactive: listUsers
-        flickDeceleration: 1500
-        maximumFlickVelocity: 2500
 
         // Padding for centering
         leftMargin: width / 2 - (config.selectedAvatarSize || 120) / 2
         rightMargin: leftMargin
 
-        onCurrentIndexChanged: index => {
-            userList.changeUser(index);
+        // Close the list when click behind the avatars
+        MouseArea {
+            anchors.fill: parent
+            enabled: listUsers
+            onClicked: mouse => {
+                const clickedItem = userList.itemAt(mouse.x, mouse.y);
+                if (!clickedItem) {
+                    closeUserList();
+                    mouse.accepted = true;
+                } else {
+                    mouse.accepted = false;
+                }
+            }
+            z: -1
         }
 
-        function changeUser(index) {
-            // Collapse the list if the user selects the current one again
-            if (index === userList.currentIndex) {
-                closeUserList();
-            }
-            userList.currentIndex = index;
-            sddm.currentUser = model.name;
-            userName = model.name;
-            userIcon = model.icon;
-            userNameText.text = model.realName ? model.realName : model.name;
-            userChanged(index);
+        onCurrentIndexChanged: {
+            const username = userModel.data(userModel.index(currentIndex, 0), 257);
+            const userRealName = userModel.data(userModel.index(currentIndex, 0), 258);
+            const userIconL = userModel.data(userModel.index(currentIndex, 0), 260);
+
+            sddm.currentUser = username;
+            userName = username;
+            userIcon = userIconL;
+            userNameText.text = userRealName ? userRealName : username;
+            userChanged(currentIndex);
+
+            print(config.boolValue("LockScreen/enabled"));
         }
 
         delegate: Rectangle {
@@ -91,7 +103,7 @@ Item {
             }
 
             Avatar {
-                z: 4
+                z: 5
                 width: parent.width
                 height: parent.height
                 source: model.icon
@@ -110,8 +122,15 @@ Item {
                         click();
                         userList.model.reset();
                     } else {
-                        userList.changeUser(index);
+                        // Collapse the list if the user selects the current one again
+                        if (index === userList.currentIndex) {
+                            closeUserList();
+                        }
+                        userList.currentIndex = index;
                     }
+                }
+                onClickedOutside: {
+                    closeUserList();
                 }
             }
 
@@ -120,15 +139,6 @@ Item {
                     userNameText.text = model.realName ? model.realName : model.name;
                 }
             }
-        }
-    }
-    MouseArea {
-        anchors.fill: parent
-        z: 3
-        enabled: listUsers
-        visible: listUsers
-        onClicked: {
-            closeUserList();
         }
     }
 }

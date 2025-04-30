@@ -6,6 +6,7 @@ Canvas {
     property color m_strokeStyle: "#ffffff"
 
     signal clicked
+    signal clickedOutside
 
     onSourceChanged: delayPaintTimer.running = true
     onPaint: {
@@ -22,16 +23,45 @@ Canvas {
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
-        onEntered: {
-            m_strokeStyle = "#77ffffff";
-            avatar.requestPaint();
+        cursorShape: Qt.ArrowCursor
+
+        function isCursorInsideAvatar() {
+            // Calculate ellipse center and radius
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radiusX = width / 2;
+            const radiusY = height / 2;
+
+            // Calculate normalized distance from center
+            const dx = (mouseX - centerX) / radiusX;
+            const dy = (mouseY - centerY) / radiusY;
+
+            // Check if point is inside ellipse using the equation (x/a)² + (y/b)² ≤ 1
+            return (dx * dx + dy * dy) <= 1.0;
         }
-        onExited: {
-            m_strokeStyle = "#ffffffff";
-            avatar.requestPaint();
+
+        // This is the key part - check if the click is within the ellipse
+        onPressed: mouse => {
+            const isInside = isCursorInsideAvatar();
+            if (isInside) {
+                avatar.clicked();
+            } else {
+                avatar.clickedOutside();
+            }
+
+            mouse.accepted = isInside;
         }
-        onClicked: avatar.clicked()
+
+        function updateHover() {
+            if (isCursorInsideAvatar()) {
+                cursorShape = Qt.PointingHandCursor;
+            } else {
+                cursorShape = Qt.ArrowCursor;
+            }
+        }
+
+        onMouseXChanged: updateHover()
+        onMouseYChanged: updateHover()
     }
 
     // Fixme: paint() not affect event if source is not empty in initialization
