@@ -53,14 +53,14 @@ QtObject {
     property bool centerLoginArea: config["LoginScreen.LoginArea/certer_vertically"] === "false" ? false : true
     property int loginAreaMarginTop: config.intValue("LoginScreen.LoginArea/margin_top")
 
-    function clampReal(config, min, max, def = null) {
-        let v = config.realValue(config);
+    function clampReal(cfg, min, max, def = null) {
+        let v = config.realValue(cfg);
         if (def !== null)
             v = v || def;
         return Math.min(Math.max(v, min), max);
     }
-    function clampInt(config, min, max, def = null) {
-        let v = config.intValue(config);
+    function clampInt(cfg, min, max, def = null) {
+        let v = config.intValue(cfg);
         if (def !== null)
             v = v || def;
         return Math.min(Math.max(v, min), max);

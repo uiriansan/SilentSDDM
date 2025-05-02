@@ -113,29 +113,9 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: 20
 
-            TextField {
+            PasswordInput {
                 id: passwdInput
-                width: config.passwordInputWidth || 200
-                height: config.passwordInputHeight || 30
-                anchors.left: parent.left
-                echoMode: TextInput.Password
                 enabled: loginFrame.activeMenu === ""
-                focus: false
-                placeholderText: qsTr("Password")
-                placeholderTextColor: config.passwordInputTextColor || "#FFFFFF"
-                palette.text: config.passwordInputTextColor || "#FFFFFF"
-                font.family: config.font || "RedHatDisplay"
-                font.pointSize: config.passwordInputFontSize || 8
-                font.italic: true
-                background: Rectangle {
-                    color: config.passwordInputBackgroundColor || "#FFFFFF"
-                    opacity: config.passwordInputBackgroundOpacity || 0.15
-                    radius: 10
-                    width: parent.width
-                    height: parent.height
-                    anchors.centerIn: parent
-                }
-                selectByMouse: true
                 onAccepted: {
                     if (passwdInput.text.length > 0) {
                         spinner.visible = true;
@@ -149,6 +129,7 @@ Item {
                     }
                 }
             }
+
             IconButton {
                 id: loginButton
                 height: passwdInput.height
@@ -191,14 +172,12 @@ Item {
             visible: showKeyboard
             externalLanguageSwitchEnabled: true
             onExternalLanguageSwitch: {
-                activeMenu = "language";
+                activeMenu = activeMenu === "" ? "language" : "";
             }
             Component.onCompleted: {
                 VirtualKeyboardSettings.styleName = "tstyle";
-                VirtualKeyboardSettings.activeLocales = ["pt_BR"];
+                VirtualKeyboardSettings.activeLocales = ["en_US", "pt_BR"];
                 VirtualKeyboardSettings.layout = "symbols";
-
-                print(JSON.stringify(keyboard.currentLayout));
             }
         }
 
@@ -284,8 +263,23 @@ Item {
                 anchors.rightMargin: 10
                 icon: "icons/language.svg"
                 iconSize: 15
-                onClicked: {}
+                onClicked: {
+                    activeMenu = "language";
+                }
                 tooltip_text: "Change keyboard layout"
+            }
+
+            ComboBox {
+                id: language
+                visible: true
+                color: "red"
+                anchors {
+                    bottom: languageButton.top
+                    bottomMargin: 10
+                    horizontalCenter: languageButton.horizontalCenter
+                }
+                model: keyboard.layouts
+                index: keyboard.currentLayout
             }
 
             IconButton {

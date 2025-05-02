@@ -5,13 +5,13 @@
 
 # Installing
 ### Dependencies
-- SDDM >= 0.20;
-- QT >= 6.5;
+- SDDM ≥ 0.20;
+- QT ≥ 6.5;
 - qt6-svg;
 - qt6-virtualkeyboard;
 - RedHatDisplay font (optional)
 
-Install dependencies on Arch Linux:
+Install on Arch Linux:
 ```bash
 $ sudo pacman -S sddm qt6-svg qt6-virtualkeyboard
 $ yay -S redhat-fonts

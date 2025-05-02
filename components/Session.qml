@@ -142,7 +142,7 @@ Item {
                     Rectangle {
                         anchors.fill: parent
                         color: "#FFFFFF"
-                        opacity: index === currentSessionIndex ? 0.30 : 0.0
+                        opacity: index === currentSessionIndex ? 0.15 : (itemMouseArea.containsMouse ? 0.15 : 0.0)
                         radius: 5
                     }
 
@@ -164,7 +164,7 @@ Item {
                             source: sessionListIcon
                             anchors.fill: sessionListIcon
                             colorization: 1
-                            colorizationColor: index === currentSessionIndex ? "#000" : "#FFF"
+                            colorizationColor: index === currentSessionIndex ? "#fff" : "#FFF"
                         }
                     }
                     // Session name
@@ -173,7 +173,7 @@ Item {
                         anchors.leftMargin: 10
                         anchors.verticalCenter: parent.verticalCenter
                         text: (name.length > 25) ? name.slice(0, 24) + '...' : name
-                        color: index === currentSessionIndex ? "#161617" : "#FFF"
+                        color: index === currentSessionIndex ? "#fff" : "#FFF"
                         font.pixelSize: 10
                     }
 
@@ -188,6 +188,7 @@ Item {
                     }
 
                     MouseArea {
+                        id: itemMouseArea
                         anchors.fill: parent
                         z: 2
                         cursorShape: Qt.PointingHandCursor

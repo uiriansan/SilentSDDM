@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Effects
+import QtQuick.Controls
 
 Item {
     id: frame
@@ -65,11 +66,6 @@ Item {
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
             }
-            // ColorOverlay {
-            //     anchors.fill: lockIcon
-            //     source: lockIcon
-            //     color: config.pressAnyKeyColor || "#FFFFFF"
-            // }
 
             MultiEffect {
                 source: lockIcon
@@ -109,6 +105,7 @@ Item {
     }
 
     MouseArea {
+        id: lockScreenMouseArea
         z: -1
         anchors.fill: parent
         onClicked: needLogin()

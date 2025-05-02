@@ -73,8 +73,6 @@ Item {
             } else {
                 loginFrame.showKeyboard = false;
             }
-
-            print(Config.enableAnimations);
         }
 
         delegate: Rectangle {
