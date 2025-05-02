@@ -16,7 +16,7 @@ Canvas {
         ctx.ellipse(0, 0, width, height);
         ctx.clip();
         if (source === "")
-            source = "icons/user.png";
+            source = "icons/user-default.png";
         ctx.drawImage(source, 0, 0, width, height);
     }
 

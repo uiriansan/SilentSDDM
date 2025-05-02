@@ -1,6 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.0
+// import QtGraphicalEffects 1.0
 import SddmComponents 2.0
 
 Item {
@@ -61,6 +61,7 @@ Item {
             const username = userModel.data(userModel.index(currentIndex, 0), 257);
             const userRealName = userModel.data(userModel.index(currentIndex, 0), 258);
             const userIconL = userModel.data(userModel.index(currentIndex, 0), 260);
+            const needsPasswd = userModel.data(userModel.index(currentIndex, 0), 261);
 
             sddm.currentUser = username;
             userName = username;
@@ -68,7 +69,13 @@ Item {
             userNameText.text = userRealName ? userRealName : username;
             userChanged(currentIndex);
 
-            print(config.boolValue("LockScreen/enabled"));
+            if (!needsPasswd) {
+                loginFrame.showKeyboard = true;
+            } else {
+                loginFrame.showKeyboard = false;
+            }
+
+            // print(config.boolValue("LockScreen/enabled"));
         }
 
         delegate: Rectangle {
@@ -82,12 +89,14 @@ Item {
 
             // Size transition animation
             Behavior on width {
+                enabled: config.enableAnimations === "false" ? false : true
                 NumberAnimation {
                     duration: 150
                     easing.type: Easing.OutQuad
                 }
             }
             Behavior on height {
+                enabled: config.enableAnimations === "false" ? false : true
                 NumberAnimation {
                     duration: 150
                     easing.type: Easing.OutQuad
@@ -97,6 +106,7 @@ Item {
             // Animate visibility
             opacity: listUsers || index === userList.currentIndex ? 1.0 : 0.0
             Behavior on opacity {
+                enabled: config.enableAnimations === "false" ? false : true
                 NumberAnimation {
                     duration: 150
                 }
@@ -112,6 +122,7 @@ Item {
 
                 // Opacity transition
                 Behavior on opacity {
+                    enabled: config.enableAnimations === "false" ? false : true
                     NumberAnimation {
                         duration: 150
                     }

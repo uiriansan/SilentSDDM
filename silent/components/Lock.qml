@@ -1,5 +1,7 @@
 import QtQuick 2.5
-import QtGraphicalEffects 1.12
+import QtQuick.Effects
+
+// import QtGraphicalEffects 1.12
 
 Item {
     id: frame
@@ -65,10 +67,17 @@ Item {
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
             }
-            ColorOverlay {
-                anchors.fill: lockIcon
+            // ColorOverlay {
+            //     anchors.fill: lockIcon
+            //     source: lockIcon
+            //     color: config.pressAnyKeyColor || "#FFFFFF"
+            // }
+
+            MultiEffect {
                 source: lockIcon
-                color: config.pressAnyKeyColor || "#FFFFFF"
+                anchors.fill: lockIcon
+                colorization: 1
+                colorizationColor: config.pressAnyKeyColor || "#FFFFFF"
             }
         }
         Text {

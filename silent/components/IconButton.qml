@@ -1,6 +1,8 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.12
+import QtQuick.Effects
+
+// import QtGraphicalEffects 1.12
 
 Item {
     id: iconButton
@@ -12,6 +14,8 @@ Item {
     property double hoverBackgroundOpacity: 0.15
     property color iconColor: "#FFFFFF"
     property color hoverIconColor: "#FFFFFF"
+    property string tooltip_text: ""
+    property bool pressed: false
     signal clicked
 
     width: iconSize * 2
@@ -20,9 +24,9 @@ Item {
     Rectangle {
         id: buttonBackground
         anchors.fill: parent
-        color: mouseArea.pressed ? iconButton.hoverBackgroundColor : (mouseArea.containsMouse ? iconButton.hoverBackgroundColor : iconButton.backgroundColor)
+        color: pressed ? iconButton.hoverBackgroundColor : (mouseArea.pressed ? iconButton.hoverBackgroundColor : (mouseArea.containsMouse ? iconButton.hoverBackgroundColor : iconButton.backgroundColor))
         radius: 10
-        opacity: mouseArea.pressed ? iconButton.hoverBackgroundOpacity : (mouseArea.containsMouse ? iconButton.hoverBackgroundOpacity : iconButton.backgroundOpacity)
+        opacity: pressed ? iconButton.hoverBackgroundOpacity : (mouseArea.pressed ? iconButton.hoverBackgroundOpacity : (mouseArea.containsMouse ? iconButton.hoverBackgroundOpacity : iconButton.backgroundOpacity))
 
         Behavior on opacity {
             NumberAnimation {
@@ -41,10 +45,17 @@ Item {
         fillMode: Image.PreserveAspectFit
     }
 
-    ColorOverlay {
-        anchors.fill: buttonIcon
+    // ColorOverlay {
+    //     anchors.fill: buttonIcon
+    //     source: buttonIcon
+    //     color: mouseArea.pressed ? iconButton.hoverIconColor : (mouseArea.containsMouse ? iconButton.hoverIconColor : iconButton.iconColor)
+    // }
+
+    MultiEffect {
         source: buttonIcon
-        color: mouseArea.pressed ? iconButton.hoverIconColor : (mouseArea.containsMouse ? iconButton.hoverIconColor : iconButton.iconColor)
+        anchors.fill: buttonIcon
+        colorization: 1
+        colorizationColor: mouseArea.pressed ? iconButton.hoverIconColor : (mouseArea.containsMouse ? iconButton.hoverIconColor : iconButton.iconColor)
     }
 
     MouseArea {
@@ -53,6 +64,22 @@ Item {
         hoverEnabled: true
         onClicked: iconButton.clicked()
         cursorShape: Qt.PointingHandCursor
+        ToolTip {
+            parent: mouseArea
+            visible: mouseArea.containsMouse && tooltip_text !== ""
+            delay: 300
+            text: tooltip_text
+            contentItem: Text {
+                text: tooltip_text
+                color: "#FFFFFF"
+            }
+            background: Rectangle {
+                color: "#FFFFFF"
+                opacity: 0.15
+                border.width: 0
+                radius: 5
+            }
+        }
     }
     Keys.onPressed: event => {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {

@@ -1,12 +1,12 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.12
+import QtQuick.Effects
+
+// import QtGraphicalEffects 1.12
 
 Item {
     id: sessionSelector
     height: 30
-
-    z: 2
 
     signal sessionChanged(sessionIndex: int)
     signal click
@@ -48,6 +48,7 @@ Item {
             radius: 5
 
             Behavior on opacity {
+                enabled: config.enableAnimations === "false" ? false : true
                 NumberAnimation {
                     duration: 250
                 }
@@ -76,6 +77,7 @@ Item {
 
         MouseArea {
             id: sessionMouseArea
+            z: 0
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
@@ -116,6 +118,7 @@ Item {
             // Simple session list without ScrollBar (for compatibility)
             ListView {
                 id: sessionList
+                z: 2
                 height: sessionPopup.height
                 width: parent.width
                 anchors.fill: parent
@@ -132,6 +135,7 @@ Item {
                 spacing: 2
 
                 delegate: Rectangle {
+                    z: 2
                     width: 200
                     height: listEntryHeight
                     color: "transparent"
@@ -153,10 +157,16 @@ Item {
                         }
                         source: getSessionIcon(name)
 
-                        ColorOverlay {
-                            anchors.fill: sessionListIcon
+                        // ColorOverlay {
+                        //     anchors.fill: sessionListIcon
+                        //     source: sessionListIcon
+                        //     color: index === currentSessionIndex ? "#000" : "#FFF"
+                        // }
+                        MultiEffect {
                             source: sessionListIcon
-                            color: index === currentSessionIndex ? "#000" : "#FFF"
+                            anchors.fill: sessionListIcon
+                            colorization: 1
+                            colorizationColor: index === currentSessionIndex ? "#000" : "#FFF"
                         }
                     }
                     // Session name
@@ -181,6 +191,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
+                        z: 2
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
                         onClicked: {

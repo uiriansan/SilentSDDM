@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import QtGraphicalEffects 1.12
+// import QtGraphicalEffects 1.12
 import SddmComponents 2.0
 import "components"
 
@@ -28,10 +28,6 @@ Rectangle {
                 target: bgBlur
                 radius: config.lockScreenBlur || 0
             }
-            PropertyChanges {
-                target: loginFrame
-                scale: 0.5
-            }
         },
         State {
             name: "loginState"
@@ -47,10 +43,6 @@ Rectangle {
                 target: bgBlur
                 radius: config.loginScreenBlur || 50
             }
-            PropertyChanges {
-                target: loginFrame
-                scale: 1
-            }
         }
     ]
     transitions: Transition {
@@ -62,10 +54,6 @@ Rectangle {
         PropertyAnimation {
             duration: 400
             properties: "radius"
-        }
-        PropertyAnimation {
-            duration: 200
-            properties: "scale"
         }
     }
 
@@ -100,12 +88,21 @@ Rectangle {
             source: root.state === "lockState" ? config.lockScreenBackground || "backgrounds/default.jpg" : config.loginScreenBackground || "backgrounds/default.jpg"
         }
 
-        FastBlur {
+        ShaderEffect {
             id: bgBlur
+            property var src: mainFrameBackground
+            property int radius: 0
+            property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
             anchors.fill: mainFrameBackground
-            source: mainFrameBackground
-            radius: 0
+            fragmentShader: "components/shaders/gaussianblur.frag.qsb"
         }
+
+        // FastBlur {
+        //     id: bgBlur
+        //     anchors.fill: mainFrameBackground
+        //     source: mainFrameBackground
+        //     radius: 0
+        // }
 
         Item {
             id: centerArea
@@ -135,7 +132,6 @@ Rectangle {
                     root.state = "lockState";
                     lockFrame.focus = true;
                 }
-                scale: 0.5
             }
 
             MouseArea {

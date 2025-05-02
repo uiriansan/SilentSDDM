@@ -3,6 +3,12 @@
 
 [General]
 font = "RedHatDisplay"
+text_color = "#FFFFFF"
+active_text_color = "#FFFFFF"
+background_color = "#FFFFFF"
+background_opacity = 0.15
+active_background_color = "#FFFFFF"
+active_background_opacity = 0.30
 enable_animations = true
 
 [LockScreen]
@@ -36,13 +42,13 @@ background = "backgrounds/smoky.jpg"
 background_blur = 50
 
 [LoginScreen.LoginArea]
-center = true
+certer_vertically = true
 margin_top = #
 
 [LoginScreen.LoginArea.Avatar]
-selected_size = 120
-standard_size = 80
-standard_opacity = 0.35
+active_size = 120
+inactive_size = 80
+inactive_opacity = 0.35
 shape = "circle"
 border = false
 border_color = "#FFFFFF"
@@ -68,14 +74,15 @@ margin_top = #
 [LoginScreen.LoginArea.LoginButton]
 background_color = "#FFFFFF"
 background_opacity = 0.15
-hover_background_color = "#FFFFFF"
-hover_background_opacity = 0.30
+active_background_color = "#FFFFFF"
+active_background_opacity = 0.30
 icon_size = 24
-icon_color = "#FFFFFF"
-hover_icon_color = "#FFFFFF"
+text_color = "#FFFFFF"
+active_text_color = "#FFFFFF"
 border_radius_left = #
 border_radius_right = #
 margin_left = 5
+show_text_if_no_password = true
 
 [LoginScreen.LoginArea.Spinner]
 size = 32
@@ -83,7 +90,7 @@ color = "#FFFFFF"
 margin_top = #
 
 [LoginScreen.LoginArea.WarningMessage]
-font_size = 9
+font_size = 8
 color = "#FFFFFF"
 margin_top = #
 
@@ -98,30 +105,18 @@ position = "bottom_left"
 margin_x = 50
 margin_y = 50
 popup_direction = "up"
-button_background_color = "#FFFFFF"
-button_background_opacity = 0.15
-button_text_color = "#FFFFFF"
-button_hover_background_color = "#FFFFFF"
-button_hover_background_opacity = 0.30
-button_hover_text_color = "#FFFFFF"
-popup_background_color = "#FFFFFF"
-popup_background_opacity = 0.15
-popup_text_color = "#FFFFFF"
-popup_selected_background_color = "#FFFFFF"
-popup_selected_background_opacity = 0.15
-popup_selected_text_color = "#000"
+button_background_color = false
+text_color = "#FFFFFF"
+icon_size = 24
 
 [LoginScreen.MenuArea.Keyboard]
 display = true
 position = "bottom_right"
 margin_x = 50
 margin_y = 50
-button_background_color = "#FFFFFF"
-button_background_opacity = 0.15
-button_icon_color = "#FFFFFF"
-button_hover_background_color = "#FFFFFF"
-button_hover_background_opacity = 0.30
-button_hover_icon_color = "#FFFFFF"
+button_background_color = false
+text_color = "#FFFFFF"
+icon_size = 24
 
 [LoginScreen.MenuArea.Language]
 display = true
@@ -129,18 +124,9 @@ position = "bottom_right"
 margin_x = 50
 margin_y = 50
 popup_direction = "up"
-button_background_color = "#FFFFFF"
-button_background_opacity = 0.15
-button_icon_color = "#FFFFFF"
-button_hover_background_color = "#FFFFFF"
-button_hover_background_opacity = 0.30
-button_hover_icon_color = "#FFFFFF"
-popup_background_color = "#FFFFFF"
-popup_background_opacity = 0.15
-popup_text_color = "#FFFFFF"
-popup_selected_background_color = "#FFFFFF"
-popup_selected_background_opacity = 0.15
-popup_selected_text_color = "#000"
+button_background_color = false
+text_color = "#FFFFFF"
+icon_size = 24
 
 [LoginScreen.MenuArea.Power]
 display = true
@@ -148,15 +134,6 @@ position = "bottom_right"
 margin_x = 50
 margin_y = 50
 popup_direction = "up"
-button_background_color = "#FFFFFF"
-button_background_opacity = 0.15
-button_icon_color = "#FFFFFF"
-button_hover_background_color = "#FFFFFF"
-button_hover_background_opacity = 0.30
-button_hover_icon_color = "#FFFFFF"
-popup_background_color = "#FFFFFF"
-popup_background_opacity = 0.15
-popup_text_color = "#FFFFFF"
-popup_selected_background_color = "#FFFFFF"
-popup_selected_background_opacity = 0.15
-popup_selected_text_color = "#000"
+button_background_color = false
+text_color = "#FFFFFF"
+icon_size = 24

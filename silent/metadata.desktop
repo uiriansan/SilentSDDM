@@ -2,7 +2,7 @@
 Name=Silent
 Type=sddm-theme
 Description=A very customizable SDDM theme that actually looks good.
-License=CC-BY-SA
+License=GPL-3.0-or-later
 Version=1.0
 ConfigFile=theme.conf
 Theme-Id=silent
@@ -10,3 +10,4 @@ Theme-API=2.0
 MainScript=Main.qml
 Screenshot=preview.jpg
 TranslationsDirectory=translations
+QtVersion=6

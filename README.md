@@ -9,6 +9,7 @@
 - qt5-svg;
 - qt5-quickcontrols2;
 - qt5-graphicaleffects;
+- qt5-virtualkeyboard;
 - RedHatDisplay font (opcional)
 
 Install dependencies on Arch Linux:

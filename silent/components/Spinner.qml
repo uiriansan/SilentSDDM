@@ -1,6 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.12
+import QtQuick.Effects
 
 Item {
     id: spinnerContainer
@@ -25,10 +25,17 @@ Item {
             duration: 1200
         }
 
-        ColorOverlay {
-            anchors.fill: spinner
+        // ColorOverlay {
+        //     anchors.fill: spinner
+        //     source: spinner
+        //     color: config.spinnerColor || "#FFFFFF"
+        // }
+
+        MultiEffect {
             source: spinner
-            color: config.spinnerColor || "#FFFFFF"
+            anchors.fill: spinner
+            colorization: 1
+            colorizationColor: config.spinnerColor || "#FFFFFF"
         }
     }
 }

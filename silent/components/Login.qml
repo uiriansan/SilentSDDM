@@ -1,6 +1,8 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.12
+// import QtGraphicalEffects 1.12
+import QtQuick.VirtualKeyboard 2.15
+import QtQuick.VirtualKeyboard.Settings 2.15
 import SddmComponents 2.0
 
 import "."
@@ -14,32 +16,40 @@ Item {
     property string userIcon: userList.currentItem.iconPath
     property alias input: passwdInput
     property alias button: loginButton
+    property bool showKeyboard: false
+    property bool returnKeyboard: false
 
     property string activeMenu: ""
+    onActiveMenuChanged: {
+        if (returnKeyboard) {
+            showKeyboard = true;
+            returnKeyboard = false;
+        }
+
+        passwdInput.forceActiveFocus();
+    }
 
     property bool isAuthorizing: false
 
-    function onLoginSucceeded() {
-        spinner.visible = false;
-        Qt.quit();
-    }
+    Connections {
+        target: sddm
+        function onLoginSucceeded() {
+            spinner.visible = false;
+            Qt.quit();
+        }
 
-    function onLoginFailed() {
-        isAuthorizing = false;
-        spinner.visible = false;
-        loginMessage.warn(textConstants.loginFailed, "error");
-        passwdInput.text = "";
-        passwdInput.focus = true;
-        loginArea.visible = true;
-    }
-
-    function isThereAMenuOpened() {
-        return userListContainer.listUsers || sessionButton.popupVisible;
-    }
-
-    function closeAllMenus() {
-        userListContainer.listUsers = false;
-        sessionButton.close();
+        function onLoginFailed() {
+            isAuthorizing = false;
+            spinner.visible = false;
+            loginMessage.warn("Wrong password", "error");
+            passwdInput.text = "";
+            passwdInput.focus = true;
+            loginArea.visible = true;
+            if (returnKeyboard) {
+                showKeyboard = true;
+                returnKeyboard = false;
+            }
+        }
     }
 
     Item {
@@ -61,6 +71,10 @@ Item {
             }
             onClick: {
                 loginFrame.activeMenu = "user";
+                if (showKeyboard) {
+                    showKeyboard = false;
+                    returnKeyboard = true;
+                }
             }
             onUserChanged: index => {
                 userIndex = index;
@@ -124,10 +138,16 @@ Item {
                 }
                 selectByMouse: true
                 onAccepted: {
-                    spinner.visible = true;
-                    loginArea.visible = false;
-                    isAuthorizing = true;
-                    sddm.login(userName, passwdInput.text, sessionIndex);
+                    if (passwdInput.text.length > 0) {
+                        spinner.visible = true;
+                        loginArea.visible = false;
+                        isAuthorizing = true;
+                        if (showKeyboard) {
+                            showKeyboard = false;
+                            returnKeyboard = true;
+                        }
+                        sddm.login(userName, passwdInput.text, sessionIndex);
+                    }
                 }
             }
             IconButton {
@@ -145,12 +165,41 @@ Item {
                 hoverBackgroundColor: config.loginButtonHoverBackgroundColor || "#FFFFFF"
                 hoverBackgroundOpacity: config.loginButtonHoverBackgroundOpacity || 0.30
                 onClicked: {
-                    closeAllMenus();
-                    spinner.visible = true;
-                    loginArea.visible = false;
-                    isAuthorizing = true;
-                    sddm.login(userName, passwdInput.text, sessionIndex);
+                    if (passwdInput.text.length > 0) {
+                        spinner.visible = true;
+                        loginArea.visible = false;
+                        isAuthorizing = true;
+                        if (showKeyboard) {
+                            showKeyboard = false;
+                            returnKeyboard = true;
+                        }
+                        sddm.login(userName, passwdInput.text, sessionIndex);
+                    }
                 }
+            }
+        }
+
+        // TODO: Virtual keyboard not working on the second screen.
+        InputPanel {
+            id: inputPanel
+            z: 99
+            width: Math.min(parent.width / 2, loginArea.width * 3)
+            anchors {
+                top: loginArea.bottom
+                horizontalCenter: parent.horizontalCenter
+                topMargin: loginMessage.text === "" ? 50 : 80
+            }
+            visible: showKeyboard
+            externalLanguageSwitchEnabled: true
+            onExternalLanguageSwitch: {
+                activeMenu = "language";
+            }
+            Component.onCompleted: {
+                VirtualKeyboardSettings.styleName = "tstyle";
+                VirtualKeyboardSettings.activeLocales = ["pt_BR"];
+                VirtualKeyboardSettings.layout = "symbols";
+
+                print(JSON.stringify(keyboard.currentLayout));
             }
         }
 
@@ -184,13 +233,18 @@ Item {
         Session {
             id: sessionButton
             anchors.bottom: parent.bottom
+            z: 2
             anchors.left: parent.left
             anchors.bottomMargin: 50
             anchors.leftMargin: 50
             visible: config.showSessionButton === "false" ? false : true
             popupVisible: loginFrame.activeMenu === "session"
             onClick: {
-                loginFrame.activeMenu = loginFrame.activeMenu === "" ? "session" : "";
+                loginFrame.activeMenu = "session";
+                if (showKeyboard) {
+                    showKeyboard = false;
+                    returnKeyboard = true;
+                }
             }
             onSessionChanged: newSessionIndex => {
                 sessionIndex = newSessionIndex;
@@ -209,25 +263,30 @@ Item {
             }
 
             IconButton {
-                id: languageButton
+                id: keyboardButton
                 height: 30
                 width: 30
-                anchors.right: keyboardButton.left
+                anchors.right: languageButton.left
                 anchors.rightMargin: 10
-                icon: "icons/language.svg"
+                icon: "icons/keyboard.svg"
                 iconSize: 15
-                onClicked: {}
+                pressed: showKeyboard
+                onClicked: {
+                    showKeyboard = !showKeyboard;
+                }
+                tooltip_text: "Toggle virtual keyboard"
             }
 
             IconButton {
-                id: keyboardButton
+                id: languageButton
                 height: 30
                 width: 30
                 anchors.right: powerButton.left
                 anchors.rightMargin: 10
-                icon: "icons/keyboard.svg"
+                icon: "icons/language.svg"
                 iconSize: 15
                 onClicked: {}
+                tooltip_text: "Change keyboard layout"
             }
 
             IconButton {
@@ -238,15 +297,7 @@ Item {
                 icon: "icons/power.svg"
                 iconSize: 15
                 onClicked: {}
-            }
-        }
-
-        Text {
-            anchors {
-                top: parent.top
-                left: parent.left
-                leftMargin: 20
-                topMargin: 20
+                tooltip_text: "Power options"
             }
         }
 
@@ -260,7 +311,6 @@ Item {
                 if (isAuthorizing)
                     return;
                 loginFrame.activeMenu = "";
-                passwdInput.forceActiveFocus();
             }
         }
 
@@ -280,7 +330,10 @@ Item {
         }
         Keys.onPressed: event => {
             if (event.key == Qt.Key_CapsLock && !isAuthorizing) {
-                loginMessage.warn("CapsLock on", "warning");
+                if (keyboard.capsLock)
+                    loginMessage.warn("CapsLock on", "warning");
+                else
+                    loginMessage.clear();
             }
         }
     }
