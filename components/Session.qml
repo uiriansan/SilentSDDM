@@ -1,8 +1,6 @@
-import QtQuick 2.5
-import QtQuick.Controls 2.5
+import QtQuick
+import QtQuick.Controls
 import QtQuick.Effects
-
-// import QtGraphicalEffects 1.12
 
 Item {
     id: sessionSelector

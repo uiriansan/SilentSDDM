@@ -1,7 +1,5 @@
-import QtQuick 2.5
+import QtQuick
 import QtQuick.Effects
-
-// import QtGraphicalEffects 1.12
 
 Item {
     id: frame

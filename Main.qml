@@ -1,11 +1,11 @@
-import QtQuick 2.5
-// import QtGraphicalEffects 1.12
-import SddmComponents 2.0
+import QtQuick
+import SddmComponents
+import QtQuick.Effects
 import "components"
 
 Rectangle {
     id: root
-    state: config.showLockScreen === "false" ? "loginState" : "lockState"
+    state: Config.displayLockScreen ? "lockState" : "loginState"
 
     readonly property color textColor: "#FFFFFF"
 
@@ -26,7 +26,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: bgBlur
-                radius: config.lockScreenBlur || 0
+                blur: Config.lockScreenBlur ? 1.0 : 0.0
             }
         },
         State {
@@ -41,7 +41,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: bgBlur
-                radius: config.loginScreenBlur || 50
+                blur: Config.loginScreenBlur ? 1.0 : 0.0
             }
         }
     ]
@@ -53,7 +53,7 @@ Rectangle {
         }
         PropertyAnimation {
             duration: 400
-            properties: "radius"
+            properties: "blur"
         }
     }
 
@@ -88,21 +88,13 @@ Rectangle {
             source: root.state === "lockState" ? config.lockScreenBackground || "backgrounds/default.jpg" : config.loginScreenBackground || "backgrounds/default.jpg"
         }
 
-        ShaderEffect {
+        MultiEffect {
             id: bgBlur
-            property var src: mainFrameBackground
-            property int radius: 0
-            property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+            source: mainFrameBackground
             anchors.fill: mainFrameBackground
-            fragmentShader: "components/shaders/gaussianblur.frag.qsb"
+            blurEnabled: true
+            blurMax: Config.blurRadius
         }
-
-        // FastBlur {
-        //     id: bgBlur
-        //     anchors.fill: mainFrameBackground
-        //     source: mainFrameBackground
-        //     radius: 0
-        // }
 
         Item {
             id: centerArea
@@ -118,8 +110,6 @@ Rectangle {
                 onNeedLogin: {
                     root.state = "loginState";
                     loginFrame.input.forceActiveFocus();
-                    // print("op1:", config.intValue("LoginScreen/option1"));
-                    // print("op2:", config.intValue("LoginScreen.Buttons/option2"));
                 }
             }
             Login {

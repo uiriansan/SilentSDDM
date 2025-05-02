@@ -1,9 +1,8 @@
-import QtQuick 2.5
-import QtQuick.Controls 2.5
-// import QtGraphicalEffects 1.12
-import QtQuick.VirtualKeyboard 2.15
-import QtQuick.VirtualKeyboard.Settings 2.15
-import SddmComponents 2.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.VirtualKeyboard
+import QtQuick.VirtualKeyboard.Settings
+import SddmComponents
 
 import "."
 
