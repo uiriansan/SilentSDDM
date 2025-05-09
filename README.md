@@ -19,6 +19,10 @@ $ yay -S redhat-fonts
 
 # Customizing
 
+# TODO
+- [ ] Better positioning;
+- [ ] Animated backgrounds;
+
 # Acknowledgements
 - [Match-Yang/sddm-deepin](https://github.com/Match-Yang/sddm-deepin): code reference;
 - [Keyitdev/sddm-astronaut-theme](https://github.com/Keyitdev/sddm-astronaut-theme): code reference;

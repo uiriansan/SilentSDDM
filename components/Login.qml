@@ -159,7 +159,7 @@ Item {
             }
         }
 
-        // TODO: Virtual keyboard not working on the second screen.
+        // FIX: Virtual keyboard not working on the second screen.
         InputPanel {
             id: inputPanel
             z: 99
@@ -170,13 +170,14 @@ Item {
                 topMargin: loginMessage.text === "" ? 50 : 80
             }
             visible: showKeyboard
-            externalLanguageSwitchEnabled: true
-            onExternalLanguageSwitch: {
-                activeMenu = activeMenu === "" ? "language" : "";
-            }
+            // externalLanguageSwitchEnabled: true
+            // onExternalLanguageSwitch: {
+            //     activeMenu = activeMenu === "" ? "language" : "";
+            // }
             Component.onCompleted: {
                 VirtualKeyboardSettings.styleName = "tstyle";
-                VirtualKeyboardSettings.activeLocales = ["en_US", "pt_BR"];
+                // VirtualKeyboardSettings.locale = "pt_BR";
+                // VirtualKeyboardSettings.activeLocales = [keyboard.layouts[keyboard.currentLayout].shortName];
                 VirtualKeyboardSettings.layout = "symbols";
             }
         }
@@ -264,22 +265,33 @@ Item {
                 icon: "icons/language.svg"
                 iconSize: 15
                 onClicked: {
-                    activeMenu = "language";
+                    // activeMenu = "language";
+                    print(keyboard.layouts[0].longName);
+                    print(keyboard.layouts[0].shortName);
                 }
                 tooltip_text: "Change keyboard layout"
             }
 
-            ComboBox {
-                id: language
-                visible: true
-                color: "red"
+            // ComboBox {
+            //     id: language
+            //     visible: true
+            //     color: "red"
+            //     anchors {
+            //         bottom: languageButton.top
+            //         bottomMargin: 10
+            //         horizontalCenter: languageButton.horizontalCenter
+            //     }
+            //     model: keyboard.layouts
+            //     index: keyboard.currentLayout ? keyboard.currentLayout : 0
+            // }
+
+            Text {
                 anchors {
                     bottom: languageButton.top
                     bottomMargin: 10
                     horizontalCenter: languageButton.horizontalCenter
                 }
-                model: keyboard.layouts
-                index: keyboard.currentLayout
+                text: keyboard.layouts[0].longName
             }
 
             IconButton {
