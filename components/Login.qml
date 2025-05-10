@@ -174,6 +174,12 @@ Item {
             // onExternalLanguageSwitch: {
             //     activeMenu = activeMenu === "" ? "language" : "";
             // }
+
+            onActiveChanged: {
+                if (showKeyboard)
+                    showKeyboard = false;
+            }
+
             Component.onCompleted: {
                 VirtualKeyboardSettings.styleName = "tstyle";
                 // VirtualKeyboardSettings.locale = "pt_BR";
@@ -256,46 +262,33 @@ Item {
                 tooltip_text: "Toggle virtual keyboard"
             }
 
-            IconButton {
+            LabelButton {
                 id: languageButton
                 height: 30
-                width: 30
                 anchors.right: powerButton.left
                 anchors.rightMargin: 10
                 icon: "icons/language.svg"
                 iconSize: 15
                 onClicked: {
-                    // activeMenu = "language";
-                    print(keyboard.layouts[0].longName);
-                    print(keyboard.layouts[0].shortName);
+                    loginFrame.activeMenu = "language";
                 }
                 tooltip_text: "Change keyboard layout"
+                label: keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase()
             }
 
-            // ComboBox {
-            //     id: language
-            //     visible: true
-            //     color: "red"
-            //     anchors {
-            //         bottom: languageButton.top
-            //         bottomMargin: 10
-            //         horizontalCenter: languageButton.horizontalCenter
-            //     }
-            //     model: keyboard.layouts
-            //     index: keyboard.currentLayout ? keyboard.currentLayout : 0
-            // }
-
-            Text {
-                anchors {
-                    bottom: languageButton.top
-                    bottomMargin: 10
-                    horizontalCenter: languageButton.horizontalCenter
+            Language {
+                z: 2
+                anchors.bottom: languageButton.top
+                anchors.horizontalCenter: languageButton.horizontalCenter
+                visible: loginFrame.activeMenu === "language"
+                onLanguageChanged: index => {
+                    languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
                 }
-                text: keyboard.layouts[0].longName
             }
 
             IconButton {
                 id: powerButton
+                z: 0
                 height: 30
                 width: 30
                 anchors.right: parent.right

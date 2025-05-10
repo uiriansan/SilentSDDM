@@ -3,8 +3,9 @@ import QtQuick.Controls
 import QtQuick.Effects
 
 Item {
-    id: iconButton
+    id: labelButton
     property string icon: ""
+    property string label: ""
     property int iconSize: 24
     property double backgroundOpacity: 0.0
     property color backgroundColor: "#FFFFFF"
@@ -16,15 +17,15 @@ Item {
     property bool pressed: false
     signal clicked
 
-    width: iconSize * 2
     height: iconSize * 2
+    width: childrenRect.width + 10
 
     Rectangle {
         id: buttonBackground
         anchors.fill: parent
-        color: pressed ? iconButton.hoverBackgroundColor : (mouseArea.pressed ? iconButton.hoverBackgroundColor : (mouseArea.containsMouse ? iconButton.hoverBackgroundColor : iconButton.backgroundColor))
+        color: pressed ? labelButton.hoverBackgroundColor : (mouseArea.pressed ? labelButton.hoverBackgroundColor : (mouseArea.containsMouse ? labelButton.hoverBackgroundColor : labelButton.backgroundColor))
         radius: 10
-        opacity: pressed ? iconButton.hoverBackgroundOpacity : (mouseArea.pressed ? iconButton.hoverBackgroundOpacity : (mouseArea.containsMouse ? iconButton.hoverBackgroundOpacity : iconButton.backgroundOpacity))
+        opacity: pressed ? labelButton.hoverBackgroundOpacity : (mouseArea.pressed ? labelButton.hoverBackgroundOpacity : (mouseArea.containsMouse ? labelButton.hoverBackgroundOpacity : labelButton.backgroundOpacity))
 
         Behavior on opacity {
             NumberAnimation {
@@ -35,10 +36,14 @@ Item {
 
     Image {
         id: buttonIcon
-        source: iconButton.icon
-        anchors.centerIn: parent
-        width: iconButton.iconSize
-        height: iconButton.iconSize
+        source: labelButton.icon
+        anchors {
+            left: parent.left
+            leftMargin: 10
+            verticalCenter: parent.verticalCenter
+        }
+        width: labelButton.iconSize
+        height: labelButton.iconSize
         sourceSize: Qt.size(width, height)
         fillMode: Image.PreserveAspectFit
     }
@@ -47,14 +52,27 @@ Item {
         source: buttonIcon
         anchors.fill: buttonIcon
         colorization: 1
-        colorizationColor: mouseArea.pressed ? iconButton.hoverIconColor : (mouseArea.containsMouse ? iconButton.hoverIconColor : iconButton.iconColor)
+        colorizationColor: mouseArea.pressed ? labelButton.hoverIconColor : (mouseArea.containsMouse ? labelButton.hoverIconColor : labelButton.iconColor)
+    }
+
+    Text {
+        id: buttonLabel
+        text: labelButton.label
+        visible: labelButton.label !== ""
+        font.pointSize: 8
+        color: mouseArea.pressed ? labelButton.hoverIconColor : (mouseArea.containsMouse ? labelButton.hoverIconColor : labelButton.iconColor)
+        anchors {
+            left: buttonIcon.right
+            leftMargin: 5
+            verticalCenter: parent.verticalCenter
+        }
     }
 
     MouseArea {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
-        onClicked: iconButton.clicked()
+        onClicked: labelButton.clicked()
         cursorShape: Qt.PointingHandCursor
         ToolTip {
             parent: mouseArea
@@ -75,7 +93,7 @@ Item {
     }
     Keys.onPressed: event => {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
-            iconButton.clicked();
+            labelButton.clicked();
         }
     }
 }

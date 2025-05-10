@@ -155,11 +155,6 @@ Item {
                         }
                         source: getSessionIcon(name)
 
-                        // ColorOverlay {
-                        //     anchors.fill: sessionListIcon
-                        //     source: sessionListIcon
-                        //     color: index === currentSessionIndex ? "#000" : "#FFF"
-                        // }
                         MultiEffect {
                             source: sessionListIcon
                             anchors.fill: sessionListIcon
