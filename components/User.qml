@@ -115,7 +115,7 @@ Item {
                 height: parent.height
                 source: model.icon
                 opacity: index === userList.currentIndex ? 1.0 : config.standardAvatarOpacity || 0.35
-                enabled: true
+                enabled: userModel.rowCount() > 1
 
                 // Opacity transition
                 Behavior on opacity {

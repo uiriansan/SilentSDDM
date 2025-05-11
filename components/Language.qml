@@ -8,7 +8,6 @@ Item {
     height: 30
 
     signal languageChanged(languageIndex: int)
-    signal click
 
     property int currentLanguageIndex: keyboard.currentLayout ? keyboard.currentLayout : 0
     property string languageName: ""
@@ -16,7 +15,6 @@ Item {
     property bool popupVisible: true
 
     function close() {
-        // languagePopup.visible = false;
         popupVisible = false;
     }
 

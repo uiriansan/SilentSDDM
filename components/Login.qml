@@ -239,6 +239,7 @@ Item {
 
         Item {
             id: rightButtons
+            z: 2
             height: childrenRect.height
             anchors {
                 bottom: parent.bottom
@@ -249,6 +250,7 @@ Item {
 
             IconButton {
                 id: keyboardButton
+                z: 0
                 height: 30
                 width: 30
                 anchors.right: languageButton.left
@@ -264,6 +266,7 @@ Item {
 
             LabelButton {
                 id: languageButton
+                z: 0
                 height: 30
                 anchors.right: powerButton.left
                 anchors.rightMargin: 10
@@ -274,15 +277,15 @@ Item {
                 }
                 tooltip_text: "Change keyboard layout"
                 label: keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase()
-            }
 
-            Language {
-                z: 2
-                anchors.bottom: languageButton.top
-                anchors.horizontalCenter: languageButton.horizontalCenter
-                visible: loginFrame.activeMenu === "language"
-                onLanguageChanged: index => {
-                    languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
+                Language {
+                    z: 2
+                    anchors.bottom: parent.top
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    visible: loginFrame.activeMenu === "language"
+                    onLanguageChanged: index => {
+                        languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
+                    }
                 }
             }
 
@@ -294,8 +297,23 @@ Item {
                 anchors.right: parent.right
                 icon: "icons/power.svg"
                 iconSize: 15
-                onClicked: {}
+                onClicked: {
+                    loginFrame.activeMenu = "power";
+                }
                 tooltip_text: "Power options"
+
+                Power {
+                    z: 2
+                    visible: loginFrame.activeMenu === "power"
+                    anchors {
+                        bottom: parent.top
+                        bottomMargin: 5
+                        right: parent.right
+                    }
+                    onOptionSelected: index => {
+                        languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
+                    }
+                }
             }
         }
 

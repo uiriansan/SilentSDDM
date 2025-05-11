@@ -20,7 +20,7 @@ Item {
     }
 
     function getSessionIcon(name) {
-        const available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "plasma"];
+        const available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "awesome", "qtile", "i3", "bspwm", "dwm", "xfce", "cinnamon"];
         for (let i = 0; i < available_session_icons.length; i++) {
             if (name && name.toLowerCase().includes(available_session_icons[i]))
                 return "icons/" + available_session_icons[i] + "-session.svg";
@@ -60,8 +60,10 @@ Item {
             anchors.leftMargin: 10
             width: 15
             height: 15
-            sourceSize.width: 15
-            sourceSize.height: 15
+            sourceSize: Qt.size(15, 15)
+            smooth: true
+            antialiasing: true
+            fillMode: Image.PreserveAspectFit
         }
         // Current session name
         Text {
