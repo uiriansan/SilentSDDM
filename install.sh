@@ -5,3 +5,6 @@
 # InputMethod=qtvirtualkeyboard
 
 # Convert faces to 256x256
+
+# Copy fonts:
+# sudo cp -r fonts/{redhat,redhat-vf} /usr/share/fonts/
