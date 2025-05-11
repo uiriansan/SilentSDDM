@@ -6,6 +6,10 @@ import SddmComponents
 
 import "."
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                          https://doc.qt.io/qt-6/qml-qtquick-controls-popup.html                          //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Item {
     id: loginFrame
     signal needClose
@@ -30,11 +34,24 @@ Item {
 
     property bool isAuthorizing: false
 
+    Timer {
+        id: loginTimer
+    }
+
+    function delay(delayTime, cb) {
+        loginTimer.interval = delayTime;
+        loginTimer.repeat = false;
+        loginTimer.triggered.connect(cb);
+        loginTimer.start();
+    }
+
     Connections {
         target: sddm
         function onLoginSucceeded() {
             spinner.visible = false;
-            Qt.quit();
+            delay(config.enableAnimations === "false" ? 0 : 1000, () => {
+                Qt.quit();
+            });
         }
 
         function onLoginFailed() {
@@ -170,10 +187,11 @@ Item {
                 topMargin: loginMessage.text === "" ? 50 : 80
             }
             visible: showKeyboard
-            // externalLanguageSwitchEnabled: true
-            // onExternalLanguageSwitch: {
-            //     activeMenu = activeMenu === "" ? "language" : "";
-            // }
+            externalLanguageSwitchEnabled: true
+            onExternalLanguageSwitch: {
+                activeMenu = activeMenu === "" ? "language" : "";
+                // TODO: Keep keyboard visible.
+            }
 
             onActiveChanged: {
                 if (showKeyboard)
@@ -182,10 +200,12 @@ Item {
 
             Component.onCompleted: {
                 VirtualKeyboardSettings.styleName = "tstyle";
-                // VirtualKeyboardSettings.locale = "pt_BR";
-                // VirtualKeyboardSettings.activeLocales = [keyboard.layouts[keyboard.currentLayout].shortName];
                 VirtualKeyboardSettings.layout = "symbols";
             }
+        }
+
+        Component.onCompleted: {
+            VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
         }
 
         Text {
@@ -285,6 +305,7 @@ Item {
                     visible: loginFrame.activeMenu === "language"
                     onLanguageChanged: index => {
                         languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
+                        VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
                     }
                 }
             }

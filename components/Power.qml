@@ -12,8 +12,10 @@ Item {
 
     property bool canShutdown: sddm.canPowerOff
     property bool canReboot: sddm.canReboot
-    property bool canSuspend: sddm.canSuspend
+    property bool canSuspend: sddm.canHybridSleep
+    property int availableOptions: [canShutdown, canReboot, canSuspend].filter(Boolean).length
 
+    // property bool popupVisible: availableOptions > 0
     property bool popupVisible: true
 
     function close() {
@@ -26,6 +28,7 @@ Item {
         id: powerPopup
         z: 2
         width: 100
+        // height: availableOptions * listEntryHeight + 10
         height: 3 * listEntryHeight + 10
         visible: popupVisible
         color: "transparent"
@@ -72,8 +75,6 @@ Item {
                 height: listEntryHeight
                 width: parent.width
                 icon: "icons/power.svg"
-                iconColor: "#FF0000"
-                hoverIconColor: "#FF0000"
                 iconSize: 15
                 onClicked: sddm.powerOff()
                 label: "Shutdown"
