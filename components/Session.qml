@@ -182,12 +182,7 @@ Item {
                         currentSessionIndex = index;
                         sessionList.currentIndex = index;
                         sessionName = name;
-                        sessionNameText.text = (name.length > 25) ? name.slice(0, 24) + '...' : name;
-                        sessionIconPath = getSessionIcon(name);
-                        sessionIcon.source = sessionIconPath;
-                        // popupVisible = false;
-                        // sessionPopup.visible = false;
-                        sessionChanged(currentSessionIndex);
+                        sessionChanged(currentSessionIndex, getSessionIcon(name), (name.length > 25) ? name.slice(0, 24) + '...' : name);
                     }
                 }
             }

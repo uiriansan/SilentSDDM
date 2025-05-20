@@ -18,7 +18,7 @@ Item {
     signal clicked
 
     height: iconSize * 2
-    width: childrenRect.width + (label === "" ? 0 : 10)
+    width: childrenRect.width
 
     Rectangle {
         id: buttonBackground
@@ -36,7 +36,6 @@ Item {
 
     Row {
         height: parent.height
-        width: childrenRect.width
 
         Rectangle {
             id: iconContainer
@@ -68,6 +67,7 @@ Item {
             text: iconButton.label
             visible: iconButton.label !== ""
             font.pointSize: 8
+            rightPadding: 10
             color: mouseArea.pressed ? iconButton.hoverIconColor : (mouseArea.containsMouse ? iconButton.hoverIconColor : iconButton.iconColor)
             opacity: iconButton.enabled ? 1.0 : 0.5
             anchors {

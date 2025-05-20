@@ -25,7 +25,7 @@ Item {
 
     // Break binding so it doesn't update when `keyboard.capsLock` changes.
     property bool capsLockOn: {
-        capsLockOn = keyboard.capsLock;
+        capsLockOn = keyboard.capsLock || false;
     }
 
     signal needClose
@@ -93,6 +93,7 @@ Item {
             passwdInput.text = "";
         }
         Keys.onPressed: event => {
+            // TODO: Move this to the Main
             if (event.key == Qt.Key_CapsLock && !isAuthorizing) {
                 capsLockOn = !capsLockOn;
                 if (capsLockOn)
@@ -270,14 +271,33 @@ Item {
             id: menuArea
             anchors.fill: parent
 
-            function calculatePopupDir(dir, popup_w, popup_h, parent_w, parent_h) {
-                var x = 0, y = 0;
+            function calculatePopupDir(dir, popup_w, popup_h, parent_w, parent_h, parent_x) {
+                let x = 0, y = 0;
                 const popup_margin = 5;
+                print("parent_x:", parent_x, "screen_size:", loginFrame.width - 10, "popup_w:", popup_w);
                 if (dir === "up") {
-                    x = (parent_w - popup_w) / 2;
+                    if (parent_x + (parent_w - popup_w) / 2 < 10) {
+                        // Align popup left
+                        x = 0;
+                    } else if (parent_x - (parent_w - popup_w) / 2 > loginFrame.width - 10) {
+                        // Align popup right
+                        x = -popup_w + parent_w;
+                    } else {
+                        // Center popup
+                        x = (parent_w - popup_w) / 2;
+                    }
                     y = -popup_h - popup_margin;
                 } else if (dir === "down") {
-                    x = (parent_w - popup_w) / 2;
+                    if (parent_x + (parent_w - popup_w) / 2 < 10) {
+                        // Align popup left
+                        x = 0;
+                    } else if (parent_x - (parent_w - popup_w) / 2 > loginFrame.width - 10) {
+                        // Align popup right
+                        x = -popup_w + parent_w;
+                    } else {
+                        // Center popup
+                        x = (parent_w - popup_w) / 2;
+                    }
                     y = parent.height + popup_margin;
                 } else if (dir === "left") {
                     x = -popup_w - popup_margin;
@@ -294,7 +314,8 @@ Item {
 
                 IconButton {
                     id: sessionButton
-
+                    property bool showLabel: true
+                    width: showLabel ? 200 : childrenRect.width
                     height: 30
                     iconSize: 15
                     onClicked: {
@@ -318,11 +339,11 @@ Item {
                             onSessionChanged: (newSessionIndex, sessionIcon, sessionLabel) => {
                                 sessionIndex = newSessionIndex;
                                 sessionButton.icon = sessionIcon;
-                                sessionButton.label = sessionLabel;
+                                sessionButton.label = sessionButton.showLabel ? sessionLabel : "";
                             }
                         }
                         Component.onCompleted: {
-                            [x, y] = menuArea.calculatePopupDir("up", width, height, parent.width, parent.height);
+                            [x, y] = menuArea.calculatePopupDir("up", width, height, parent.width, parent.height, parent.parent.x);
                         }
                     }
                 }
@@ -338,18 +359,30 @@ Item {
                     icon: "icons/language.svg"
                     iconSize: 15
                     onClicked: {
-                        loginFrame.activeMenu = "language";
+                        popup.open();
                     }
                     tooltip_text: "Change keyboard layout"
                     label: keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase()
 
-                    Language {
-                        anchors.bottom: parent.top
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        visible: loginFrame.activeMenu === "language"
-                        onLanguageChanged: index => {
-                            languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
-                            VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
+                    Popup {
+                        id: popup
+                        property int popupMargin: 5
+                        width: contentItem.width
+                        height: contentItem.height
+                        parent: powerButton
+
+                        focus: true
+                        modal: true
+                        popupType: Popup.Item
+                        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+                        contentItem: Language {
+                            onLanguageChanged: index => {
+                                languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
+                                VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
+                            }
+                        }
+                        Component.onCompleted: {
+                            [x, y] = menuArea.calculatePopupDir("up", width, height, parent.width, parent.height, parent.parent.x);
                         }
                     }
                 }
@@ -401,16 +434,9 @@ Item {
                         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
                         contentItem: Power {
                             visible: true
-                            anchors {
-                                top: parent.top
-                                left: parent.left
-                            }
-                            onOptionSelected: index => {
-                                languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
-                            }
                         }
                         Component.onCompleted: {
-                            [x, y] = menuArea.calculatePopupDir("up", width, height, parent.width, parent.height);
+                            [x, y] = menuArea.calculatePopupDir("up", width, height, parent.width, parent.height, parent.parent.x);
                         }
                     }
                 }
