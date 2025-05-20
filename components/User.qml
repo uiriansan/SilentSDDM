@@ -80,7 +80,8 @@ Item {
             width: index === userList.currentIndex ? config.selectedAvatarSize || 120 : config.standardAvatarSize || 80
             height: index === userList.currentIndex ? config.selectedAvatarSize || 120 : config.standardAvatarSize || 80
             anchors.verticalCenter: parent.verticalCenter
-            color: "transparent"
+
+            color: model.needsPassword ? "transparent" : "#FF0000"
 
             visible: listUsers || index === userList.currentIndex
 

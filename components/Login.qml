@@ -30,13 +30,6 @@ Item {
 
     signal needClose
 
-    function delay(delayTime, cb) {
-        loginTimer.interval = delayTime;
-        loginTimer.repeat = false;
-        loginTimer.triggered.connect(cb);
-        loginTimer.start();
-    }
-
     onActiveMenuChanged: {
         if (returnKeyboard) {
             showKeyboard = true;
@@ -271,7 +264,7 @@ Item {
             id: menuArea
             anchors.fill: parent
 
-            function calculatePopupDir(dir, popup_w, popup_h, parent_w, parent_h, parent_x) {
+            function calculatePopupPos(dir, popup_w, popup_h, parent_w, parent_h, parent_x) {
                 let x = 0, y = 0;
                 const popup_margin = 5;
                 print("parent_x:", parent_x, "screen_size:", loginFrame.width - 10, "popup_w:", popup_w);
@@ -318,6 +311,7 @@ Item {
                     width: showLabel ? 200 : childrenRect.width
                     height: 30
                     iconSize: 15
+                    pressed: popup.visible
                     onClicked: {
                         popup.open();
                     }
@@ -343,7 +337,7 @@ Item {
                             }
                         }
                         Component.onCompleted: {
-                            [x, y] = menuArea.calculatePopupDir("up", width, height, parent.width, parent.height, parent.parent.x);
+                            [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
                         }
                     }
                 }
@@ -358,6 +352,7 @@ Item {
                     height: 30
                     icon: "icons/language.svg"
                     iconSize: 15
+                    pressed: popup.visible
                     onClicked: {
                         popup.open();
                     }
@@ -382,7 +377,7 @@ Item {
                             }
                         }
                         Component.onCompleted: {
-                            [x, y] = menuArea.calculatePopupDir("up", width, height, parent.width, parent.height, parent.parent.x);
+                            [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
                         }
                     }
                 }
@@ -416,6 +411,7 @@ Item {
                     width: 30
                     icon: "icons/power.svg"
                     iconSize: 15
+                    pressed: popup.visible
                     onClicked: {
                         popup.open();
                     }
@@ -436,7 +432,7 @@ Item {
                             visible: true
                         }
                         Component.onCompleted: {
-                            [x, y] = menuArea.calculatePopupDir("up", width, height, parent.width, parent.height, parent.parent.x);
+                            [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
                         }
                     }
                 }
