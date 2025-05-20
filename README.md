@@ -31,13 +31,13 @@ $ sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard
 $ sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports
 ```
 
-### Install script
+## Install script
 
 ```bash
 $ git clone --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && ./install.sh | bash
 ```
 
-### Manual installation:
+## Manual installation:
 
 ...
 

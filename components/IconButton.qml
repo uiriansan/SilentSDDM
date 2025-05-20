@@ -5,6 +5,7 @@ import QtQuick.Effects
 Item {
     id: iconButton
     property string icon: ""
+    property string label: ""
     property int iconSize: 24
     property double backgroundOpacity: 0.0
     property color backgroundColor: "#FFFFFF"
@@ -16,8 +17,8 @@ Item {
     property bool pressed: false
     signal clicked
 
-    width: iconSize * 2
     height: iconSize * 2
+    width: childrenRect.width + (label === "" ? 0 : 10)
 
     Rectangle {
         id: buttonBackground
@@ -33,27 +34,52 @@ Item {
         }
     }
 
-    Image {
-        id: buttonIcon
-        source: iconButton.icon
-        anchors.centerIn: parent
-        width: iconButton.iconSize
-        height: iconButton.iconSize
-        sourceSize: Qt.size(width, height)
-        fillMode: Image.PreserveAspectFit
-    }
+    Row {
+        height: parent.height
+        width: childrenRect.width
 
-    MultiEffect {
-        source: buttonIcon
-        anchors.fill: buttonIcon
-        colorization: 1
-        colorizationColor: mouseArea.pressed ? iconButton.hoverIconColor : (mouseArea.containsMouse ? iconButton.hoverIconColor : iconButton.iconColor)
+        Rectangle {
+            id: iconContainer
+            color: "transparent"
+            height: parent.height
+            width: height
+
+            Image {
+                id: buttonIcon
+                source: iconButton.icon
+                anchors.centerIn: parent
+                width: iconButton.iconSize
+                height: iconButton.iconSize
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+                opacity: iconButton.enabled ? 1.0 : 0.5
+
+                MultiEffect {
+                    source: buttonIcon
+                    anchors.fill: buttonIcon
+                    colorization: 1
+                    colorizationColor: mouseArea.pressed ? iconButton.hoverIconColor : (mouseArea.containsMouse ? iconButton.hoverIconColor : iconButton.iconColor)
+                }
+            }
+        }
+
+        Text {
+            id: buttonLabel
+            text: iconButton.label
+            visible: iconButton.label !== ""
+            font.pointSize: 8
+            color: mouseArea.pressed ? iconButton.hoverIconColor : (mouseArea.containsMouse ? iconButton.hoverIconColor : iconButton.iconColor)
+            opacity: iconButton.enabled ? 1.0 : 0.5
+            anchors {
+                verticalCenter: parent.verticalCenter
+            }
+        }
     }
 
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        hoverEnabled: true
+        hoverEnabled: parent.enabled
         onClicked: iconButton.clicked()
         cursorShape: Qt.PointingHandCursor
         ToolTip {

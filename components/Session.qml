@@ -58,9 +58,9 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 10
-            width: 15
-            height: 15
-            sourceSize: Qt.size(15, 15)
+            width: 16
+            height: 16
+            sourceSize: Qt.size(16, 16)
             smooth: true
             antialiasing: true
             fillMode: Image.PreserveAspectFit

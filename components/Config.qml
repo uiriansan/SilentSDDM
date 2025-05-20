@@ -47,7 +47,7 @@ QtObject {
 
     // LoginScreen
     property string loginScreenBackground: config.stringValue("LoginScreen/background") || "backgrounds/default.jpg"
-    property bool loginScreenBlur: clampReal("LoginScreen/blur", 0.0, 1.0)
+    property real loginScreenBlur: clampReal("LoginScreen/blur", 0.0, 1.0)
 
     // LoginScreen.LoginArea
     property bool centerLoginArea: config["LoginScreen.LoginArea/certer_vertically"] === "false" ? false : true
@@ -67,6 +67,68 @@ QtObject {
     }
 
     function sortMenuButtons() {
-        return true;
+        // LoginScreen.MenuArea.Session
+        const sessionButtonDisplay = config["LoginScreen.MenuArea.Session/display"] === "false" ? false : true;
+        const sessionButtonPosition = config.stringValue("LoginScreen.MenuArea.Session/position");
+        const sessionButtonIndex = clampInt(config.intValue("LoginScreen.MenuArea.Session/index"), 0, 4);
+        const sessionButtonPopupDirection = config.stringValue("LoginScreen.MenuArea.Session/popup_direction") || "up";
+        const sessionButtonBackgroundColor = config.stringValue("LoginScreen.MenuArea.Session/button_background_color") || "#FFFFFF";
+        const sessionButtonTextColor = config.stringValue("LoginScreen.MenuArea.Session/text_color") || "#FFFFFF";
+        const sessionButtonIconSize = config.intValue("LoginScreen.MenuArea.Session/icon_size") || 16;
+        const sessionButtonDisplayName = config["LoginScreen.MenuArea.Session/display_session_name"] === "false" ? false : true;
+
+        // LoginScreen.MenuArea.Keyboard
+        const keyboardButtonDisplay = config["LoginScreen.MenuArea.Keyboard/display"] === "false" ? false : true;
+        const keyboardButtonPosition = config.stringValue("LoginScreen.MenuArea.Keyboard/position");
+        const keyboardButtonIndex = clampInt(config.intValue("LoginScreen.MenuArea.Keyboard/index"), 0, 4);
+        const keyboardButtonBackgroundColor = config.stringValue("LoginScreen.MenuArea.Keyboard/button_background_color") || "#FFFFFF";
+        const keyboardButtonTextColor = config.stringValue("LoginScreen.MenuArea.Keyboard/text_color") || "#FFFFFF";
+        const keyboardButtonIconSize = config.intValue("LoginScreen.MenuArea.Keyboard/icon_size") || 16;
+
+        // LoginScreen.MenuArea.Language
+        const languageButtonDisplay = config["LoginScreen.MenuArea.Language/display"] === "false" ? false : true;
+        const languageButtonPosition = config.stringValue("LoginScreen.MenuArea.Language/position");
+        const languageButtonIndex = clampInt(config.intValue("LoginScreen.MenuArea.Language/index"), 0, 4);
+        const languageButtonPopupDirection = config.stringValue("LoginScreen.MenuArea.Language/popup_direction") || "up";
+        const languageButtonBackgroundColor = config.stringValue("LoginScreen.MenuArea.Language/button_background_color") || "#FFFFFF";
+        const languageButtonTextColor = config.stringValue("LoginScreen.MenuArea.Language/text_color") || "#FFFFFF";
+        const languageButtonIconSize = config.intValue("LoginScreen.MenuArea.Language/icon_size") || 16;
+        const languageButtonDisplayName = config["LoginScreen.MenuArea.Language/display_language_name"] === "false" ? false : true;
+
+        // LoginScreen.MenuArea.Power
+        const powerButtonDisplay = config["LoginScreen.MenuArea.Power/display"] === "false" ? false : true;
+        const powerButtonPosition = config.stringValue("LoginScreen.MenuArea.Power/position");
+        const powerButtonIndex = clampInt(config.intValue("LoginScreen.MenuArea.Power/index"), 0, 4);
+        const powerButtonPopupDirection = config.stringValue("LoginScreen.MenuArea.Power/popup_direction") || "up";
+        const powerButtonBackgroundColor = config.stringValue("LoginScreen.MenuArea.Power/button_background_color") || "#FFFFFF";
+        const powerButtonTextColor = config.stringValue("LoginScreen.MenuArea.Power/text_color") || "#FFFFFF";
+        const powerButtonIconSize = config.intValue("LoginScreen.MenuArea.Power/icon_size") || 16;
+
+        const buttons = [];
+        const available_positions = ["top_left", "top_center", "top_right", "bottom_left", "bottom_center", "bottom_right"];
+
+        if (sessionButtonDisplay)
+            buttons.push({
+                text: true,
+                position: sessionButtonPosition in available_positions ? sessionButtonPosition : "bottom_left",
+                index: sessionButtonIndex,
+                popup_direction: sessionButtonPopupDirection,
+                background_color: sessionButtonBackgroundColor,
+                text_color: sessionButtonTextColor,
+                icon_size: sessionButtonIconSize,
+                display_name: sessionButtonDisplayName,
+                id: "sessionButton"
+            });
+
+        if (keyboardButtonDisplay)
+            buttons.push({});
+
+        if (languageButtonDisplay)
+            buttons.push({});
+
+        if (powerButtonDisplay)
+            buttons.push({});
+
+        return buttons.sort((c, n) => c.a - n.a);
     }
 }

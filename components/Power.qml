@@ -13,9 +13,7 @@ Item {
     property bool canShutdown: sddm.canPowerOff
     property bool canReboot: sddm.canReboot
     property bool canSuspend: sddm.canHybridSleep
-    property int availableOptions: [canShutdown, canReboot, canSuspend].filter(Boolean).length
 
-    // property bool popupVisible: availableOptions > 0
     property bool popupVisible: true
 
     function close() {
@@ -28,7 +26,6 @@ Item {
         id: powerPopup
         z: 2
         width: 100
-        // height: availableOptions * listEntryHeight + 10
         height: 3 * listEntryHeight + 10
         visible: popupVisible
         color: "transparent"
@@ -47,9 +44,9 @@ Item {
             anchors.fill: parent
             anchors.margins: 5
 
-            LabelButton {
+            IconButton {
                 id: suspendButton
-                // visible: powerSelector.canSuspend
+                enabled: powerSelector.canSuspend
                 height: listEntryHeight
                 width: parent.width
                 icon: "icons/power-suspend.svg"
@@ -58,9 +55,9 @@ Item {
                 label: "Suspend"
             }
 
-            LabelButton {
+            IconButton {
                 id: rebootButton
-                // visible: powerSelector.canReboot
+                enabled: powerSelector.canReboot
                 height: listEntryHeight
                 width: parent.width
                 icon: "icons/power-reboot.svg"
@@ -69,9 +66,9 @@ Item {
                 label: "Reboot"
             }
 
-            LabelButton {
+            IconButton {
                 id: shutdownButton
-                // visible: powerSelector.canShutdown
+                enabled: powerSelector.canShutdown
                 height: listEntryHeight
                 width: parent.width
                 icon: "icons/power.svg"
