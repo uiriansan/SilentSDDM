@@ -41,7 +41,7 @@ Canvas {
             return (dx * dx + dy * dy) <= 1.0;
         }
 
-        onPressed: mouse => {
+        onReleased: mouse => {
             const isInside = isCursorInsideAvatar();
             if (isInside) {
                 avatar.clicked();

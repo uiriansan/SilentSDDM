@@ -23,6 +23,11 @@ Item {
     property string activeMenu: ""
     property bool isAuthorizing: false
 
+    // Break binding so it doesn't update when `keyboard.capsLock` changes.
+    property bool capsLockOn: {
+        capsLockOn = keyboard.capsLock;
+    }
+
     signal needClose
 
     function delay(delayTime, cb) {
@@ -69,6 +74,8 @@ Item {
         height: parent.height
         Component.onCompleted: {
             VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
+
+            print(capsLockOn, keyboard.capsLock);
         }
         focus: activeMenu !== ""
         Keys.onEscapePressed: () => {
@@ -87,7 +94,8 @@ Item {
         }
         Keys.onPressed: event => {
             if (event.key == Qt.Key_CapsLock && !isAuthorizing) {
-                if (keyboard.capsLock)
+                capsLockOn = !capsLockOn;
+                if (capsLockOn)
                     loginMessage.warn("CapsLock on", "warning");
                 else
                     loginMessage.clear();
@@ -233,178 +241,34 @@ Item {
 
         Text {
             id: loginMessage
-
-            function warn(message, type) {
-                text = message;
-                enabled = true;
-            }
-
-            function clear() {
-                enabled = false;
-                text = "";
-            }
-
             font.pointSize: config.warningMessageSize || 9
             font.family: config.font || "RedHatDisplay"
             color: config.warningMessageColor || "#FFFFFF"
-            enabled: false
-            Component.onCompleted: {
-                if (keyboard.capsLock)
-                    loginMessage.warn("CapsLock on", "warning");
-            }
-
+            visible: false
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: loginArea.bottom
                 topMargin: 50
             }
-        }
-
-        Session {
-            id: sessionButton
-
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            anchors.bottomMargin: 50
-            anchors.leftMargin: 50
-            visible: config.showSessionButton === "false" ? false : true
-            popupVisible: loginFrame.activeMenu === "session"
-            onClick: {
-                loginFrame.activeMenu = "session";
-                if (showKeyboard) {
-                    showKeyboard = false;
-                    returnKeyboard = true;
-                }
+            Component.onCompleted: {
+                if (loginFrame.capsLockOn)
+                    loginMessage.warn("CapsLock on", "warning");
             }
-            onSessionChanged: newSessionIndex => {
-                sessionIndex = newSessionIndex;
-                loginFrame.activeMenu = "";
+
+            function warn(message, type) {
+                text = message;
+                visible = true;
+            }
+
+            function clear() {
+                visible = false;
+                text = "";
             }
         }
 
-        Row {
-            // top_left
-            id: topLeftButtons
-
-            height: 30
-            spacing: 10
-
-            anchors {
-                top: parent.top
-                left: parent.left
-                topMargin: 50
-                leftMargin: 50
-            }
-        }
-
-        Row {
-            // top_center
-            id: topCenterButtons
-
-            height: 30
-            spacing: 10
-
-            anchors {
-                top: parent.top
-                horizontalCenter: parent.horizontalCenter
-                topMargin: 50
-            }
-        }
-
-        Row {
-            // top_right
-            id: topRightButtons
-
-            height: 30
-            spacing: 10
-
-            anchors {
-                top: parent.top
-                right: parent.right
-                topMargin: 50
-                rightMargin: 50
-            }
-        }
-
-        Row {
-            // bottom_left
-            id: bottomLeftButtons
-
-            height: 30
-            spacing: 10
-
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-                bottomMargin: 50
-                leftMargin: 50
-            }
-        }
-
-        Row {
-            // bottom_center
-            id: bottomCenterButtons
-
-            height: 30
-            spacing: 10
-
-            anchors {
-                bottom: parent.bottom
-                horizontalCenter: parent.horizontalCenter
-                bottomMargin: 50
-            }
-        }
-
-        Row {
-            // bottom_right
-            id: bottomRightButtons
-
-            height: childrenRect.height
-            spacing: 10
-
-            anchors {
-                bottom: parent.bottom
-                right: parent.right
-                bottomMargin: 50
-                rightMargin: 50
-            }
-
-            IconButton {
-                id: languageButton
-
-                height: 30
-                icon: "icons/language.svg"
-                iconSize: 15
-                onClicked: {
-                    loginFrame.activeMenu = "language";
-                }
-                tooltip_text: "Change keyboard layout"
-                label: keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase()
-
-                Language {
-                    anchors.bottom: parent.top
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    visible: loginFrame.activeMenu === "language"
-                    onLanguageChanged: index => {
-                        languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
-                        VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
-                    }
-                }
-            }
-
-            IconButton {
-                id: keyboardButton
-
-                height: 30
-                width: 30
-                icon: "icons/keyboard.svg"
-                iconSize: 15
-                pressed: showKeyboard
-                onClicked: {
-                    showKeyboard = !showKeyboard;
-                }
-                tooltip_text: "Toggle virtual keyboard"
-            }
+        Item {
+            id: menuArea
+            anchors.fill: parent
 
             function calculatePopupDir(dir, popup_w, popup_h, parent_w, parent_h) {
                 var x = 0, y = 0;
@@ -423,6 +287,90 @@ Item {
                     y = 0;
                 }
                 return [x, y];
+            }
+
+            Component {
+                id: sessionMenuComponent
+
+                IconButton {
+                    id: sessionButton
+
+                    height: 30
+                    iconSize: 15
+                    onClicked: {
+                        popup.open();
+                    }
+                    tooltip_text: "Change session"
+
+                    Popup {
+                        id: popup
+                        property int popupMargin: 5
+                        width: contentItem.width
+                        height: contentItem.height
+                        parent: sessionButton
+
+                        focus: true
+                        modal: true
+                        popupType: Popup.Item
+                        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+                        contentItem: Session {
+                            onSessionChanged: (newSessionIndex, sessionIcon, sessionLabel) => {
+                                sessionIndex = newSessionIndex;
+                                sessionButton.icon = sessionIcon;
+                                sessionButton.label = sessionLabel;
+                            }
+                        }
+                        Component.onCompleted: {
+                            [x, y] = menuArea.calculatePopupDir("up", width, height, parent.width, parent.height);
+                        }
+                    }
+                }
+            }
+
+            Component {
+                id: languageMenuComponent
+
+                IconButton {
+                    id: languageButton
+
+                    height: 30
+                    icon: "icons/language.svg"
+                    iconSize: 15
+                    onClicked: {
+                        loginFrame.activeMenu = "language";
+                    }
+                    tooltip_text: "Change keyboard layout"
+                    label: keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase()
+
+                    Language {
+                        anchors.bottom: parent.top
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        visible: loginFrame.activeMenu === "language"
+                        onLanguageChanged: index => {
+                            languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
+                            VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
+                        }
+                    }
+                }
+            }
+
+            Component {
+                id: keyboardMenuComponent
+
+                IconButton {
+                    id: keyboardButton
+
+                    height: 30
+                    width: 30
+                    icon: "icons/keyboard.svg"
+                    iconSize: 15
+                    pressed: showKeyboard
+                    onClicked: {
+                        showKeyboard = !showKeyboard;
+                    }
+                    tooltip_text: "Toggle virtual keyboard"
+                }
             }
 
             Component {
@@ -462,14 +410,169 @@ Item {
                             }
                         }
                         Component.onCompleted: {
-                            [x, y] = bottomRightButtons.calculatePopupDir("up", width, height, parent.width, parent.height);
+                            [x, y] = menuArea.calculatePopupDir("up", width, height, parent.width, parent.height);
                         }
                     }
                 }
             }
 
+            Row {
+                // top_left
+                id: topLeftButtons
+
+                height: 30
+                spacing: 10
+
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    topMargin: 50
+                    leftMargin: 50
+                }
+            }
+
+            Row {
+                // top_center
+                id: topCenterButtons
+
+                height: 30
+                spacing: 10
+
+                anchors {
+                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
+                    topMargin: 50
+                }
+            }
+
+            Row {
+                // top_right
+                id: topRightButtons
+
+                height: 30
+                spacing: 10
+
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                    topMargin: 50
+                    rightMargin: 50
+                }
+            }
+
+            Column {
+                // center_left
+                id: centerLeftButtons
+
+                width: 30
+                spacing: 10
+
+                anchors {
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: 50
+                }
+            }
+
+            Column {
+                // center_right
+                id: centerRightButtons
+
+                width: 30
+                spacing: 10
+
+                anchors {
+                    right: parent.right
+                    verticalCenter: parent.verticalCenter
+                    rightMargin: 50
+                }
+            }
+
+            Row {
+                // bottom_left
+                id: bottomLeftButtons
+
+                height: 30
+                spacing: 10
+
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    bottomMargin: 50
+                    leftMargin: 50
+                }
+            }
+
+            Row {
+                // bottom_center
+                id: bottomCenterButtons
+
+                height: 30
+                spacing: 10
+
+                anchors {
+                    bottom: parent.bottom
+                    horizontalCenter: parent.horizontalCenter
+                    bottomMargin: 50
+                }
+            }
+
+            Row {
+                // bottom_right
+                id: bottomRightButtons
+
+                height: childrenRect.height
+                spacing: 10
+
+                anchors {
+                    bottom: parent.bottom
+                    right: parent.right
+                    bottomMargin: 50
+                    rightMargin: 50
+                }
+            }
+
             Component.onCompleted: {
-                var btn = powerMenuComponent.createObject(bottomRightButtons, {});
+                const menus = Config.sortMenuButtons();
+
+                for (let i = 0; i < menus.length; i++) {
+                    let pos;
+                    switch (menus[i].position) {
+                    case "top_left":
+                        pos = topLeftButtons;
+                        break;
+                    case "top_center":
+                        pos = topCenterButtons;
+                        break;
+                    case "top_right":
+                        pos = topRightButtons;
+                        break;
+                    case "center_left":
+                        pos = centerLeftButtons;
+                        break;
+                    case "center_right":
+                        pos = centerRightButtons;
+                        break;
+                    case "bottom_left":
+                        pos = bottomLeftButtons;
+                        break;
+                    case "bottom_center":
+                        pos = bottomCenterButtons;
+                        break;
+                    case "bottom_right":
+                        pos = bottomRightButtons;
+                        break;
+                    }
+
+                    if (menus[i].name === "session")
+                        sessionMenuComponent.createObject(pos, {});
+                    else if (menus[i].name === "language")
+                        languageMenuComponent.createObject(pos, {});
+                    else if (menus[i].name === "keyboard")
+                        keyboardMenuComponent.createObject(pos, {});
+                    else if (menus[i].name === "power")
+                        powerMenuComponent.createObject(pos, {});
+                }
             }
         }
 

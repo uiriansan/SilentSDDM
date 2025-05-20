@@ -22,7 +22,6 @@ Item {
         currentIndex: userModel.lastIndex
 
         // Center the current avatar
-        // TODO: Sometimes this doesn't work!
         preferredHighlightBegin: width / 2 - (config.selectedAvatarSize || 120) / 2
         preferredHighlightEnd: preferredHighlightBegin
         highlightRangeMode: ListView.StrictlyEnforceRange
@@ -38,11 +37,10 @@ Item {
 
         // Padding for centering
         leftMargin: width / 2 - (config.selectedAvatarSize || 120) / 2
-        rightMargin: leftMargin  
+        rightMargin: leftMargin
 
         // Close the list when click behind the avatars
 
-        // FIX: If you click and hold, the selected avatar does not move to the middle
         MouseArea {
             anchors.fill: parent
             enabled: listUsers

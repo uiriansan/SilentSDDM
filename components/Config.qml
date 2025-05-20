@@ -53,6 +53,31 @@ QtObject {
     property bool centerLoginArea: config["LoginScreen.LoginArea/certer_vertically"] === "false" ? false : true
     property int loginAreaMarginTop: config.intValue("LoginScreen.LoginArea/margin_top")
 
+    // LoginScreen.MenuArea.Session
+    property string sessionButtonPopupDirection: config.stringValue("LoginScreen.MenuArea.Session/popup_direction") || "up"
+    property color sessionButtonBackgroundColor: config.stringValue("LoginScreen.MenuArea.Session/button_background_color") || "#FFFFFF"
+    property color sessionButtonTextColor: config.stringValue("LoginScreen.MenuArea.Session/text_color") || "#FFFFFF"
+    property int sessionButtonIconSize: config.intValue("LoginScreen.MenuArea.Session/icon_size") || 16
+    property bool sessionButtonDisplayName: config["LoginScreen.MenuArea.Session/display_session_name"] === "false" ? false : true
+
+    // LoginScreen.MenuArea.Language
+    property string languageButtonPopupDirection: config.stringValue("LoginScreen.MenuArea.Language/popup_direction") || "up"
+    property color languageButtonBackgroundColor: config.stringValue("LoginScreen.MenuArea.Language/button_background_color") || "#FFFFFF"
+    property color languageButtonTextColor: config.stringValue("LoginScreen.MenuArea.Language/text_color") || "#FFFFFF"
+    property int languageButtonIconSize: config.intValue("LoginScreen.MenuArea.Language/icon_size") || 16
+    property bool languageButtonDisplayName: config["LoginScreen.MenuArea.Language/display_language_name"] === "false" ? false : true
+
+    // LoginScreen.MenuArea.Keyboard
+    property color keyboardButtonBackgroundColor: config.stringValue("LoginScreen.MenuArea.Keyboard/button_background_color") || "#FFFFFF"
+    property color keyboardButtonTextColor: config.stringValue("LoginScreen.MenuArea.Keyboard/text_color") || "#FFFFFF"
+    property int keyboardButtonIconSize: config.intValue("LoginScreen.MenuArea.Keyboard/icon_size") || 16
+
+    // LoginScreen.MenuArea.Power
+    property string powerButtonPopupDirection: config.stringValue("LoginScreen.MenuArea.Power/popup_direction") || "up"
+    property color powerButtonBackgroundColor: config.stringValue("LoginScreen.MenuArea.Power/button_background_color") || "#FFFFFF"
+    property color powerButtonTextColor: config.stringValue("LoginScreen.MenuArea.Power/text_color") || "#FFFFFF"
+    property int powerButtonIconSize: config.intValue("LoginScreen.MenuArea.Power/icon_size") || 16
+
     function clampReal(cfg, min, max, def = null) {
         let v = config.realValue(cfg);
         if (def !== null)
@@ -71,64 +96,59 @@ QtObject {
         const sessionButtonDisplay = config["LoginScreen.MenuArea.Session/display"] === "false" ? false : true;
         const sessionButtonPosition = config.stringValue("LoginScreen.MenuArea.Session/position");
         const sessionButtonIndex = clampInt(config.intValue("LoginScreen.MenuArea.Session/index"), 0, 4);
-        const sessionButtonPopupDirection = config.stringValue("LoginScreen.MenuArea.Session/popup_direction") || "up";
-        const sessionButtonBackgroundColor = config.stringValue("LoginScreen.MenuArea.Session/button_background_color") || "#FFFFFF";
-        const sessionButtonTextColor = config.stringValue("LoginScreen.MenuArea.Session/text_color") || "#FFFFFF";
-        const sessionButtonIconSize = config.intValue("LoginScreen.MenuArea.Session/icon_size") || 16;
-        const sessionButtonDisplayName = config["LoginScreen.MenuArea.Session/display_session_name"] === "false" ? false : true;
 
         // LoginScreen.MenuArea.Keyboard
         const keyboardButtonDisplay = config["LoginScreen.MenuArea.Keyboard/display"] === "false" ? false : true;
         const keyboardButtonPosition = config.stringValue("LoginScreen.MenuArea.Keyboard/position");
         const keyboardButtonIndex = clampInt(config.intValue("LoginScreen.MenuArea.Keyboard/index"), 0, 4);
-        const keyboardButtonBackgroundColor = config.stringValue("LoginScreen.MenuArea.Keyboard/button_background_color") || "#FFFFFF";
-        const keyboardButtonTextColor = config.stringValue("LoginScreen.MenuArea.Keyboard/text_color") || "#FFFFFF";
-        const keyboardButtonIconSize = config.intValue("LoginScreen.MenuArea.Keyboard/icon_size") || 16;
 
         // LoginScreen.MenuArea.Language
         const languageButtonDisplay = config["LoginScreen.MenuArea.Language/display"] === "false" ? false : true;
         const languageButtonPosition = config.stringValue("LoginScreen.MenuArea.Language/position");
         const languageButtonIndex = clampInt(config.intValue("LoginScreen.MenuArea.Language/index"), 0, 4);
-        const languageButtonPopupDirection = config.stringValue("LoginScreen.MenuArea.Language/popup_direction") || "up";
-        const languageButtonBackgroundColor = config.stringValue("LoginScreen.MenuArea.Language/button_background_color") || "#FFFFFF";
-        const languageButtonTextColor = config.stringValue("LoginScreen.MenuArea.Language/text_color") || "#FFFFFF";
-        const languageButtonIconSize = config.intValue("LoginScreen.MenuArea.Language/icon_size") || 16;
-        const languageButtonDisplayName = config["LoginScreen.MenuArea.Language/display_language_name"] === "false" ? false : true;
 
         // LoginScreen.MenuArea.Power
         const powerButtonDisplay = config["LoginScreen.MenuArea.Power/display"] === "false" ? false : true;
         const powerButtonPosition = config.stringValue("LoginScreen.MenuArea.Power/position");
         const powerButtonIndex = clampInt(config.intValue("LoginScreen.MenuArea.Power/index"), 0, 4);
-        const powerButtonPopupDirection = config.stringValue("LoginScreen.MenuArea.Power/popup_direction") || "up";
-        const powerButtonBackgroundColor = config.stringValue("LoginScreen.MenuArea.Power/button_background_color") || "#FFFFFF";
-        const powerButtonTextColor = config.stringValue("LoginScreen.MenuArea.Power/text_color") || "#FFFFFF";
-        const powerButtonIconSize = config.intValue("LoginScreen.MenuArea.Power/icon_size") || 16;
 
-        const buttons = [];
-        const available_positions = ["top_left", "top_center", "top_right", "bottom_left", "bottom_center", "bottom_right"];
+        const menus = [];
+        const available_positions = ["top_left", "top_center", "top_right", "center_left", "center_right", "bottom_left", "bottom_center", "bottom_right"];
 
         if (sessionButtonDisplay)
-            buttons.push({
-                text: true,
-                position: sessionButtonPosition in available_positions ? sessionButtonPosition : "bottom_left",
+            menus.push({
+                name: "session",
                 index: sessionButtonIndex,
-                popup_direction: sessionButtonPopupDirection,
-                background_color: sessionButtonBackgroundColor,
-                text_color: sessionButtonTextColor,
-                icon_size: sessionButtonIconSize,
-                display_name: sessionButtonDisplayName,
-                id: "sessionButton"
+                def_index: 0,
+                position: sessionButtonPosition in available_positions ? sessionButtonPosition : "bottom_left"
+            });
+
+        if (languageButtonDisplay)
+            menus.push({
+                name: "language",
+                index: languageButtonIndex,
+                def_index: 1,
+                position: languageButtonPosition in available_positions ? languageButtonPosition : "bottom_right"
             });
 
         if (keyboardButtonDisplay)
-            buttons.push({});
+            menus.push({
+                name: "keyboard",
+                index: keyboardButtonIndex,
+                def_index: 2,
+                position: keyboardButtonPosition in available_positions ? keyboardButtonPosition : "bottom_right"
+            });
 
-        if (languageButtonDisplay)
-            buttons.push({});
 
         if (powerButtonDisplay)
-            buttons.push({});
+            menus.push({
+                name: "power",
+                index: powerButtonIndex,
+                def_index: 3,
+                position: powerButtonPosition in available_positions ? powerButtonPosition : "bottom_right"
+            });
 
-        return buttons.sort((c, n) => c.a - n.a);
+        // Sort by index or default index if 0
+        return menus.sort((c, n) => c.index - n.index || c.def_index - n.def_index);
     }
 }
