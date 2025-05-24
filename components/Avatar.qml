@@ -8,6 +8,7 @@ Canvas {
     property bool drawStroke: false
     property color strokeColor: "#ffffff"
     property int strokeSize: 2
+    property bool drawShadow: true
 
     signal clicked
     signal clickedOutside
@@ -33,6 +34,7 @@ Canvas {
         }
 
         ctx.clip();
+
         if (source === "")
             source = "icons/user-default.png";
         ctx.drawImage(source, 0, 0, width, height);

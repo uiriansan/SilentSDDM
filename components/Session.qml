@@ -29,66 +29,6 @@ Item {
         return "icons/default-session.svg";
     }
 
-    // // Session button
-    // Rectangle {
-    //     id: sessionButton
-    //     z: 0
-    //     anchors.left: parent.left
-    //     width: sessionPopup.width
-    //     height: 30
-    //     color: "transparent"
-    //     radius: 4
-
-    //     Rectangle {
-    //         id: sessionButtonBg
-    //         anchors.fill: parent
-    //         color: "#FFFFFF"
-    //         opacity: popupVisible ? 0.15 : (sessionMouseArea.containsMouse ? 0.15 : 0.0)
-    //         radius: 5
-
-    //         Behavior on opacity {
-    //             enabled: config.enableAnimations === "false" ? false : true
-    //             NumberAnimation {
-    //                 duration: 250
-    //             }
-    //         }
-    //     }
-
-    //     Image {
-    //         id: sessionIcon
-    //         anchors.verticalCenter: parent.verticalCenter
-    //         anchors.left: parent.left
-    //         anchors.leftMargin: 10
-    //         width: 16
-    //         height: 16
-    //         sourceSize: Qt.size(16, 16)
-    //         smooth: true
-    //         antialiasing: true
-    //         fillMode: Image.PreserveAspectFit
-    //     }
-    //     // Current session name
-    //     Text {
-    //         id: sessionNameText
-    //         anchors.left: sessionIcon.right
-    //         anchors.leftMargin: 10
-    //         anchors.verticalCenter: sessionButton.verticalCenter
-    //         color: "white"
-    //         font.pixelSize: 10
-    //     }
-
-    //     MouseArea {
-    //         id: sessionMouseArea
-    //         z: 0
-    //         anchors.fill: parent
-    //         hoverEnabled: true
-    //         cursorShape: Qt.PointingHandCursor
-
-    //         onClicked: {
-    //             click();
-    //         }
-    //     }
-    // }
-
     readonly property int listEntryHeight: 30
 
     // Session popup
@@ -110,7 +50,7 @@ Item {
         ListView {
             id: sessionList
             z: 2
-            height: sessionPopup.height
+            height: sessionSelector.height
             width: parent.width
             anchors.fill: parent
             anchors.margins: 5

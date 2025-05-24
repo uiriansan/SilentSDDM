@@ -2,7 +2,6 @@
 //                          https://doc.qt.io/qt-6/qml-qtquick-controls-popup.html                          //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import "."
 import QtQuick
 import QtQuick.Controls
 import QtQuick.VirtualKeyboard
@@ -12,9 +11,9 @@ import SddmComponents
 Item {
     id: loginFrame
 
-    property int sessionIndex: sessionModel.lastIndex
+    property int sessionIndex: sessionModel ? sessionModel.lastIndex : 0
     property string userIndex: userList.currentIndex
-    property string userName: userModel.lastUser
+    property string userName: userModel ? userModel.lastUser : ""
     property string userIcon: userList.currentItem.iconPath
     property alias input: passwdInput
     property alias button: loginButton
@@ -25,7 +24,7 @@ Item {
 
     // Break binding so it doesn't update when `keyboard.capsLock` changes.
     property bool capsLockOn: {
-        capsLockOn = keyboard.capsLock || false;
+        capsLockOn = keyboard ? keyboard.capsLock : false;
     }
 
     signal needClose
@@ -66,9 +65,7 @@ Item {
         width: parent.width
         height: parent.height
         Component.onCompleted: {
-            VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
-
-            print(capsLockOn, keyboard.capsLock);
+            VirtualKeyboardSettings.locale = keyboard.layouts[keyboard.currentLayout] ? Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName) : "en_US";
         }
         focus: activeMenu !== ""
         Keys.onEscapePressed: () => {
@@ -267,7 +264,6 @@ Item {
             function calculatePopupPos(dir, popup_w, popup_h, parent_w, parent_h, parent_x) {
                 let x = 0, y = 0;
                 const popup_margin = 5;
-                print("parent_x:", parent_x, "screen_size:", loginFrame.width - 10, "popup_w:", popup_w);
                 if (dir === "up") {
                     if (parent_x + (parent_w - popup_w) / 2 < 10) {
                         // Align popup left
@@ -357,14 +353,14 @@ Item {
                         popup.open();
                     }
                     tooltip_text: "Change keyboard layout"
-                    label: keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase()
+                    label: keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : ""
 
                     Popup {
                         id: popup
                         property int popupMargin: 5
                         width: contentItem.width
                         height: contentItem.height
-                        parent: powerButton
+                        parent: languageButton
 
                         focus: true
                         modal: true
