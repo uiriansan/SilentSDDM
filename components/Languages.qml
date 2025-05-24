@@ -27,12 +27,12 @@ QtObject {
         },
         "cz": {
             // Czech
-            "label": "čeština",
+            "label": "Čeština ",
             "kb_code": "cs_CZ"
         },
         "dk": {
             // Danish
-            "label": "dansk",
+            "label": "Dansk",
             "kb_code": "da_DK"
         },
         "de": {
@@ -65,17 +65,17 @@ QtObject {
         },
         "ee": {
             // Estonian
-            "label": "eesti",
+            "label": "Eesti",
             "kb_code": "et_EE"
         },
         "fa": {
-            // Persian
+            // Persian (Farsi)
             "label": "فارسى",
             "kb_code": "fa_FA"
         },
         "fi": {
             // Finnish
-            "label": "suomi",
+            "label": "Suomi",
             "kb_code": "fi_FI"
         },
         "ca": {
@@ -100,12 +100,12 @@ QtObject {
         },
         "hr": {
             // Croatian
-            "label": "hrvatski",
+            "label": "Hrvatski ",
             "kb_code": "hr_HR"
         },
         "hu": {
             // Hungarian
-            "label": "magyar",
+            "label": "Magyar ",
             "kb_code": "hu_HU"
         },
         "id": {
@@ -120,7 +120,7 @@ QtObject {
         },
         "lv": {
             // Latvian
-            "label": "latviešu",
+            "label": "latviešu ",
             "kb_code": "lv_LV"
         },
         "jp": {
@@ -140,7 +140,7 @@ QtObject {
         },
         "no": {
             // Norwegian
-            "label": "norsk",
+            "label": "Norsk ",
             "kb_code": "nb_NO"
         },
         "nl": {
@@ -150,7 +150,7 @@ QtObject {
         },
         "pl": {
             // Polish
-            "label": "polski",
+            "label": "Polski",
             "kb_code": "pl_PL"
         },
         "br": {
@@ -165,37 +165,37 @@ QtObject {
         },
         "ro": {
             // Romanian
-            "label": "română",
+            "label": "Română",
             "kb_code": "ro_RO"
         },
         "ru": {
             // Russian
-            "label": "русский",
+            "label": "Русский",
             "kb_code": "ru_RU"
         },
         "sk": {
             // Slovak
-            "label": "slovenčina",
+            "label": "Slovenčina",
             "kb_code": "sk_SK"
         },
         "si": {
             // Slovenian
-            "label": "slovenski",
+            "label": "Slovenski",
             "kb_code": "sl_SI"
         },
         "al": {
             // Albanian
-            "label": "shqip",
+            "label": "Shqip",
             "kb_code": "sq_AL"
         },
         "sp": {
             // Serbian
-            "label": "srpski/српски",
+            "label": "Srpski/Српски",
             "kb_code": "sr_SP"
         },
         "se": {
             // Swedish
-            "label": "svenska",
+            "label": "Svenska",
             "kb_code": "sv_SE"
         },
         "th": {
@@ -210,7 +210,7 @@ QtObject {
         },
         "ua": {
             // Ukrainian
-            "label": "українська",
+            "label": "Українська",
             "kb_code": "uk_UA"
         },
         "vn": {
@@ -232,7 +232,7 @@ QtObject {
     }
 
     function getKBCodeFor(country) {
-        // TODO: Better defaults instead of en_US
+        // TODO: Better defaults
         return langs[country]["kb_code"] || "en_US";
     }
 

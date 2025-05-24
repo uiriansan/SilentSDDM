@@ -1,9 +1,8 @@
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                          https://doc.qt.io/qt-6/qml-qtquick-controls-popup.html                          //
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+pragma NativeMethodBehavior: AcceptThisObject
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 import QtQuick.VirtualKeyboard
 import QtQuick.VirtualKeyboard.Settings
 import SddmComponents
@@ -316,22 +315,27 @@ Item {
                     Popup {
                         id: popup
                         property int popupMargin: 5
-                        width: contentItem.width
-                        height: contentItem.height
                         parent: sessionButton
+                        background: Rectangle {
+                            color: "transparent"
+                        }
+                        dim: true
 
                         focus: true
                         modal: true
                         popupType: Popup.Item
                         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
-                        contentItem: Session {
-                            onSessionChanged: (newSessionIndex, sessionIcon, sessionLabel) => {
-                                sessionIndex = newSessionIndex;
-                                sessionButton.icon = sessionIcon;
-                                sessionButton.label = sessionButton.showLabel ? sessionLabel : "";
+                        StackLayout {
+                            Session {
+                                onSessionChanged: (newSessionIndex, sessionIcon, sessionLabel) => {
+                                    sessionIndex = newSessionIndex;
+                                    sessionButton.icon = sessionIcon;
+                                    sessionButton.label = sessionButton.showLabel ? sessionLabel : "";
+                                }
                             }
                         }
+
                         Component.onCompleted: {
                             [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
                         }
@@ -358,18 +362,22 @@ Item {
                     Popup {
                         id: popup
                         property int popupMargin: 5
-                        width: contentItem.width
-                        height: contentItem.height
                         parent: languageButton
+                        background: Rectangle {
+                            color: "transparent"
+                        }
+                        dim: true
 
                         focus: true
                         modal: true
                         popupType: Popup.Item
                         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-                        contentItem: Language {
-                            onLanguageChanged: index => {
-                                languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
-                                VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
+                        StackLayout {
+                            Language {
+                                onLanguageChanged: index => {
+                                    languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
+                                    VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
+                                }
                             }
                         }
                         Component.onCompleted: {
@@ -416,17 +424,23 @@ Item {
                     Popup {
                         id: popup
                         property int popupMargin: 5
-                        width: contentItem.width
-                        height: contentItem.height
                         parent: powerButton
+                        background: Rectangle {
+                            color: "transparent"
+                        }
+                        dim: true
 
                         focus: true
                         modal: true
                         popupType: Popup.Item
                         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-                        contentItem: Power {
-                            visible: true
+
+                        StackLayout {
+                            Power {
+                                visible: true
+                            }
                         }
+
                         Component.onCompleted: {
                             [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
                         }

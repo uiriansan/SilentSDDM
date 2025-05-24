@@ -1,3 +1,6 @@
+// Silence, annoying QML warning!
+pragma NativeMethodBehavior: AcceptThisObject
+
 import "."
 import QtQuick
 import SddmComponents

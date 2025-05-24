@@ -5,7 +5,6 @@ import QtQuick.Effects
 Item {
     id: languageSelector
     z: 2
-    height: 30
 
     signal languageChanged(languageIndex: int)
 

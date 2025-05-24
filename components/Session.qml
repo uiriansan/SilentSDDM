@@ -24,9 +24,9 @@ Item {
         const available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "awesome", "qtile", "i3", "bspwm", "dwm", "xfce", "cinnamon"];
         for (let i = 0; i < available_session_icons.length; i++) {
             if (name && name.toLowerCase().includes(available_session_icons[i]))
-                return "icons/" + available_session_icons[i] + "-session.svg";
+                return "icons/sessions/" + available_session_icons[i] + ".svg";
         }
-        return "icons/default-session.svg";
+        return "icons/sessions/default.svg";
     }
 
     readonly property int listEntryHeight: 30
