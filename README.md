@@ -6,10 +6,12 @@
 # Presets
 
 <details>
-  <summary>default</summary>
-  <img src="./previews/default_lock.png" />
-  <img src="./previews/default_login.png" />
-</details>
+  <summary>configs/default.conf</summary>
+    <p float="left">
+      <img src="./previews/default_lock.png" width="49%" />
+      <img src="./previews/default_login.png" width="49%" />
+    </p>
+</details>>
 
 # Dependencies
 
