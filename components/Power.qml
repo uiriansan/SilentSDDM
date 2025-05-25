@@ -12,7 +12,7 @@ Item {
 
     property bool canShutdown: sddm.canPowerOff
     property bool canReboot: sddm.canReboot
-    property bool canSuspend: sddm.canHybridSleep
+    property bool canSuspend: sddm.canSuspend
 
     property bool popupVisible: true
 
@@ -51,8 +51,8 @@ Item {
                 width: parent.width
                 icon: "icons/power-suspend.svg"
                 iconSize: 15
-                onClicked: sddm.hybridSleep()
-                label: "Suspend"
+                onClicked: sddm.suspend()
+                label: textConstants.suspend
             }
 
             IconButton {
@@ -63,7 +63,7 @@ Item {
                 icon: "icons/power-reboot.svg"
                 iconSize: 15
                 onClicked: sddm.reboot()
-                label: "Reboot"
+                label: textConstants.reboot
             }
 
             IconButton {
@@ -74,7 +74,7 @@ Item {
                 icon: "icons/power.svg"
                 iconSize: 15
                 onClicked: sddm.powerOff()
-                label: "Shutdown"
+                label: textConstants.shutdown
             }
         }
     }

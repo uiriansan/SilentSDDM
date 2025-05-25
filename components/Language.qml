@@ -23,7 +23,7 @@ Item {
         id: languagePopup
         z: 2
         width: 200
-        height: Math.min(keyboard.layouts.length * listEntryHeight + 13, 300)
+        height: keyboard && keyboard.layouts.length > 0 ? Math.min(keyboard.layouts.length * listEntryHeight + 13, 300) : noLangText.height
         visible: popupVisible
         color: "transparent"
         anchors.bottom: parent.bottom
@@ -45,12 +45,24 @@ Item {
             ScrollBar.vertical.interactive: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
+            Text {
+                id: noLangText
+                visible: keyboard == undefined || keyboard.layouts.length === 0
+                text: "No keyboard layout could be found. This is a known issue with Wayland."
+                width: parent.width
+                wrapMode: Text.Wrap
+                horizontalAlignment: Text.AlignHCenter
+                color: "#FFFFFF"
+                padding: 10
+            }
+
             ListView {
                 id: languageList
                 z: 2
                 height: languagePopup.height
                 width: parent.width
                 anchors.fill: parent
+                visible: keyboard && keyboard.layouts.length > 0
                 anchors.margins: 5
                 anchors.rightMargin: languagePopup.height < 300 ? 5 : 13
                 orientation: ListView.Vertical

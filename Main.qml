@@ -1,6 +1,3 @@
-// Silence, annoying QML warning!
-pragma NativeMethodBehavior: AcceptThisObject
-
 import "."
 import QtQuick
 import SddmComponents
@@ -113,7 +110,7 @@ Rectangle {
                 enabled: root.state == "lockState"
                 onNeedLogin: {
                     root.state = "loginState";
-                    loginFrame.input.forceActiveFocus();
+                    loginFrame.input.input.forceActiveFocus();
                 }
             }
             Login {
@@ -133,7 +130,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     root.state = "loginState";
-                    loginFrame.input.forceActiveFocus();
+                    loginFrame.input.input.forceActiveFocus();
                 }
             }
         }

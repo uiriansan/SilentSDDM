@@ -9,7 +9,7 @@ Item {
 
     property alias text: textField.text
     property bool enabled: true
-    property var forceActiveFocus: textField.forceActiveFocus
+    property alias input: textField
 
     signal accepted
 
@@ -44,7 +44,7 @@ Item {
         anchors.leftMargin: textField.leftPadding
         anchors.rightMargin: textField.rightPadding
         visible: textField.text.length === 0
-        text: "Password"
+        text: textConstants.password
         color: "#FFFFFF"
         font.family: textField.font.family
         font.italic: true

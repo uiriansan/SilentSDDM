@@ -1,5 +1,3 @@
-pragma NativeMethodBehavior: AcceptThisObject
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -21,6 +19,8 @@ Item {
     property string activeMenu: ""
     property bool isAuthorizing: false
 
+    property var activePopup: null
+
     // Break binding so it doesn't update when `keyboard.capsLock` changes.
     property bool capsLockOn: {
         capsLockOn = keyboard ? keyboard.capsLock : false;
@@ -33,7 +33,7 @@ Item {
             showKeyboard = true;
             returnKeyboard = false;
         }
-        passwdInput.forceActiveFocus();
+        passwdInput.input.forceActiveFocus();
     }
 
     Connections {
@@ -44,7 +44,7 @@ Item {
         function onLoginFailed() {
             isAuthorizing = false;
             spinner.visible = false;
-            loginMessage.warn("Wrong password", "error");
+            loginMessage.warn(textConstants.loginFailed, "error");
             passwdInput.text = "";
             passwdInput.focus = true;
             loginArea.visible = true;
@@ -70,7 +70,7 @@ Item {
         Keys.onEscapePressed: () => {
             if (loginFrame.activeMenu !== "") {
                 loginFrame.activeMenu = "";
-                passwdInput.forceActiveFocus();
+                passwdInput.input.forceActiveFocus();
                 return;
             }
             if (isAuthorizing)
@@ -86,7 +86,7 @@ Item {
             if (event.key == Qt.Key_CapsLock && !isAuthorizing) {
                 capsLockOn = !capsLockOn;
                 if (capsLockOn)
-                    loginMessage.warn("CapsLock on", "warning");
+                    loginMessage.warn(textConstants.capslockWarning, "warning");
                 else
                     loginMessage.clear();
             }
@@ -155,7 +155,7 @@ Item {
 
             PasswordInput {
                 id: passwdInput
-                enabled: loginFrame.activeMenu === ""
+                enabled: loginFrame.activePopup === null
                 onAccepted: {
                     if (passwdInput.text.length > 0) {
                         spinner.visible = true;
@@ -175,9 +175,11 @@ Item {
 
                 height: passwdInput.height
                 width: height
+                enabled: activePopup === null
                 anchors.left: (passwdInput.right)
                 anchors.leftMargin: config.loginButtonMarginLeft || 5
                 icon: "icons/arrow-right.svg"
+                tooltip_text: textConstants.login
                 iconSize: config.loginButtonIconSize || 24
                 iconColor: config.loginButtonIconColor || "#FFFFFF"
                 hoverIconColor: config.loginButtonHoverIconColor || "#FFFFFF"
@@ -203,9 +205,7 @@ Item {
         // FIX: Virtual keyboard not working on the second screen.
         InputPanel {
             // TODO: Keep keyboard visible.
-
             id: inputPanel
-
             z: 99
             width: Math.min(parent.width / 2, loginArea.width * 3)
             visible: showKeyboard
@@ -309,6 +309,7 @@ Item {
                     pressed: popup.visible
                     onClicked: {
                         popup.open();
+                        activePopup = popup;
                     }
                     tooltip_text: "Change session"
 
@@ -339,6 +340,9 @@ Item {
                         Component.onCompleted: {
                             [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
                         }
+                        onClosed: {
+                            loginFrame.activePopup = null;
+                        }
                     }
                 }
             }
@@ -355,6 +359,7 @@ Item {
                     pressed: popup.visible
                     onClicked: {
                         popup.open();
+                        activePopup = popup;
                     }
                     tooltip_text: "Change keyboard layout"
                     label: keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : ""
@@ -382,6 +387,9 @@ Item {
                         }
                         Component.onCompleted: {
                             [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
+                        }
+                        onClosed: {
+                            loginFrame.activePopup = null;
                         }
                     }
                 }
@@ -418,6 +426,7 @@ Item {
                     pressed: popup.visible
                     onClicked: {
                         popup.open();
+                        activePopup = popup;
                     }
                     tooltip_text: "Power options"
 
@@ -443,6 +452,9 @@ Item {
 
                         Component.onCompleted: {
                             [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
+                        }
+                        onClosed: {
+                            loginFrame.activePopup = null;
                         }
                     }
                 }
@@ -610,14 +622,16 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            enabled: loginFrame.activeMenu !== "" || isAuthorizing
-            visible: loginFrame.activeMenu !== "" || isAuthorizing
+            enabled: loginFrame.activePopup !== null || isAuthorizing
+            visible: loginFrame.activePopup !== null || isAuthorizing
             hoverEnabled: true
             onClicked: {
                 if (isAuthorizing)
                     return;
 
-                loginFrame.activeMenu = "";
+                // Prevent weird inconsistence with multiple monitors where the loginButton is still reachable when a popup is open.
+                loginFrame.activePopup.close();
+                loginFrame.activePopup = null;
             }
         }
     }
