@@ -2,7 +2,7 @@
 > UNDER DEVELOPMENT <br/>
 > A beta will be released soon. I discourage you from using this theme until then.
 
-<img src="https://github.com/uiriansan/SilentSDDM/blob/main/previews/LoginCenter.png" />
+<img src="https://github.com/uiriansan/SilentSDDM/blob/main/previews/silent.gif" width="100%" />
 
 # Presets
 
