@@ -3,6 +3,14 @@
 
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/previews/LoginCenter.png" />
 
+# Presets
+
+<details>
+  <summary>default</summary>
+  <img src="./previews/default_lock.png" />
+  <img src="./previews/default_login.png" />
+</details>
+
 # Dependencies
 
 - SDDM ≥ 0.20;
@@ -54,9 +62,9 @@ sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-
 
 # Customizing
 
-You can find some presets in `./configs/`. To change the active config you must edit the `./metadata.desktop` file and replace the `ConfigFile=` option's value.
+The premade configs are located in `./configs/`. To change the active config, edit the `./metadata.desktop` file and replace the `ConfigFile=` option's value.
 
-You can also create a new preset file. You can find a detailed guide in addition to the available options in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
+You can also create a new config file. There's a detailed guide in addition to the available options in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
 
 # Acknowledgements
 
