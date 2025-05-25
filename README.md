@@ -74,7 +74,7 @@ ConfigFile=configs/<your_preferred_config>.conf
 ```
 
 > [!NOTE]
-> Changes to the login screen will only take effect when made in `/usr/share/sddm/themes/silent/`. If you changed things in the cloned directory, copy them with `sudo cp -rf ./. /usr/share/sddm/themes/silent/`
+> Changes to the login screen will only take effect when made in `/usr/share/sddm/themes/silent/`. If you changed things in the cloned directory, copy them with `sudo cp -rf SilentSDDM/. /usr/share/sddm/themes/silent/`
 
 <br/>
 
