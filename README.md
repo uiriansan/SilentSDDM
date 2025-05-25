@@ -3,52 +3,58 @@
 
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/previews/LoginCenter.png" />
 
-# Installation
-
-## Dependencies
+# Dependencies
 
 - SDDM ≥ 0.20;
 - QT ≥ 6.5;
 - qt6-svg;
 - qt6-virtualkeyboard;
 
-### Installing dependencies:
+# Installation
+
+Just run the script:
 
 ```bash
-# Arch Linux
-$ sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard
-
-# Debian
-$ sudo apt-get install sddm qt6-svg qt6-virtualkeyboard
-
-# Void Linux
-$ sudo xbps-install sddm qt6-svg qt6-virtualkeyboard
-
-# Fedora
-$ sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard
-
-# OpenSUSE
-$ sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports
+git clone --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && ./install.sh | bash
 ```
 
-## Install script
+## Manual installation
+
+### 1. Install dependencies:
+
+Arch Linux
 
 ```bash
-$ git clone --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && ./install.sh | bash
+sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard
 ```
 
-## Manual installation:
+Debian
 
-...
+```bash
+sudo apt-get install sddm qt6-svg qt6-virtualkeyboard
+```
+
+Void Linux
+
+```bash
+sudo xbps-install sddm qt6-svg qt6-virtualkeyboard
+```
+
+Fedora
+
+```bash
+sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard
+```
+
+OpenSUSE
+
+```bash
+sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports
+```
 
 # Customizing
 
 ...
-
-# TODO
-
-- [ ] Better positioning;
-- [ ] Animated backgrounds;
 
 # Acknowledgements
 
