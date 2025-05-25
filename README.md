@@ -56,7 +56,7 @@ sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-
 
 You can find some presets in `./configs/`. To change the active config you must edit the `./metadata.desktop` file and replace the `ConfigFile=` option's value.
 
-You can also create a new preset file. Read the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing) for a detailed guide and the available options.
+You can also create a new preset file. You can find a detailed guide in addition to the available options in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
 
 # Acknowledgements
 
