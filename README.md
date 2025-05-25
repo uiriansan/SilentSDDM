@@ -1,7 +1,7 @@
 > [!CAUTION]
 > UNDER DEVELOPMENT
 
-<img src="https://github.com/uiriansan/SilentSDDM/blob/main/wiki/LoginCenter.png" />
+<img src="https://github.com/uiriansan/SilentSDDM/blob/main/previews/LoginCenter.png" />
 
 # Installation
 
