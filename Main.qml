@@ -29,6 +29,10 @@ Rectangle {
                 target: bgBlur
                 blur: Config.lockScreenBlur ? 1.0 : 0.0
             }
+            PropertyChanges {
+                target: loginFrame.loginArea
+                scale: 0.5
+            }
         },
         State {
             name: "loginState"
@@ -44,6 +48,10 @@ Rectangle {
                 target: bgBlur
                 blur: Config.loginScreenBlur ? 1.0 : 0.0
             }
+            PropertyChanges {
+                target: loginFrame.loginArea
+                scale: 1
+            }
         }
     ]
     transitions: Transition {
@@ -56,6 +64,10 @@ Rectangle {
             duration: 400
             properties: "blur"
         }
+        PropertyAnimation {
+            duration: 200
+            properties: "scale"
+        }
     }
 
     Repeater {
@@ -65,11 +77,11 @@ Rectangle {
             y: geometry.y
             width: geometry.width
             height: geometry.height
-            source: root.state === "lockState" ? config.lockScreenBackground || "backgrounds/default.jpg" : config.loginScreenBackground || "backgrounds/default.jpg"
+            source: root.state === "lockState" ? config.lockScreenBackground || "./backgrounds/default.jpg" : config.loginScreenBackground || "./backgrounds/default.jpg"
             fillMode: Image.Tile
             onStatusChanged: {
-                if (status == Image.Error && source !== "backgrounds/default.jpg") {
-                    source = "backgrounds/default.jpg";
+                if (status == Image.Error && source !== "./backgrounds/default.jpg") {
+                    source = "./backgrounds/default.jpg";
                 }
             }
         }
@@ -86,7 +98,7 @@ Rectangle {
         Image {
             id: mainFrameBackground
             anchors.fill: parent
-            source: root.state === "lockState" ? config.lockScreenBackground || "backgrounds/default.jpg" : config.loginScreenBackground || "backgrounds/default.jpg"
+            source: root.state === "lockState" ? config.lockScreenBackground || "./backgrounds/default.jpg" : config.loginScreenBackground || "./backgrounds/default.jpg"
         }
 
         MultiEffect {

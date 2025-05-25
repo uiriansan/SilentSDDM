@@ -14,14 +14,18 @@ Item {
     property string userIcon: userList.currentItem.iconPath
     property alias input: passwdInput
     property alias button: loginButton
+    property alias loginArea: loginSection
     property bool showKeyboard: false
     property bool returnKeyboard: false
     property string activeMenu: ""
     property bool isAuthorizing: false
 
     property var activePopup: null
+    onActivePopupChanged: {
+        passwdInput.input.forceActiveFocus();
+    }
 
-    // Break binding so it doesn't update when `keyboard.capsLock` changes.
+    // Break property binding so it doesn't update when `keyboard.capsLock` changes.
     property bool capsLockOn: {
         capsLockOn = keyboard ? keyboard.capsLock : false;
     }
@@ -66,139 +70,198 @@ Item {
         Component.onCompleted: {
             VirtualKeyboardSettings.locale = keyboard.layouts[keyboard.currentLayout] ? Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName) : "en_US";
         }
-        focus: activeMenu !== ""
-        Keys.onEscapePressed: () => {
-            if (loginFrame.activeMenu !== "") {
-                loginFrame.activeMenu = "";
-                passwdInput.input.forceActiveFocus();
-                return;
-            }
-            if (isAuthorizing)
-                return;
-
-            if (config.showLockScreen !== "false")
-                needClose();
-
-            passwdInput.text = "";
-        }
-        Keys.onPressed: event => {
-            // TODO: Move this to the Main
-            if (event.key == Qt.Key_CapsLock && !isAuthorizing) {
-                capsLockOn = !capsLockOn;
-                if (capsLockOn)
-                    loginMessage.warn(textConstants.capslockWarning, "warning");
-                else
-                    loginMessage.clear();
-            }
-        }
-
-        User {
-            id: userListContainer
-
-            width: parent.width
-            height: config.selectedAvatarSize || 120
-            listUsers: loginFrame.activeMenu === "user"
-            enabled: loginFrame.activeMenu === "user" || loginFrame.activeMenu === ""
-            onClick: {
-                loginFrame.activeMenu = "user";
-                if (showKeyboard) {
-                    showKeyboard = false;
-                    returnKeyboard = true;
-                }
-            }
-            onUserChanged: index => {
-                userIndex = index;
-            }
-            onCloseUserList: {
-                loginFrame.activeMenu = "";
-            }
-
-            anchors {
-                top: parent.top
-                topMargin: parent.height / 3
-                horizontalCenter: parent.horizontalCenter
-            }
-        }
-
-        Text {
-            id: userNameText
-
-            text: userName
-            font.bold: true
-            font.family: config.font || "RedHatDisplay"
-            color: config.userNameColor || "#FFFFFF"
-            font.pointSize: config.userNameFontSize || 15
-
-            anchors {
-                top: userListContainer.bottom
-                topMargin: 10
-                horizontalCenter: parent.horizontalCenter
-            }
-        }
-
-        Spinner {
-            id: spinner
-
-            anchors.top: userNameText.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: 10
-            visible: false
-        }
 
         Item {
-            id: loginArea
+            id: loginSection
+            z: 2
+            width: parent.width
+            height: childrenRect.height
+            scale: 0.5
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                verticalCenter: parent.verticalCenter
+            }
 
-            width: childrenRect.width
-            anchors.top: userNameText.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: 20
+            focus: loginFrame.activePopup !== null
+            Keys.onEscapePressed: () => {
+                if (loginFrame.activePopup !== null) {
+                    loginFrame.activePopup.close();
+                    loginFrame.activePopup = null;
+                    passwdInput.input.forceActiveFocus();
+                    return;
+                }
+                if (loginFrame.isAuthorizing)
+                    return;
 
-            PasswordInput {
-                id: passwdInput
-                enabled: loginFrame.activePopup === null
-                onAccepted: {
-                    if (passwdInput.text.length > 0) {
-                        spinner.visible = true;
-                        loginArea.visible = false;
-                        isAuthorizing = true;
-                        if (showKeyboard) {
-                            showKeyboard = false;
-                            returnKeyboard = true;
+                if (config.showLockScreen !== "false")
+                    loginFrame.needClose();
+
+                passwdInput.text = "";
+            }
+            Keys.onPressed: event => {
+                // TODO: Move this to the Main
+                if (event.key == Qt.Key_CapsLock && !loginFrame.isAuthorizing) {
+                    loginFrame.capsLockOn = !loginFrame.capsLockOn;
+                    if (loginFrame.capsLockOn)
+                        loginMessage.warn(textConstants.capslockWarning, "warning");
+                    else
+                        loginMessage.clear();
+                }
+            }
+
+            User {
+                id: userListContainer
+                z: 2
+
+                width: parent.width
+                height: config.selectedAvatarSize || 120
+                listUsers: loginFrame.activePopup == userListContainer
+                enabled: !loginFrame.isAuthorizing
+                onClick: {
+                    loginFrame.activePopup = userListContainer;
+                }
+                onUserChanged: index => {
+                    userIndex = index;
+                }
+                onCloseUserList: {
+                    loginFrame.activePopup = null;
+                }
+
+                anchors {
+                    top: parent.top
+                    // topMargin: parent.height / 3
+                    topMargin: 0
+                    horizontalCenter: parent.horizontalCenter
+                }
+
+                function close() {
+                    return;
+                }
+            }
+
+            Text {
+                id: userNameText
+
+                text: userName
+                font.bold: true
+                font.family: config.font || "RedHatDisplay"
+                color: config.userNameColor || "#FFFFFF"
+                font.pointSize: config.userNameFontSize || 15
+
+                anchors {
+                    top: userListContainer.bottom
+                    topMargin: 10
+                    horizontalCenter: parent.horizontalCenter
+                }
+            }
+
+            Spinner {
+                id: spinner
+
+                anchors.top: userNameText.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.topMargin: 10
+                visible: false
+            }
+
+            Item {
+                id: loginArea
+
+                width: childrenRect.width
+                anchors.top: userNameText.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.topMargin: 20
+
+                PasswordInput {
+                    id: passwdInput
+                    enabled: loginFrame.activePopup === null
+                    onAccepted: {
+                        if (passwdInput.text.length > 0) {
+                            spinner.visible = true;
+                            loginArea.visible = false;
+                            isAuthorizing = true;
+                            if (showKeyboard) {
+                                showKeyboard = false;
+                                returnKeyboard = true;
+                            }
+                            sddm.login(userName, passwdInput.text, sessionIndex);
                         }
-                        sddm.login(userName, passwdInput.text, sessionIndex);
+                    }
+                }
+
+                IconButton {
+                    id: loginButton
+
+                    height: passwdInput.height
+                    width: height
+                    enabled: activePopup === null
+                    anchors.left: (passwdInput.right)
+                    anchors.leftMargin: config.loginButtonMarginLeft || 5
+                    icon: "icons/arrow-right.svg"
+                    tooltip_text: textConstants.login
+                    iconSize: config.loginButtonIconSize || 24
+                    iconColor: config.loginButtonIconColor || "#FFFFFF"
+                    hoverIconColor: config.loginButtonHoverIconColor || "#FFFFFF"
+                    backgroundColor: config.loginButtonBackgroundColor || "#FFFFFF"
+                    backgroundOpacity: config.loginButtonBackgroundOpacity || 0.15
+                    hoverBackgroundColor: config.loginButtonHoverBackgroundColor || "#FFFFFF"
+                    hoverBackgroundOpacity: config.loginButtonHoverBackgroundOpacity || 0.3
+                    onClicked: {
+                        if (passwdInput.text.length > 0) {
+                            spinner.visible = true;
+                            loginArea.visible = false;
+                            isAuthorizing = true;
+                            if (showKeyboard) {
+                                showKeyboard = false;
+                                returnKeyboard = true;
+                            }
+                            sddm.login(userName, passwdInput.text, sessionIndex);
+                        }
                     }
                 }
             }
 
-            IconButton {
-                id: loginButton
-
-                height: passwdInput.height
-                width: height
-                enabled: activePopup === null
-                anchors.left: (passwdInput.right)
-                anchors.leftMargin: config.loginButtonMarginLeft || 5
-                icon: "icons/arrow-right.svg"
-                tooltip_text: textConstants.login
-                iconSize: config.loginButtonIconSize || 24
-                iconColor: config.loginButtonIconColor || "#FFFFFF"
-                hoverIconColor: config.loginButtonHoverIconColor || "#FFFFFF"
-                backgroundColor: config.loginButtonBackgroundColor || "#FFFFFF"
-                backgroundOpacity: config.loginButtonBackgroundOpacity || 0.15
-                hoverBackgroundColor: config.loginButtonHoverBackgroundColor || "#FFFFFF"
-                hoverBackgroundOpacity: config.loginButtonHoverBackgroundOpacity || 0.3
-                onClicked: {
-                    if (passwdInput.text.length > 0) {
-                        spinner.visible = true;
-                        loginArea.visible = false;
-                        isAuthorizing = true;
-                        if (showKeyboard) {
-                            showKeyboard = false;
-                            returnKeyboard = true;
-                        }
-                        sddm.login(userName, passwdInput.text, sessionIndex);
-                    }
+            Text {
+                id: loginMessage
+                font.pointSize: config.warningMessageSize || 9
+                font.family: config.font || "RedHatDisplay"
+                color: config.warningMessageColor || "#FFFFFF"
+                visible: false
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    top: loginArea.bottom
+                    topMargin: 50
                 }
+                Component.onCompleted: {
+                    if (loginFrame.capsLockOn)
+                        loginMessage.warn("CapsLock on", "warning");
+                }
+
+                function warn(message, type) {
+                    text = message;
+                    visible = true;
+                }
+
+                function clear() {
+                    visible = false;
+                    text = "";
+                }
+            }
+        }
+
+        MouseArea {
+            z: 1
+            anchors.fill: parent
+            enabled: loginFrame.activePopup !== null || loginFrame.isAuthorizing
+            visible: loginFrame.activePopup !== null || loginFrame.isAuthorizing
+            hoverEnabled: true
+            onClicked: {
+                if (loginFrame.isAuthorizing)
+                    return;
+
+                // Prevent weird inconsistence with multiple monitors where the loginButton is still reachable when a popup is open.
+                loginFrame.activePopup.close();
+                loginFrame.activePopup = null;
             }
         }
 
@@ -223,36 +286,9 @@ Item {
             }
 
             anchors {
-                top: loginArea.bottom
+                top: loginSection.bottom
                 horizontalCenter: parent.horizontalCenter
-                topMargin: loginMessage.text === "" ? 50 : 80
-            }
-        }
-
-        Text {
-            id: loginMessage
-            font.pointSize: config.warningMessageSize || 9
-            font.family: config.font || "RedHatDisplay"
-            color: config.warningMessageColor || "#FFFFFF"
-            visible: false
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                top: loginArea.bottom
-                topMargin: 50
-            }
-            Component.onCompleted: {
-                if (loginFrame.capsLockOn)
-                    loginMessage.warn("CapsLock on", "warning");
-            }
-
-            function warn(message, type) {
-                text = message;
-                visible = true;
-            }
-
-            function clear() {
-                visible = false;
-                text = "";
+                topMargin: loginMessage.text === "" ? -20 : 10
             }
         }
 
@@ -321,6 +357,9 @@ Item {
                             color: "transparent"
                         }
                         dim: true
+                        Overlay.modal: Rectangle {
+                            color: "transparent"  // Use whatever color/opacity you like
+                        }
 
                         focus: true
                         modal: true
@@ -372,6 +411,9 @@ Item {
                             color: "transparent"
                         }
                         dim: true
+                        Overlay.modal: Rectangle {
+                            color: "transparent"  // Use whatever color/opacity you like
+                        }
 
                         focus: true
                         modal: true
@@ -438,6 +480,9 @@ Item {
                             color: "transparent"
                         }
                         dim: true
+                        Overlay.modal: Rectangle {
+                            color: "transparent"  // Use whatever color/opacity you like
+                        }
 
                         focus: true
                         modal: true
@@ -617,21 +662,6 @@ Item {
                     else if (menus[i].name === "power")
                         powerMenuComponent.createObject(pos, {});
                 }
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            enabled: loginFrame.activePopup !== null || isAuthorizing
-            visible: loginFrame.activePopup !== null || isAuthorizing
-            hoverEnabled: true
-            onClicked: {
-                if (isAuthorizing)
-                    return;
-
-                // Prevent weird inconsistence with multiple monitors where the loginButton is still reachable when a popup is open.
-                loginFrame.activePopup.close();
-                loginFrame.activePopup = null;
             }
         }
     }

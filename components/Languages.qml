@@ -14,7 +14,7 @@ pragma Singleton
 import QtQuick
 
 QtObject {
-    property var langs: {
+    property var layouts: {
         "ar": {
             // Arabic
             "label": "العربية",
@@ -228,15 +228,15 @@ QtObject {
             "label": "繁體中文",
             "kb_code": "zh_TW"
         }
-        // FIXME: Missing layout for "zh_HK" (HongKong Chinese). This might be a SDDM bug.
+        // FIXME: Missing layout for "zh_HK" (HongKong Chinese). This might be yet another SDDM bug.
     }
 
     function getKBCodeFor(country) {
         // TODO: Better defaults
-        return langs[country]["kb_code"] || "en_US";
+        return layouts[country]["kb_code"] || "en_US";
     }
 
     function getLabelFor(country) {
-        return langs[country]["label"] || null;
+        return layouts[country]["label"] || null;
     }
 }
