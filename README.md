@@ -22,31 +22,31 @@ git clone --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && 
 
 ### 1. Install dependencies:
 
-Arch Linux
+#### Arch Linux
 
 ```bash
 sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard
 ```
 
-Debian
+#### Debian
 
 ```bash
 sudo apt-get install sddm qt6-svg qt6-virtualkeyboard
 ```
 
-Void Linux
+#### Void Linux
 
 ```bash
 sudo xbps-install sddm qt6-svg qt6-virtualkeyboard
 ```
 
-Fedora
+#### Fedora
 
 ```bash
 sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard
 ```
 
-OpenSUSE
+#### OpenSUSE
 
 ```bash
 sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports
@@ -54,7 +54,7 @@ sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-
 
 # Customizing
 
-...
+You can find some presets in `./configs/`
 
 # Acknowledgements
 
