@@ -11,14 +11,14 @@
       <img src="./previews/default_lock.png" width="49%" />
       <img src="./previews/default_login.png" width="49%" />
     </p>
-</details>>
+</details>
 
 # Dependencies
 
 - SDDM ≥ 0.20;
 - QT ≥ 6.5;
 - qt6-svg;
-- qt6-virtualkeyboard;
+- qt6-virtualkeyboard
 
 # Installation
 
@@ -64,9 +64,17 @@ sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-
 
 # Customizing
 
-The premade configs are located in `./configs/`. To change the active config, edit the `./metadata.desktop` file and replace the `ConfigFile=` option's value.
+The preset configs are located in `./configs/`. To change the active config, edit the `./metadata.desktop` file and replace the `ConfigFile=` option's value.
+
+> [!NOTE]
+> Changes made to the theme will only be applied to the login screen if you reinstall it by moving its contents to /usr/share/sddm/themes/silent/: `sudo cp -rf ./. /usr/share/sddm/themes/silent/`.
+
+<br/>
 
 You can also create a new config file. There's a detailed guide in addition to the available options in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
+
+> [!IMPORTANT]
+> Don't forget to test the theme before installing it by running `./test`, otherwise you might end up with a broken login screen.
 
 # Acknowledgements
 
