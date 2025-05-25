@@ -19,7 +19,7 @@ KeyboardStyle {
     property color primaryLightColor: "#FFFFFF"
     property color primaryDarkColor: "#FFFFFF"
     property color textOnPrimaryColor: "#ffffff"
-    property color secondaryColor: "#FF0000"
+    property color secondaryColor: "#CCCCCC"
     property color secondaryLightColor: "#00FF00"
     property color secondaryDarkColor: "#0000FF"
     property color textOnSecondaryColor: "#ffffff"

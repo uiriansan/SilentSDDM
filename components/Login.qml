@@ -16,7 +16,6 @@ Item {
     property alias button: loginButton
     property alias loginArea: loginSection
     property bool showKeyboard: false
-    property bool returnKeyboard: false
     property string activeMenu: ""
     property bool isAuthorizing: false
 
@@ -33,10 +32,6 @@ Item {
     signal needClose
 
     onActiveMenuChanged: {
-        if (returnKeyboard) {
-            showKeyboard = true;
-            returnKeyboard = false;
-        }
         passwdInput.input.forceActiveFocus();
     }
 
@@ -52,10 +47,6 @@ Item {
             passwdInput.text = "";
             passwdInput.focus = true;
             loginArea.visible = true;
-            if (returnKeyboard) {
-                showKeyboard = true;
-                returnKeyboard = false;
-            }
         }
 
         target: sddm
@@ -180,10 +171,6 @@ Item {
                             spinner.visible = true;
                             loginArea.visible = false;
                             isAuthorizing = true;
-                            if (showKeyboard) {
-                                showKeyboard = false;
-                                returnKeyboard = true;
-                            }
                             sddm.login(userName, passwdInput.text, sessionIndex);
                         }
                     }
@@ -211,10 +198,6 @@ Item {
                             spinner.visible = true;
                             loginArea.visible = false;
                             isAuthorizing = true;
-                            if (showKeyboard) {
-                                showKeyboard = false;
-                                returnKeyboard = true;
-                            }
                             sddm.login(userName, passwdInput.text, sessionIndex);
                         }
                     }
@@ -273,13 +256,13 @@ Item {
             width: Math.min(parent.width / 2, loginArea.width * 3)
             visible: showKeyboard
             externalLanguageSwitchEnabled: true
-            onExternalLanguageSwitch: {
-                activeMenu = activeMenu === "" ? "language" : "";
+			onExternalLanguageSwitch: {
+				// TODO: Open lang popup
             }
-            onActiveChanged: {
-                if (showKeyboard)
-                    showKeyboard = false;
-            }
+            // onActiveChanged: {
+            //     if (showKeyboard)
+            //         showKeyboard = false;
+            // }
             Component.onCompleted: {
                 VirtualKeyboardSettings.styleName = "tstyle";
                 VirtualKeyboardSettings.layout = "symbols";

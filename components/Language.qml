@@ -23,7 +23,7 @@ Item {
         id: languagePopup
         z: 2
         width: 200
-        height: keyboard && keyboard.layouts.length > 0 ? Math.min(keyboard.layouts.length * listEntryHeight + 13, 300) : noLangText.height
+        height: keyboard && keyboard.layouts.length > 0 ? Math.min(keyboard.layouts.length * listEntryHeight + 14, 300) : noLangText.height
         visible: popupVisible
         color: "transparent"
         anchors.bottom: parent.bottom
@@ -104,6 +104,7 @@ Item {
                             languageShort = shortName;
                             languageChanged(currentLanguageIndex);
                         }
+						print(JSON.stringify(keyboard.layouts))
                     }
 
                     MouseArea {
