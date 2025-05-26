@@ -2,7 +2,7 @@
 > UNDER DEVELOPMENT <br/>
 > A beta will be released soon. I discourage you from using this theme until then.
 
-> [!WARNING] 
+> [!WARNING]
 > **PRE-RELEASE** <br/>
 > Bugs are expected. SDDM itself has some [annoying issues](https://github.com/uiriansan/SilentSDDM/issues?q=is%3Aissue%20label%3Asddm-issue) and limitations that make it very hard to create an actual good theme. If you encounter a bug, feel free to [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose).
 
@@ -71,7 +71,7 @@ sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-
 ```
 
 > [!NOTE]
-> You can also get the compressed files from the [latest release](https://github.com/uiriansan/LainGrubTheme/releases/latest).
+> You can also get the compressed files from the [latest release](https://github.com/uiriansan/SilentSDDM/releases/latest).
 
 # Customizing
 
@@ -86,15 +86,16 @@ ConfigFile=configs/<your_preferred_config>.conf
 
 <br/>
 
-You can also create a new config file. There's a detailed guide in addition to the available options in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
+You can also create a new config file. There's a detailed guide with the list of available options in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
 
 > [!IMPORTANT]
 > Don't forget to test the theme after every change by running `./test`, otherwise you might end up with a broken login screen.
 
 # Acknowledgements
 
-- [Match-Yang/sddm-deepin](https://github.com/Match-Yang/sddm-deepin): code reference;
-- [Keyitdev/sddm-astronaut-theme](https://github.com/Keyitdev/sddm-astronaut-theme): code reference;
+- [Keyitdev/sddm-astronaut-theme](https://github.com/Keyitdev/sddm-astronaut-theme): inspiration and code reference;
+- [Match-Yang/sddm-deepin](https://github.com/Match-Yang/sddm-deepin): inspiration and code reference;
+- [qt/qtvirtualkeyboard](https://github.com/qt/qtvirtualkeyboard): code reference;
 - [Joyston Judah](https://www.pexels.com/photo/white-and-black-mountain-wallpaper-933054/): background;
 - [iconify.design](https://iconify.design/): icons
 

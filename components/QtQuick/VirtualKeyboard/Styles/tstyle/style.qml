@@ -1,6 +1,8 @@
 // Copyright (C) 2016 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
+// Taken from https://github.com/qt/qtvirtualkeyboard/blob/16fbddbbc03777e0a006daa998eda14624d62268/src/styles/builtin/default/style.qml#L11
+
 import QtQuick
 import QtQuick.VirtualKeyboard
 import QtQuick.VirtualKeyboard.Styles

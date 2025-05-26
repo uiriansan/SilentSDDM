@@ -128,6 +128,9 @@ Item {
                 function close() {
                     return;
                 }
+
+                KeyNavigation.tab: passwdInput
+                KeyNavigation.backtab: powerButton
             }
 
             Text {
@@ -174,6 +177,9 @@ Item {
                             sddm.login(userName, passwdInput.text, sessionIndex);
                         }
                     }
+
+                    KeyNavigation.tab: loginButton
+                    KeyNavigation.backtab: userListContainer
                 }
 
                 IconButton {
@@ -201,6 +207,9 @@ Item {
                             sddm.login(userName, passwdInput.text, sessionIndex);
                         }
                     }
+
+                    KeyNavigation.tab: sessionButton
+                    KeyNavigation.backtab: passwdInput
                 }
             }
 
@@ -256,9 +265,9 @@ Item {
             width: Math.min(parent.width / 2, loginArea.width * 3)
             visible: showKeyboard
             externalLanguageSwitchEnabled: true
-			onExternalLanguageSwitch: {
-				// TODO: Open lang popup
-            }
+            onExternalLanguageSwitch:
+            // TODO: Open lang popup
+            {}
             // onActiveChanged: {
             //     if (showKeyboard)
             //         showKeyboard = false;
@@ -366,6 +375,9 @@ Item {
                             loginFrame.activePopup = null;
                         }
                     }
+
+                    KeyNavigation.tab: languageButton
+                    KeyNavigation.backtab: loginButton
                 }
             }
 
@@ -417,6 +429,9 @@ Item {
                             loginFrame.activePopup = null;
                         }
                     }
+
+                    KeyNavigation.tab: keyboardButton
+                    KeyNavigation.backtab: sessionButton
                 }
             }
 
@@ -435,6 +450,9 @@ Item {
                         showKeyboard = !showKeyboard;
                     }
                     tooltip_text: "Toggle virtual keyboard"
+
+                    KeyNavigation.tab: powerButton
+                    KeyNavigation.backtab: languageButton
                 }
             }
 
@@ -485,6 +503,9 @@ Item {
                             loginFrame.activePopup = null;
                         }
                     }
+
+                    KeyNavigation.tab: userListContainer
+                    KeyNavigation.backtab: keyboardButton
                 }
             }
 

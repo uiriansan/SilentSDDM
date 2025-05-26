@@ -127,6 +127,7 @@ Item {
                 }
 
                 onClicked: {
+                    print(model.needsPassword);
                     if (!listUsers) {
                         click();
                         userList.model.reset();

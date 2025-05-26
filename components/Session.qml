@@ -21,7 +21,7 @@ Item {
     }
 
     function getSessionIcon(name) {
-        const available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "awesome", "qtile", "i3", "bspwm", "dwm", "xfce", "cinnamon"];
+        const available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "awesome", "qtile", "i3", "bspwm", "dwm", "xfce", "cinnamon", "niri"];
         for (let i = 0; i < available_session_icons.length; i++) {
             if (name && name.toLowerCase().includes(available_session_icons[i]))
                 return "icons/sessions/" + available_session_icons[i] + ".svg";
@@ -87,6 +87,10 @@ Item {
                         verticalCenter: parent.verticalCenter
                     }
                     source: getSessionIcon(name)
+                    width: 16
+                    height: 16
+                    sourceSize: Qt.size(width, height)
+                    fillMode: Image.PreserveAspectFit
 
                     MultiEffect {
                         source: sessionListIcon
