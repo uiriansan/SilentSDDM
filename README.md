@@ -2,9 +2,8 @@
 > UNDER DEVELOPMENT <br/>
 > A beta will be released soon. I discourage you from using this theme until then.
 
-> [!WARNING] 
-> **PRE-RELEASE** <br/>
-> Bugs are expected. SDDM itself has some annoying issues and limitations that make it very hard to create an actual good product. If you encounter a bug, feel free to [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose).
+> [!WARNING] > **PRE-RELEASE** <br/>
+> Bugs are expected. SDDM itself has some [annoying issues](https://github.com/uiriansan/SilentSDDM/issues?q=is%3Aissue%20label%3Asddm-issue) and limitations that make it very hard to create an actual good theme. If you encounter a bug, feel free to [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose).
 
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/previews/silent.gif" width="100%" />
 
@@ -69,6 +68,9 @@ sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard
 ```bash
 sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports
 ```
+
+> [!NOTE]
+> You can also get the compressed files from the [latest release](https://github.com/uiriansan/LainGrubTheme/releases/latest).
 
 # Customizing
 
