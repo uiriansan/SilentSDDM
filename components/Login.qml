@@ -18,10 +18,15 @@ Item {
     property bool showKeyboard: false
     property string activeMenu: ""
     property bool isAuthorizing: false
+    property bool needsPassword: true
 
     property var activePopup: null
     onActivePopupChanged: {
-        passwdInput.input.forceActiveFocus();
+        if (needsPassword) {
+            passwdInput.input.forceActiveFocus();
+        } else {
+            loginButton.forceActiveFocus();
+        }
     }
 
     // Break property binding so it doesn't update when `keyboard.capsLock` changes.
@@ -31,13 +36,19 @@ Item {
 
     signal needClose
 
-    onActiveMenuChanged: {
-        passwdInput.input.forceActiveFocus();
+    function login() {
+        if (passwdInput.text.length > 0 || !loginFrame.needsPassword) {
+            spinner.visible = true;
+            loginArea.visible = false;
+            isAuthorizing = true;
+            sddm.login(userName, passwdInput.text, sessionIndex);
+        }
     }
 
     Connections {
         function onLoginSucceeded() {
             spinner.visible = false;
+            loginSection.scale = 0.0;
         }
 
         function onLoginFailed() {
@@ -45,8 +56,12 @@ Item {
             spinner.visible = false;
             loginMessage.warn(textConstants.loginFailed, "error");
             passwdInput.text = "";
-            passwdInput.focus = true;
+            passwdInput.input.forceActiveFocus();
             loginArea.visible = true;
+        }
+
+        function onInformationMessage(message) {
+            loginMessage.warn(message, "error");
         }
 
         target: sddm
@@ -71,6 +86,12 @@ Item {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 verticalCenter: parent.verticalCenter
+            }
+
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 200
+                }
             }
 
             focus: loginFrame.activePopup !== null
@@ -102,17 +123,18 @@ Item {
 
             User {
                 id: userListContainer
-                z: 2
-
                 width: parent.width
                 height: config.selectedAvatarSize || 120
                 listUsers: loginFrame.activePopup == userListContainer
                 enabled: !loginFrame.isAuthorizing
+                activeFocusOnTab: true
+                focus: false
                 onClick: {
                     loginFrame.activePopup = userListContainer;
                 }
-                onUserChanged: index => {
+                onUserChanged: (index, needsPasswd) => {
                     userIndex = index;
+                    loginFrame.needsPassword = needsPasswd;
                 }
                 onCloseUserList: {
                     loginFrame.activePopup = null;
@@ -128,9 +150,6 @@ Item {
                 function close() {
                     return;
                 }
-
-                KeyNavigation.tab: passwdInput
-                KeyNavigation.backtab: powerButton
             }
 
             Text {
@@ -158,40 +177,33 @@ Item {
                 visible: false
             }
 
-            Item {
+            Row {
                 id: loginArea
-
-                width: childrenRect.width
                 anchors.top: userNameText.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.topMargin: 20
+                spacing: 5
 
                 PasswordInput {
                     id: passwdInput
                     enabled: loginFrame.activePopup === null
+                    visible: loginFrame.needsPassword
                     onAccepted: {
-                        if (passwdInput.text.length > 0) {
-                            spinner.visible = true;
-                            loginArea.visible = false;
-                            isAuthorizing = true;
-                            sddm.login(userName, passwdInput.text, sessionIndex);
-                        }
+                        loginFrame.login();
                     }
-
-                    KeyNavigation.tab: loginButton
-                    KeyNavigation.backtab: userListContainer
                 }
 
                 IconButton {
                     id: loginButton
 
                     height: passwdInput.height
-                    width: height
                     enabled: activePopup === null
-                    anchors.left: (passwdInput.right)
-                    anchors.leftMargin: config.loginButtonMarginLeft || 5
+                    activeFocusOnTab: true
+                    focus: loginFrame.needsPassword ? false : (loginFrame.activePopup !== null ? false : true)
                     icon: "icons/arrow-right.svg"
-                    tooltip_text: textConstants.login
+                    label: loginFrame.needsPassword ? "" : textConstants.login.toUpperCase()
+                    tooltip_text: loginFrame.needsPassword ? textConstants.login : ""
+                    boldLabel: true
                     iconSize: config.loginButtonIconSize || 24
                     iconColor: config.loginButtonIconColor || "#FFFFFF"
                     hoverIconColor: config.loginButtonHoverIconColor || "#FFFFFF"
@@ -200,16 +212,8 @@ Item {
                     hoverBackgroundColor: config.loginButtonHoverBackgroundColor || "#FFFFFF"
                     hoverBackgroundOpacity: config.loginButtonHoverBackgroundOpacity || 0.3
                     onClicked: {
-                        if (passwdInput.text.length > 0) {
-                            spinner.visible = true;
-                            loginArea.visible = false;
-                            isAuthorizing = true;
-                            sddm.login(userName, passwdInput.text, sessionIndex);
-                        }
+                        loginFrame.login();
                     }
-
-                    KeyNavigation.tab: sessionButton
-                    KeyNavigation.backtab: passwdInput
                 }
             }
 
@@ -265,9 +269,10 @@ Item {
             width: Math.min(parent.width / 2, loginArea.width * 3)
             visible: showKeyboard
             externalLanguageSwitchEnabled: true
-            onExternalLanguageSwitch:
+            onExternalLanguageSwitch: {
+                return;
+            }
             // TODO: Open lang popup
-            {}
             // onActiveChanged: {
             //     if (showKeyboard)
             //         showKeyboard = false;
@@ -335,6 +340,8 @@ Item {
                     height: 30
                     iconSize: 15
                     pressed: popup.visible
+                    activeFocusOnTab: true
+                    focus: false
                     onClicked: {
                         popup.open();
                         activePopup = popup;
@@ -353,7 +360,6 @@ Item {
                             color: "transparent"  // Use whatever color/opacity you like
                         }
 
-                        focus: true
                         modal: true
                         popupType: Popup.Item
                         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -375,9 +381,6 @@ Item {
                             loginFrame.activePopup = null;
                         }
                     }
-
-                    KeyNavigation.tab: languageButton
-                    KeyNavigation.backtab: loginButton
                 }
             }
 
@@ -391,6 +394,8 @@ Item {
                     icon: "icons/language.svg"
                     iconSize: 15
                     pressed: popup.visible
+                    activeFocusOnTab: true
+                    focus: false
                     onClicked: {
                         popup.open();
                         activePopup = popup;
@@ -410,7 +415,6 @@ Item {
                             color: "transparent"  // Use whatever color/opacity you like
                         }
 
-                        focus: true
                         modal: true
                         popupType: Popup.Item
                         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -429,9 +433,6 @@ Item {
                             loginFrame.activePopup = null;
                         }
                     }
-
-                    KeyNavigation.tab: keyboardButton
-                    KeyNavigation.backtab: sessionButton
                 }
             }
 
@@ -446,13 +447,12 @@ Item {
                     icon: "icons/keyboard.svg"
                     iconSize: 15
                     pressed: showKeyboard
+                    activeFocusOnTab: true
+                    focus: false
                     onClicked: {
                         showKeyboard = !showKeyboard;
                     }
                     tooltip_text: "Toggle virtual keyboard"
-
-                    KeyNavigation.tab: powerButton
-                    KeyNavigation.backtab: languageButton
                 }
             }
 
@@ -467,6 +467,8 @@ Item {
                     icon: "icons/power.svg"
                     iconSize: 15
                     pressed: popup.visible
+                    activeFocusOnTab: true
+                    focus: false
                     onClicked: {
                         popup.open();
                         activePopup = popup;
@@ -485,7 +487,6 @@ Item {
                             color: "transparent"  // Use whatever color/opacity you like
                         }
 
-                        focus: true
                         modal: true
                         popupType: Popup.Item
                         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -503,9 +504,6 @@ Item {
                             loginFrame.activePopup = null;
                         }
                     }
-
-                    KeyNavigation.tab: userListContainer
-                    KeyNavigation.backtab: keyboardButton
                 }
             }
 

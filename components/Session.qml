@@ -13,12 +13,6 @@ Item {
     property int currentSessionIndex: sessionModel.lastIndex >= 0 ? sessionModel.lastIndex : 0
     property string sessionName: ""
     property string sessionIconPath: ""
-    property bool popupVisible: false
-
-    function close() {
-        sessionPopup.visible = false;
-        popupVisible = false;
-    }
 
     function getSessionIcon(name) {
         const available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "awesome", "qtile", "i3", "bspwm", "dwm", "xfce", "cinnamon", "niri"];
@@ -64,6 +58,8 @@ Item {
             currentIndex: sessionModel.lastIndex
 
             spacing: 2
+            keyNavigationEnabled: true
+            keyNavigationWraps: true
 
             delegate: Rectangle {
                 z: 2

@@ -64,10 +64,6 @@ Rectangle {
             duration: 400
             properties: "blur"
         }
-        PropertyAnimation {
-            duration: 200
-            properties: "scale"
-        }
     }
 
     Repeater {

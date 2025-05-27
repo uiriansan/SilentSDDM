@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 
 Canvas {
     id: avatar
@@ -9,6 +10,8 @@ Canvas {
     property color strokeColor: "#ffffff"
     property int strokeSize: 2
     property bool drawShadow: true
+    property string tooltipText: ""
+    property bool showTooltip: false
 
     signal clicked
     signal clickedOutside
@@ -39,7 +42,7 @@ Canvas {
             source = "icons/user-default.png";
         ctx.drawImage(source, 0, 0, width, height);
 
-        if (drawStroke) {
+        if (avatar.drawStroke) {
             ctx.strokeStyle = avatar.strokeColor;
             ctx.lineWidth = avatar.strokeSize;
             ctx.stroke();
@@ -47,12 +50,15 @@ Canvas {
     }
 
     MouseArea {
+        id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.ArrowCursor
 
         function isCursorInsideAvatar() {
-            if (avatar.avatarShape === "square" || avatar.avatarShape === "squircle")
+            if (!mouseArea.containsMouse)
+                return false;
+            if (avatar.avatarShape === "square")
                 return true;
 
             // Calculate ellipse center and radius
@@ -90,6 +96,23 @@ Canvas {
 
         onMouseXChanged: updateHover()
         onMouseYChanged: updateHover()
+
+        ToolTip {
+            parent: mouseArea
+            visible: showTooltip || (mouseArea.isCursorInsideAvatar() && tooltipText !== "")
+            delay: 300
+            text: tooltipText
+            contentItem: Text {
+                text: tooltipText
+                color: "#FFFFFF"
+            }
+            background: Rectangle {
+                color: "#FFFFFF"
+                opacity: 0.15
+                border.width: 0
+                radius: 5
+            }
+        }
     }
 
     // FIX: paint() not affect event if source is not empty in initialization

@@ -104,7 +104,6 @@ Item {
                             languageShort = shortName;
                             languageChanged(currentLanguageIndex);
                         }
-						print(JSON.stringify(keyboard.layouts))
                     }
 
                     MouseArea {

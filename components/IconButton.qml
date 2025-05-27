@@ -6,6 +6,7 @@ Item {
     id: iconButton
     property string icon: ""
     property string label: ""
+    property bool boldLabel: false
     property int iconSize: 24
     property double backgroundOpacity: 0.0
     property color backgroundColor: "#FFFFFF"
@@ -18,23 +19,34 @@ Item {
     signal clicked
 
     height: iconSize * 2
-    width: childrenRect.width
+    width: buttonContentRow.width // childrenRect doesn't update for some reason
 
     Rectangle {
-        id: buttonBackground
+        id: buttonBorder
         anchors.fill: parent
-        color: pressed ? iconButton.hoverBackgroundColor : (mouseArea.pressed ? iconButton.hoverBackgroundColor : (mouseArea.containsMouse ? iconButton.hoverBackgroundColor : iconButton.backgroundColor))
+        color: "transparent"
         radius: 10
-        opacity: pressed ? iconButton.hoverBackgroundOpacity : (mouseArea.pressed ? iconButton.hoverBackgroundOpacity : (mouseArea.containsMouse ? iconButton.hoverBackgroundOpacity : iconButton.backgroundOpacity))
+        border {
+            color: "#FFFFFF"
+            width: iconButton.focus ? 1 : 0
+        }
+        Rectangle {
+            id: buttonBackground
+            anchors.fill: parent
+            color: pressed ? iconButton.hoverBackgroundColor : (mouseArea.pressed ? iconButton.hoverBackgroundColor : (mouseArea.containsMouse ? iconButton.hoverBackgroundColor : (iconButton.focus ? iconButton.hoverBackgroundColor : iconButton.backgroundColor)))
+            radius: 10
+            opacity: pressed ? iconButton.hoverBackgroundOpacity : (mouseArea.pressed ? iconButton.hoverBackgroundOpacity : (mouseArea.containsMouse ? iconButton.hoverBackgroundOpacity : (iconButton.focus ? iconButton.hoverBackgroundOpacity : iconButton.backgroundOpacity)))
 
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 250
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 250
+                }
             }
         }
     }
 
     Row {
+        id: buttonContentRow
         height: parent.height
 
         Rectangle {
@@ -51,7 +63,7 @@ Item {
                 height: iconButton.iconSize
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
-                opacity: iconButton.enabled ? 1.0 : 0.5
+                opacity: iconButton.enabled ? 1.0 : 0.3
 
                 MultiEffect {
                     source: buttonIcon
@@ -65,8 +77,9 @@ Item {
         Text {
             id: buttonLabel
             text: iconButton.label
-            visible: iconButton.label !== ""
+            visible: text !== ""
             font.pointSize: 8
+            font.bold: iconButton.boldLabel
             rightPadding: 10
             color: mouseArea.pressed ? iconButton.hoverIconColor : (mouseArea.containsMouse ? iconButton.hoverIconColor : iconButton.iconColor)
             opacity: iconButton.enabled ? 1.0 : 0.5
@@ -84,7 +97,7 @@ Item {
         cursorShape: Qt.PointingHandCursor
         ToolTip {
             parent: mouseArea
-            visible: mouseArea.containsMouse && tooltip_text !== ""
+            visible: mouseArea.containsMouse && tooltip_text !== "" || iconButton.focus && tooltip_text !== ""
             delay: 300
             text: tooltip_text
             contentItem: Text {

@@ -3,8 +3,9 @@ import QtQuick.Controls
 import SddmComponents
 
 Item {
+    id: userSelector
     signal click
-    signal userChanged(userIndex: int)
+    signal userChanged(userIndex: int, needsPasswd: bool)
     signal closeUserList
     property bool listUsers: false
 
@@ -66,13 +67,7 @@ Item {
             userName = username;
             userIcon = userIconL;
             userNameText.text = userRealName ? userRealName : username;
-            userChanged(currentIndex);
-
-            if (!needsPasswd) {
-                loginFrame.showKeyboard = true;
-            } else {
-                loginFrame.showKeyboard = false;
-            }
+            userChanged(currentIndex, needsPasswd);
         }
 
         delegate: Rectangle {
@@ -80,8 +75,7 @@ Item {
             width: index === userList.currentIndex ? config.selectedAvatarSize || 120 : config.standardAvatarSize || 80
             height: index === userList.currentIndex ? config.selectedAvatarSize || 120 : config.standardAvatarSize || 80
             anchors.verticalCenter: parent.verticalCenter
-
-            color: model.needsPassword ? "transparent" : "#FF0000"
+            color: "transparent"
 
             visible: listUsers || index === userList.currentIndex
 
@@ -117,6 +111,9 @@ Item {
                 source: model.icon
                 opacity: index === userList.currentIndex ? 1.0 : config.standardAvatarOpacity || 0.35
                 enabled: userModel.rowCount() > 1
+                tooltipText: index === userList.currentIndex && listUsers ? "Close user selection" : (index === userList.currentIndex && !listUsers ? "Select user" : `Select user ${model.name}`)
+                showTooltip: userSelector.focus && !listUsers && index === userList.currentIndex
+                drawStroke: userSelector.focus && !listUsers && index === userList.currentIndex
 
                 // Opacity transition
                 Behavior on opacity {
@@ -127,7 +124,6 @@ Item {
                 }
 
                 onClicked: {
-                    print(model.needsPassword);
                     if (!listUsers) {
                         click();
                         userList.model.reset();
