@@ -233,7 +233,7 @@ QtObject {
 
     function getKBCodeFor(country) {
         // TODO: Better defaults
-        return layouts[country]["kb_code"] || "en_US";
+        return layouts[country]["kb_code"] || "";
     }
 
     function getLabelFor(country) {

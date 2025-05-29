@@ -4,12 +4,12 @@ import QtQuick.Controls
 Canvas {
     id: avatar
     property string source: ""
-    property string avatarShape: "circle"
-    property int squareRadius: 20 // min: 1
+    property string avatarShape: Config.avatarShape
+    property int squareRadius: Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius // min: 1
     property bool drawStroke: false
     property color strokeColor: "#ffffff"
     property int strokeSize: 2
-    property bool drawShadow: true
+    property bool drawShadow: Config.avatarShadow
     property string tooltipText: ""
     property bool showTooltip: false
 
@@ -102,7 +102,9 @@ Canvas {
             visible: showTooltip || (mouseArea.isCursorInsideAvatar() && tooltipText !== "")
             delay: 300
             text: tooltipText
+            font.family: Config.fontFamily
             contentItem: Text {
+                font.family: Config.fontFamily
                 text: tooltipText
                 color: "#FFFFFF"
             }

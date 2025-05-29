@@ -15,7 +15,7 @@ Item {
     property alias input: passwdInput
     property alias button: loginButton
     property alias loginArea: loginSection
-    property bool showKeyboard: false
+    property bool showKeyboard: !Config.virtualKeyboardStartHidden
     property string activeMenu: ""
     property bool isAuthorizing: false
     property bool needsPassword: true
@@ -74,7 +74,8 @@ Item {
         width: parent.width
         height: parent.height
         Component.onCompleted: {
-            VirtualKeyboardSettings.locale = keyboard.layouts[keyboard.currentLayout] ? Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName) : "en_US";
+            // It probably defaults to the system language or something if empty/wrong
+            VirtualKeyboardSettings.locale = keyboard.layouts[keyboard.currentLayout] ? Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName) : "";
         }
 
         Item {
@@ -89,6 +90,7 @@ Item {
             }
 
             Behavior on scale {
+                enabled: Config.enableAnimations
                 NumberAnimation {
                     duration: 200
                 }
@@ -157,13 +159,13 @@ Item {
 
                 text: userName
                 font.bold: true
-                font.family: config.font || "RedHatDisplay"
-                color: config.userNameColor || "#FFFFFF"
-                font.pointSize: config.userNameFontSize || 15
+                font.family: Config.fontFamily
+                color: Config.usernameColor
+                font.pixelSize: Config.usernameFontSize
 
                 anchors {
                     top: userListContainer.bottom
-                    topMargin: 10
+                    topMargin: Config.usernameMarginTop // 10
                     horizontalCenter: parent.horizontalCenter
                 }
             }
@@ -173,7 +175,7 @@ Item {
 
                 anchors.top: userNameText.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.topMargin: 10
+                anchors.topMargin: Config.spinnerMarginTop // 10
                 visible: false
             }
 
@@ -181,8 +183,8 @@ Item {
                 id: loginArea
                 anchors.top: userNameText.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.topMargin: 20
-                spacing: 5
+                anchors.topMargin: Config.passwordInputMarginTop // 20
+                spacing: Config.loginButtonMarginLeft
 
                 PasswordInput {
                     id: passwdInput
@@ -201,16 +203,17 @@ Item {
                     activeFocusOnTab: true
                     focus: loginFrame.needsPassword ? false : (loginFrame.activePopup !== null ? false : true)
                     icon: "icons/arrow-right.svg"
-                    label: loginFrame.needsPassword ? "" : textConstants.login.toUpperCase()
-                    tooltip_text: loginFrame.needsPassword ? textConstants.login : ""
+                    label: loginFrame.needsPassword ? "" : (Config.loginButtonShowTextIfNoPassword ? textConstants.login.toUpperCase() : "")
+                    tooltip_text: loginFrame.needsPassword ? textConstants.login : (Config.loginButtonShowTextIfNoPassword ? "" : textConstants.login)
                     boldLabel: true
-                    iconSize: config.loginButtonIconSize || 24
-                    iconColor: config.loginButtonIconColor || "#FFFFFF"
-                    hoverIconColor: config.loginButtonHoverIconColor || "#FFFFFF"
-                    backgroundColor: config.loginButtonBackgroundColor || "#FFFFFF"
-                    backgroundOpacity: config.loginButtonBackgroundOpacity || 0.15
-                    hoverBackgroundColor: config.loginButtonHoverBackgroundColor || "#FFFFFF"
-                    hoverBackgroundOpacity: config.loginButtonHoverBackgroundOpacity || 0.3
+                    iconSize: Config.loginButtonIconSize
+                    fontSize: Config.loginButtonFontSize
+                    iconColor: Config.loginButtonContentColor
+                    hoverIconColor: Config.loginButtonActiveContentColor
+                    backgroundColor: Config.loginButtonBackgroundColor
+                    backgroundOpacity: Config.loginButtonBackgroundOpacity
+                    hoverBackgroundColor: Config.loginButtonActiveBackgroundColor
+                    hoverBackgroundOpacity: Config.loginButtonActiveBackgroundOpacity
                     onClicked: {
                         loginFrame.login();
                     }
@@ -219,14 +222,15 @@ Item {
 
             Text {
                 id: loginMessage
-                font.pointSize: config.warningMessageSize || 9
-                font.family: config.font || "RedHatDisplay"
-                color: config.warningMessageColor || "#FFFFFF"
+                font.pixelSize: Config.warningMessageFontSize
+                font.family: Config.fontFamily
+                font.bold: Config.warningMessageBold
+                color: Config.warningMessageNormalColor
                 visible: false
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     top: loginArea.bottom
-                    topMargin: 50
+                    topMargin: Config.warningMessageMarginTop // 50
                 }
                 Component.onCompleted: {
                     if (loginFrame.capsLockOn)
@@ -235,6 +239,7 @@ Item {
 
                 function warn(message, type) {
                     text = message;
+                    color = type === "error" ? Config.warningMessageErrorColor : (type === "warning" ? Config.warningMessageWarningColor : Config.warningMessageNormalColor);
                     visible = true;
                 }
 
@@ -266,7 +271,7 @@ Item {
             // TODO: Keep keyboard visible.
             id: inputPanel
             z: 99
-            width: Math.min(parent.width / 2, loginArea.width * 3)
+            width: Math.min(parent.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
             visible: showKeyboard
             externalLanguageSwitchEnabled: true
             onExternalLanguageSwitch: {
@@ -282,10 +287,16 @@ Item {
                 VirtualKeyboardSettings.layout = "symbols";
             }
 
+            property string pos: Config.virtualKeyboardPosition
             anchors {
-                top: loginSection.bottom
-                horizontalCenter: parent.horizontalCenter
-                topMargin: loginMessage.text === "" ? -20 : 10
+                top: pos === "top" ? parent.top : (pos === "bottom" ? loginSection.bottom : undefined)
+                topMargin: pos === "top" ? Config.menuAreaMarginTop : (pos === "bottom" ? (!loginMessage.visible ? loginMessage.anchors.topMargin : loginMessage.anchors.topMargin + 10) : undefined)
+                left: pos === "left" ? parent.left : undefined
+                leftMargin: pos === "left" ? Config.menuAreaMarginLeft : undefined
+                right: pos === "right" ? parent.right : undefined
+                rightMargin: pos === "right" ? Config.menuAreaMarginRight : undefined
+                horizontalCenter: pos === "top" || pos === "bottom" ? parent.horizontalCenter : undefined
+                verticalCenter: pos === "left" || pos === "right" ? parent.verticalCenter : undefined
             }
         }
 
@@ -335,11 +346,19 @@ Item {
 
                 IconButton {
                     id: sessionButton
-                    property bool showLabel: true
-                    width: showLabel ? 200 : childrenRect.width
-                    height: 30
-                    iconSize: 15
+                    property bool showLabel: Config.sessionButtonDisplaySessionName
+                    width: showLabel ? Config.sessionButonMaxWidth : Config.menuAreaButtonsSize
+                    height: Config.menuAreaButtonsSize
+                    iconSize: Config.sessionButtonIconSize
+                    fontSize: Config.sessionButtonFontSize
                     pressed: popup.visible
+                    iconColor: Config.sessionButtonContentColor
+                    hoverIconColor: Config.sessionButtonActiveContentColor
+                    borderRadius: Config.menuAreaButtonsBorderRadius
+                    backgroundColor: Config.sessionButtonBackgroundColor
+                    backgroundOpacity: Config.sessionButtonBackgroundOpacity
+                    hoverBackgroundColor: Config.sessionButtonBackgroundColor
+                    hoverBackgroundOpacity: Config.sessionButtonActiveBackgroundOpacity
                     activeFocusOnTab: true
                     focus: false
                     onClicked: {
@@ -352,6 +371,7 @@ Item {
                         id: popup
                         property int popupMargin: 5
                         parent: sessionButton
+                        padding: 0
                         background: Rectangle {
                             color: "transparent"
                         }
@@ -375,7 +395,7 @@ Item {
                         }
 
                         Component.onCompleted: {
-                            [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
+                            [x, y] = menuArea.calculatePopupPos(Config.sessionPopupDirection, width, height, parent.width, parent.height, parent.parent.x);
                         }
                         onClosed: {
                             loginFrame.activePopup = null;
@@ -390,10 +410,20 @@ Item {
                 IconButton {
                     id: languageButton
 
-                    height: 30
+                    property bool showLabel: Config.languageButtonDisplayLanguageName
+
+                    height: Config.menuAreaButtonsSize
                     icon: "icons/language.svg"
-                    iconSize: 15
                     pressed: popup.visible
+                    borderRadius: Config.menuAreaButtonsBorderRadius
+                    iconSize: Config.languageButtonIconSize
+                    fontSize: Config.languageButtonFontSize
+                    backgroundColor: Config.languageButtonBackgroundColor
+                    backgroundOpacity: Config.languageButtonBackgroundOpacity
+                    hoverBackgroundColor: Config.languageButtonBackgroundColor
+                    hoverBackgroundOpacity: Config.languageButtonActiveBackgroundOpacity
+                    iconColor: Config.languageButtonContentColor
+                    hoverIconColor: Config.languageButtonActiveContentColor
                     activeFocusOnTab: true
                     focus: false
                     onClicked: {
@@ -401,12 +431,13 @@ Item {
                         activePopup = popup;
                     }
                     tooltip_text: "Change keyboard layout"
-                    label: keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : ""
+                    label: showLabel ? (keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
 
                     Popup {
                         id: popup
                         property int popupMargin: 5
                         parent: languageButton
+                        padding: 0
                         background: Rectangle {
                             color: "transparent"
                         }
@@ -427,7 +458,7 @@ Item {
                             }
                         }
                         Component.onCompleted: {
-                            [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
+                            [x, y] = menuArea.calculatePopupPos(Config.languagePopupDirection, width, height, parent.width, parent.height, parent.parent.x);
                         }
                         onClosed: {
                             loginFrame.activePopup = null;
@@ -442,11 +473,18 @@ Item {
                 IconButton {
                     id: keyboardButton
 
-                    height: 30
-                    width: 30
+                    height: Config.menuAreaButtonsSize
+                    width: Config.menuAreaButtonsSize
                     icon: "icons/keyboard.svg"
-                    iconSize: 15
+                    iconSize: Config.keyboardButtonIconSize
+                    backgroundColor: Config.keyboardButtonBackgroundColor
+                    backgroundOpacity: Config.keyboardButtonBackgroundOpacity
+                    hoverBackgroundColor: Config.keyboardButtonBackgroundColor
+                    hoverBackgroundOpacity: Config.keyboardButtonActiveBackgroundOpacity
+                    iconColor: Config.keyboardButtonContentColor
+                    hoverIconColor: Config.keyboardButtonActiveContentColor
                     pressed: showKeyboard
+                    borderRadius: Config.menuAreaButtonsBorderRadius
                     activeFocusOnTab: true
                     focus: false
                     onClicked: {
@@ -462,11 +500,18 @@ Item {
                 IconButton {
                     id: powerButton
 
-                    height: 30
-                    width: 30
+                    height: Config.menuAreaButtonsSize
+                    width: Config.menuAreaButtonsSize
                     icon: "icons/power.svg"
-                    iconSize: 15
+                    iconSize: Config.powerButtonIconSize
+                    iconColor: Config.powerButtonContentColor
+                    hoverIconColor: Config.powerButtonActiveContentColor
                     pressed: popup.visible
+                    borderRadius: Config.menuAreaButtonsBorderRadius
+                    backgroundColor: Config.powerButtonBackgroundColor
+                    backgroundOpacity: Config.powerButtonBackgroundOpacity
+                    hoverBackgroundColor: Config.powerButtonBackgroundColor
+                    hoverBackgroundOpacity: Config.powerButtonActiveBackgroundOpacity
                     activeFocusOnTab: true
                     focus: false
                     onClicked: {
@@ -483,6 +528,7 @@ Item {
                             color: "transparent"
                         }
                         dim: true
+                        padding: 0
                         Overlay.modal: Rectangle {
                             color: "transparent"  // Use whatever color/opacity you like
                         }
@@ -498,7 +544,7 @@ Item {
                         }
 
                         Component.onCompleted: {
-                            [x, y] = menuArea.calculatePopupPos("up", width, height, parent.width, parent.height, parent.parent.x);
+                            [x, y] = menuArea.calculatePopupPos(Config.powerPopupDirection, width, height, parent.width, parent.height, parent.parent.x);
                         }
                         onClosed: {
                             loginFrame.activePopup = null;
@@ -512,13 +558,13 @@ Item {
                 id: topLeftButtons
 
                 height: 30
-                spacing: 10
+                spacing: Config.menuAreaSpacing // 10
 
                 anchors {
                     top: parent.top
                     left: parent.left
-                    topMargin: 50
-                    leftMargin: 50
+                    topMargin: Config.menuAreaMarginTop
+                    leftMargin: Config.menuAreaMarginLeft
                 }
             }
 
@@ -527,12 +573,12 @@ Item {
                 id: topCenterButtons
 
                 height: 30
-                spacing: 10
+                spacing: Config.menuAreaSpacing // 10
 
                 anchors {
                     top: parent.top
                     horizontalCenter: parent.horizontalCenter
-                    topMargin: 50
+                    topMargin: Config.menuAreaMarginTop
                 }
             }
 
@@ -541,13 +587,13 @@ Item {
                 id: topRightButtons
 
                 height: 30
-                spacing: 10
+                spacing: Config.menuAreaSpacing // 10
 
                 anchors {
                     top: parent.top
                     right: parent.right
-                    topMargin: 50
-                    rightMargin: 50
+                    topMargin: Config.menuAreaMarginTop
+                    rightMargin: Config.menuAreaMarginRight
                 }
             }
 
@@ -556,12 +602,12 @@ Item {
                 id: centerLeftButtons
 
                 width: 30
-                spacing: 10
+                spacing: Config.menuAreaSpacing // 10
 
                 anchors {
                     left: parent.left
                     verticalCenter: parent.verticalCenter
-                    leftMargin: 50
+                    leftMargin: Config.menuAreaMarginLeft
                 }
             }
 
@@ -570,12 +616,12 @@ Item {
                 id: centerRightButtons
 
                 width: 30
-                spacing: 10
+                spacing: Config.menuAreaSpacing // 10
 
                 anchors {
                     right: parent.right
                     verticalCenter: parent.verticalCenter
-                    rightMargin: 50
+                    rightMargin: Config.menuAreaMarginRight
                 }
             }
 
@@ -584,13 +630,13 @@ Item {
                 id: bottomLeftButtons
 
                 height: 30
-                spacing: 10
+                spacing: Config.menuAreaSpacing // 10
 
                 anchors {
                     bottom: parent.bottom
                     left: parent.left
-                    bottomMargin: 50
-                    leftMargin: 50
+                    bottomMargin: Config.menuAreaMarginBottom
+                    leftMargin: Config.menuAreaMarginLeft
                 }
             }
 
@@ -599,12 +645,12 @@ Item {
                 id: bottomCenterButtons
 
                 height: 30
-                spacing: 10
+                spacing: Config.menuAreaSpacing // 10
 
                 anchors {
                     bottom: parent.bottom
                     horizontalCenter: parent.horizontalCenter
-                    bottomMargin: 50
+                    bottomMargin: Config.menuAreaMarginBottom
                 }
             }
 
@@ -613,13 +659,13 @@ Item {
                 id: bottomRightButtons
 
                 height: childrenRect.height
-                spacing: 10
+                spacing: Config.menuAreaSpacing // 10
 
                 anchors {
                     bottom: parent.bottom
                     right: parent.right
-                    bottomMargin: 50
-                    rightMargin: 50
+                    bottomMargin: Config.menuAreaMarginBottom
+                    rightMargin: Config.menuAreaMarginRight
                 }
             }
 

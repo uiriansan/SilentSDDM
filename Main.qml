@@ -6,7 +6,7 @@ import "components"
 
 Rectangle {
     id: root
-    state: Config.displayLockScreen ? "lockState" : "loginState"
+    state: Config.lockScreenDisplay ? "lockState" : "loginState"
 
     readonly property color textColor: "#FFFFFF"
 
@@ -27,7 +27,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: bgBlur
-                blur: Config.lockScreenBlur ? 1.0 : 0.0
+                blur: Config.lockScreenBlur
             }
             PropertyChanges {
                 target: loginFrame.loginArea
@@ -46,7 +46,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: bgBlur
-                blur: Config.loginScreenBlur ? 1.0 : 0.0
+                blur: Config.loginScreenBlur
             }
             PropertyChanges {
                 target: loginFrame.loginArea
@@ -55,7 +55,7 @@ Rectangle {
         }
     ]
     transitions: Transition {
-        enabled: config.enableAnimations === "false" ? false : true
+        enabled: Config.enableAnimations
         PropertyAnimation {
             duration: 150
             properties: "opacity"
@@ -73,11 +73,11 @@ Rectangle {
             y: geometry.y
             width: geometry.width
             height: geometry.height
-            source: root.state === "lockState" ? config.lockScreenBackground || "./backgrounds/default.jpg" : config.loginScreenBackground || "./backgrounds/default.jpg"
+            source: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
             fillMode: Image.Tile
             onStatusChanged: {
-                if (status == Image.Error && source !== "./backgrounds/default.jpg") {
-                    source = "./backgrounds/default.jpg";
+                if (status == Image.Error && source !== "backgrounds/default.jpg") {
+                    source = "backgrounds/default.jpg";
                 }
             }
         }
@@ -94,7 +94,7 @@ Rectangle {
         Image {
             id: mainFrameBackground
             anchors.fill: parent
-            source: root.state === "lockState" ? config.lockScreenBackground || "./backgrounds/default.jpg" : config.loginScreenBackground || "./backgrounds/default.jpg"
+            source: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
         }
 
         MultiEffect {
@@ -103,6 +103,7 @@ Rectangle {
             anchors.fill: mainFrameBackground
             blurEnabled: true
             blurMax: Config.blurRadius
+            blur: 0.0
         }
 
         Item {

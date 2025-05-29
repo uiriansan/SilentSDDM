@@ -33,8 +33,8 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            color: "#FFFFFF"
-            opacity: 0.15
+            color: Config.menuAreaPopupBackgroundColor
+            opacity: Config.menuAreaPopupBackgroundOpacity
             radius: 5
         }
 
@@ -50,7 +50,13 @@ Item {
                 height: listEntryHeight
                 width: parent.width
                 icon: "icons/power-suspend.svg"
-                iconSize: 15
+                iconColor: Config.menuAreaPopupContentColor
+                hoverIconColor: Config.menuAreaPopupActiveContentColor
+                backgroundColor: Config.menuAreaPopupBackgroundColor
+                hoverBackgroundColor: Config.menuAreaPopupActiveOptionBackgroundColor
+                hoverBackgroundOpacity: Config.menuAreaPopupActiveOptionBackgroundOpacity
+                iconSize: Config.menuAreaPopupIconSize
+                fontSize: Config.menuAreaPopupFontSize
                 onClicked: sddm.suspend()
                 label: textConstants.suspend
             }
@@ -61,7 +67,13 @@ Item {
                 height: listEntryHeight
                 width: parent.width
                 icon: "icons/power-reboot.svg"
-                iconSize: 15
+                iconColor: Config.menuAreaPopupContentColor
+                hoverIconColor: Config.menuAreaPopupActiveContentColor
+                backgroundColor: Config.menuAreaPopupBackgroundColor
+                hoverBackgroundColor: Config.menuAreaPopupActiveOptionBackgroundColor
+                hoverBackgroundOpacity: Config.menuAreaPopupActiveOptionBackgroundOpacity
+                iconSize: Config.menuAreaPopupIconSize
+                fontSize: Config.menuAreaPopupFontSize
                 onClicked: sddm.reboot()
                 label: textConstants.reboot
             }
@@ -72,7 +84,13 @@ Item {
                 height: listEntryHeight
                 width: parent.width
                 icon: "icons/power.svg"
-                iconSize: 15
+                iconColor: Config.menuAreaPopupContentColor
+                hoverIconColor: Config.menuAreaPopupActiveContentColor
+                backgroundColor: Config.menuAreaPopupBackgroundColor
+                hoverBackgroundColor: Config.menuAreaPopupActiveOptionBackgroundColor
+                hoverBackgroundOpacity: Config.menuAreaPopupActiveOptionBackgroundOpacity
+                iconSize: Config.menuAreaPopupIconSize
+                fontSize: Config.menuAreaPopupFontSize
                 onClicked: sddm.powerOff()
                 label: textConstants.shutdown
             }

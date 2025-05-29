@@ -4,38 +4,32 @@ import QtQuick.Effects
 
 Item {
     id: spinnerContainer
-    width: config.spinnerSize || 50
-    height: config.spinnerSize || 50
+    width: Config.spinnerSize
+    height: Config.spinnerSize
 
     Image {
         id: spinner
         source: "icons/spinner.svg" // Your spinner icon
         anchors.centerIn: parent
-        width: config.spinnerSize || 32
-        height: config.spinnerSize || 32
-        sourceSize.width: config.spinnerSize || 32
-        sourceSize.height: config.spinnerSize || 32
+        width: parent.width
+        height: parent.height
+        sourceSize.width: width
+        sourceSize.height: height
 
         RotationAnimation {
             target: spinner
-            running: spinnerContainer.visible
+            running: spinnerContainer.visible && Config.enableAnimations
             from: 0
             to: 360
             loops: Animation.Infinite
             duration: 1200
         }
 
-        // ColorOverlay {
-        //     anchors.fill: spinner
-        //     source: spinner
-        //     color: config.spinnerColor || "#FFFFFF"
-        // }
-
         MultiEffect {
             source: spinner
             anchors.fill: spinner
             colorization: 1
-            colorizationColor: config.spinnerColor || "#FFFFFF"
+            colorizationColor: Config.spinnerColor
         }
     }
 }

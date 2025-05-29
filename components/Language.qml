@@ -33,8 +33,8 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            color: "#FFFFFF"
-            opacity: 0.15
+            color: Config.menuAreaPopupBackgroundColor
+            opacity: Config.menuAreaPopupBackgroundOpacity
             radius: 5
         }
 
@@ -52,7 +52,9 @@ Item {
                 width: parent.width
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
-                color: "#FFFFFF"
+                font.family: Config.fontFamily
+                font.pixelSize: Config.menuAreaPopupFontSize
+                color: Config.menuAreaPopupContentColor
                 padding: 10
             }
 
@@ -84,8 +86,8 @@ Item {
 
                     Rectangle {
                         anchors.fill: parent
-                        color: "#FFFFFF"
-                        opacity: index === currentLanguageIndex ? 0.15 : (itemMouseArea.containsMouse ? 0.15 : 0.0)
+                        color: Config.menuAreaPopupActiveOptionBackgroundColor
+                        opacity: index === currentLanguageIndex ? Config.menuAreaPopupActiveOptionBackgroundOpacity : (itemMouseArea.containsMouse ? Config.menuAreaPopupActiveOptionBackgroundOpacity : 0.0)
                         radius: 5
                     }
 
@@ -94,8 +96,9 @@ Item {
                         anchors.leftMargin: 10
                         anchors.verticalCenter: parent.verticalCenter
                         text: (longName.length > 25) ? longName.slice(0, 24) + '...' : longName
-                        color: index === currentLanguageIndex ? "#fff" : "#FFF"
-                        font.pixelSize: 10
+                        color: index === currentLanguageIndex ? Config.menuAreaPopupActiveContentColor : Config.menuAreaPopupContentColor
+                        font.pixelSize: Config.menuAreaPopupFontSize
+                        font.family: Config.fontFamily
                     }
 
                     Component.onCompleted: {

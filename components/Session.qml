@@ -29,8 +29,8 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "#FFFFFF"
-        opacity: 0.15
+        color: Config.menuAreaPopupBackgroundColor
+        opacity: Config.menuAreaPopupBackgroundOpacity
         radius: 5
     }
 
@@ -70,8 +70,8 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
-                    color: "#FFFFFF"
-                    opacity: index === currentSessionIndex ? 0.15 : (itemMouseArea.containsMouse ? 0.15 : 0.0)
+                    color: Config.menuAreaPopupActiveOptionBackgroundColor
+                    opacity: index === currentSessionIndex ? Config.menuAreaPopupActiveOptionBackgroundOpacity : (itemMouseArea.containsMouse ? Config.menuAreaPopupActiveOptionBackgroundOpacity : 0.0)
                     radius: 5
                 }
 
@@ -83,8 +83,8 @@ Item {
                         verticalCenter: parent.verticalCenter
                     }
                     source: getSessionIcon(name)
-                    width: 16
-                    height: 16
+                    width: Config.menuAreaPopupIconSize
+                    height: Config.menuAreaPopupIconSize
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit
 
@@ -92,7 +92,7 @@ Item {
                         source: sessionListIcon
                         anchors.fill: sessionListIcon
                         colorization: 1
-                        colorizationColor: index === currentSessionIndex ? "#fff" : "#FFF"
+                        colorizationColor: index === currentSessionIndex ? Config.menuAreaPopupActiveContentColor : Config.menuAreaPopupContentColor
                     }
                 }
                 // Session name
@@ -101,8 +101,9 @@ Item {
                     anchors.leftMargin: 10
                     anchors.verticalCenter: parent.verticalCenter
                     text: (name.length > 25) ? name.slice(0, 24) + '...' : name
-                    color: index === currentSessionIndex ? "#fff" : "#FFF"
-                    font.pixelSize: 10
+                    color: index === currentSessionIndex ? Config.menuAreaPopupActiveContentColor : Config.menuAreaPopupContentColor
+                    font.pixelSize: Config.menuAreaPopupFontSize
+                    font.family: Config.fontFamily
                 }
 
                 Component.onCompleted: {

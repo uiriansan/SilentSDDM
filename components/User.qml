@@ -72,8 +72,8 @@ Item {
 
         delegate: Rectangle {
             property string iconPath: model.icon
-            width: index === userList.currentIndex ? config.selectedAvatarSize || 120 : config.standardAvatarSize || 80
-            height: index === userList.currentIndex ? config.selectedAvatarSize || 120 : config.standardAvatarSize || 80
+            width: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
+            height: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
             anchors.verticalCenter: parent.verticalCenter
             color: "transparent"
 
@@ -81,14 +81,14 @@ Item {
 
             // Size transition animation
             Behavior on width {
-                enabled: config.enableAnimations === "false" ? false : true
+                enabled: Config.enableAnimations
                 NumberAnimation {
                     duration: 150
                     easing.type: Easing.OutQuad
                 }
             }
             Behavior on height {
-                enabled: config.enableAnimations === "false" ? false : true
+                enabled: Config.enableAnimations
                 NumberAnimation {
                     duration: 150
                     easing.type: Easing.OutQuad
@@ -98,7 +98,7 @@ Item {
             // Animate visibility
             opacity: listUsers || index === userList.currentIndex ? 1.0 : 0.0
             Behavior on opacity {
-                enabled: config.enableAnimations === "false" ? false : true
+                enabled: Config.enableAnimations
                 NumberAnimation {
                     duration: 150
                 }
@@ -109,7 +109,7 @@ Item {
                 width: parent.width
                 height: parent.height
                 source: model.icon
-                opacity: index === userList.currentIndex ? 1.0 : config.standardAvatarOpacity || 0.35
+                opacity: index === userList.currentIndex ? 1.0 : Config.avatarInactiveOpacity
                 enabled: userModel.rowCount() > 1
                 tooltipText: index === userList.currentIndex && listUsers ? "Close user selection" : (index === userList.currentIndex && !listUsers ? "Select user" : `Select user ${model.name}`)
                 showTooltip: userSelector.focus && !listUsers && index === userList.currentIndex
@@ -117,7 +117,7 @@ Item {
 
                 // Opacity transition
                 Behavior on opacity {
-                    enabled: config.enableAnimations === "false" ? false : true
+                    enabled: Config.enableAnimations
                     NumberAnimation {
                         duration: 150
                     }

@@ -15,37 +15,37 @@ Item {
         }
         Text {
             id: timeText
-            visible: config.showClock === "false" ? false : true
+            visible: Config.clockDisplay
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
-                topMargin: parent.height / 8
+                topMargin: parent.height / 8 + Config.clockMarginTop
             }
-            font.pointSize: config.clockFontSize || 60
+            font.pixelSize: Config.clockFontSize
             font.bold: true
-            font.family: config.font || "RedHatDisplay"
-            color: config.clockColor || "#FFFFFF"
+            font.family: Config.fontFamily
+            color: Config.clockColor
 
             function updateTime() {
-                text = new Date().toLocaleString(Qt.locale("en_US"), config.clockFormat || "hh:mm");
+                text = new Date().toLocaleString(Qt.locale("en_US"), Config.clockFormat);
             }
         }
 
         Text {
             id: dateText
-            visible: config.showDate === "false" ? false : true
+            visible: Config.dateDisplay
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: timeText.bottom
-                topMargin: -15
+                topMargin: -15 + Config.dateMarginTop
             }
 
-            font.pointSize: config.dateFontSize || 12
-            font.family: config.font || "RedHatDisplay"
-            color: config.dateColor || "#FFFFFF"
+            font.pixelSize: Config.dateFontSize
+            font.family: Config.fontFamily
+            color: Config.dateColor
 
             function updateDate() {
-                text = new Date().toLocaleString(Qt.locale("en_US"), config.dateFormat || "dddd, MMMM dd, yyyy");
+                text = new Date().toLocaleString(Qt.locale("en_US"), Config.dateFormat);
             }
         }
 
@@ -53,16 +53,16 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: lockBottomMessage.top
             anchors.bottomMargin: 5
-            width: config.pressAnyKeyIconSize || 18
-            height: config.pressAnyKeyIconSize || 18
+            width: Config.pressAnyKeyIconSize
+            height: Config.pressAnyKeyIconSize
 
             Image {
                 id: lockIcon
-                visible: config.showPressAnyKey === "false" ? false : true
+                visible: Config.pressAnyKeyDisplay
                 source: "icons/enter.svg"
 
-                width: config.pressAnyKeyIconSize || 18
-                height: config.pressAnyKeyIconSize || 18
+                width: Config.pressAnyKeyIconSize
+                height: Config.pressAnyKeyIconSize
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
             }
@@ -71,21 +71,21 @@ Item {
                 source: lockIcon
                 anchors.fill: lockIcon
                 colorization: 1
-                colorizationColor: config.pressAnyKeyColor || "#FFFFFF"
+                colorizationColor: Config.pressAnyKeyColor
             }
         }
         Text {
             id: lockBottomMessage
-            visible: config.showPressAnyKey === "false" ? false : true
+            visible: Config.pressAnyKeyDisplay
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
-                bottomMargin: parent.height / 10
+                bottomMargin: parent.height / 10 + Config.pressAnyKeyMarginBottom
             }
-            font.pointSize: config.pressAnyKeyFontSize || 9
-            font.family: config.font || "RedHatDisplay"
-            color: config.pressAnyKeyColor || "#FFFFFF"
-            text: "Press any key"
+            font.pixelSize: Config.pressAnyKeyFontSize
+            font.family: Config.fontFamily
+            color: Config.pressAnyKeyColor
+            text: Config.pressAnyKeyText
         }
 
         Timer {
