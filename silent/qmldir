@@ -1,2 +1,0 @@
-singleton Config components/Config.qml
-singleton Languages components/Languages.qml
