@@ -8,6 +8,7 @@ Item {
     id: root
     state: Config.lockScreenDisplay ? "lockState" : "loginState"
 
+    // TODO: Add own translations: https://github.com/sddm/sddm/wiki/Localization
     TextConstants {
         id: textConstants
     }
@@ -71,7 +72,7 @@ Item {
         }
     }
 
-    // Not sure if this is needed:
+    // Still not sure if this is needed:
     // Repeater {
     //     model: screenModel
 
@@ -99,6 +100,7 @@ Item {
         height: geometry.height
 
         Rectangle {
+            // TODO: Animated backgrounds (video/gif)
             id: backgroundContainer
             anchors.fill: parent
             // Background color

@@ -232,7 +232,6 @@ QtObject {
     }
 
     function getKBCodeFor(country) {
-        // TODO: Better defaults
         return layouts[country]["kb_code"] || "";
     }
 

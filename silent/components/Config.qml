@@ -52,10 +52,11 @@ QtObject {
     property real loginScreenBlur: config.realValue("LoginScreen/blur")
 
     // [LoginScreen.LoginArea]
-    // property string loginAreaPosition: config.stringValue("LoginScreen.LoginArea/position") || "center"
-    // property string loginAreaAlign: config.stringValue("LoginScreen.LoginArea/align") || "center"
-    // property bool loginAreaCenterVertically: config['LoginScreen.LoginArea/center-vertically'] === "false" ? false : true
-    // property int loginAreaMarginTop: config.intValue("LoginScreen.LoginArea/margin-top")
+    property string loginAreaPosition: config.stringValue("LoginScreen.LoginArea/position") || "center"
+    property string loginAreaAlign: config.stringValue("LoginScreen.LoginArea/align") || "center"
+    property string loginAreaOrientation: config.stringValue("LoginScreen.LoginArea/orientation") || "horizontal"
+    property bool loginAreaCenterVertically: config['LoginScreen.LoginArea/center-vertically'] === "false" ? false : true
+    property int loginAreaMarginTop: config.intValue("LoginScreen.LoginArea/margin-top")
 
     // [LoginScreen.LoginArea.Avatar]
     property string avatarShape: config.stringValue("LoginScreen.LoginArea.Avatar/shape") || "circle"
