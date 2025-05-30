@@ -1,0 +1,24 @@
+[SddmGreeterTheme]
+Name=Silent
+Type=sddm-theme
+Description=A very customizable SDDM theme that actually looks good.
+License=GPL-3.0-or-later
+Version=1.0
+Theme-Id=silent
+Theme-API=2.0
+MainScript=Main.qml
+Screenshot=preview.jpg
+TranslationsDirectory=translations
+QtVersion=6
+
+ConfigFile=configs/default.conf
+
+# ConfigFile=configs/default-left.conf
+# ConfigFile=configs/default-right.conf
+# ConfigFile=configs/default-dark.conf
+# ConfigFile=configs/default-dark-left.conf
+# ConfigFile=configs/default-dark-right.conf
+# ConfigFile=configs/catppuccin-latte.conf
+# ConfigFile=configs/catppuccin-frappe.conf
+# ConfigFile=configs/catppuccin-macchiato.conf
+# ConfigFile=configs/catppuccin-mocha.conf
