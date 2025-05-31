@@ -36,7 +36,7 @@ Item {
                 blur: Config.lockScreenBlur
             }
             PropertyChanges {
-                target: loginScreen.loginArea
+                target: loginScreen.loginContainer
                 scale: 0.5
             }
         },
@@ -55,7 +55,7 @@ Item {
                 blur: Config.loginScreenBlur
             }
             PropertyChanges {
-                target: loginScreen.loginArea
+                target: loginScreen.loginContainer
                 scale: 1.0
             }
         }

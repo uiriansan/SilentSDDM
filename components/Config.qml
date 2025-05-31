@@ -18,12 +18,12 @@ QtObject {
     property bool lockScreenUseBackgroundColor: config.boolValue('LockScreen/use-background-color')
     property color lockScreenBackgroundColor: config.stringValue("LockScreen/background-color") || "#000000"
     property real lockScreenBlur: config.realValue("LockScreen/blur")
+    property int lockScreenMargin: config.intValue("LockScreen/margin")
 
     // [LockScreen.Clock]
     property bool clockDisplay: config['LockScreen.Clock/display'] === "false" ? false : true
     // property string clockPosition: config.stringValue("LockScreen.Clock/position") || "center"
     // property bool clockCenterVertically: config.boolValue("LockScreen.Clock/center-vertically")
-    property int clockMarginTop: config.intValue("LockScreen.Clock/margin-top")
     property string clockFormat: config.stringValue("LockScreen.Clock/format") || "hh:mm"
     property int clockFontSize: config.intValue("LockScreen.Clock/font-size") || 60
     property color clockColor: config.stringValue("LockScreen.Clock/color") || "#FFFFFF"
@@ -39,7 +39,6 @@ QtObject {
     property bool pressAnyKeyDisplay: config['LockScreen.PressAnyKey/display'] === "false" ? false : true
     // property string pressAnyKeyPosition: config.stringValue("LockScreen.PressAnyKey/position") || "center"
     // property bool pressAnyKeyCenterVertically: config.boolValue("LockScreen.PressAnyKey/center-vertically")
-    property int pressAnyKeyMarginBottom: config.intValue("LockScreen.PressAnyKey/margin-bottom")
     property string pressAnyKeyText: config.stringValue("LockScreen.PressAnyKey/text") || "Press any key"
     property int pressAnyKeyFontSize: config.intValue("LockScreen.PressAnyKey/font-size") || 9
     property int pressAnyKeyIconSize: config.intValue("LockScreen.PressAnyKey/icon-size") || 18
@@ -50,28 +49,30 @@ QtObject {
     property bool loginScreenUseBackgroundColor: config.boolValue('LoginScreen/use-background-color')
     property color loginScreenBackgroundColor: config.stringValue("LoginScreen/background-color") || "#000000"
     property real loginScreenBlur: config.realValue("LoginScreen/blur")
+    property int loginScreenPaddingTop: config.intValue("LoginScreen/padding-top")
+    property int loginScreenPaddingRight: config.intValue("LoginScreen/padding-right")
+    property int loginScreenPaddingBottom: config.intValue("LoginScreen/padding-bottom")
+    property int loginScreenPaddingLeft: config.intValue("LoginScreen/padding-left")
 
     // [LoginScreen.LoginArea]
     property string loginAreaPosition: config.stringValue("LoginScreen.LoginArea/position") || "center"
     property string loginAreaAlign: config.stringValue("LoginScreen.LoginArea/align") || "center"
-    property string loginAreaOrientation: config.stringValue("LoginScreen.LoginArea/orientation") || "horizontal"
-    property bool loginAreaCenterVertically: config['LoginScreen.LoginArea/center-vertically'] === "false" ? false : true
-    property int loginAreaMarginTop: config.intValue("LoginScreen.LoginArea/margin-top")
 
     // [LoginScreen.LoginArea.Avatar]
     property string avatarShape: config.stringValue("LoginScreen.LoginArea.Avatar/shape") || "circle"
     property int avatarActiveSize: config.intValue("LoginScreen.LoginArea.Avatar/active-size") || 120
     property int avatarInactiveSize: config.intValue("LoginScreen.LoginArea.Avatar/inactive-size") || 80
     property real avatarInactiveOpacity: config.realValue("LoginScreen.LoginArea.Avatar/inactive-opacity") || 0.35
-    // property int avatarBorderSize: config.intValue("LoginScreen.LoginArea.Avatar/border-size")
-    // property int avatarInactiveBorderSize: config.intValue("LoginScreen.LoginArea.Avatar/inactive-border-size")
-    // property color avatarBorderColor: config.stringValue("LoginScreen.LoginArea.Avatar/border-color") || "#FFFFFF"
-    // property color avatarInactiveBorderColor: config.stringValue("LoginScreen.LoginArea.Avatar/inactive-border-color") || "#FFFFFF"
+    property int avatarBorderSize: config.intValue("LoginScreen.LoginArea.Avatar/active-border-size")
+    property int avatarInactiveBorderSize: config.intValue("LoginScreen.LoginArea.Avatar/inactive-border-size")
+    property color avatarBorderColor: config.stringValue("LoginScreen.LoginArea.Avatar/border-color") || "#FFFFFF"
+    property color avatarInactiveBorderColor: config.stringValue("LoginScreen.LoginArea.Avatar/inactive-border-color") || "#FFFFFF"
     property int avatarBorderRadius: config.intValue("LoginScreen.LoginArea.Avatar/border-radius")
     property bool avatarShadow: config['LoginScreen.LoginArea.Avatar/shadow'] === "false" ? false : true
 
     // [LoginScreen.LoginArea.Username]
     property int usernameFontSize: config.intValue("LoginScreen.LoginArea.Username/font-size") || 15
+    property int usernameFontWeight: config.intValue("LoginScreen.LoginArea.Username/font-weight")
     property color usernameColor: config.stringValue("LoginScreen.LoginArea.Username/color") || "#FFFFFF"
     property int usernameMarginTop: config.intValue("LoginScreen.LoginArea.Username/margin-top")
 
@@ -122,10 +123,6 @@ QtObject {
     // [LoginScreen.MenuArea]
     property int menuAreaSpacing: config.intValue("LoginScreen.MenuArea/spacing")
     property int menuAreaButtonsBorderRadius: config.intValue("LoginScreen.MenuArea/buttons-border-radius")
-    property int menuAreaMarginTop: config.intValue("LoginScreen.MenuArea/margin-top")
-    property int menuAreaMarginRight: config.intValue("LoginScreen.MenuArea/margin-right")
-    property int menuAreaMarginBottom: config.intValue("LoginScreen.MenuArea/margin-bottom")
-    property int menuAreaMarginLeft: config.intValue("LoginScreen.MenuArea/margin-left")
     property int menuAreaButtonsSize: config.intValue("LoginScreen.MenuArea/buttons-size") || 30
     property color menuAreaPopupBackgroundColor: config.stringValue("LoginScreen.MenuArea/popup-background-color") || "#FFFFFF"
     property real menuAreaPopupBackgroundOpacity: config.realValue("LoginScreen.MenuArea/popup-background-opacity")
