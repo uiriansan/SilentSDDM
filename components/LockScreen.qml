@@ -14,10 +14,10 @@ Item {
 
         Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-            Layout.topMargin: Config.lockScreenMargin || parent.height / 10
-            Layout.leftMargin: Config.lockScreenMargin || parent.width / 10
-            Layout.rightMargin: Config.lockScreenMargin || parent.width / 10
-            Layout.bottomMargin: Config.lockScreenMargin || parent.height / 10
+            Layout.topMargin: Config.lockScreenPadding || parent.height / 10
+            Layout.leftMargin: Config.lockScreenPadding || parent.width / 10
+            Layout.rightMargin: Config.lockScreenPadding || parent.width / 10
+            Layout.bottomMargin: Config.lockScreenPadding || parent.height / 10
 
             // TODO: Support for weather info?
             Text {
@@ -75,7 +75,7 @@ Item {
 
         Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-            Layout.bottomMargin: Config.lockScreenMargin || parent.height / 10
+            Layout.bottomMargin: Config.lockScreenPadding || parent.height / 10
 
             Image {
                 id: lockIcon
@@ -115,6 +115,7 @@ Item {
 
     MouseArea {
         id: lockScreenMouseArea
+        hoverEnabled: true
         z: -1
         anchors.fill: parent
         onClicked: screen.loginRequested()

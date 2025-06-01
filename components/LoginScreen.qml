@@ -106,7 +106,12 @@ Item {
                     if (screen.isAuthenticating)
                         return;
 
-                    if (Config.lockScreenDisplay !== "false")
+                    if (screen.isSelectingUser) {
+                        screen.isSelectingUser = false;
+                        return;
+                    }
+
+                    if (Config.lockScreenDisplay)
                         screen.closeRequested();
 
                     password.text = "";
@@ -140,6 +145,10 @@ Item {
                         }
                         onCloseUserList: {
                             screen.isSelectingUser = false;
+                            if (screen.userNeedsPassword)
+                                password.input.forceActiveFocus();
+                            else
+                                loginButton.forceActiveFocus();
                         }
                         onUserChanged: (index, name, realName, icon, needsPassword) => {
                             screen.userIndex = index;
@@ -173,7 +182,7 @@ Item {
                         text: screen.userRealName
                     }
 
-                    Row {
+                    RowLayout {
                         id: loginArea
                         Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
                         Layout.preferredWidth: childrenRect.width
@@ -182,8 +191,10 @@ Item {
 
                         PasswordInput {
                             id: password
-                            enabled: !screen.isSelectingUser
+                            Layout.alignment: Qt.AlignHCenter
+                            enabled: !screen.isSelectingUser && !screen.isAuthenticating
                             visible: screen.userNeedsPassword
+                            focus: enabled && visible
                             onAccepted: {
                                 screen.login();
                             }
@@ -191,6 +202,8 @@ Item {
 
                         IconButton {
                             id: loginButton
+                            Layout.alignment: Qt.AlignHCenter
+                            Layout.preferredWidth: width // Fix button not resizing when label updates
                             height: password.height
                             enabled: !screen.isSelectingUser
                             activeFocusOnTab: true
@@ -215,39 +228,56 @@ Item {
                     }
                 }
             }
+        }
+    }
 
-            // FIX: Virtual keyboard not working on the second screen.
-            InputPanel {
-                // TODO: Keep keyboard visible.
-                id: inputPanel
-                z: 99
-                width: Math.min(parent.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
-                visible: screen.showKeyboard
-                externalLanguageSwitchEnabled: true
-                onExternalLanguageSwitch: {
-                    return;
-                }
-                // TODO: Open lang popup
-                // onActiveChanged: {
-                //     if (showKeyboard)
-                //         showKeyboard = false;
-                // }
-                Component.onCompleted: {
-                    VirtualKeyboardSettings.styleName = "tstyle";
-                    VirtualKeyboardSettings.layout = "symbols";
-                }
+    // FIX: Virtual keyboard not working on the second screen.
+    InputPanel {
+        // TODO: Keep keyboard visible.
+        id: inputPanel
+        z: 99
+        width: Math.min(screen.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
+        visible: screen.showKeyboard
+        externalLanguageSwitchEnabled: true
+        onExternalLanguageSwitch: {
+            return;
+        }
+        // TODO: Open lang popup
+        // onActiveChanged: {
+        //     if (showKeyboard)
+        //         showKeyboard = false;
+        // }
+        Component.onCompleted: {
+            VirtualKeyboardSettings.styleName = "tstyle";
+            VirtualKeyboardSettings.layout = "symbols";
+        }
 
-                property string pos: Config.virtualKeyboardPosition
-                anchors {
-                    top: pos === "top" ? parent.top : (pos === "bottom" ? loginContainer.bottom : undefined)
-                    // topMargin: pos === "top" ? Config.menuAreaMarginTop : (pos === "bottom" ? (!loginMessage.visible ? loginMessage.anchors.topMargin : loginMessage.anchors.topMargin + 10) : undefined)
-                    left: pos === "left" ? parent.left : undefined
-                    leftMargin: pos === "left" ? Config.loginScreenPaddingLeft : undefined
-                    right: pos === "right" ? parent.right : undefined
-                    rightMargin: pos === "right" ? Config.loginScreenPaddingRight : undefined
-                    horizontalCenter: pos === "top" || pos === "bottom" ? parent.horizontalCenter : undefined
-                    verticalCenter: pos === "left" || pos === "right" ? parent.verticalCenter : undefined
-                }
+        property string pos: Config.virtualKeyboardPosition
+        anchors {
+            top: pos === "top" ? screen.top : undefined
+            topMargin: pos === "top" ? Config.loginScreenPaddingTop : undefined
+            bottom: pos === "bottom" ? screen.bottom : undefined
+            bottomMargin: pos === "bottom" ? Config.loginScreenPaddingBottom : undefined
+            left: pos === "left" ? parent.left : undefined
+            leftMargin: pos === "left" ? Config.loginScreenPaddingLeft : undefined
+            right: pos === "right" ? parent.right : undefined
+            rightMargin: pos === "right" ? Config.loginScreenPaddingRight : undefined
+            horizontalCenter: pos === "top" || pos === "bottom" ? parent.horizontalCenter : undefined
+            verticalCenter: pos === "left" || pos === "right" ? parent.verticalCenter : undefined
+        }
+    }
+
+    MouseArea {
+        id: closeUserSelectorMouseArea
+        z: -1
+        anchors.fill: parent
+        hoverEnabled: true
+        onClicked: {
+            if (screen.isSelectingUser) {
+                screen.isSelectingUser = false;
+            }
+            if (!screen.isAuthenticating) {
+                password.input.forceActiveFocus();
             }
         }
     }

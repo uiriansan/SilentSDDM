@@ -18,7 +18,7 @@ QtObject {
     property bool lockScreenUseBackgroundColor: config.boolValue('LockScreen/use-background-color')
     property color lockScreenBackgroundColor: config.stringValue("LockScreen/background-color") || "#000000"
     property real lockScreenBlur: config.realValue("LockScreen/blur")
-    property int lockScreenMargin: config.intValue("LockScreen/margin")
+    property int lockScreenPadding: config.intValue("LockScreen/padding")
 
     // [LockScreen.Clock]
     property bool clockDisplay: config['LockScreen.Clock/display'] === "false" ? false : true

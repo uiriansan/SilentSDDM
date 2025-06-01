@@ -12,20 +12,9 @@ Item {
     property bool listUsers: false
     property string orientation: ""
 
-    Rectangle {
-        width: parent.width
-        height: parent.height
-        // color: "#000"
-        color: "transparent"
-    }
-
     ListView {
         id: userList
-        anchors {
-            fill: parent
-            horizontalCenter: parent.horizontalCenter
-            verticalCenter: parent.verticalCenter
-        }
+        anchors.fill: parent
         orientation: selector.orientation === "vertical" ? ListView.Horizontal : ListView.Vertical
         spacing: 10
         interactive: selector.listUsers
@@ -46,7 +35,6 @@ Item {
         highlightResizeDuration: 200
         highlightMoveVelocity: -1
         highlightFollowsCurrentItem: true
-        // highlightFollowsCurrentItem: false
 
         model: userModel
 
@@ -61,14 +49,14 @@ Item {
             selector.userChanged(currentIndex, username, userRealName, userIcon, needsPasswd);
         }
 
-        delegate: Rectangle {
+        delegate: Item {
             width: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
             height: width
             anchors {
                 verticalCenter: selector.orientation === "vertical" ? parent.verticalCenter : undefined
                 horizontalCenter: selector.orientation === "vertical" ? undefined : parent.horizontalCenter
             }
-            color: "transparent"
+            // color: "transparent"
             visible: selector.listUsers || index === userList.currentIndex
 
             Behavior on width {
@@ -97,10 +85,11 @@ Item {
                 width: parent.width
                 height: parent.height
                 source: model.icon
-                opacity: index === userList.currentIndex ? 1.0 : Config.avatarInactiveOpacity
+                active: index === userList.currentIndex
+                opacity: active ? 1.0 : Config.avatarInactiveOpacity
                 enabled: userModel.rowCount() > 1 // No need to open the selector if there's only one user
-                tooltipText: index === userList.currentIndex && selector.listUsers ? "Close user selection" : (index === userList.currentIndex && !listUsers ? "Select user" : `Select user ${model.name}`)
-                showTooltip: selector.focus && !listUsers && index === userList.currentIndex
+                tooltipText: active && selector.listUsers ? "Close user selection" : (active && !listUsers ? "Select user" : `Select user ${model.name}`)
+                showTooltip: selector.focus && !listUsers && active
 
                 Behavior on opacity {
                     enabled: Config.enableAnimations
@@ -114,33 +103,45 @@ Item {
                         // Open selector
                         selector.openUserList();
                         userList.model.reset();
+                        selector.focus = true;
                     } else {
                         // Collapse the list if the selected user gets another click
                         if (index === userList.currentIndex) {
                             selector.closeUserList();
+                            selector.focus = false;
                         }
                         userList.currentIndex = index;
                     }
                 }
                 onClickedOutside: {
                     selector.closeUserList();
+                    selector.focus = false;
                 }
             }
         }
+    }
 
-        MouseArea {
-            z: -1
-            anchors.fill: parent
-            enabled: selector.listUsers
-            onClicked: mouse => {
-                const clickedItem = userList.itemAt(mouse.x, mouse.y);
-                if (!clickedItem) {
-                    selector.closeUserList();
-                    mouse.accepted = true;
-                } else {
-                    mouse.accepted = false;
-                }
+    Keys.onPressed: event => {
+        if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
+            if (selector.listUsers) {
+                // selector.listUsers = false;
+                selector.closeUserList();
+                selector.focus = false;
+            } else {
+                // selector.listUsers = true;
+                selector.openUserList();
+                selector.focus = true;
             }
+        } else if (event.key == Qt.Key_Escape) {
+            // selector.listUsers = false;
+            selector.closeUserList();
+            selector.focus = false;
+        } else if ((selector.orientation === "vertical" && event.key == Qt.Key_Left) || (selector.orientation === "horizontal" && event.key == Qt.Key_Up)) {
+            userList.decrementCurrentIndex();
+            selector.focus = true;
+        } else if ((selector.orientation === "vertical" && event.key == Qt.Key_Right) || (selector.orientation === "horizontal" && event.key == Qt.Key_Down)) {
+            userList.incrementCurrentIndex();
+            selector.focus = true;
         }
     }
 }

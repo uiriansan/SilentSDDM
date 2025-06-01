@@ -13,13 +13,13 @@ Item {
         id: textConstants
     }
 
-    // Break property binding so it doesn't update when `sddm.keyboard.capsLock` changes.
-    // `sddm.keyboard.capsLock` should be enough, but yet again it doesn't work
-    // TODO: Update this every time the login area becomes visible, so it kinda works with multiple monitors
+    // Break property binding so it doesn't lock to `keyboard.capsLock` state's.
+    // `keyboard.capsLock` should be enough, but its value only updates once for some F*ing reason
     property bool capsLockOn: {
         capsLockOn = keyboard ? keyboard.capsLock : false;
     }
 
+    // Maybe it would be a good idea to use StackLayout or something similar instead. Anyway, this works and I'm not touching it...
     states: [
         State {
             name: "lockState"
@@ -72,25 +72,6 @@ Item {
         }
     }
 
-    // Still not sure if this is needed:
-    // Repeater {
-    //     model: screenModel
-
-    //     Background {
-    //         x: geometry.x
-    //         y: geometry.y
-    //         width: geometry.width
-    //         height: geometry.height
-    //         source: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
-    //         fillMode: Image.Tile
-    //         onStatusChanged: {
-    //             if (status == Image.Error && source !== "backgrounds/default.jpg") {
-    //                 source = "background/default.jpg";
-    //             }
-    //         }
-    //     }
-    // }
-
     Item {
         id: mainFrame
         property variant geometry: screenModel.geometry(screenModel.primary)
@@ -132,6 +113,7 @@ Item {
 
             LockScreen {
                 id: lockScreen
+                z: root.state === "lockState" ? 2 : 1 // Fix tooltips from the login screen showing up on top of the lock screen.
                 anchors.fill: parent
                 focus: root.state === "lockState"
                 enabled: root.state === "lockState"
@@ -142,6 +124,7 @@ Item {
             }
             LoginScreen {
                 id: loginScreen
+                z: root.state === "loginState" ? 2 : 1
                 anchors.fill: parent
                 enabled: root.state === "loginState"
                 opacity: 0.0

@@ -16,9 +16,9 @@ Item {
     property int fontSize: 12
     property bool boldLabel: false
     property color backgroundColor: "#FFFFFF"
-    property real backgroundOpacity: 0.0
+    property double backgroundOpacity: 0.0
     property color activeBackgroundColor: "#FFFFFF"
-    property real activeBackgroundOpacity: 0.15
+    property double activeBackgroundOpacity: 0.15
     property string tooltipText: ""
     property int borderRadius: 10
     property bool active: false
@@ -35,7 +35,7 @@ Item {
         radius: iconButton.borderRadius
         border {
             color: iconButton.isActive ? iconButton.activeIconColor : iconButton.iconColor
-            width: iconButton.focus ? Config.passwordInputBorderSize : 0
+            width: iconButton.focus ? Config.passwordInputBorderSize || 1 : 0
         }
 
         Behavior on opacity {
