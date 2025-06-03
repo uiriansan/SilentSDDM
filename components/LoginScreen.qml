@@ -8,6 +8,7 @@ import SddmComponents
 Item {
     id: screen
     signal closeRequested
+    signal openLayoutPopup
 
     readonly property alias password: password
     readonly property alias loginButton: loginButton
@@ -266,14 +267,19 @@ Item {
                 visible: screen.showKeyboard
                 externalLanguageSwitchEnabled: true
                 onExternalLanguageSwitch: {
-                    // TODO: Open lang popup
-                    languagePopup.open();
-                    return;
+                    screen.openLayoutPopup();
                 }
-                // onActiveChanged: {
-                //     if (showKeyboard)
-                //         showKeyboard = false;
-                // }
+                onVisibleChanged: {
+                    if (visible)
+                        Qt.inputMethod.show();
+                    else
+                        Qt.inputMethod.hide();
+                }
+                onActiveChanged: {
+                    if (!active) {
+                        screen.showKeyboard = false;
+                    }
+                }
                 Component.onCompleted: {
                     VirtualKeyboardSettings.styleName = "tstyle";
                     VirtualKeyboardSettings.layout = "symbols";
@@ -403,7 +409,7 @@ Item {
 
                 height: Config.menuAreaButtonsSize
                 icon: "icons/language.svg"
-                active: languagePopup.visible
+                active: popup.visible
                 borderRadius: Config.menuAreaButtonsBorderRadius
                 iconSize: Config.languageButtonIconSize
                 fontSize: Config.languageButtonFontSize
@@ -416,13 +422,20 @@ Item {
                 activeFocusOnTab: true
                 focus: false
                 onClicked: {
-                    languagePopup.open();
+                    popup.open();
                 }
                 tooltipText: "Change keyboard layout"
                 label: showLabel ? (keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
 
+                Connections {
+                    target: screen
+                    function onOpenLayoutPopup() {
+                        popup.open();
+                    }
+                }
+
                 Popup {
-                    id: languagePopup
+                    id: popup
                     property int popupMargin: 5
                     parent: languageButton
                     padding: 5
