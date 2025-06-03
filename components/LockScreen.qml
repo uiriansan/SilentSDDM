@@ -126,12 +126,12 @@ Item {
             root.capsLockOn = !root.capsLockOn;
         }
 
-        if (event.key == Qt.Key_Escape) {
+        if (event.key === Qt.Key_Escape) {
             event.accepted = false;
             return;
         } else {
-            event.accepted = true;
             screen.loginRequested();
         }
+        event.accepted = true;
     }
 }

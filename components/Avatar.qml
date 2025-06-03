@@ -101,7 +101,8 @@ Canvas {
 
         ToolTip {
             parent: mouseArea
-            visible: avatar.showTooltip || (mouseArea.isCursorInsideAvatar() && avatar.tooltipText !== "")
+            enabled: Config.enableTooltips
+            visible: enabled && avatar.showTooltip || (enabled && mouseArea.isCursorInsideAvatar() && avatar.tooltipText !== "")
             delay: 300
             contentItem: Text {
                 font.family: Config.fontFamily

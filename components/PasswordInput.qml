@@ -43,7 +43,7 @@ Item {
             anchors.fill: parent
             anchors.leftMargin: textField.leftPadding
             anchors.rightMargin: textField.rightPadding
-            visible: textField.text.length === 0
+            visible: textField.text.length === 0 && textField.preeditText.length === 0
             text: textConstants.password
             color: textField.color
             font.pixelSize: textField.font.pixelSize

@@ -52,6 +52,14 @@ Item {
         target: sddm
     }
 
+    function updateCapsLock() {
+        if (root.capsLockOn && !screen.isAuthenticating) {
+            loginMessage.warn(textConstants.capslockWarning, "warning");
+        } else {
+            loginMessage.clear();
+        }
+    }
+
     GridLayout {
         id: loginPositioner
         anchors.fill: parent
@@ -61,8 +69,8 @@ Item {
         columnSpacing: 0
 
         Item {
-            Layout.preferredWidth: childrenRect.width
-            Layout.preferredHeight: childrenRect.height
+            Layout.preferredWidth: loginLayout.width
+            Layout.preferredHeight: loginLayout.height
 
             // Position of the login area. left | center | right
             // There's probably a better way...
@@ -78,15 +86,10 @@ Item {
                 }
             }
 
-            GridLayout {
+            Item {
                 id: loginContainer
-                property string loginOrientation: Config.loginAreaPosition === "left" || Config.loginAreaPosition === "right" ? "horizontal" : "vertical"
-
-                rows: loginOrientation === "vertical" ? 2 : 1
-                columns: loginOrientation === "vertical" ? 1 : 2
-                layoutDirection: (Config.loginAreaPosition === "left" && Config.loginAreaAlign === "right") || (Config.loginAreaPosition === "right" && Config.loginAreaAlign === "right") ? Qt.RightToLeft : Qt.LeftToRight
-                rowSpacing: 10
-                columnSpacing: 10
+                width: childrenRect.width
+                height: childrenRect.height
                 scale: 0.5 // Initial animation
 
                 Behavior on scale {
@@ -96,174 +99,599 @@ Item {
                     }
                 }
 
-                Keys.onEscapePressed: () => {
-                    // if (screen.activePopup !== null) {
-                    //     screen.activePopup.close();
-                    //     screen.activePopup = null;
-                    //     password.input.forceActiveFocus();
-                    //     return;
-                    // }
-                    if (screen.isAuthenticating)
-                        return;
+                GridLayout {
+                    id: loginLayout
+                    property string loginOrientation: Config.loginAreaPosition === "left" || Config.loginAreaPosition === "right" ? "horizontal" : "vertical"
 
-                    if (screen.isSelectingUser) {
-                        screen.isSelectingUser = false;
-                        return;
-                    }
+                    rows: loginOrientation === "vertical" ? 2 : 1
+                    columns: loginOrientation === "vertical" ? 1 : 2
+                    layoutDirection: (Config.loginAreaPosition === "left" && Config.loginAreaAlign === "right") || (Config.loginAreaPosition === "right" && Config.loginAreaAlign === "right") ? Qt.RightToLeft : Qt.LeftToRight
+                    rowSpacing: 10
+                    columnSpacing: 10
 
-                    if (Config.lockScreenDisplay)
-                        screen.closeRequested();
-
-                    password.text = "";
-                }
-                Keys.onPressed: event => {
-                    // TODO: Move this to the Main
-                    if (event.key == Qt.Key_CapsLock && !screen.isAuthenticating) {
-                        root.capsLockOn = !root.capsLockOn;
-                        // if (root.capsLockOn)
-                        //     loginMessage.warn(textConstants.capslockWarning, "warning");
-                        // else
-                        //     loginMessage.clear();
-                    }
-                }
-
-                Item {
-                    // Alignment of the login area. left | center | right
-                    Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
-                    Layout.preferredWidth: childrenRect.width
-                    Layout.preferredHeight: childrenRect.height
-
-                    UserSelector {
-                        id: userSelector
-                        listUsers: screen.isSelectingUser
-                        enabled: !screen.isAuthenticating
-                        activeFocusOnTab: true
-                        orientation: loginContainer.loginOrientation
-
-                        onOpenUserList: {
-                            screen.isSelectingUser = true;
+                    Keys.onPressed: event => {
+                        if (event.key === Qt.Key_Escape) {
+                            if (screen.isAuthenticating) {
+                                event.accepted = false;
+                                return;
+                            }
+                            if (Config.lockScreenDisplay) {
+                                screen.closeRequested();
+                            }
+                            password.text = "";
+                        } else if (event.key === Qt.Key_CapsLock) {
+                            root.capsLockOn = !root.capsLockOn;
                         }
-                        onCloseUserList: {
-                            screen.isSelectingUser = false;
-                            if (screen.userNeedsPassword)
-                                password.input.forceActiveFocus();
-                            else
-                                loginButton.forceActiveFocus();
-                        }
-                        onUserChanged: (index, name, realName, icon, needsPassword) => {
-                            screen.userIndex = index;
-                            screen.userName = name;
-                            screen.userRealName = realName;
-                            screen.userIcon = icon;
-                            screen.userNeedsPassword = needsPassword;
-                        }
-                        width: orientation === "vertical" ? screen.width - Config.loginScreenPaddingLeft - Config.loginScreenPaddingRight : Config.avatarActiveSize
-                        height: orientation === "vertical" ? Config.avatarActiveSize : screen.height - Config.loginScreenPaddingTop - Config.loginScreenPaddingBottom
-                    }
-                }
-
-                ColumnLayout {
-                    // Alignment of the login area. left | center | right
-                    Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
-                    Layout.preferredWidth: childrenRect.width
-                    Layout.preferredHeight: childrenRect.height
-
-                    spacing: 10
-
-                    Text {
-                        id: activeUserName
-                        // User name
-                        Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
-                        // horizontalAlignment: Qt.AlignRight
-
-                        font.weight: Config.usernameFontWeight
-                        font.pixelSize: Config.usernameFontSize
-                        color: Config.usernameColor
-                        text: screen.userRealName
+                        event.accepted = true;
                     }
 
-                    RowLayout {
-                        id: loginArea
+                    Item {
+                        // Alignment of the login area. left | center | right
                         Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
                         Layout.preferredWidth: childrenRect.width
                         Layout.preferredHeight: childrenRect.height
-                        spacing: 5
 
-                        PasswordInput {
-                            id: password
-                            Layout.alignment: Qt.AlignHCenter
-                            enabled: !screen.isSelectingUser && !screen.isAuthenticating
-                            visible: screen.userNeedsPassword
-                            focus: enabled && visible
-                            onAccepted: {
-                                screen.login();
+                        UserSelector {
+                            id: userSelector
+                            listUsers: screen.isSelectingUser
+                            enabled: !screen.isAuthenticating
+                            activeFocusOnTab: true
+                            layoutOrientation: loginLayout.loginOrientation
+
+                            onOpenUserList: {
+                                screen.isSelectingUser = true;
                             }
+                            onCloseUserList: {
+                                screen.isSelectingUser = false;
+                                if (screen.userNeedsPassword)
+                                    password.input.forceActiveFocus();
+                                else
+                                    loginButton.forceActiveFocus();
+                            }
+                            onUserChanged: (index, name, realName, icon, needsPassword) => {
+                                screen.userIndex = index;
+                                screen.userName = name;
+                                screen.userRealName = realName;
+                                screen.userIcon = icon;
+                                screen.userNeedsPassword = needsPassword;
+                            }
+                            width: layoutOrientation === "vertical" ? screen.width - Config.loginScreenPaddingLeft - Config.loginScreenPaddingRight : Config.avatarActiveSize
+                            height: layoutOrientation === "vertical" ? Config.avatarActiveSize : screen.height - Config.loginScreenPaddingTop - Config.loginScreenPaddingBottom
+                        }
+                    }
+
+                    ColumnLayout {
+                        // Alignment of the login area. left | center | right
+                        Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
+                        Layout.preferredWidth: childrenRect.width
+                        Layout.preferredHeight: childrenRect.height
+
+                        spacing: 10
+
+                        Text {
+                            id: activeUserName
+                            // User name
+                            Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
+                            // horizontalAlignment: Qt.AlignRight
+
+                            font.weight: Config.usernameFontWeight
+                            font.pixelSize: Config.usernameFontSize
+                            color: Config.usernameColor
+                            text: screen.userRealName
                         }
 
-                        IconButton {
-                            id: loginButton
-                            Layout.alignment: Qt.AlignHCenter
-                            Layout.preferredWidth: width // Fix button not resizing when label updates
-                            height: password.height
-                            enabled: !screen.isSelectingUser
-                            activeFocusOnTab: true
-                            focus: !screen.userNeedsPassword && !screen.isSelectingUser
-                            icon: "icons/arrow-right.svg"
-                            label: textConstants.login.toUpperCase()
-                            showLabel: Config.loginButtonShowTextIfNoPassword && !screen.userNeedsPassword
-                            tooltipText: !Config.loginButtonShowTextIfNoPassword || screen.userNeedsPassword ? textConstants.login : ""
-                            boldLabel: true
-                            iconSize: Config.loginButtonIconSize
-                            fontSize: Config.loginButtonFontSize
-                            iconColor: Config.loginButtonContentColor
-                            activeIconColor: Config.loginButtonActiveContentColor
-                            backgroundColor: Config.loginButtonBackgroundColor
-                            backgroundOpacity: Config.loginButtonBackgroundOpacity
-                            activeBackgroundColor: Config.loginButtonActiveBackgroundColor
-                            activeBackgroundOpacity: Config.loginButtonActiveBackgroundOpacity
-                            onClicked: {
-                                screen.login();
+                        RowLayout {
+                            id: loginArea
+                            Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
+                            Layout.preferredWidth: childrenRect.width
+                            Layout.preferredHeight: childrenRect.height
+                            spacing: 5
+
+                            PasswordInput {
+                                id: password
+                                Layout.alignment: Qt.AlignHCenter
+                                enabled: !screen.isSelectingUser && !screen.isAuthenticating
+                                visible: screen.userNeedsPassword
+                                focus: enabled && visible
+                                onAccepted: {
+                                    screen.login();
+                                }
+                            }
+
+                            IconButton {
+                                id: loginButton
+                                Layout.alignment: Qt.AlignHCenter
+                                Layout.preferredWidth: width // Fix button not resizing when label updates
+                                height: password.height
+                                enabled: !screen.isSelectingUser
+                                activeFocusOnTab: true
+                                focus: !screen.userNeedsPassword && !screen.isSelectingUser
+                                icon: "icons/arrow-right.svg"
+                                label: textConstants.login.toUpperCase()
+                                showLabel: Config.loginButtonShowTextIfNoPassword && !screen.userNeedsPassword
+                                tooltipText: !Config.loginButtonShowTextIfNoPassword || screen.userNeedsPassword ? textConstants.login : ""
+                                boldLabel: true
+                                iconSize: Config.loginButtonIconSize
+                                fontSize: Config.loginButtonFontSize
+                                iconColor: Config.loginButtonContentColor
+                                activeIconColor: Config.loginButtonActiveContentColor
+                                backgroundColor: Config.loginButtonBackgroundColor
+                                backgroundOpacity: Config.loginButtonBackgroundOpacity
+                                activeBackgroundColor: Config.loginButtonActiveBackgroundColor
+                                activeBackgroundOpacity: Config.loginButtonActiveBackgroundOpacity
+                                onClicked: {
+                                    screen.login();
+                                }
                             }
                         }
                     }
                 }
             }
+
+            Text {
+                id: loginMessage
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    top: loginContainer.bottom
+                    topMargin: 20
+                }
+                font.pixelSize: Config.warningMessageFontSize
+                font.family: Config.fontFamily
+                font.bold: Config.warningMessageBold
+                color: Config.warningMessageNormalColor
+                visible: false
+                Component.onCompleted: {
+                    if (root.capsLockOn)
+                        loginMessage.warn(textConstants.capslockWarning, "warning");
+                }
+
+                function warn(message, type) {
+                    text = message;
+                    color = type === "error" ? Config.warningMessageErrorColor : (type === "warning" ? Config.warningMessageWarningColor : Config.warningMessageNormalColor);
+                    visible = true;
+                }
+
+                function clear() {
+                    visible = false;
+                    text = "";
+                }
+            }
+
+            // FIX: Virtual keyboard not working on the second screen.
+            InputPanel {
+                // TODO: Keep keyboard visible.
+                id: inputPanel
+                z: 99
+                width: Math.min(screen.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
+                visible: screen.showKeyboard
+                externalLanguageSwitchEnabled: true
+                onExternalLanguageSwitch: {
+                    // TODO: Open lang popup
+                    languagePopup.open();
+                    return;
+                }
+                // onActiveChanged: {
+                //     if (showKeyboard)
+                //         showKeyboard = false;
+                // }
+                Component.onCompleted: {
+                    VirtualKeyboardSettings.styleName = "tstyle";
+                    VirtualKeyboardSettings.layout = "symbols";
+                }
+
+                property string pos: Config.virtualKeyboardPosition
+                anchors {
+                    top: pos === "top" ? parent.top : (pos === "bottom" ? loginContainer.bottom : undefined)
+                    topMargin: pos === "top" ? Config.loginScreenPaddingTop : (pos === "bottom" ? (loginMessage.visible ? 45 : 20) : undefined)
+                    left: pos === "left" ? parent.left : undefined
+                    leftMargin: pos === "left" ? Config.loginScreenPaddingLeft : undefined
+                    right: pos === "right" ? parent.right : undefined
+                    rightMargin: pos === "right" ? Config.loginScreenPaddingRight : undefined
+                    horizontalCenter: pos === "top" || pos === "bottom" ? parent.horizontalCenter : undefined
+                    verticalCenter: pos === "left" || pos === "right" ? parent.verticalCenter : undefined
+                }
+            }
         }
     }
 
-    // FIX: Virtual keyboard not working on the second screen.
-    InputPanel {
-        // TODO: Keep keyboard visible.
-        id: inputPanel
-        z: 99
-        width: Math.min(screen.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
-        visible: screen.showKeyboard
-        externalLanguageSwitchEnabled: true
-        onExternalLanguageSwitch: {
-            return;
-        }
-        // TODO: Open lang popup
-        // onActiveChanged: {
-        //     if (showKeyboard)
-        //         showKeyboard = false;
-        // }
-        Component.onCompleted: {
-            VirtualKeyboardSettings.styleName = "tstyle";
-            VirtualKeyboardSettings.layout = "symbols";
+    Item {
+        id: menuArea
+        anchors.fill: parent
+
+        function calculatePopupPos(dir, popup_w, popup_h, parent_w, parent_h, parent_x) {
+            let x = 0, y = 0;
+            const popup_margin = 5;
+            if (dir === "up") {
+                if (parent_x + (parent_w - popup_w) / 2 < 10) {
+                    // Align popup left
+                    x = 0;
+                } else if (parent_x - (parent_w - popup_w) / 2 > screen.width - 10) {
+                    // Align popup right
+                    x = -popup_w + parent_w;
+                } else {
+                    // Center popup
+                    x = (parent_w - popup_w) / 2;
+                }
+                y = -popup_h - popup_margin;
+            } else if (dir === "down") {
+                if (parent_x + (parent_w - popup_w) / 2 < 10) {
+                    // Align popup left
+                    x = 0;
+                } else if (parent_x - (parent_w - popup_w) / 2 > screen.width - 10) {
+                    // Align popup right
+                    x = -popup_w + parent_w;
+                } else {
+                    // Center popup
+                    x = (parent_w - popup_w) / 2;
+                }
+                y = parent_h + popup_margin;
+            } else if (dir === "left") {
+                x = -popup_w - popup_margin;
+                y = 0;
+            } else {
+                x = parent_w + popup_margin;
+                y = 0;
+            }
+            return [x, y];
         }
 
-        property string pos: Config.virtualKeyboardPosition
-        anchors {
-            top: pos === "top" ? screen.top : undefined
-            topMargin: pos === "top" ? Config.loginScreenPaddingTop : undefined
-            bottom: pos === "bottom" ? screen.bottom : undefined
-            bottomMargin: pos === "bottom" ? Config.loginScreenPaddingBottom : undefined
-            left: pos === "left" ? parent.left : undefined
-            leftMargin: pos === "left" ? Config.loginScreenPaddingLeft : undefined
-            right: pos === "right" ? parent.right : undefined
-            rightMargin: pos === "right" ? Config.loginScreenPaddingRight : undefined
-            horizontalCenter: pos === "top" || pos === "bottom" ? parent.horizontalCenter : undefined
-            verticalCenter: pos === "left" || pos === "right" ? parent.verticalCenter : undefined
+        Component {
+            id: sessionMenuComponent
+
+            IconButton {
+                id: sessionButton
+                property bool showLabel: Config.sessionButtonDisplaySessionName
+                width: showLabel ? Config.sessionButonMaxWidth : Config.menuAreaButtonsSize
+                height: Config.menuAreaButtonsSize
+                iconSize: Config.sessionButtonIconSize
+                fontSize: Config.sessionButtonFontSize
+                active: popup.visible
+                iconColor: Config.sessionButtonContentColor
+                activeIconColor: Config.sessionButtonActiveContentColor
+                borderRadius: Config.menuAreaButtonsBorderRadius
+                backgroundColor: Config.sessionButtonBackgroundColor
+                backgroundOpacity: Config.sessionButtonBackgroundOpacity
+                activeBackgroundColor: Config.sessionButtonBackgroundColor
+                activeBackgroundOpacity: Config.sessionButtonActiveBackgroundOpacity
+                activeFocusOnTab: true
+                focus: false
+                onClicked: {
+                    popup.open();
+                }
+                tooltipText: "Change session"
+
+                Popup {
+                    id: popup
+                    property int popupMargin: 5
+                    parent: sessionButton
+                    padding: 0
+                    background: Rectangle {
+                        color: "transparent"
+                    }
+                    dim: true
+                    Overlay.modal: Rectangle {
+                        color: "transparent"  // Use whatever color/opacity you like
+                    }
+
+                    modal: true
+                    popupType: Popup.Item
+                    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+                    StackLayout {
+                        // onSessionChanged: (newSessionIndex, sessionIcon, sessionLabel) => {
+                        //     sessionIndex = newSessionIndex;
+                        //     sessionButton.icon = sessionIcon;
+                        //     sessionButton.label = sessionButton.showLabel ? sessionLabel : "";
+                        // }
+                        SessionSelector {}
+                    }
+
+                    // Component.onCompleted: {
+                    //     [x, y] = menuArea.calculatePopupPos(Config.sessionPopupDirection, width, height, parent.width, parent.height, parent.parent.x);
+                    // }
+                }
+            }
+        }
+
+        Component {
+            id: languageMenuComponent
+
+            IconButton {
+                id: languageButton
+
+                property bool showLabel: Config.languageButtonDisplayLanguageName
+
+                height: Config.menuAreaButtonsSize
+                icon: "icons/language.svg"
+                active: languagePopup.visible
+                borderRadius: Config.menuAreaButtonsBorderRadius
+                iconSize: Config.languageButtonIconSize
+                fontSize: Config.languageButtonFontSize
+                backgroundColor: Config.languageButtonBackgroundColor
+                backgroundOpacity: Config.languageButtonBackgroundOpacity
+                activeBackgroundColor: Config.languageButtonBackgroundColor
+                activeBackgroundOpacity: Config.languageButtonActiveBackgroundOpacity
+                iconColor: Config.languageButtonContentColor
+                activeIconColor: Config.languageButtonActiveContentColor
+                activeFocusOnTab: true
+                focus: false
+                onClicked: {
+                    languagePopup.open();
+                }
+                tooltipText: "Change keyboard layout"
+                label: showLabel ? (keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
+
+                Popup {
+                    id: languagePopup
+                    property int popupMargin: 5
+                    parent: languageButton
+                    padding: 5
+                    background: Rectangle {
+                        color: Config.menuAreaPopupBackgroundColor
+                        opacity: Config.menuAreaPopupBackgroundOpacity
+                        radius: 5
+                    }
+                    dim: true
+                    Overlay.modal: Rectangle {
+                        color: "transparent" // Remove dim background (dim: false doesn't work here)
+                    }
+
+                    modal: true
+                    popupType: Popup.Item
+                    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+                    LayoutSelector {
+                        onLayoutChanged: index => {
+                            languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
+                            VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
+                        }
+                    }
+
+                    Component.onCompleted: {
+                        [x, y] = menuArea.calculatePopupPos(Config.languagePopupDirection, width, height, parent.width, parent.height, parent.parent.x);
+                    }
+                }
+            }
+        }
+
+        Component {
+            id: keyboardMenuComponent
+
+            IconButton {
+                id: keyboardButton
+
+                height: Config.menuAreaButtonsSize
+                width: Config.menuAreaButtonsSize
+                icon: "icons/keyboard.svg"
+                iconSize: Config.keyboardButtonIconSize
+                backgroundColor: Config.keyboardButtonBackgroundColor
+                backgroundOpacity: Config.keyboardButtonBackgroundOpacity
+                activeBackgroundColor: Config.keyboardButtonBackgroundColor
+                activeBackgroundOpacity: Config.keyboardButtonActiveBackgroundOpacity
+                iconColor: Config.keyboardButtonContentColor
+                activeIconColor: Config.keyboardButtonActiveContentColor
+                active: showKeyboard
+                borderRadius: Config.menuAreaButtonsBorderRadius
+                activeFocusOnTab: true
+                focus: false
+                onClicked: {
+                    screen.showKeyboard = !screen.showKeyboard;
+                }
+                tooltipText: "Toggle virtual keyboard"
+            }
+        }
+
+        Component {
+            id: powerMenuComponent
+
+            IconButton {
+                id: powerButton
+
+                height: Config.menuAreaButtonsSize
+                width: Config.menuAreaButtonsSize
+                icon: "icons/power.svg"
+                iconSize: Config.powerButtonIconSize
+                iconColor: Config.powerButtonContentColor
+                activeIconColor: Config.powerButtonActiveContentColor
+                active: popup.visible
+                borderRadius: Config.menuAreaButtonsBorderRadius
+                backgroundColor: Config.powerButtonBackgroundColor
+                backgroundOpacity: Config.powerButtonBackgroundOpacity
+                activeBackgroundColor: Config.powerButtonBackgroundColor
+                activeBackgroundOpacity: Config.powerButtonActiveBackgroundOpacity
+                activeFocusOnTab: true
+                focus: false
+                onClicked: {
+                    popup.open();
+                }
+                tooltipText: "Power options"
+
+                Popup {
+                    id: popup
+                    property int popupMargin: 5
+                    parent: powerButton
+                    background: Rectangle {
+                        color: "transparent"
+                    }
+                    dim: true
+                    padding: 0
+                    Overlay.modal: Rectangle {
+                        color: "transparent"  // Use whatever color/opacity you like
+                    }
+
+                    modal: true
+                    popupType: Popup.Item
+                    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+                    StackLayout {
+                        PowerMenu {
+                            visible: true
+                        }
+                    }
+
+                    // Component.onCompleted: {
+                    //     [x, y] = menuArea.calculatePopupPos(Config.powerPopupDirection, width, height, parent.width, parent.height, parent.parent.x);
+                    // }
+                }
+            }
+        }
+
+        Row {
+            // top_left
+            id: topLeftButtons
+
+            height: 30
+            spacing: Config.menuAreaSpacing // 10
+
+            anchors {
+                top: parent.top
+                left: parent.left
+                topMargin: Config.loginScreenPaddingTop
+                leftMargin: Config.loginScreenPaddingLeft
+            }
+        }
+
+        Row {
+            // top_center
+            id: topCenterButtons
+
+            height: 30
+            spacing: Config.menuAreaSpacing // 10
+
+            anchors {
+                top: parent.top
+                horizontalCenter: parent.horizontalCenter
+                topMargin: Config.loginScreenPaddingTop
+            }
+        }
+
+        Row {
+            // top_right
+            id: topRightButtons
+
+            height: 30
+            spacing: Config.menuAreaSpacing // 10
+
+            anchors {
+                top: parent.top
+                right: parent.right
+                topMargin: Config.loginScreenPaddingTop
+                rightMargin: Config.loginScreenPaddingRight
+            }
+        }
+
+        Column {
+            // center_left
+            id: centerLeftButtons
+
+            width: 30
+            spacing: Config.menuAreaSpacing // 10
+
+            anchors {
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+                leftMargin: Config.loginScreenPaddingLeft
+            }
+        }
+
+        Column {
+            // center_right
+            id: centerRightButtons
+
+            width: 30
+            spacing: Config.menuAreaSpacing // 10
+
+            anchors {
+                right: parent.right
+                verticalCenter: parent.verticalCenter
+                rightMargin: Config.loginScreenPaddingRight
+            }
+        }
+
+        Row {
+            // bottom_left
+            id: bottomLeftButtons
+
+            height: 30
+            spacing: Config.menuAreaSpacing // 10
+
+            anchors {
+                bottom: parent.bottom
+                left: parent.left
+                bottomMargin: Config.loginScreenPaddingBottom
+                leftMargin: Config.loginScreenPaddingLeft
+            }
+        }
+
+        Row {
+            // bottom_center
+            id: bottomCenterButtons
+
+            height: 30
+            spacing: Config.menuAreaSpacing // 10
+
+            anchors {
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+                bottomMargin: Config.loginScreenPaddingBottom
+            }
+        }
+
+        Row {
+            // bottom_right
+            id: bottomRightButtons
+
+            height: childrenRect.height
+            spacing: Config.menuAreaSpacing // 10
+
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+                bottomMargin: Config.loginScreenPaddingBottom
+                rightMargin: Config.loginScreenPaddingRight
+            }
+        }
+
+        Component.onCompleted: {
+            const menus = Config.sortMenuButtons();
+
+            for (let i = 0; i < menus.length; i++) {
+                let pos;
+                switch (menus[i].position) {
+                case "top-left":
+                    pos = topLeftButtons;
+                    break;
+                case "top-center":
+                    pos = topCenterButtons;
+                    break;
+                case "top-right":
+                    pos = topRightButtons;
+                    break;
+                case "center-left":
+                    pos = centerLeftButtons;
+                    break;
+                case "center-right":
+                    pos = centerRightButtons;
+                    break;
+                case "bottom-left":
+                    pos = bottomLeftButtons;
+                    break;
+                case "bottom-center":
+                    pos = bottomCenterButtons;
+                    break;
+                case "bottom-right":
+                    pos = bottomRightButtons;
+                    break;
+                }
+
+                if (menus[i].name === "session")
+                    sessionMenuComponent.createObject(pos, {});
+                else if (menus[i].name === "language")
+                    languageMenuComponent.createObject(pos, {});
+                else if (menus[i].name === "keyboard")
+                    keyboardMenuComponent.createObject(pos, {});
+                else if (menus[i].name === "power")
+                    powerMenuComponent.createObject(pos, {});
+            }
         }
     }
 
@@ -278,6 +706,13 @@ Item {
             }
             if (!screen.isAuthenticating) {
                 password.input.forceActiveFocus();
+            }
+        }
+        onWheel: event => {
+            if (event.angleDelta.y < 0) {
+                userSelector.nextUser();
+            } else {
+                userSelector.prevUser();
             }
         }
     }

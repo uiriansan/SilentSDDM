@@ -21,6 +21,7 @@ Item {
     property double activeBackgroundOpacity: 0.15
     property string tooltipText: ""
     property int borderRadius: 10
+    property int borderSize: 0
     property bool active: false
     readonly property bool isActive: active || focus || mouseArea.pressed || mouseArea.containsMouse
 
@@ -35,7 +36,7 @@ Item {
         radius: iconButton.borderRadius
         border {
             color: iconButton.isActive ? iconButton.activeIconColor : iconButton.iconColor
-            width: iconButton.focus ? Config.passwordInputBorderSize || 1 : 0
+            width: iconButton.focus ? (Config.passwordInputBorderSize > 0 ? Config.passwordInputBorderSize : 2) : 0
         }
 
         Behavior on opacity {
@@ -43,6 +44,18 @@ Item {
             NumberAnimation {
                 duration: 250
             }
+        }
+    }
+
+    Rectangle {
+        id: buttonBorder
+        color: "transparent"
+        radius: iconButton.borderRadius
+        anchors.fill: parent
+        visible: iconButton.borderSize > 0 || iconButton.focus
+        border {
+            color: iconButton.isActive ? iconButton.activeIconColor : iconButton.iconColor
+            width: iconButton.focus ? Config.passwordInputBorderSize || 2 : 0
         }
     }
 
@@ -97,7 +110,8 @@ Item {
         cursorShape: Qt.PointingHandCursor
         ToolTip {
             parent: mouseArea
-            visible: mouseArea.containsMouse && iconButton.tooltipText !== "" || iconButton.focus && iconButton.tooltipText !== ""
+            enabled: Config.enableTooltips
+            visible: enabled && mouseArea.containsMouse && iconButton.tooltipText !== "" || enabled && iconButton.focus && iconButton.tooltipText !== ""
             delay: 300
             contentItem: Text {
                 font.family: Config.fontFamily

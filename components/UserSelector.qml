@@ -10,24 +10,32 @@ Item {
     signal userChanged(userIndex: int, username: string, userRealName: string, userIcon: string, needsPassword: bool)
 
     property bool listUsers: false
-    property string orientation: ""
+    property string layoutOrientation: ""
+    property bool isDragging: false
+
+    function nextUser() {
+        userList.incrementCurrentIndex();
+    }
+    function prevUser() {
+        userList.decrementCurrentIndex();
+    }
 
     ListView {
         id: userList
         anchors.fill: parent
-        orientation: selector.orientation === "vertical" ? ListView.Horizontal : ListView.Vertical
+        orientation: selector.layoutOrientation === "vertical" ? ListView.Horizontal : ListView.Vertical
         spacing: 10
-        interactive: selector.listUsers
+        interactive: false
         boundsBehavior: Flickable.StopAtBounds
 
         // Center the active avatar
-        preferredHighlightBegin: selector.orientation === "vertical" ? (width - Config.avatarActiveSize) / 2 : (height - Config.avatarActiveSize) / 2
+        preferredHighlightBegin: selector.layoutOrientation === "vertical" ? (width - Config.avatarActiveSize) / 2 : (height - Config.avatarActiveSize) / 2
         preferredHighlightEnd: preferredHighlightBegin
         highlightRangeMode: ListView.StrictlyEnforceRange
         // Padding for centering
-        leftMargin: selector.orientation === "vertical" ? preferredHighlightBegin : 0
+        leftMargin: selector.layoutOrientation === "vertical" ? preferredHighlightBegin : 0
         rightMargin: leftMargin
-        topMargin: selector.orientation === "vertical" ? 0 : preferredHighlightBegin
+        topMargin: selector.layoutOrientation === "vertical" ? 0 : preferredHighlightBegin
         bottomMargin: topMargin
 
         // Animation properties
@@ -37,7 +45,6 @@ Item {
         highlightFollowsCurrentItem: true
 
         model: userModel
-
         currentIndex: userModel.lastIndex
         onCurrentIndexChanged: {
             const username = userModel.data(userModel.index(currentIndex, 0), 257);
@@ -53,8 +60,8 @@ Item {
             width: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
             height: width
             anchors {
-                verticalCenter: selector.orientation === "vertical" ? parent.verticalCenter : undefined
-                horizontalCenter: selector.orientation === "vertical" ? undefined : parent.horizontalCenter
+                verticalCenter: selector.layoutOrientation === "vertical" ? parent.verticalCenter : undefined
+                horizontalCenter: selector.layoutOrientation === "vertical" ? undefined : parent.horizontalCenter
             }
             // color: "transparent"
             visible: selector.listUsers || index === userList.currentIndex
@@ -102,8 +109,8 @@ Item {
                     if (!selector.listUsers) {
                         // Open selector
                         selector.openUserList();
-                        userList.model.reset();
                         selector.focus = true;
+                        userList.model.reset();
                     } else {
                         // Collapse the list if the selected user gets another click
                         if (index === userList.currentIndex) {
@@ -124,24 +131,28 @@ Item {
     Keys.onPressed: event => {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
             if (selector.listUsers) {
-                // selector.listUsers = false;
                 selector.closeUserList();
                 selector.focus = false;
             } else {
-                // selector.listUsers = true;
                 selector.openUserList();
                 selector.focus = true;
             }
+            event.accepted = true;
         } else if (event.key == Qt.Key_Escape) {
-            // selector.listUsers = false;
             selector.closeUserList();
             selector.focus = false;
-        } else if ((selector.orientation === "vertical" && event.key == Qt.Key_Left) || (selector.orientation === "horizontal" && event.key == Qt.Key_Up)) {
-            userList.decrementCurrentIndex();
+            event.accepted = true;
+        } else if ((selector.layoutOrientation === "vertical" && event.key == Qt.Key_Left) || (selector.layoutOrientation === "horizontal" && event.key == Qt.Key_Up)) {
+            selector.prevUser();
             selector.focus = true;
-        } else if ((selector.orientation === "vertical" && event.key == Qt.Key_Right) || (selector.orientation === "horizontal" && event.key == Qt.Key_Down)) {
-            userList.incrementCurrentIndex();
+            event.accepted = true;
+        } else if ((selector.layoutOrientation === "vertical" && event.key == Qt.Key_Right) || (selector.layoutOrientation === "horizontal" && event.key == Qt.Key_Down)) {
+            selector.nextUser();
             selector.focus = true;
+            event.accepted = true;
+        } else {
+            // Do not steal other keys
+            event.accepted = false;
         }
     }
 }

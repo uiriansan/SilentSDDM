@@ -18,6 +18,9 @@ Item {
     property bool capsLockOn: {
         capsLockOn = keyboard ? keyboard.capsLock : false;
     }
+    onCapsLockOnChanged: {
+        loginScreen.updateCapsLock();
+    }
 
     // Maybe it would be a good idea to use StackLayout or something similar instead. Anyway, this works and I'm not touching it...
     states: [

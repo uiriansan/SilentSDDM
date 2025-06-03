@@ -11,6 +11,7 @@ QtObject {
     property string fontFamily: config.stringValue("font-family") || "RedHatDisplay"
     property bool enableAnimations: config['enable-animations'] === "false" ? false : true
     property int blurRadius: config.intValue("blur-radius") || 32
+    property bool enableTooltips: config['enable-tooltips'] === "false" ? false : true
 
     // [LockScreen]
     property bool lockScreenDisplay: config['LockScreen/display'] === "false" ? false : true
@@ -211,14 +212,14 @@ QtObject {
         const powerButtonIndex = config.intValue("LoginScreen.MenuArea.Power/index");
 
         const menus = [];
-        const available_positions = ["top_left", "top_center", "top_right", "center_left", "center_right", "bottom_left", "bottom_center", "bottom_right"];
+        const available_positions = ["top-left", "top-center", "top-right", "center-left", "center-right", "bottom-left", "bottom-center", "bottom-right"];
 
         if (sessionButtonDisplay)
             menus.push({
                 name: "session",
                 index: sessionButtonIndex,
                 def_index: 0,
-                position: sessionButtonPosition in available_positions ? sessionButtonPosition : "bottom_left"
+                position: available_positions.includes(sessionButtonPosition) ? sessionButtonPosition : "bottom-left"
             });
 
         if (languageButtonDisplay)
@@ -226,7 +227,7 @@ QtObject {
                 name: "language",
                 index: languageButtonIndex,
                 def_index: 1,
-                position: languageButtonPosition in available_positions ? languageButtonPosition : "bottom_right"
+                position: available_positions.includes(languageButtonPosition) ? languageButtonPosition : "bottom-right"
             });
 
         if (keyboardButtonDisplay)
@@ -234,7 +235,7 @@ QtObject {
                 name: "keyboard",
                 index: keyboardButtonIndex,
                 def_index: 2,
-                position: keyboardButtonPosition in available_positions ? keyboardButtonPosition : "bottom_right"
+                position: available_positions.includes(keyboardButtonPosition) ? keyboardButtonPosition : "bottom-right"
             });
 
         if (powerButtonDisplay)
@@ -242,7 +243,7 @@ QtObject {
                 name: "power",
                 index: powerButtonIndex,
                 def_index: 3,
-                position: powerButtonPosition in available_positions ? powerButtonPosition : "bottom_right"
+                position: available_positions.includes(powerButtonPosition) ? powerButtonPosition : "bottom-right"
             });
 
         // Sort by index or default index if 0
