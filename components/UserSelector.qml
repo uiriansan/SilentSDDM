@@ -58,7 +58,7 @@ Item {
 
         delegate: Rectangle {
             width: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
-            height: width
+            height: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
             anchors {
                 verticalCenter: selector.layoutOrientation === "vertical" ? parent.verticalCenter : undefined
                 horizontalCenter: selector.layoutOrientation === "vertical" ? undefined : parent.horizontalCenter
@@ -69,14 +69,14 @@ Item {
             Behavior on width {
                 enabled: Config.enableAnimations
                 NumberAnimation {
-                    duration: 150
+                    duration: 200
                     easing.type: Easing.OutQuad
                 }
             }
             Behavior on height {
                 enabled: Config.enableAnimations
                 NumberAnimation {
-                    duration: 150
+                    duration: 200
                     easing.type: Easing.OutQuad
                 }
             }
@@ -84,7 +84,7 @@ Item {
             Behavior on opacity {
                 enabled: Config.enableAnimations
                 NumberAnimation {
-                    duration: 150
+                    duration: 200
                 }
             }
 
@@ -101,7 +101,7 @@ Item {
                 Behavior on opacity {
                     enabled: Config.enableAnimations
                     NumberAnimation {
-                        duration: 150
+                        duration: 200
                     }
                 }
 

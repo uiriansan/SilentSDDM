@@ -170,8 +170,8 @@ Item {
                     ColumnLayout {
                         // Alignment of the login area. left | center | right
                         Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
-                        Layout.preferredWidth: childrenRect.width
-                        Layout.preferredHeight: childrenRect.height
+                        // Layout.preferredWidth: childrenRect.width
+                        // Layout.preferredHeight: childrenRect.height
 
                         spacing: 10
 
