@@ -56,14 +56,14 @@ Item {
             selector.userChanged(currentIndex, username, userRealName, userIcon, needsPasswd);
         }
 
-        delegate: Item {
+        delegate: Rectangle {
             width: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
             height: width
             anchors {
                 verticalCenter: selector.layoutOrientation === "vertical" ? parent.verticalCenter : undefined
                 horizontalCenter: selector.layoutOrientation === "vertical" ? undefined : parent.horizontalCenter
             }
-            // color: "transparent"
+            color: "transparent"
             visible: selector.listUsers || index === userList.currentIndex
 
             Behavior on width {

@@ -25,11 +25,11 @@ Item {
     property bool userNeedsPassword: false
     property bool isAuthenticating: false
     property bool isSelectingUser: false
+    property bool isMenu: false
 
     function login() {
         if (password.text.length > 0 || !userNeedsPassword) {
-            spinner.visible = true;
-            loginArea.visible = false;
+            // spinner.visible = true;
             isAuthenticating = true;
             sddm.login(userName, password.text, sessionIndex);
         }
@@ -138,6 +138,14 @@ Item {
                             enabled: !screen.isAuthenticating
                             activeFocusOnTab: true
                             layoutOrientation: loginLayout.loginOrientation
+                            width: layoutOrientation === "vertical" ? screen.width - Config.loginScreenPaddingLeft - Config.loginScreenPaddingRight : Config.avatarActiveSize
+                            height: layoutOrientation === "vertical" ? Config.avatarActiveSize : screen.height - Config.loginScreenPaddingTop - Config.loginScreenPaddingBottom
+                            onFocusChanged: {
+                                if (!focus && screen.isSelectingUser) {
+                                    screen.isSelectingUser = false;
+                                    password.input.forceActiveFocus();
+                                }
+                            }
 
                             onOpenUserList: {
                                 screen.isSelectingUser = true;
@@ -156,8 +164,6 @@ Item {
                                 screen.userIcon = icon;
                                 screen.userNeedsPassword = needsPassword;
                             }
-                            width: layoutOrientation === "vertical" ? screen.width - Config.loginScreenPaddingLeft - Config.loginScreenPaddingRight : Config.avatarActiveSize
-                            height: layoutOrientation === "vertical" ? Config.avatarActiveSize : screen.height - Config.loginScreenPaddingTop - Config.loginScreenPaddingBottom
                         }
                     }
 
@@ -181,48 +187,67 @@ Item {
                             text: screen.userRealName
                         }
 
-                        RowLayout {
-                            id: loginArea
+                        StackLayout {
+                            id: loginAreaStack
                             Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
-                            Layout.preferredWidth: childrenRect.width
-                            Layout.preferredHeight: childrenRect.height
-                            spacing: 5
+                            Layout.preferredWidth: loginArea.width
+                            Layout.preferredHeight: loginArea.height
+                            Layout.fillWidth: false
+                            // currentIndex: screen.isAuthenticating ? 1 : 0
+                            currentIndex: 1
 
-                            PasswordInput {
-                                id: password
-                                Layout.alignment: Qt.AlignHCenter
-                                enabled: !screen.isSelectingUser && !screen.isAuthenticating
-                                visible: screen.userNeedsPassword
-                                focus: enabled && visible
-                                onAccepted: {
-                                    screen.login();
+                            RowLayout {
+                                id: loginArea
+                                spacing: 5
+                                Layout.preferredWidth: childrenRect.width
+                                Layout.preferredHeight: childrenRect.height
+                                Layout.fillWidth: false
+
+                                PasswordInput {
+                                    id: password
+                                    Layout.alignment: Qt.AlignHCenter
+                                    enabled: !screen.isSelectingUser && !screen.isAuthenticating
+                                    visible: screen.userNeedsPassword
+                                    focus: enabled && visible
+                                    onAccepted: {
+                                        screen.login();
+                                    }
+                                }
+
+                                IconButton {
+                                    id: loginButton
+                                    Layout.alignment: Qt.AlignHCenter
+                                    Layout.preferredWidth: width // Fix button not resizing when label updates
+                                    height: password.height
+                                    enabled: !screen.isSelectingUser && !screen.isAuthenticating
+                                    activeFocusOnTab: true
+                                    focus: !screen.userNeedsPassword && !screen.isSelectingUser
+                                    icon: "icons/arrow-right.svg"
+                                    label: textConstants.login.toUpperCase()
+                                    showLabel: Config.loginButtonShowTextIfNoPassword && !screen.userNeedsPassword
+                                    tooltipText: !Config.loginButtonShowTextIfNoPassword || screen.userNeedsPassword ? textConstants.login : ""
+                                    boldLabel: true
+                                    iconSize: Config.loginButtonIconSize
+                                    fontSize: Config.loginButtonFontSize
+                                    iconColor: Config.loginButtonContentColor
+                                    activeIconColor: Config.loginButtonActiveContentColor
+                                    backgroundColor: Config.loginButtonBackgroundColor
+                                    backgroundOpacity: Config.loginButtonBackgroundOpacity
+                                    activeBackgroundColor: Config.loginButtonActiveBackgroundColor
+                                    activeBackgroundOpacity: Config.loginButtonActiveBackgroundOpacity
+                                    onClicked: {
+                                        screen.login();
+                                    }
                                 }
                             }
 
-                            IconButton {
-                                id: loginButton
-                                Layout.alignment: Qt.AlignHCenter
-                                Layout.preferredWidth: width // Fix button not resizing when label updates
-                                height: password.height
-                                enabled: !screen.isSelectingUser
-                                activeFocusOnTab: true
-                                focus: !screen.userNeedsPassword && !screen.isSelectingUser
-                                icon: "icons/arrow-right.svg"
-                                label: textConstants.login.toUpperCase()
-                                showLabel: Config.loginButtonShowTextIfNoPassword && !screen.userNeedsPassword
-                                tooltipText: !Config.loginButtonShowTextIfNoPassword || screen.userNeedsPassword ? textConstants.login : ""
-                                boldLabel: true
-                                iconSize: Config.loginButtonIconSize
-                                fontSize: Config.loginButtonFontSize
-                                iconColor: Config.loginButtonContentColor
-                                activeIconColor: Config.loginButtonActiveContentColor
-                                backgroundColor: Config.loginButtonBackgroundColor
-                                backgroundOpacity: Config.loginButtonBackgroundOpacity
-                                activeBackgroundColor: Config.loginButtonActiveBackgroundColor
-                                activeBackgroundOpacity: Config.loginButtonActiveBackgroundOpacity
-                                onClicked: {
-                                    screen.login();
-                                }
+                            Rectangle {
+                                Layout.fillWidth: false
+                                Layout.fillHeight: false
+                                Layout.preferredWidth: 32
+                                Layout.preferredHeight: 32
+                                Layout.alignment: Qt.AlignCenter
+                                color: "red"
                             }
                         }
                     }
@@ -351,6 +376,7 @@ Item {
                 height: Config.menuAreaButtonsSize
                 iconSize: Config.sessionButtonIconSize
                 fontSize: Config.sessionButtonFontSize
+                enabled: !screen.isSelectingUser
                 active: popup.visible
                 iconColor: Config.sessionButtonContentColor
                 activeIconColor: Config.sessionButtonActiveContentColor
@@ -362,7 +388,12 @@ Item {
                 activeFocusOnTab: true
                 focus: false
                 onClicked: {
-                    popup.open();
+                    if (screen.isSelectingUser) {
+                        screen.isSelectingUser = false;
+                    } else {
+                        popup.open();
+                        screen.isMenu = true;
+                    }
                 }
                 tooltipText: "Change session"
 
@@ -379,6 +410,7 @@ Item {
                         color: "transparent"  // Use whatever color/opacity you like
                     }
 
+                    onClosed: screen.isMenu = false
                     modal: true
                     popupType: Popup.Item
                     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -420,9 +452,15 @@ Item {
                 iconColor: Config.languageButtonContentColor
                 activeIconColor: Config.languageButtonActiveContentColor
                 activeFocusOnTab: true
+                enabled: !screen.isSelectingUser
                 focus: false
                 onClicked: {
-                    popup.open();
+                    if (screen.isSelectingUser) {
+                        screen.isSelectingUser = false;
+                    } else {
+                        popup.open();
+                        screen.isMenu = true;
+                    }
                 }
                 tooltipText: "Change keyboard layout"
                 label: showLabel ? (keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
@@ -431,6 +469,7 @@ Item {
                     target: screen
                     function onOpenLayoutPopup() {
                         popup.open();
+                        screen.isMenu = true;
                     }
                 }
 
@@ -442,20 +481,27 @@ Item {
                     background: Rectangle {
                         color: Config.menuAreaPopupBackgroundColor
                         opacity: Config.menuAreaPopupBackgroundOpacity
-                        radius: 5
+                        radius: 5 // Remove dim background (dim: false doesn't work here)
                     }
+                    focus: visible
                     dim: true
                     Overlay.modal: Rectangle {
                         color: "transparent" // Remove dim background (dim: false doesn't work here)
                     }
 
+                    onClosed: screen.isMenu = false
                     modal: true
                     popupType: Popup.Item
                     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
                     LayoutSelector {
+                        focus: popup.focus
                         onLayoutChanged: index => {
                             languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
                             VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
+                        }
+                        onClose: {
+                            popup.close();
+                            password.input.forceActiveFocus();
                         }
                     }
 
@@ -484,6 +530,7 @@ Item {
                 activeIconColor: Config.keyboardButtonActiveContentColor
                 active: showKeyboard
                 borderRadius: Config.menuAreaButtonsBorderRadius
+                enabled: !screen.isSelectingUser
                 activeFocusOnTab: true
                 focus: false
                 onClicked: {
@@ -511,10 +558,12 @@ Item {
                 backgroundOpacity: Config.powerButtonBackgroundOpacity
                 activeBackgroundColor: Config.powerButtonBackgroundColor
                 activeBackgroundOpacity: Config.powerButtonActiveBackgroundOpacity
+                enabled: !screen.isSelectingUser
                 activeFocusOnTab: true
                 focus: false
                 onClicked: {
                     popup.open();
+                    screen.isMenu = true;
                 }
                 tooltipText: "Power options"
 
@@ -523,27 +572,26 @@ Item {
                     property int popupMargin: 5
                     parent: powerButton
                     background: Rectangle {
-                        color: "transparent"
+                        color: Config.menuAreaPopupBackgroundColor
+                        opacity: Config.menuAreaPopupBackgroundOpacity
+                        radius: 5
                     }
+                    onClosed: screen.isMenu = false
                     dim: true
-                    padding: 0
+                    padding: 5
                     Overlay.modal: Rectangle {
-                        color: "transparent"  // Use whatever color/opacity you like
+                        color: "transparent"  // Remove dim background (dim: false doesn't work here)
                     }
 
                     modal: true
                     popupType: Popup.Item
                     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
-                    StackLayout {
-                        PowerMenu {
-                            visible: true
-                        }
-                    }
+                    PowerMenu {}
 
-                    // Component.onCompleted: {
-                    //     [x, y] = menuArea.calculatePopupPos(Config.powerPopupDirection, width, height, parent.width, parent.height, parent.parent.x);
-                    // }
+                    Component.onCompleted: {
+                        [x, y] = menuArea.calculatePopupPos(Config.powerPopupDirection, width, height, parent.width, parent.height, parent.parent.x);
+                    }
                 }
             }
         }
@@ -722,10 +770,12 @@ Item {
             }
         }
         onWheel: event => {
-            if (event.angleDelta.y < 0) {
-                userSelector.nextUser();
-            } else {
-                userSelector.prevUser();
+            if (screen.isSelectingUser) {
+                if (event.angleDelta.y < 0) {
+                    userSelector.nextUser();
+                } else {
+                    userSelector.prevUser();
+                }
             }
         }
     }

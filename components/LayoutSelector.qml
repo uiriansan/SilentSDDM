@@ -8,10 +8,24 @@ ColumnLayout {
     spacing: 2
 
     signal layoutChanged(layoutIndex: int)
+    signal close
 
     property int currentLayoutIndex: keyboard.currentLayout ? keyboard.currentLayout : 0
     property string layoutName: ""
     property string layoutShortName: ""
+
+    function updateLayout() {
+        keyboard.currentLayout = selector.currentLayoutIndex;
+        selector.layoutName = keyboard.layouts[selector.currentLayoutIndex].longName;
+        selector.layoutShortName = keyboard.layouts[selector.currentLayoutIndex].shortName;
+        selector.layoutChanged(selector.currentLayoutIndex);
+    }
+
+    Component.onCompleted: {
+        selector.layoutName = keyboard.layouts[selector.currentLayoutIndex].longName;
+        selector.layoutShortName = keyboard.layouts[selector.currentLayoutIndex].shortName;
+        selector.layoutChanged(selector.currentLayoutIndex);
+    }
 
     Repeater {
         id: layoutsList
@@ -73,14 +87,6 @@ ColumnLayout {
                 }
             }
 
-            Component.onCompleted: {
-                if (index === selector.currentLayoutIndex) {
-                    selector.layoutName = longName;
-                    selector.layoutShortName = shortName;
-                    selector.layoutChanged(selector.currentLayoutIndex);
-                }
-            }
-
             MouseArea {
                 id: mouseArea
                 anchors.fill: parent
@@ -90,12 +96,20 @@ ColumnLayout {
                 cursorShape: hoverEnabled ? Qt.PointingHandCursor : Qt.ArrowCursor
                 onClicked: {
                     selector.currentLayoutIndex = index;
-                    keyboard.currentLayout = index;
-                    selector.layoutName = longName;
-                    selector.layoutShortName = shortName;
-                    selector.layoutChanged(selector.currentLayoutIndex);
+                    selector.updateLayout();
                 }
             }
+        }
+    }
+    Keys.onPressed: event => {
+        if (event.key === Qt.Key_Down) {
+            selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length + 1) % keyboard.layouts.length;
+            selector.updateLayout();
+        } else if (event.key === Qt.Key_Up) {
+            selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length - 1) % keyboard.layouts.length;
+            selector.updateLayout();
+        } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
+            selector.close();
         }
     }
 }

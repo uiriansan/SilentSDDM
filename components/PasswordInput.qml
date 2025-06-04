@@ -23,7 +23,6 @@ Item {
         enabled: passwordInput.enabled
         echoMode: TextInput.Password
         activeFocusOnTab: true
-        focus: true
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
         font.family: Config.fontFamily
