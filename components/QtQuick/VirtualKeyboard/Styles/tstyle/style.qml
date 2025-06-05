@@ -12,7 +12,7 @@ KeyboardStyle {
     id: vkeyboardStyle
 
     readonly property bool compactSelectionList: [InputEngine.InputMode.Pinyin, InputEngine.InputMode.Cangjie, InputEngine.InputMode.Zhuyin].indexOf(InputContext.inputEngine.inputMode) !== -1
-    readonly property string fontFamily: config.font || "RedHatDisplay"
+    readonly property string fontFamily: Config.fontFamily
     readonly property real keyBackgroundMargin: Math.round(8 * scaleHint)
     readonly property real keyContentMargin: Math.round(40 * scaleHint)
     readonly property real keyIconScale: scaleHint * 0.8

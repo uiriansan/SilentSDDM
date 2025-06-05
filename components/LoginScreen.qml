@@ -80,6 +80,7 @@ Item {
         columnSpacing: 0
 
         Item {
+            id: loginContainerContainer
             Layout.preferredWidth: loginLayout.width
             Layout.preferredHeight: loginLayout.height
 
@@ -290,37 +291,6 @@ Item {
                 function clear() {
                     visible = false;
                     text = "";
-                }
-            }
-
-            // FIX: Virtual keyboard not working on the second loginScreen.
-            InputPanel {
-                // TODO: Keep keyboard visible.
-                id: inputPanel
-                z: 99
-                width: Math.min(loginScreen.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
-                active: Qt.inputMethod.visible
-                visible: loginScreen.showKeyboard && !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
-                externalLanguageSwitchEnabled: true
-                onExternalLanguageSwitch: {
-                    loginScreen.openLayoutPopup();
-                }
-
-                Component.onCompleted: {
-                    VirtualKeyboardSettings.styleName = "tstyle";
-                    VirtualKeyboardSettings.layout = "symbols";
-                }
-
-                property string pos: Config.virtualKeyboardPosition
-                anchors {
-                    top: pos === "top" ? parent.top : (pos === "bottom" ? loginContainer.bottom : undefined)
-                    topMargin: pos === "top" ? Config.loginScreenPaddingTop : (pos === "bottom" ? (loginMessage.visible ? 45 : 20) : undefined)
-                    left: pos === "left" ? parent.left : undefined
-                    leftMargin: pos === "left" ? Config.loginScreenPaddingLeft : undefined
-                    right: pos === "right" ? parent.right : undefined
-                    rightMargin: pos === "right" ? Config.loginScreenPaddingRight : undefined
-                    horizontalCenter: pos === "top" || pos === "bottom" ? parent.horizontalCenter : undefined
-                    verticalCenter: pos === "left" || pos === "right" ? parent.verticalCenter : undefined
                 }
             }
         }
@@ -754,6 +724,55 @@ Item {
                 else if (menus[i].name === "power")
                     powerMenuComponent.createObject(pos, {});
             }
+        }
+    }
+
+    // FIX: Virtual keyboard not working on the second loginScreen.
+    InputPanel {
+        // TODO: Keep keyboard visible.
+        id: inputPanel
+        z: 99
+        width: Math.min(loginScreen.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
+        active: Qt.inputMethod.visible
+        visible: loginScreen.showKeyboard && !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
+        externalLanguageSwitchEnabled: true
+        onExternalLanguageSwitch: {
+            loginScreen.openLayoutPopup();
+        }
+
+        Component.onCompleted: {
+            VirtualKeyboardSettings.styleName = "tstyle";
+            VirtualKeyboardSettings.layout = "symbols";
+        }
+
+        property string pos: Config.virtualKeyboardPosition
+
+        x: {
+            if (pos === "top" || pos === "bottom")
+                return (parent.width - inputPanel.width) / 2;
+            else if (pos === "left")
+                return Config.loginScreenPaddingLeft;
+            else
+                return parent.width - inputPanel.width - Config.loginScreenPaddingRight;
+        }
+        y: {
+            if (pos === "top")
+                return Config.loginScreenPaddingTop;
+            else if (pos === "bottom")
+                return loginMessage.visible ? (loginContainerContainer.mapToGlobal(loginMessage.x, loginMessage.y).y + 25) : loginContainerContainer.mapToGlobal(loginMessage.x, loginMessage.y).y;
+            else
+                return (parent.height - inputPanel.height) / 2;
+        }
+
+        MouseArea {
+            id: vKeyboardDragArea
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.ArrowCursor
+            drag.target: inputPanel
+            acceptedButtons: Qt.MiddleButton
+            onPressed: cursorShape = Qt.ClosedHandCursor
+            onReleased: cursorShape = Qt.ArrowCursor
         }
     }
 
