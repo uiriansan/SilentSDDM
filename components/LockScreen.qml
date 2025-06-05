@@ -4,7 +4,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Item {
-    id: screen
+    id: lockScreen
     signal loginRequested
 
     ColumnLayout {
@@ -35,7 +35,7 @@ Item {
                 Layout.column: 1
 
                 function updateTime() {
-                    text = new Date().toLocaleString(Qt.locale("en_US"), Config.clockFormat);
+                    text = new Date().toLocaleString(Qt.locale(""), Config.clockFormat);
                 }
             }
 
@@ -53,7 +53,7 @@ Item {
                 Layout.column: 2
 
                 function updateDate() {
-                    text = new Date().toLocaleString(Qt.locale("en_US"), Config.dateFormat);
+                    text = new Date().toLocaleString(Qt.locale(""), Config.dateFormat);
                 }
             }
 
@@ -118,7 +118,7 @@ Item {
         hoverEnabled: true
         z: -1
         anchors.fill: parent
-        onClicked: screen.loginRequested()
+        onClicked: lockScreen.loginRequested()
     }
 
     Keys.onPressed: event => {
@@ -130,7 +130,7 @@ Item {
             event.accepted = false;
             return;
         } else {
-            screen.loginRequested();
+            lockScreen.loginRequested();
         }
         event.accepted = true;
     }

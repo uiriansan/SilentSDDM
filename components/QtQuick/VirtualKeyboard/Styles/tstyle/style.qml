@@ -6,9 +6,11 @@
 import QtQuick
 import QtQuick.VirtualKeyboard
 import QtQuick.VirtualKeyboard.Styles
+import "../../../../../components"
 
 KeyboardStyle {
-    id: currentStyle
+    id: vkeyboardStyle
+
     readonly property bool compactSelectionList: [InputEngine.InputMode.Pinyin, InputEngine.InputMode.Cangjie, InputEngine.InputMode.Zhuyin].indexOf(InputContext.inputEngine.inputMode) !== -1
     readonly property string fontFamily: config.font || "RedHatDisplay"
     readonly property real keyBackgroundMargin: Math.round(8 * scaleHint)
@@ -399,6 +401,12 @@ KeyboardStyle {
                 sourceSize.height: 127 * keyIconScale
                 smooth: false
                 source: resourcePrefix + "images/hidekeyboard-fff.svg"
+            }
+
+            MouseArea {
+                // Close virtual keyboard
+                anchors.fill: parent
+                onClicked: loginScreen.showKeyboard = false
             }
         }
         states: [

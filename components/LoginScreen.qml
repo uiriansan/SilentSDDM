@@ -6,7 +6,7 @@ import QtQuick.VirtualKeyboard.Settings
 import SddmComponents
 
 Item {
-    id: screen
+    id: loginScreen
     signal closeRequested
     signal openLayoutPopup
 
@@ -54,11 +54,21 @@ Item {
     }
 
     function updateCapsLock() {
-        if (root.capsLockOn && !screen.isAuthenticating) {
+        if (root.capsLockOn && !loginScreen.isAuthenticating) {
             loginMessage.warn(textConstants.capslockWarning, "warning");
         } else {
             loginMessage.clear();
         }
+    }
+
+    function resetFocus() {
+        // TODO: ...
+        if (userNeedsPassword) {
+            password.input.forceActiveFocus();
+        } else {
+            loginButton.focus = true;
+        }
+        return;
     }
 
     GridLayout {
@@ -112,12 +122,12 @@ Item {
 
                     Keys.onPressed: event => {
                         if (event.key === Qt.Key_Escape) {
-                            if (screen.isAuthenticating) {
+                            if (loginScreen.isAuthenticating) {
                                 event.accepted = false;
                                 return;
                             }
                             if (Config.lockScreenDisplay) {
-                                screen.closeRequested();
+                                loginScreen.closeRequested();
                             }
                             password.text = "";
                         } else if (event.key === Qt.Key_CapsLock) {
@@ -134,35 +144,35 @@ Item {
 
                         UserSelector {
                             id: userSelector
-                            listUsers: screen.isSelectingUser
-                            enabled: !screen.isAuthenticating
+                            listUsers: loginScreen.isSelectingUser
+                            enabled: !loginScreen.isAuthenticating
                             activeFocusOnTab: true
                             layoutOrientation: loginLayout.loginOrientation
-                            width: layoutOrientation === "vertical" ? screen.width - Config.loginScreenPaddingLeft - Config.loginScreenPaddingRight : Config.avatarActiveSize
-                            height: layoutOrientation === "vertical" ? Config.avatarActiveSize : screen.height - Config.loginScreenPaddingTop - Config.loginScreenPaddingBottom
+                            width: layoutOrientation === "vertical" ? loginScreen.width - Config.loginScreenPaddingLeft - Config.loginScreenPaddingRight : Config.avatarActiveSize
+                            height: layoutOrientation === "vertical" ? Config.avatarActiveSize : loginScreen.height - Config.loginScreenPaddingTop - Config.loginScreenPaddingBottom
                             onFocusChanged: {
-                                if (!focus && screen.isSelectingUser) {
-                                    screen.isSelectingUser = false;
+                                if (!focus && loginScreen.isSelectingUser) {
+                                    loginScreen.isSelectingUser = false;
                                     password.input.forceActiveFocus();
                                 }
                             }
 
                             onOpenUserList: {
-                                screen.isSelectingUser = true;
+                                loginScreen.isSelectingUser = true;
                             }
                             onCloseUserList: {
-                                screen.isSelectingUser = false;
-                                if (screen.userNeedsPassword)
+                                loginScreen.isSelectingUser = false;
+                                if (loginScreen.userNeedsPassword)
                                     password.input.forceActiveFocus();
                                 else
                                     loginButton.forceActiveFocus();
                             }
                             onUserChanged: (index, name, realName, icon, needsPassword) => {
-                                screen.userIndex = index;
-                                screen.userName = name;
-                                screen.userRealName = realName;
-                                screen.userIcon = icon;
-                                screen.userNeedsPassword = needsPassword;
+                                loginScreen.userIndex = index;
+                                loginScreen.userName = name;
+                                loginScreen.userRealName = realName;
+                                loginScreen.userIcon = icon;
+                                loginScreen.userNeedsPassword = needsPassword;
                             }
                         }
                     }
@@ -184,7 +194,7 @@ Item {
                             font.weight: Config.usernameFontWeight
                             font.pixelSize: Config.usernameFontSize
                             color: Config.usernameColor
-                            text: screen.userRealName
+                            text: loginScreen.userRealName
                         }
 
                         StackLayout {
@@ -193,8 +203,8 @@ Item {
                             Layout.preferredWidth: loginArea.width
                             Layout.preferredHeight: loginArea.height
                             Layout.fillWidth: false
-                            // currentIndex: screen.isAuthenticating ? 1 : 0
-                            currentIndex: 1
+                            // currentIndex: loginScreen.isAuthenticating ? 1 : 0
+                            currentIndex: 0
 
                             RowLayout {
                                 id: loginArea
@@ -206,11 +216,11 @@ Item {
                                 PasswordInput {
                                     id: password
                                     Layout.alignment: Qt.AlignHCenter
-                                    enabled: !screen.isSelectingUser && !screen.isAuthenticating
-                                    visible: screen.userNeedsPassword
+                                    enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
+                                    visible: loginScreen.userNeedsPassword
                                     focus: enabled && visible
                                     onAccepted: {
-                                        screen.login();
+                                        loginScreen.login();
                                     }
                                 }
 
@@ -219,13 +229,13 @@ Item {
                                     Layout.alignment: Qt.AlignHCenter
                                     Layout.preferredWidth: width // Fix button not resizing when label updates
                                     height: password.height
-                                    enabled: !screen.isSelectingUser && !screen.isAuthenticating
+                                    enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                                     activeFocusOnTab: true
-                                    focus: !screen.userNeedsPassword && !screen.isSelectingUser
+                                    focus: !loginScreen.userNeedsPassword && !loginScreen.isSelectingUser
                                     icon: "icons/arrow-right.svg"
                                     label: textConstants.login.toUpperCase()
-                                    showLabel: Config.loginButtonShowTextIfNoPassword && !screen.userNeedsPassword
-                                    tooltipText: !Config.loginButtonShowTextIfNoPassword || screen.userNeedsPassword ? textConstants.login : ""
+                                    showLabel: Config.loginButtonShowTextIfNoPassword && !loginScreen.userNeedsPassword
+                                    tooltipText: !Config.loginButtonShowTextIfNoPassword || loginScreen.userNeedsPassword ? textConstants.login : ""
                                     boldLabel: true
                                     iconSize: Config.loginButtonIconSize
                                     fontSize: Config.loginButtonFontSize
@@ -236,7 +246,7 @@ Item {
                                     activeBackgroundColor: Config.loginButtonActiveBackgroundColor
                                     activeBackgroundOpacity: Config.loginButtonActiveBackgroundOpacity
                                     onClicked: {
-                                        screen.login();
+                                        loginScreen.login();
                                     }
                                 }
                             }
@@ -283,28 +293,19 @@ Item {
                 }
             }
 
-            // FIX: Virtual keyboard not working on the second screen.
+            // FIX: Virtual keyboard not working on the second loginScreen.
             InputPanel {
                 // TODO: Keep keyboard visible.
                 id: inputPanel
                 z: 99
-                width: Math.min(screen.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
-                visible: screen.showKeyboard
+                width: Math.min(loginScreen.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
+                active: Qt.inputMethod.visible
+                visible: loginScreen.showKeyboard && !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                 externalLanguageSwitchEnabled: true
                 onExternalLanguageSwitch: {
-                    screen.openLayoutPopup();
+                    loginScreen.openLayoutPopup();
                 }
-                onVisibleChanged: {
-                    if (visible)
-                        Qt.inputMethod.show();
-                    else
-                        Qt.inputMethod.hide();
-                }
-                onActiveChanged: {
-                    if (!active) {
-                        screen.showKeyboard = false;
-                    }
-                }
+
                 Component.onCompleted: {
                     VirtualKeyboardSettings.styleName = "tstyle";
                     VirtualKeyboardSettings.layout = "symbols";
@@ -336,7 +337,7 @@ Item {
                 if (parent_x + (parent_w - popup_w) / 2 < 10) {
                     // Align popup left
                     x = 0;
-                } else if (parent_x - (parent_w - popup_w) / 2 > screen.width - 10) {
+                } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
                     // Align popup right
                     x = -popup_w + parent_w;
                 } else {
@@ -348,7 +349,7 @@ Item {
                 if (parent_x + (parent_w - popup_w) / 2 < 10) {
                     // Align popup left
                     x = 0;
-                } else if (parent_x - (parent_w - popup_w) / 2 > screen.width - 10) {
+                } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
                     // Align popup right
                     x = -popup_w + parent_w;
                 } else {
@@ -376,7 +377,7 @@ Item {
                 height: Config.menuAreaButtonsSize
                 iconSize: Config.sessionButtonIconSize
                 fontSize: Config.sessionButtonFontSize
-                enabled: !screen.isSelectingUser
+                enabled: !loginScreen.isSelectingUser
                 active: popup.visible
                 iconColor: Config.sessionButtonContentColor
                 activeIconColor: Config.sessionButtonActiveContentColor
@@ -388,11 +389,11 @@ Item {
                 activeFocusOnTab: true
                 focus: false
                 onClicked: {
-                    if (screen.isSelectingUser) {
-                        screen.isSelectingUser = false;
+                    if (loginScreen.isSelectingUser) {
+                        loginScreen.isSelectingUser = false;
                     } else {
                         popup.open();
-                        screen.isMenu = true;
+                        loginScreen.isMenu = true;
                     }
                 }
                 tooltipText: "Change session"
@@ -410,7 +411,7 @@ Item {
                         color: "transparent"  // Use whatever color/opacity you like
                     }
 
-                    onClosed: screen.isMenu = false
+                    onClosed: loginScreen.isMenu = false
                     modal: true
                     popupType: Popup.Item
                     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -452,24 +453,24 @@ Item {
                 iconColor: Config.languageButtonContentColor
                 activeIconColor: Config.languageButtonActiveContentColor
                 activeFocusOnTab: true
-                enabled: !screen.isSelectingUser
+                enabled: !loginScreen.isSelectingUser
                 focus: false
                 onClicked: {
-                    if (screen.isSelectingUser) {
-                        screen.isSelectingUser = false;
+                    if (loginScreen.isSelectingUser) {
+                        loginScreen.isSelectingUser = false;
                     } else {
                         popup.open();
-                        screen.isMenu = true;
+                        loginScreen.isMenu = true;
                     }
                 }
                 tooltipText: "Change keyboard layout"
                 label: showLabel ? (keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
 
                 Connections {
-                    target: screen
+                    target: loginScreen
                     function onOpenLayoutPopup() {
                         popup.open();
-                        screen.isMenu = true;
+                        loginScreen.isMenu = true;
                     }
                 }
 
@@ -489,7 +490,7 @@ Item {
                         color: "transparent" // Remove dim background (dim: false doesn't work here)
                     }
 
-                    onClosed: screen.isMenu = false
+                    onClosed: loginScreen.isMenu = false
                     modal: true
                     popupType: Popup.Item
                     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -530,11 +531,11 @@ Item {
                 activeIconColor: Config.keyboardButtonActiveContentColor
                 active: showKeyboard
                 borderRadius: Config.menuAreaButtonsBorderRadius
-                enabled: !screen.isSelectingUser
+                enabled: !loginScreen.isSelectingUser
                 activeFocusOnTab: true
                 focus: false
                 onClicked: {
-                    screen.showKeyboard = !screen.showKeyboard;
+                    loginScreen.showKeyboard = !loginScreen.showKeyboard;
                 }
                 tooltipText: "Toggle virtual keyboard"
             }
@@ -558,12 +559,12 @@ Item {
                 backgroundOpacity: Config.powerButtonBackgroundOpacity
                 activeBackgroundColor: Config.powerButtonBackgroundColor
                 activeBackgroundOpacity: Config.powerButtonActiveBackgroundOpacity
-                enabled: !screen.isSelectingUser
+                enabled: !loginScreen.isSelectingUser
                 activeFocusOnTab: true
                 focus: false
                 onClicked: {
                     popup.open();
-                    screen.isMenu = true;
+                    loginScreen.isMenu = true;
                 }
                 tooltipText: "Power options"
 
@@ -576,7 +577,7 @@ Item {
                         opacity: Config.menuAreaPopupBackgroundOpacity
                         radius: 5
                     }
-                    onClosed: screen.isMenu = false
+                    onClosed: loginScreen.isMenu = false
                     dim: true
                     padding: 5
                     Overlay.modal: Rectangle {
@@ -762,15 +763,15 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         onClicked: {
-            if (screen.isSelectingUser) {
-                screen.isSelectingUser = false;
+            if (loginScreen.isSelectingUser) {
+                loginScreen.isSelectingUser = false;
             }
-            if (!screen.isAuthenticating) {
+            if (!loginScreen.isAuthenticating) {
                 password.input.forceActiveFocus();
             }
         }
         onWheel: event => {
-            if (screen.isSelectingUser) {
+            if (loginScreen.isSelectingUser) {
                 if (event.angleDelta.y < 0) {
                     userSelector.nextUser();
                 } else {
