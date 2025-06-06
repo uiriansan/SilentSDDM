@@ -2,6 +2,7 @@ import "."
 import QtQuick
 import SddmComponents
 import QtQuick.Effects
+import QtMultimedia
 import "components"
 
 Item {
@@ -83,30 +84,43 @@ Item {
         width: geometry.width
         height: geometry.height
 
-        Rectangle {
-            // TODO: Animated backgrounds (video/gif)
-            id: backgroundContainer
+        AnimatedImage {
+            id: backgroundImage
+            property bool isVideo: ["avi", "mp4", "mov", "mkv", "m4v", "webm"].includes(source.toString().split(".").slice(-1)[0])
+            property url tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
             anchors.fill: parent
-            // Background color
-            color: root.state === "lockState" && Config.lockScreenUseBackgroundColor ? Config.lockScreenBackgroundColor : (root.state === "loginState" && Config.loginScreenUseBackgroundColor ? Config.loginScreenBackgroundColor : "transparent")
+            visible: (root.state === "lockState" && !Config.lockScreenUseBackgroundColor) || (root.state === "loginState" && !Config.loginScreenUseBackgroundColor)
+            source: !isVideo ? tsource : ""
 
-            Image {
-                // Background image
-                id: backgroundImage
+            Rectangle {
+                id: backgroundColor
                 anchors.fill: parent
-                visible: (root.state === "lockState" && !Config.lockScreenUseBackgroundColor) || (root.state === "loginState" && !Config.loginScreenUseBackgroundColor)
-                source: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
+                color: root.state === "lockState" && Config.lockScreenUseBackgroundColor ? Config.lockScreenBackgroundColor : root.state === "loginState" && Config.loginScreenUseBackgroundColor ? Config.loginScreenBackgroundColor : "black"
+                visible: root.state === "lockState" && Config.lockScreenUseBackgroundColor || root.state === "loginState" && Config.loginScreenUseBackgroundColor || backgroundVideo.visible
             }
 
-            MultiEffect {
-                // Background blur
-                id: backgroundBlur
-                source: backgroundImage
-                anchors.fill: backgroundImage
-                blurEnabled: backgroundImage.visible
-                blurMax: Config.blurRadius
-                blur: 0.0
+            // TODO: This is really slow
+            Video {
+                id: backgroundVideo
+                anchors.fill: parent
+                source: parent.isVideo ? Qt.resolvedUrl(parent.source) : ""
+                visible: parent.isVideo && !backgroundColor.visible
+                autoPlay: true
+                loops: MediaPlayer.Infinite
+                muted: true
+                onSourceChanged: {
+                    if (source.toString().length > 0)
+                        backgroundVideo.play();
+                }
             }
+        }
+        MultiEffect {
+            // Background blur
+            id: backgroundBlur
+            source: backgroundImage
+            anchors.fill: backgroundImage
+            blurEnabled: backgroundImage.visible
+            blurMax: Config.blurRadius
         }
 
         Item {
