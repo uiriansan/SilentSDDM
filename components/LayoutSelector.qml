@@ -4,7 +4,8 @@ import QtQuick.Controls
 
 ColumnLayout {
     id: selector
-    width: 200
+    width: 180
+    height: 35
     spacing: 2
 
     signal layoutChanged(layoutIndex: int)
@@ -27,6 +28,8 @@ ColumnLayout {
         selector.layoutChanged(selector.currentLayoutIndex);
     }
 
+    // TODO: Missing layout error message
+
     Repeater {
         id: layoutsList
 
@@ -45,7 +48,7 @@ ColumnLayout {
             }
 
             RowLayout {
-                width: 200
+                width: 180
                 height: 35
                 spacing: 0
 
@@ -70,19 +73,23 @@ ColumnLayout {
                     Layout.fillWidth: true
 
                     Text {
+                        width: parent.width - 5
                         text: Languages.getLabelFor(shortName)
                         visible: text && text.length > 0
                         color: index === currentLayoutIndex ? Config.menuAreaPopupActiveContentColor : Config.menuAreaPopupContentColor
                         font.pixelSize: Config.menuAreaPopupFontSize
                         font.family: Config.fontFamily
+                        elide: Text.ElideRight
                     }
 
                     Text {
+                        width: parent.width - 5
                         text: longName
                         color: index === currentLayoutIndex ? Config.menuAreaPopupActiveContentColor : Config.menuAreaPopupContentColor
                         opacity: 0.75
                         font.pixelSize: Config.menuAreaPopupFontSize - 2
                         font.family: Config.fontFamily
+                        elide: Text.ElideRight
                     }
                 }
             }

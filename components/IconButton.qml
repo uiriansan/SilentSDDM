@@ -78,6 +78,12 @@ Item {
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
                 opacity: iconButton.enabled ? 1.0 : 0.3
+                Behavior on opacity {
+                    enabled: Config.enableAnimations
+                    NumberAnimation {
+                        duration: 250
+                    }
+                }
 
                 MultiEffect {
                     source: buttonIcon
@@ -90,6 +96,7 @@ Item {
 
         Text {
             id: buttonLabel
+            anchors.verticalCenter: parent.verticalCenter
             text: iconButton.label
             visible: iconButton.showLabel && text !== ""
             font.family: Config.fontFamily
@@ -98,7 +105,12 @@ Item {
             rightPadding: 10
             color: iconButton.isActive ? iconButton.activeIconColor : iconButton.iconColor
             opacity: iconButton.enabled ? 1.0 : 0.5
-            anchors.verticalCenter: parent.verticalCenter
+            Behavior on opacity {
+                enabled: Config.enableAnimations
+                NumberAnimation {
+                    duration: 250
+                }
+            }
         }
     }
 

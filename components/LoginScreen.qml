@@ -8,7 +8,24 @@ import SddmComponents
 Item {
     id: loginScreen
     signal closeRequested
-    signal openLayoutPopup
+    signal toggleLayoutPopup
+
+    state: "normal"
+    states: [
+        State {
+            name: "normal"
+            PropertyChanges {
+                target: password.input
+                focus: true
+            }
+        },
+        State {
+            name: "popup"
+        },
+        State {
+            name: "user"
+        }
+    ]
 
     readonly property alias password: password
     readonly property alias loginButton: loginButton
@@ -17,7 +34,7 @@ Item {
     property bool showKeyboard: !Config.virtualKeyboardStartHidden
 
     // Login info
-    property int sessionIndex: sessionModel ? sessionModel.lastIndex : 0
+    property int sessionIndex: 0
     property int userIndex: 0
     property string userName: ""
     property string userRealName: ""
@@ -25,7 +42,6 @@ Item {
     property bool userNeedsPassword: false
     property bool isAuthenticating: false
     property bool isSelectingUser: false
-    property bool isMenu: false
 
     function login() {
         if (password.text.length > 0 || !userNeedsPassword) {
@@ -217,7 +233,7 @@ Item {
                                 PasswordInput {
                                     id: password
                                     Layout.alignment: Qt.AlignHCenter
-                                    enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
+                                    enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating && loginScreen.state === "normal"
                                     visible: loginScreen.userNeedsPassword
                                     focus: enabled && visible
                                     onAccepted: {
@@ -277,9 +293,17 @@ Item {
                 font.bold: Config.warningMessageBold
                 color: Config.warningMessageNormalColor
                 visible: false
+                opacity: visible ? 1.0 : 0.0
                 Component.onCompleted: {
                     if (root.capsLockOn)
                         loginMessage.warn(textConstants.capslockWarning, "warning");
+                }
+
+                Behavior on opacity {
+                    enabled: Config.enableAnimations
+                    NumberAnimation {
+                        duration: 150
+                    }
                 }
 
                 function warn(message, type) {
@@ -300,9 +324,12 @@ Item {
         id: menuArea
         anchors.fill: parent
 
-        function calculatePopupPos(dir, popup_w, popup_h, parent_w, parent_h, parent_x) {
+        function calculatePopupPos(dir, popup_w, popup_h, parent_w, parent_h, parent_x, parent_y) {
             let x = 0, y = 0;
             const popup_margin = 5;
+
+            // TODO: This positioning is not working correctly
+            print("parent_x: ", parent_x, "parent_w: ", parent_w, "popup_w: ", popup_w);
             if (dir === "up") {
                 if (parent_x + (parent_w - popup_w) / 2 < 10) {
                     // Align popup left
@@ -329,10 +356,16 @@ Item {
                 y = parent_h + popup_margin;
             } else if (dir === "left") {
                 x = -popup_w - popup_margin;
-                y = 0;
+                if (parent_y + popup_h > loginScreen.height)
+                    y = -popup_h + parent_h;
+                else
+                    y = 0;
             } else {
                 x = parent_w + popup_margin;
-                y = 0;
+                if (parent_y + popup_h > loginScreen.height)
+                    y = -popup_h + parent_h;
+                else
+                    y = 0;
             }
             return [x, y];
         }
@@ -347,7 +380,7 @@ Item {
                 height: Config.menuAreaButtonsSize
                 iconSize: Config.sessionButtonIconSize
                 fontSize: Config.sessionButtonFontSize
-                enabled: !loginScreen.isSelectingUser
+                enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                 active: popup.visible
                 iconColor: Config.sessionButtonContentColor
                 activeIconColor: Config.sessionButtonActiveContentColor
@@ -363,7 +396,6 @@ Item {
                         loginScreen.isSelectingUser = false;
                     } else {
                         popup.open();
-                        loginScreen.isMenu = true;
                     }
                 }
                 tooltipText: "Change session"
@@ -372,32 +404,50 @@ Item {
                     id: popup
                     property int popupMargin: 5
                     parent: sessionButton
-                    padding: 0
+                    padding: 5
+                    rightPadding: 0 // For the scrollbar
                     background: Rectangle {
-                        color: "transparent"
+                        color: Config.menuAreaPopupBackgroundColor
+                        opacity: Config.menuAreaPopupBackgroundOpacity
+                        radius: 5 // Remove dim background (dim: false doesn't work here)
                     }
                     dim: true
                     Overlay.modal: Rectangle {
                         color: "transparent"  // Use whatever color/opacity you like
+                        MouseArea {
+                            // Fix popup not closing sometimes
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: event => {
+                                popup.close();
+                                event.accepted = true;
+                            }
+                        }
                     }
 
-                    onClosed: loginScreen.isMenu = false
+                    onOpened: loginScreen.state = "popup"
+                    onClosed: loginScreen.state = "normal"
+
                     modal: true
                     popupType: Popup.Item
                     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+                    focus: visible
 
-                    StackLayout {
-                        // onSessionChanged: (newSessionIndex, sessionIcon, sessionLabel) => {
-                        //     sessionIndex = newSessionIndex;
-                        //     sessionButton.icon = sessionIcon;
-                        //     sessionButton.label = sessionButton.showLabel ? sessionLabel : "";
-                        // }
-                        SessionSelector {}
+                    SessionSelector {
+                        focus: popup.focus
+                        onSessionChanged: (newSessionIndex, sessionIcon, sessionLabel) => {
+                            loginScreen.sessionIndex = newSessionIndex;
+                            sessionButton.icon = sessionIcon;
+                            sessionButton.label = sessionButton.showLabel ? sessionLabel : "";
+                        }
+                        onClose: {
+                            popup.close();
+                        }
                     }
 
-                    // Component.onCompleted: {
-                    //     [x, y] = menuArea.calculatePopupPos(Config.sessionPopupDirection, width, height, parent.width, parent.height, parent.parent.x);
-                    // }
+                    Component.onCompleted: {
+                        [x, y] = menuArea.calculatePopupPos(Config.sessionPopupDirection, width, height, parent.width, parent.height, parent.parent.x, parent.parent.y);
+                    }
                 }
             }
         }
@@ -423,14 +473,13 @@ Item {
                 iconColor: Config.languageButtonContentColor
                 activeIconColor: Config.languageButtonActiveContentColor
                 activeFocusOnTab: true
-                enabled: !loginScreen.isSelectingUser
+                enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                 focus: false
                 onClicked: {
                     if (loginScreen.isSelectingUser) {
                         loginScreen.isSelectingUser = false;
                     } else {
                         popup.open();
-                        loginScreen.isMenu = true;
                     }
                 }
                 tooltipText: "Change keyboard layout"
@@ -438,9 +487,8 @@ Item {
 
                 Connections {
                     target: loginScreen
-                    function onOpenLayoutPopup() {
-                        popup.open();
-                        loginScreen.isMenu = true;
+                    function onToggleLayoutPopup() {
+                        popup.visible ? popup.close() : popup.open();
                     }
                 }
 
@@ -458,9 +506,20 @@ Item {
                     dim: true
                     Overlay.modal: Rectangle {
                         color: "transparent" // Remove dim background (dim: false doesn't work here)
+                        MouseArea {
+                            // Fix popup not closing sometimes
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: event => {
+                                popup.close();
+                                event.accepted = true;
+                            }
+                        }
                     }
 
-                    onClosed: loginScreen.isMenu = false
+                    onOpened: loginScreen.state = "popup"
+                    onClosed: loginScreen.state = "normal"
+
                     modal: true
                     popupType: Popup.Item
                     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -477,7 +536,7 @@ Item {
                     }
 
                     Component.onCompleted: {
-                        [x, y] = menuArea.calculatePopupPos(Config.languagePopupDirection, width, height, parent.width, parent.height, parent.parent.x);
+                        [x, y] = menuArea.calculatePopupPos(Config.languagePopupDirection, width, height, parent.width, parent.height, parent.parent.x, parent.parent.y);
                     }
                 }
             }
@@ -501,7 +560,7 @@ Item {
                 activeIconColor: Config.keyboardButtonActiveContentColor
                 active: showKeyboard
                 borderRadius: Config.menuAreaButtonsBorderRadius
-                enabled: !loginScreen.isSelectingUser
+                enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                 activeFocusOnTab: true
                 focus: false
                 onClicked: {
@@ -529,12 +588,11 @@ Item {
                 backgroundOpacity: Config.powerButtonBackgroundOpacity
                 activeBackgroundColor: Config.powerButtonBackgroundColor
                 activeBackgroundOpacity: Config.powerButtonActiveBackgroundOpacity
-                enabled: !loginScreen.isSelectingUser
+                enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                 activeFocusOnTab: true
                 focus: false
                 onClicked: {
                     popup.open();
-                    loginScreen.isMenu = true;
                 }
                 tooltipText: "Power options"
 
@@ -547,21 +605,36 @@ Item {
                         opacity: Config.menuAreaPopupBackgroundOpacity
                         radius: 5
                     }
-                    onClosed: loginScreen.isMenu = false
                     dim: true
                     padding: 5
                     Overlay.modal: Rectangle {
                         color: "transparent"  // Remove dim background (dim: false doesn't work here)
+                        MouseArea {
+                            // Fix popup not closing sometimes
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: event => {
+                                popup.close();
+                                event.accepted = true;
+                            }
+                        }
                     }
+
+                    onOpened: loginScreen.state = "popup"
+                    onClosed: loginScreen.state = "normal"
 
                     modal: true
                     popupType: Popup.Item
                     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+                    focus: visible
 
-                    PowerMenu {}
+                    PowerMenu {
+                        focus: popup.focus
+                        onClose: popup.close()
+                    }
 
                     Component.onCompleted: {
-                        [x, y] = menuArea.calculatePopupPos(Config.powerPopupDirection, width, height, parent.width, parent.height, parent.parent.x);
+                        [x, y] = menuArea.calculatePopupPos(Config.powerPopupDirection, width, height, parent.width, parent.height, parent.parent.x, parent.parent.y);
                     }
                 }
             }
@@ -731,13 +804,13 @@ Item {
     InputPanel {
         // TODO: Keep keyboard visible.
         id: inputPanel
-        z: 99
+        // z: 99
         width: Math.min(loginScreen.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
         active: Qt.inputMethod.visible
         visible: loginScreen.showKeyboard && !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
         externalLanguageSwitchEnabled: true
         onExternalLanguageSwitch: {
-            loginScreen.openLayoutPopup();
+            loginScreen.toggleLayoutPopup();
         }
 
         Component.onCompleted: {
@@ -762,6 +835,12 @@ Item {
                 return loginMessage.visible ? (loginContainerContainer.mapToGlobal(loginMessage.x, loginMessage.y).y + 25) : loginContainerContainer.mapToGlobal(loginMessage.x, loginMessage.y).y;
             else
                 return (parent.height - inputPanel.height) / 2;
+        }
+        Behavior on y {
+            enabled: Config.enableAnimations
+            NumberAnimation {
+                duration: 150
+            }
         }
 
         MouseArea {
