@@ -24,13 +24,14 @@
 - QT ≥ 6.5;
 - qt6-svg;
 - qt6-virtualkeyboard
+- qt6-multimedia
 
 # Installation
 
 Just run the script:
 
 ```bash
-git clone --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && ./install.sh | bash
+git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && ./install.sh | bash
 ```
 
 > [!IMPORTANT]
@@ -43,35 +44,70 @@ git clone --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && 
 #### Arch Linux
 
 ```bash
-sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard
+sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
 ```
 
 #### Debian
 
 ```bash
-sudo apt-get install sddm qt6-svg qt6-virtualkeyboard
+sudo apt-get install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
 ```
 
 #### Void Linux
 
 ```bash
-sudo xbps-install sddm qt6-svg qt6-virtualkeyboard
+sudo xbps-install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
 ```
 
 #### Fedora
 
 ```bash
-sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard
+sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard qt6-qtmultimedia
 ```
 
 #### OpenSUSE
 
 ```bash
-sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports
+sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimedia qt6-multimedia-imports
 ```
 
+### 2. Clone this repo:
+```bash
+git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM
+cd SilentSDDM/
+```
 > [!NOTE]
 > You can also get the compressed files from the [latest release](https://github.com/uiriansan/SilentSDDM/releases/latest).
+
+### 3. Test the theme to make sure you have all dependencies:
+```bash
+./test
+```
+
+### 4. Copy the theme to `/usr/share/sddm/themes/`:
+```bash
+cd SilentSDDM/
+sudo mkdir -p /usr/share/sddm/themes/silent
+sudo cp -rf . /usr/share/sddm/themes/silent/
+```
+
+### 5. Install the fonts:
+```bash
+sudo cp -r /usr/share/sddm/themes/silent/fonts/* /usr/share/fonts/
+```
+
+### 6. Replace the current theme and set the environment variables in `/etc/sddm.conf`:
+```bash
+sudoedit /etc/sddm.conf
+
+# Make sure these options are correct:
+[General]
+GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard
+InputMethod=qtvirtualkeyboard
+
+[Theme]
+Current=silent
+```
 
 # Customizing
 
@@ -82,7 +118,7 @@ ConfigFile=configs/<your_preferred_config>.conf
 ```
 
 > [!NOTE]
-> Changes to the login screen will only take effect when made in `/usr/share/sddm/themes/silent/`. If you changed things in the cloned directory, copy them with `sudo cp -rf SilentSDDM/. /usr/share/sddm/themes/silent/`
+> Changes to the login screen will only take effect when made in `/usr/share/sddm/themes/silent/`. If you've changed things in the cloned directory, copy them with `sudo cp -rf SilentSDDM/. /usr/share/sddm/themes/silent/`
 
 <br/>
 

@@ -45,7 +45,7 @@ Item {
 
     function login() {
         if (password.text.length > 0 || !userNeedsPassword) {
-            // spinner.visible = true;
+            spinner.visible = true;
             isAuthenticating = true;
             sddm.login(userName, password.text, sessionIndex);
         }
@@ -56,7 +56,7 @@ Item {
             loginContainer.scale = 0.0;
         }
         function onLoginFailed() {
-            isAuthenticating = false;
+            loginScreen.isAuthenticating = false;
             spinner.visible = false;
             loginMessage.warn(textConstants.loginFailed, "error");
             password.text = "";
@@ -220,8 +220,7 @@ Item {
                             Layout.preferredWidth: loginArea.width
                             Layout.preferredHeight: loginArea.height
                             Layout.fillWidth: false
-                            // currentIndex: loginScreen.isAuthenticating ? 1 : 0
-                            currentIndex: 0
+                            currentIndex: loginScreen.isAuthenticating ? 1 : 0
 
                             RowLayout {
                                 id: loginArea
@@ -269,12 +268,14 @@ Item {
                             }
 
                             Rectangle {
-                                Layout.fillWidth: false
-                                Layout.fillHeight: false
-                                Layout.preferredWidth: 32
-                                Layout.preferredHeight: 32
-                                Layout.alignment: Qt.AlignCenter
-                                color: "red"
+                                Layout.preferredWidth: parent.width
+                                Layout.preferredHeight: parent.height
+                                color: "transparent"
+
+                                Spinner {
+                                    id: spinner
+                                    anchors.centerIn: parent
+                                }
                             }
                         }
                     }

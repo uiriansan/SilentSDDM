@@ -13,13 +13,6 @@ Item {
     property string layoutOrientation: ""
     property bool isDragging: false
 
-    function nextUser() {
-        userList.incrementCurrentIndex();
-    }
-    function prevUser() {
-        userList.decrementCurrentIndex();
-    }
-
     ListView {
         id: userList
         anchors.fill: parent
@@ -143,11 +136,11 @@ Item {
             selector.focus = false;
             event.accepted = true;
         } else if ((selector.layoutOrientation === "vertical" && event.key == Qt.Key_Left) || (selector.layoutOrientation === "horizontal" && event.key == Qt.Key_Up)) {
-            selector.prevUser();
+            userList.currentIndex = (userList.currentIndex + userModel.rowCount() - 1) % userModel.rowCount();
             selector.focus = true;
             event.accepted = true;
         } else if ((selector.layoutOrientation === "vertical" && event.key == Qt.Key_Right) || (selector.layoutOrientation === "horizontal" && event.key == Qt.Key_Down)) {
-            selector.nextUser();
+            userList.currentIndex = (userList.currentIndex + userModel.rowCount() + 1) % userModel.rowCount();
             selector.focus = true;
             event.accepted = true;
         } else {

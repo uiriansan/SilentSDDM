@@ -110,7 +110,7 @@ Item {
                 visible: parent.displayColor || backgroundVideo.visible
             }
 
-            // TODO: This is really slow
+            // TODO: This is slow af. Removing the property bindings and doing everything at startup should help.
             Video {
                 id: backgroundVideo
                 anchors.fill: parent
