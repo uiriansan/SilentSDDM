@@ -85,26 +85,37 @@ Item {
         height: geometry.height
 
         AnimatedImage {
+            // Background
             id: backgroundImage
-            property bool isVideo: ["avi", "mp4", "mov", "mkv", "m4v", "webm"].includes(source.toString().split(".").slice(-1)[0])
-            property url tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
+            property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
+            property bool isVideo: ["avi", "mp4", "mov", "mkv", "m4v", "webm"].includes(tsource.toString().split(".").slice(-1)[0])
+            property bool displayColor: root.state === "lockState" && Config.lockScreenUseBackgroundColor || root.state === "loginState" && Config.loginScreenUseBackgroundColor
+
             anchors.fill: parent
-            visible: (root.state === "lockState" && !Config.lockScreenUseBackgroundColor) || (root.state === "loginState" && !Config.loginScreenUseBackgroundColor)
             source: !isVideo ? tsource : ""
+            asynchronous: true
+            cache: true
+            mipmap: true
+            onSourceChanged: {
+                if (isVideo && tsource.toString().length > 0) {
+                    backgroundVideo.source = Qt.resolvedUrl(tsource);
+                }
+            }
 
             Rectangle {
                 id: backgroundColor
                 anchors.fill: parent
+                anchors.margins: 0
                 color: root.state === "lockState" && Config.lockScreenUseBackgroundColor ? Config.lockScreenBackgroundColor : root.state === "loginState" && Config.loginScreenUseBackgroundColor ? Config.loginScreenBackgroundColor : "black"
-                visible: root.state === "lockState" && Config.lockScreenUseBackgroundColor || root.state === "loginState" && Config.loginScreenUseBackgroundColor || backgroundVideo.visible
+                visible: parent.displayColor || backgroundVideo.visible
             }
 
             // TODO: This is really slow
             Video {
                 id: backgroundVideo
                 anchors.fill: parent
-                source: parent.isVideo ? Qt.resolvedUrl(parent.source) : ""
-                visible: parent.isVideo && !backgroundColor.visible
+                visible: parent.isVideo && !parent.displayColor
+                enabled: visible
                 autoPlay: true
                 loops: MediaPlayer.Infinite
                 muted: true
