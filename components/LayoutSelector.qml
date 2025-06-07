@@ -31,7 +31,7 @@ ColumnLayout {
     ListView {
         id: layoutList
         Layout.preferredWidth: parent.width
-        Layout.preferredHeight: Math.min(keyboard.layouts.length * (35 + spacing), 300)
+        Layout.preferredHeight: Math.min(keyboard.layouts.length * (35 + spacing) - spacing, 300)
         orientation: ListView.Vertical
         interactive: true
         clip: true
@@ -39,8 +39,9 @@ ColumnLayout {
         spacing: 2
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 0
-        contentHeight: keyboard.layouts.length * (35 + spacing)
+        contentHeight: keyboard.layouts.length * (35 + spacing) - spacing
 
+        // TODO: Fix scrollbar
         ScrollBar.vertical: ScrollBar {
             id: scrollbar
             policy: layoutList.contentHeight > layoutList.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff

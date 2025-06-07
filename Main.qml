@@ -96,10 +96,18 @@ Item {
             asynchronous: true
             cache: true
             mipmap: true
-            onSourceChanged: {
+
+            function updateVideo() {
                 if (isVideo && tsource.toString().length > 0) {
                     backgroundVideo.source = Qt.resolvedUrl(tsource);
                 }
+            }
+
+            onSourceChanged: {
+                updateVideo();
+            }
+            Component.onCompleted: {
+                updateVideo();
             }
 
             Rectangle {
@@ -120,7 +128,7 @@ Item {
                 loops: MediaPlayer.Infinite
                 muted: true
                 onSourceChanged: {
-                    if (source.toString().length > 0)
+                    if (source)
                         backgroundVideo.play();
                 }
             }
