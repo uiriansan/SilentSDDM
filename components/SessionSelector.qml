@@ -26,7 +26,7 @@ ColumnLayout {
     ListView {
         id: sessionList
         Layout.preferredWidth: 200
-        Layout.preferredHeight: Math.min(sessionModel.rowCount() * 35, 300)
+        Layout.preferredHeight: Math.min(sessionModel.rowCount() * (35 + spacing), 300)
         orientation: ListView.Vertical
         interactive: true
         clip: true
@@ -34,6 +34,7 @@ ColumnLayout {
         spacing: 2
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 0
+        contentHeight: sessionModel.rowCount() * (35 + spacing)
 
         ScrollBar.vertical: ScrollBar {
             id: scrollbar

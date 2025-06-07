@@ -13,6 +13,13 @@ Item {
     property string layoutOrientation: ""
     property bool isDragging: false
 
+    function prevUser() {
+        userList.decrementCurrentIndex();
+    }
+    function nextUser() {
+        userList.incrementCurrentIndex();
+    }
+
     ListView {
         id: userList
         anchors.fill: parent

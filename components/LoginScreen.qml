@@ -45,6 +45,7 @@ Item {
 
     function login() {
         if (password.text.length > 0 || !userNeedsPassword) {
+            loginMessage.visible = false;
             spinner.visible = true;
             isAuthenticating = true;
             sddm.login(userName, password.text, sessionIndex);

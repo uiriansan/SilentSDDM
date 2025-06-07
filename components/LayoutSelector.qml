@@ -5,8 +5,6 @@ import QtQuick.Controls
 ColumnLayout {
     id: selector
     width: 180
-    height: 35
-    spacing: 2
 
     signal layoutChanged(layoutIndex: int)
     signal close
@@ -30,8 +28,31 @@ ColumnLayout {
 
     // TODO: Missing layout error message
 
-    Repeater {
-        id: layoutsList
+    ListView {
+        id: layoutList
+        Layout.preferredWidth: parent.width
+        Layout.preferredHeight: Math.min(keyboard.layouts.length * (35 + spacing), 300)
+        orientation: ListView.Vertical
+        interactive: true
+        clip: true
+        boundsBehavior: Flickable.StopAtBounds
+        spacing: 2
+        highlightFollowsCurrentItem: true
+        highlightMoveDuration: 0
+        contentHeight: keyboard.layouts.length * (35 + spacing)
+
+        ScrollBar.vertical: ScrollBar {
+            id: scrollbar
+            policy: layoutList.contentHeight > layoutList.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
+            padding: 0
+            rightPadding: visible ? 2 : 0
+            contentItem: Rectangle {
+                implicitWidth: 5
+                radius: 5
+                color: Config.menuAreaPopupActiveOptionBackgroundColor
+                opacity: Config.menuAreaPopupActiveOptionBackgroundOpacity
+            }
+        }
 
         model: keyboard.layouts
 

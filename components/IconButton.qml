@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
+import QtQuick.Layouts
 
 Item {
     id: iconButton
@@ -59,15 +60,16 @@ Item {
         }
     }
 
-    Row {
+    RowLayout {
         id: buttonContentRow
         height: parent.height
+        spacing: 0
 
         Rectangle {
             id: iconContainer
             color: "transparent"
-            height: parent.height
-            width: height
+            Layout.preferredWidth: parent.height
+            Layout.preferredHeight: parent.height
 
             Image {
                 id: buttonIcon
@@ -96,7 +98,7 @@ Item {
 
         Text {
             id: buttonLabel
-            anchors.verticalCenter: parent.verticalCenter
+            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             text: iconButton.label
             visible: iconButton.showLabel && text !== ""
             font.family: Config.fontFamily
