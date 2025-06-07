@@ -1,3 +1,7 @@
 https://vsthemes.org/en/wallpapers/other/64408-2b-nierautomata.html
 
 https://wallpapers-clan.com/desktop-wallpapers/asuka-evangelion-pink-anime-gif/
+
+https://livewallp.com/rain-anime-girl-live-wallpaper/
+
+ffmpeg -i backgrounds/2b.mp4 -vf "select=eq(n\,34)" -vframes 1 backgrounds/2b.jpg

@@ -90,6 +90,7 @@ Item {
             property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
             property bool isVideo: ["avi", "mp4", "mov", "mkv", "m4v", "webm"].includes(tsource.toString().split(".").slice(-1)[0])
             property bool displayColor: root.state === "lockState" && Config.lockScreenUseBackgroundColor || root.state === "loginState" && Config.loginScreenUseBackgroundColor
+            property string placeholder: Config.animatedBackgroundPlaceholder
 
             anchors.fill: parent
             source: !isVideo ? tsource : ""
@@ -100,6 +101,9 @@ Item {
             function updateVideo() {
                 if (isVideo && tsource.toString().length > 0) {
                     backgroundVideo.source = Qt.resolvedUrl(tsource);
+
+                    if (placeholder.length > 0)
+                        source = placeholder;
                 }
             }
 
@@ -115,7 +119,7 @@ Item {
                 anchors.fill: parent
                 anchors.margins: 0
                 color: root.state === "lockState" && Config.lockScreenUseBackgroundColor ? Config.lockScreenBackgroundColor : root.state === "loginState" && Config.loginScreenUseBackgroundColor ? Config.loginScreenBackgroundColor : "black"
-                visible: parent.displayColor || backgroundVideo.visible
+                visible: parent.displayColor || (backgroundVideo.visible && parent.placeholder.length === 0)
             }
 
             // TODO: This is slow af. Removing the property bindings and doing everything at startup should help.

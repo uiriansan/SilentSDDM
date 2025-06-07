@@ -12,6 +12,7 @@ QtObject {
     property bool enableAnimations: config['enable-animations'] === "false" ? false : true
     property int blurRadius: config.intValue("blur-radius") || 32
     property bool enableTooltips: config['enable-tooltips'] === "false" ? false : true
+    property string animatedBackgroundPlaceholder: config.stringValue("animated-background-placeholder")
 
     // [LockScreen]
     property bool lockScreenDisplay: config['LockScreen/display'] === "false" ? false : true

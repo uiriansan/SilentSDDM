@@ -11,8 +11,9 @@ Screenshot=preview.jpg
 TranslationsDirectory=translations
 QtVersion=6
 
-ConfigFile=configs/default.conf
+# ConfigFile=configs/default.conf
 
+ConfigFile=configs/rain.conf
 # ConfigFile=configs/default-left.conf
 # ConfigFile=configs/default-right.conf
 # ConfigFile=configs/default-dark.conf
