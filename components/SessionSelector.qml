@@ -110,7 +110,7 @@ ColumnLayout {
                         text: name
                         color: index === selector.currentSessionIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         font.pixelSize: Config.menuAreaPopupsFontSize
-                        font.family: Config.menuAreaPopupsfont.family
+                        font.family: Config.menuAreaPopupsFontFamily
                     }
                 }
             }

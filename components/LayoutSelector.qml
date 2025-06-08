@@ -100,7 +100,7 @@ ColumnLayout {
                         visible: text && text.length > 0
                         color: index === currentLayoutIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         font.pixelSize: Config.menuAreaPopupsFontSize
-                        font.family: Config.menuAreaPopupsfont.family
+                        font.family: Config.menuAreaPopupsFontFamily
                         elide: Text.ElideRight
                     }
 
@@ -110,7 +110,7 @@ ColumnLayout {
                         color: index === currentLayoutIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         opacity: 0.75
                         font.pixelSize: Config.menuAreaPopupsFontSize - 2
-                        font.family: Config.menuAreaPopupsfont.family
+                        font.family: Config.menuAreaPopupsFontFamily
                         elide: Text.ElideRight
                     }
                 }
