@@ -4,7 +4,7 @@ import QtQuick.Controls
 
 ColumnLayout {
     id: selector
-    width: 180
+    width: Config.layoutPopupWidth
 
     signal layoutChanged(layoutIndex: int)
     signal close
@@ -31,15 +31,15 @@ ColumnLayout {
     ListView {
         id: layoutList
         Layout.preferredWidth: parent.width
-        Layout.preferredHeight: Math.min(keyboard.layouts.length * (35 + spacing) - spacing, 300)
+        Layout.preferredHeight: Math.min(keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + spacing) - spacing, Config.menuAreaPopupsMaxHeight)
         orientation: ListView.Vertical
         interactive: true
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-        spacing: 2
+        spacing: Config.menuAreaPopupsSpacing
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 0
-        contentHeight: keyboard.layouts.length * (35 + spacing) - spacing
+        contentHeight: keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + spacing) - spacing
 
         // TODO: Fix scrollbar
         ScrollBar.vertical: ScrollBar {
@@ -50,8 +50,8 @@ ColumnLayout {
             contentItem: Rectangle {
                 implicitWidth: 5
                 radius: 5
-                color: Config.menuAreaPopupActiveOptionBackgroundColor
-                opacity: Config.menuAreaPopupActiveOptionBackgroundOpacity
+                color: Config.menuAreaPopupsActiveOptionBackgroundColor
+                opacity: Config.menuAreaPopupsActiveOptionBackgroundOpacity
             }
         }
 
@@ -64,14 +64,14 @@ ColumnLayout {
 
             Rectangle {
                 anchors.fill: parent
-                color: Config.menuAreaPopupActiveOptionBackgroundColor
-                opacity: index === currentLayoutIndex ? Config.menuAreaPopupActiveOptionBackgroundOpacity : (mouseArea.containsMouse ? Config.menuAreaPopupActiveOptionBackgroundOpacity : 0.0)
+                color: Config.menuAreaPopupsActiveOptionBackgroundColor
+                opacity: index === currentLayoutIndex ? Config.menuAreaPopupsActiveOptionBackgroundOpacity : (mouseArea.containsMouse ? Config.menuAreaPopupsActiveOptionBackgroundOpacity : 0.0)
                 radius: 5
             }
 
             RowLayout {
-                width: 180
-                height: 35
+                width: Config.layoutPopupWidth
+                height: Config.menuAreaPopupsItemHeight
                 spacing: 0
 
                 Rectangle {
@@ -83,7 +83,7 @@ ColumnLayout {
                     Image {
                         anchors.centerIn: parent
                         source: `/usr/share/sddm/flags/${shortName}.png`
-                        width: 16
+                        width: Config.menuAreaPopupsIconSize
                         height: width
                         sourceSize: Qt.size(width, height)
                         fillMode: Image.PreserveAspectFit
@@ -98,19 +98,19 @@ ColumnLayout {
                         width: parent.width - 5
                         text: Languages.getLabelFor(shortName)
                         visible: text && text.length > 0
-                        color: index === currentLayoutIndex ? Config.menuAreaPopupActiveContentColor : Config.menuAreaPopupContentColor
-                        font.pixelSize: Config.menuAreaPopupFontSize
-                        font.family: Config.fontFamily
+                        color: index === currentLayoutIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
+                        font.pixelSize: Config.menuAreaPopupsFontSize
+                        font.family: Config.menuAreaPopupsfont.family
                         elide: Text.ElideRight
                     }
 
                     Text {
                         width: parent.width - 5
                         text: longName
-                        color: index === currentLayoutIndex ? Config.menuAreaPopupActiveContentColor : Config.menuAreaPopupContentColor
+                        color: index === currentLayoutIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         opacity: 0.75
-                        font.pixelSize: Config.menuAreaPopupFontSize - 2
-                        font.family: Config.fontFamily
+                        font.pixelSize: Config.menuAreaPopupsFontSize - 2
+                        font.family: Config.menuAreaPopupsfont.family
                         elide: Text.ElideRight
                     }
                 }

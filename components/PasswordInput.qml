@@ -20,76 +20,90 @@ Item {
     TextField {
         id: textField
         anchors.fill: parent
-        color: Config.passwordInputTextColor
+        color: Config.passwordInputContentColor
         enabled: passwordInput.enabled
         echoMode: TextInput.Password
         activeFocusOnTab: true
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
-        font.family: Config.fontFamily
+        font.family: Config.passwordInputFontFamily
         font.pixelSize: Config.passwordInputFontSize
         background: Rectangle {
             anchors.fill: parent
             color: Config.passwordInputBackgroundColor
             opacity: Config.passwordInputBackgroundOpacity
-            radius: 10
+            topLeftRadius: Config.passwordInputBorderRadiusLeft
+            bottomLeftRadius: Config.passwordInputBorderRadiusLeft
+            topRightRadius: Config.passwordInputBorderRadiusRight
+            bottomRightRadius: Config.passwordInputBorderRadiusRight
         }
         leftPadding: placeholderLabel.x
         rightPadding: 10
         onAccepted: passwordInput.accepted()
 
         Rectangle {
-            id: iconContainer
-            height: parent.height
-            width: height
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: parent.left
-                leftMargin: 3
-            }
+            anchors.fill: parent
+            border.width: Config.passwordInputBorderSize
+            border.color: Config.passwordInputBorderColor
             color: "transparent"
-
-            Image {
-                id: icon
-                source: "icons/password.svg"
-                anchors.centerIn: parent
-                width: 16
-                height: width
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-                opacity: passwordInput.enabled ? 1.0 : 0.3
-                Behavior on opacity {
-                    enabled: Config.enableAnimations
-                    NumberAnimation {
-                        duration: 250
-                    }
-                }
-
-                MultiEffect {
-                    source: parent
-                    anchors.fill: parent
-                    colorization: 1
-                    colorizationColor: textField.color
-                }
-            }
+            topLeftRadius: Config.passwordInputBorderRadiusLeft
+            bottomLeftRadius: Config.passwordInputBorderRadiusLeft
+            topRightRadius: Config.passwordInputBorderRadiusRight
+            bottomRightRadius: Config.passwordInputBorderRadiusRight
         }
 
-        Label {
-            id: placeholderLabel
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: iconContainer.right
-                leftMargin: 0
+        Row {
+            anchors.fill: parent
+            spacing: 0
+            leftPadding: Config.passwordInputDisplayIcon ? 2 : 10
+
+            Rectangle {
+                id: iconContainer
+                color: "transparent"
+                visible: Config.passwordInputDisplayIcon
+                height: parent.height
+                width: height
+
+                Image {
+                    id: icon
+                    source: Config.getIcon(Config.passwordInputIcon)
+                    anchors.centerIn: parent
+                    width: Config.passwordInputIconSize
+                    height: width
+                    sourceSize: Qt.size(width, height)
+                    fillMode: Image.PreserveAspectFit
+                    opacity: passwordInput.enabled ? 1.0 : 0.3
+                    Behavior on opacity {
+                        enabled: Config.enableAnimations
+                        NumberAnimation {
+                            duration: 250
+                        }
+                    }
+
+                    MultiEffect {
+                        source: parent
+                        anchors.fill: parent
+                        colorization: 1
+                        colorizationColor: textField.color
+                    }
+                }
             }
-            padding: 0
-            visible: textField.text.length === 0 && textField.preeditText.length === 0
-            text: textConstants.password
-            color: textField.color
-            font.pixelSize: textField.font.pixelSize
-            font.family: textField.font.family
-            font.italic: true
-            verticalAlignment: textField.verticalAlignment
-            elide: Text.ElideRight
+
+            Text {
+                id: placeholderLabel
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                }
+                padding: 0
+                visible: textField.text.length === 0 && textField.preeditText.length === 0
+                text: textConstants.password
+                color: textField.color
+                font.pixelSize: textField.font.pixelSize
+                font.family: textField.font.family
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: textField.verticalAlignment
+                font.italic: true
+            }
         }
     }
 }

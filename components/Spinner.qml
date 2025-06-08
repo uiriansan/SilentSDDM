@@ -9,7 +9,7 @@ Item {
 
     Image {
         id: spinner
-        source: "icons/spinner.svg" // Your spinner icon
+        source: Config.getIcon(Config.spinnerIcon)
         anchors.centerIn: parent
         width: parent.width
         height: parent.height

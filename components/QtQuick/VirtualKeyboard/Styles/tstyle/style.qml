@@ -4,6 +4,7 @@
 // Taken from https://github.com/qt/qtvirtualkeyboard/blob/16fbddbbc03777e0a006daa998eda14624d62268/src/styles/builtin/default/style.qml#L11
 
 import QtQuick
+import QtQuick.Effects
 import QtQuick.VirtualKeyboard
 import QtQuick.VirtualKeyboard.Styles
 import "../../../../../components"
@@ -12,27 +13,27 @@ KeyboardStyle {
     id: vkeyboardStyle
 
     readonly property bool compactSelectionList: [InputEngine.InputMode.Pinyin, InputEngine.InputMode.Cangjie, InputEngine.InputMode.Zhuyin].indexOf(InputContext.inputEngine.inputMode) !== -1
-    readonly property string fontFamily: Config.fontFamily
+    readonly property string fontFamily: Config.menuAreaButtonsFontFamily
     readonly property real keyBackgroundMargin: Math.round(8 * scaleHint)
     readonly property real keyContentMargin: Math.round(40 * scaleHint)
     readonly property real keyIconScale: scaleHint * 0.8
-    readonly property string resourcePrefix: "./"
+    readonly property string resourcePrefix: "../../../../../icons/"
 
     readonly property string inputLocale: InputContext.locale
-    property color primaryColor: "#FFFFFF"
-    property color primaryLightColor: "#FFFFFF"
-    property color primaryDarkColor: "#FFFFFF"
-    property color textOnPrimaryColor: "#ffffff"
-    property color secondaryColor: "#CCCCCC"
-    property color secondaryLightColor: "#00FF00"
-    property color secondaryDarkColor: "#0000FF"
-    property color textOnSecondaryColor: "#ffffff"
+    property color primaryColor: Config.virtualKeyboardPrimaryColor
+    property color accentColor: Config.virtualKeyboardAccentColor
+    property color primaryLightColor: Config.virtualKeyboardKeyActiveBackgroundColor
+    property color primaryDarkColor: Config.virtualKeyboardKeyColor
+    property color textOnPrimaryColor: Config.virtualKeyboardKeyContentColor
+    property color secondaryColor: Config.virtualKeyboardSelectionBackgroundColor
+    property color secondaryLightColor: Config.virtualKeyboardAccentColor
+    property color secondaryDarkColor: Config.virtualKeyboardAccentColor
+    property color textOnSecondaryColor: Config.virtualKeyboardSelectionContentColor
 
-    property color keyboardBackgroundColor: primaryColor
     property color normalKeyBackgroundColor: primaryDarkColor
     property color highlightedKeyBackgroundColor: primaryLightColor
-    property real highlightedKeyBackgroundOpacity: 0.30
-    property real normalKeyBackgroundOpacity: 0.15
+    property real highlightedKeyBackgroundOpacity: Config.virtualKeyboardKeyActiveOpacity
+    property real normalKeyBackgroundOpacity: Config.virtualKeyboardKeyOpacity
     property color capsLockKeyAccentColor: secondaryColor
     property color modeKeyAccentColor: textOnPrimaryColor
     property color keyTextColor: textOnPrimaryColor
@@ -43,8 +44,8 @@ KeyboardStyle {
     property color popupHighlightColor: secondaryLightColor
     property color selectionListTextColor: textOnPrimaryColor
     property color selectionListSeparatorColor: primaryLightColor
-    property color selectionListBackgroundColor: primaryColor
-    property color navigationHighlightColor: "yellow"
+    property color selectionListBackgroundColor: accentColor
+    property color navigationHighlightColor: primaryColor
 
     property real inputLocaleIndicatorOpacity: 1.0
     property Timer inputLocaleIndicatorHighlightTimer: Timer {
@@ -61,7 +62,7 @@ KeyboardStyle {
             sourceSize.width: 80 * keyIconScale
             sourceSize.height: 80 * keyIconScale
             smooth: false
-            source: resourcePrefix + "images/settings-fff.svg"
+            source: resourcePrefix + "settings.svg"
         }
     }
 
@@ -73,9 +74,9 @@ KeyboardStyle {
     keyboardRelativeBottomMargin: 6 / keyboardDesignHeight
 
     keyboardBackground: Rectangle {
-        color: keyboardBackgroundColor
-        opacity: 0.15
-        radius: 10
+        color: Config.virtualKeyboardBackgroundColor
+        opacity: Config.virtualKeyboardBackgroundOpacity
+        radius: Config.passwordInputBorderRadiusLeft
     }
 
     keyPanel: KeyPanel {
@@ -193,9 +194,9 @@ KeyboardStyle {
             Image {
                 id: backspaceKeyIcon
                 anchors.centerIn: parent
-                sourceSize.height: 88 * keyIconScale
+                sourceSize.height: 100 * keyIconScale
                 smooth: false
-                source: resourcePrefix + "images/backspace-fff.svg"
+                source: resourcePrefix + "backspace.svg"
             }
         }
         states: [
@@ -244,9 +245,9 @@ KeyboardStyle {
             Image {
                 id: languageKeyIcon
                 anchors.centerIn: parent
-                sourceSize.height: 127 * keyIconScale
+                sourceSize.height: 100 * keyIconScale
                 smooth: false
-                source: resourcePrefix + "images/globe-fff.svg"
+                source: resourcePrefix + "language.svg"
             }
         }
         states: [
@@ -317,11 +318,11 @@ KeyboardStyle {
                     case EnterKeyAction.Send:
                     case EnterKeyAction.Next:
                     case EnterKeyAction.Done:
-                        return resourcePrefix + "images/check-fff.svg";
+                        return resourcePrefix + "check.svg";
                     case EnterKeyAction.Search:
-                        return resourcePrefix + "images/search-fff.svg";
+                        return resourcePrefix + "search.svg";
                     default:
-                        return resourcePrefix + "images/enter-fff.svg";
+                        return resourcePrefix + "enter-key.svg";
                     }
                 }
             }
@@ -400,7 +401,7 @@ KeyboardStyle {
                 anchors.centerIn: parent
                 sourceSize.height: 127 * keyIconScale
                 smooth: false
-                source: resourcePrefix + "images/hidekeyboard-fff.svg"
+                source: resourcePrefix + "hidekeyboard.svg"
             }
 
             MouseArea {
@@ -455,9 +456,17 @@ KeyboardStyle {
             Image {
                 id: shiftKeyIcon
                 anchors.centerIn: parent
-                sourceSize.height: 134 * keyIconScale
+                sourceSize.height: 100 * keyIconScale
                 smooth: false
-                source: resourcePrefix + "images/shift-fff.svg"
+                source: resourcePrefix + "shift.svg"
+
+                MultiEffect {
+                    id: shiftKeyColor
+                    source: shiftKeyIcon
+                    anchors.fill: shiftKeyIcon
+                    colorization: 1
+                    colorizationColor: textOnPrimaryColor
+                }
             }
             states: [
                 State {
@@ -469,7 +478,11 @@ KeyboardStyle {
                     }
                     PropertyChanges {
                         target: shiftKeyIcon
-                        source: resourcePrefix + "images/shift-c5d6b6.svg"
+                        source: resourcePrefix + "shift-upper.svg"
+                    }
+                    PropertyChanges {
+                        target: shiftKeyColor
+                        colorizationColor: primaryColor
                     }
                 },
                 State {
@@ -477,7 +490,11 @@ KeyboardStyle {
                     when: InputContext.shiftActive
                     PropertyChanges {
                         target: shiftKeyIcon
-                        source: resourcePrefix + "images/shift-80c342.svg"
+                        source: resourcePrefix + "shift-fill.svg"
+                    }
+                    PropertyChanges {
+                        target: shiftKeyColor
+                        colorizationColor: primaryColor
                     }
                 }
             ]
@@ -712,9 +729,9 @@ KeyboardStyle {
             Image {
                 id: hwrKeyIcon
                 anchors.centerIn: parent
-                sourceSize.height: 127 * keyIconScale
+                sourceSize.height: 100 * keyIconScale
                 smooth: false
-                source: resourcePrefix + (keyboard.handwritingMode ? "images/textmode-fff.svg" : "images/handwriting-fff.svg")
+                source: resourcePrefix + (keyboard.handwritingMode ? "textmode.svg" : "handwriting.svg")
             }
         }
         states: [
@@ -1283,7 +1300,7 @@ KeyboardStyle {
 
     selectionHandle: Image {
         sourceSize.width: 20
-        source: resourcePrefix + "images/selectionhandle-bottom.svg"
+        source: resourcePrefix + "selectionhandle.svg"
     }
 
     fullScreenInputContainerBackground: Rectangle {
@@ -1321,11 +1338,11 @@ KeyboardStyle {
             source: {
                 switch (keyboardFunction) {
                 case QtVirtualKeyboard.KeyboardFunction.HideInputPanel:
-                    return resourcePrefix + "images/hidekeyboard-fff.svg";
+                    return resourcePrefix + "hidekeyboard.svg";
                 case QtVirtualKeyboard.KeyboardFunction.ChangeLanguage:
-                    return resourcePrefix + "images/globe-fff.svg";
+                    return resourcePrefix + "language.svg";
                 case QtVirtualKeyboard.KeyboardFunction.ToggleHandwritingMode:
-                    return resourcePrefix + (keyboard.handwritingMode ? "images/textmode-fff.svg" : "images/handwriting-fff.svg");
+                    return resourcePrefix + (keyboard.handwritingMode ? "textmode.svg" : "handwriting.svg");
                 }
             }
         }

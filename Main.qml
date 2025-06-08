@@ -37,11 +37,15 @@ Item {
             }
             PropertyChanges {
                 target: backgroundBlur
-                blur: Config.lockScreenBlur
+                blurMax: Config.lockScreenBlur
             }
             PropertyChanges {
                 target: loginScreen.loginContainer
                 scale: 0.5
+            }
+            PropertyChanges {
+                target: backgroundBlur
+                brightness: Config.lockScreenBrightness
             }
         },
         State {
@@ -56,11 +60,15 @@ Item {
             }
             PropertyChanges {
                 target: backgroundBlur
-                blur: Config.loginScreenBlur
+                blurMax: Config.loginScreenBlur
             }
             PropertyChanges {
                 target: loginScreen.loginContainer
                 scale: 1.0
+            }
+            PropertyChanges {
+                target: backgroundBlur
+                brightness: Config.loginScreenBrightness
             }
         }
     ]
@@ -72,7 +80,11 @@ Item {
         }
         PropertyAnimation {
             duration: 400
-            properties: "blur"
+            properties: "blurMax"
+        }
+        PropertyAnimation {
+            duration: 400
+            properties: "brightness"
         }
     }
 
@@ -90,17 +102,17 @@ Item {
             property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
             property bool isVideo: ["avi", "mp4", "mov", "mkv", "m4v", "webm"].includes(tsource.toString().split(".").slice(-1)[0])
             property bool displayColor: root.state === "lockState" && Config.lockScreenUseBackgroundColor || root.state === "loginState" && Config.loginScreenUseBackgroundColor
-            property string placeholder: Config.animatedBackgroundPlaceholder
+            property string placeholder: Config.animatedBackgroundPlaceholder // Idea stolen from astronaut-theme. Not a fan of it, but works...
 
             anchors.fill: parent
-            source: !isVideo ? tsource : ""
+            source: !isVideo ? `backgrounds/${tsource}` : ""
             asynchronous: true
             cache: true
             mipmap: true
 
             function updateVideo() {
                 if (isVideo && tsource.toString().length > 0) {
-                    backgroundVideo.source = Qt.resolvedUrl(tsource);
+                    backgroundVideo.source = Qt.resolvedUrl(`backgrounds/${tsource}`);
 
                     if (placeholder.length > 0)
                         source = placeholder;
@@ -112,6 +124,11 @@ Item {
             }
             Component.onCompleted: {
                 updateVideo();
+            }
+            onStatusChanged: {
+                if (status == Image.Error && source !== "backgrounds/default.jpg") {
+                    source = "backgrounds/default.jpg";
+                }
             }
 
             Rectangle {
@@ -135,6 +152,10 @@ Item {
                     if (source)
                         backgroundVideo.play();
                 }
+                onErrorOccurred: {
+                    if (error !== MediaPlayer.NoError && backgroundImage.placeholder.length === 0)
+                        backgroundImage.displayColor = true;
+                }
             }
         }
         MultiEffect {
@@ -143,7 +164,7 @@ Item {
             source: backgroundImage
             anchors.fill: backgroundImage
             blurEnabled: backgroundImage.visible
-            blurMax: Config.blurRadius
+            blur: 1.0
         }
 
         Item {

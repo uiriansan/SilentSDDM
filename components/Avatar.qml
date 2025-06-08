@@ -11,10 +11,9 @@ Canvas {
     property string source: ""
     property string shape: Config.avatarShape
     property int squareRadius: Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius // min: 1
-    property bool drawStroke: (active && Config.avatarBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)
-    property color strokeColor: active ? Config.avatarBorderColor : Config.avatarInactiveBorderColor
-    property int strokeSize: active ? Config.avatarBorderSize : Config.avatarInactiveBorderSize
-    property bool drawShadow: Config.avatarShadow
+    property bool drawStroke: (active && Config.avatarActiveBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)
+    property color strokeColor: active ? Config.avatarActiveBorderColor : Config.avatarInactiveBorderColor
+    property int strokeSize: active ? Config.avatarActiveBorderSize : Config.avatarInactiveBorderSize
     property string tooltipText: ""
     property bool showTooltip: false
 
@@ -37,11 +36,10 @@ Canvas {
             // Circle
             ctx.ellipse(0, 0, width, height);
         }
-
         ctx.clip();
 
         if (source === "")
-            source = "icons/user-default.png";
+            source = "../icons/user-default.png";
         ctx.drawImage(source, 0, 0, width, height);
 
         // Border
@@ -101,19 +99,20 @@ Canvas {
 
         ToolTip {
             parent: mouseArea
-            enabled: Config.enableTooltips
+            enabled: Config.tooltipsEnable && !Config.tooltipsDisableUser
             visible: enabled && avatar.showTooltip || (enabled && mouseArea.isCursorInsideAvatar() && avatar.tooltipText !== "")
             delay: 300
             contentItem: Text {
-                font.family: Config.fontFamily
+                font.family: Config.tooltipsFontFamily
+                font.pixelSize: Config.tooltipsFontSize
                 text: avatar.tooltipText
-                color: Config.menuAreaPopupContentColor
+                color: Config.tooltipsContentColor
             }
             background: Rectangle {
-                color: Config.menuAreaPopupBackgroundColor
-                opacity: Config.menuAreaPopupBackgroundOpacity
+                color: Config.tooltipsBackgroundColor
+                opacity: Config.tooltipsBackgroundOpacity
                 border.width: 0
-                radius: Config.menuAreaButtonsBorderRadius
+                radius: Config.tooltipsBorderRadius
             }
         }
     }

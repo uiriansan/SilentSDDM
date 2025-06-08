@@ -135,8 +135,8 @@ Item {
                     rows: loginOrientation === "vertical" ? 2 : 1
                     columns: loginOrientation === "vertical" ? 1 : 2
                     layoutDirection: (Config.loginAreaPosition === "left" && Config.loginAreaAlign === "right") || (Config.loginAreaPosition === "right" && Config.loginAreaAlign === "right") ? Qt.RightToLeft : Qt.LeftToRight
-                    rowSpacing: 10
-                    columnSpacing: 10
+                    rowSpacing: Config.usernameMarginTop
+                    columnSpacing: Config.usernameMarginTop
 
                     Keys.onPressed: event => {
                         if (event.key === Qt.Key_Escape) {
@@ -201,7 +201,7 @@ Item {
                         // Layout.preferredWidth: childrenRect.width
                         // Layout.preferredHeight: childrenRect.height
 
-                        spacing: 10
+                        spacing: Config.passwordInputMarginTop
 
                         Text {
                             id: activeUserName
@@ -209,6 +209,7 @@ Item {
                             Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
                             // horizontalAlignment: Qt.AlignRight
 
+                            font.family: Config.usernameFontFamily
                             font.weight: Config.usernameFontWeight
                             font.pixelSize: Config.usernameFontSize
                             color: Config.usernameColor
@@ -225,7 +226,7 @@ Item {
 
                             RowLayout {
                                 id: loginArea
-                                spacing: 5
+                                spacing: Config.loginButtonMarginLeft
                                 Layout.preferredWidth: childrenRect.width
                                 Layout.preferredHeight: childrenRect.height
                                 Layout.fillWidth: false
@@ -246,22 +247,28 @@ Item {
                                     Layout.alignment: Qt.AlignHCenter
                                     Layout.preferredWidth: width // Fix button not resizing when label updates
                                     height: password.height
+                                    visible: !Config.loginButtonHideIfNotNeeded || !loginScreen.userNeedsPassword
                                     enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                                     activeFocusOnTab: true
                                     focus: !loginScreen.userNeedsPassword && !loginScreen.isSelectingUser
-                                    icon: "icons/arrow-right.svg"
+                                    icon: Config.getIcon(Config.loginButtonIcon)
                                     label: textConstants.login.toUpperCase()
                                     showLabel: Config.loginButtonShowTextIfNoPassword && !loginScreen.userNeedsPassword
-                                    tooltipText: !Config.loginButtonShowTextIfNoPassword || loginScreen.userNeedsPassword ? textConstants.login : ""
-                                    boldLabel: true
+                                    tooltipText: !Config.tooltipsDisableLoginButton && (!Config.loginButtonShowTextIfNoPassword || loginScreen.userNeedsPassword) ? textConstants.login : ""
                                     iconSize: Config.loginButtonIconSize
+                                    fontFamily: Config.loginButtonFontFamily
                                     fontSize: Config.loginButtonFontSize
+                                    fontWeight: Config.loginButtonFontWeight
                                     iconColor: Config.loginButtonContentColor
                                     activeIconColor: Config.loginButtonActiveContentColor
                                     backgroundColor: Config.loginButtonBackgroundColor
                                     backgroundOpacity: Config.loginButtonBackgroundOpacity
                                     activeBackgroundColor: Config.loginButtonActiveBackgroundColor
                                     activeBackgroundOpacity: Config.loginButtonActiveBackgroundOpacity
+                                    borderSize: Config.loginButtonBorderSize
+                                    borderColor: Config.loginButtonBorderColor
+                                    borderRadiusLeft: Config.loginButtonBorderRadiusLeft
+                                    borderRadiusRight: Config.loginButtonBorderRadiusRight
                                     onClicked: {
                                         loginScreen.login();
                                     }
@@ -288,11 +295,11 @@ Item {
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     top: loginContainer.bottom
-                    topMargin: 20
+                    topMargin: Config.warningMessageMarginTop
                 }
                 font.pixelSize: Config.warningMessageFontSize
-                font.family: Config.fontFamily
-                font.bold: Config.warningMessageBold
+                font.family: Config.warningMessageFontFamily
+                font.weight: Config.warningMessageFontWeight
                 color: Config.warningMessageNormalColor
                 visible: false
                 opacity: visible ? 1.0 : 0.0
@@ -377,20 +384,22 @@ Item {
 
             IconButton {
                 id: sessionButton
-                property bool showLabel: Config.sessionButtonDisplaySessionName
-                width: showLabel ? Config.sessionButonMaxWidth : Config.menuAreaButtonsSize
+                property bool showLabel: Config.sessionDisplaySessionName
+                width: showLabel ? popup.width : Config.menuAreaButtonsSize
                 height: Config.menuAreaButtonsSize
-                iconSize: Config.sessionButtonIconSize
-                fontSize: Config.sessionButtonFontSize
+                iconSize: Config.sessionIconSize
+                fontSize: Config.sessionFontSize
                 enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                 active: popup.visible
-                iconColor: Config.sessionButtonContentColor
-                activeIconColor: Config.sessionButtonActiveContentColor
+                iconColor: Config.sessionContentColor
+                activeIconColor: Config.sessionActiveContentColor
                 borderRadius: Config.menuAreaButtonsBorderRadius
-                backgroundColor: Config.sessionButtonBackgroundColor
-                backgroundOpacity: Config.sessionButtonBackgroundOpacity
-                activeBackgroundColor: Config.sessionButtonBackgroundColor
-                activeBackgroundOpacity: Config.sessionButtonActiveBackgroundOpacity
+                borderSize: Config.sessionBorderSize
+                backgroundColor: Config.sessionBackgroundColor
+                backgroundOpacity: Config.sessionBackgroundOpacity
+                activeBackgroundColor: Config.sessionBackgroundColor
+                activeBackgroundOpacity: Config.sessionActiveBackgroundOpacity
+                fontFamily: Config.menuAreaButtonsFontFamily
                 activeFocusOnTab: true
                 focus: false
                 onClicked: {
@@ -404,13 +413,13 @@ Item {
 
                 Popup {
                     id: popup
-                    property int popupMargin: 5
+                    property int popupMargin: Config.menuAreaPopupsMargin
                     parent: sessionButton
-                    padding: 5
+                    padding: Config.menuAreaPopupsPadding
                     rightPadding: 0 // For the scrollbar
                     background: Rectangle {
-                        color: Config.menuAreaPopupBackgroundColor
-                        opacity: Config.menuAreaPopupBackgroundOpacity
+                        color: Config.menuAreaPopupsBackgroundColor
+                        opacity: Config.menuAreaPopupsBackgroundOpacity
                         radius: 5 // Remove dim background (dim: false doesn't work here)
                     }
                     dim: true
@@ -460,20 +469,22 @@ Item {
             IconButton {
                 id: languageButton
 
-                property bool showLabel: Config.languageButtonDisplayLanguageName
+                property bool showLabel: Config.layoutDisplayLayoutName
 
                 height: Config.menuAreaButtonsSize
-                icon: "icons/language.svg"
+                icon: Config.getIcon(Config.layoutIcon)
                 active: popup.visible
                 borderRadius: Config.menuAreaButtonsBorderRadius
-                iconSize: Config.languageButtonIconSize
-                fontSize: Config.languageButtonFontSize
-                backgroundColor: Config.languageButtonBackgroundColor
-                backgroundOpacity: Config.languageButtonBackgroundOpacity
-                activeBackgroundColor: Config.languageButtonBackgroundColor
-                activeBackgroundOpacity: Config.languageButtonActiveBackgroundOpacity
-                iconColor: Config.languageButtonContentColor
-                activeIconColor: Config.languageButtonActiveContentColor
+                borderSize: Config.layoutBorderSize
+                iconSize: Config.layoutIconSize
+                fontSize: Config.layoutFontSize
+                backgroundColor: Config.layoutBackgroundColor
+                backgroundOpacity: Config.layoutBackgroundOpacity
+                activeBackgroundColor: Config.layoutBackgroundColor
+                activeBackgroundOpacity: Config.layoutActiveBackgroundOpacity
+                iconColor: Config.layoutContentColor
+                activeIconColor: Config.layoutActiveContentColor
+                fontFamily: Config.menuAreaButtonsFontFamily
                 activeFocusOnTab: true
                 enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                 focus: false
@@ -496,12 +507,12 @@ Item {
 
                 Popup {
                     id: popup
-                    property int popupMargin: 5
+                    property int popupMargin: Config.menuAreaPopupsMargin
                     parent: languageButton
-                    padding: 5
+                    padding: Config.menuAreaPopupsPadding
                     background: Rectangle {
-                        color: Config.menuAreaPopupBackgroundColor
-                        opacity: Config.menuAreaPopupBackgroundOpacity
+                        color: Config.menuAreaPopupsBackgroundColor
+                        opacity: Config.menuAreaPopupsBackgroundOpacity
                         radius: 5 // Remove dim background (dim: false doesn't work here)
                     }
                     focus: visible
@@ -538,7 +549,7 @@ Item {
                     }
 
                     Component.onCompleted: {
-                        [x, y] = menuArea.calculatePopupPos(Config.languagePopupDirection, width, height, parent.width, parent.height, parent.parent.x, parent.parent.y);
+                        [x, y] = menuArea.calculatePopupPos(Config.layoutPopupDirection, width, height, parent.width, parent.height, parent.parent.x, parent.parent.y);
                     }
                 }
             }
@@ -552,16 +563,18 @@ Item {
 
                 height: Config.menuAreaButtonsSize
                 width: Config.menuAreaButtonsSize
-                icon: "icons/keyboard.svg"
-                iconSize: Config.keyboardButtonIconSize
-                backgroundColor: Config.keyboardButtonBackgroundColor
-                backgroundOpacity: Config.keyboardButtonBackgroundOpacity
-                activeBackgroundColor: Config.keyboardButtonBackgroundColor
-                activeBackgroundOpacity: Config.keyboardButtonActiveBackgroundOpacity
-                iconColor: Config.keyboardButtonContentColor
-                activeIconColor: Config.keyboardButtonActiveContentColor
+                icon: Config.getIcon(Config.keyboardIcon)
+                iconSize: Config.keyboardIconSize
+                backgroundColor: Config.keyboardBackgroundColor
+                backgroundOpacity: Config.keyboardBackgroundOpacity
+                activeBackgroundColor: Config.keyboardBackgroundColor
+                activeBackgroundOpacity: Config.keyboardActiveBackgroundOpacity
+                iconColor: Config.keyboardContentColor
+                activeIconColor: Config.keyboardActiveContentColor
                 active: showKeyboard
+                fontFamily: Config.menuAreaButtonsFontFamily
                 borderRadius: Config.menuAreaButtonsBorderRadius
+                borderSize: Config.keyboardBorderSize
                 enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                 activeFocusOnTab: true
                 focus: false
@@ -580,16 +593,18 @@ Item {
 
                 height: Config.menuAreaButtonsSize
                 width: Config.menuAreaButtonsSize
-                icon: "icons/power.svg"
-                iconSize: Config.powerButtonIconSize
-                iconColor: Config.powerButtonContentColor
-                activeIconColor: Config.powerButtonActiveContentColor
+                icon: Config.getIcon(Config.powerIcon)
+                iconSize: Config.powerIconSize
+                iconColor: Config.powerContentColor
+                activeIconColor: Config.powerActiveContentColor
+                fontFamily: Config.menuAreaButtonsFontFamily
                 active: popup.visible
                 borderRadius: Config.menuAreaButtonsBorderRadius
-                backgroundColor: Config.powerButtonBackgroundColor
-                backgroundOpacity: Config.powerButtonBackgroundOpacity
-                activeBackgroundColor: Config.powerButtonBackgroundColor
-                activeBackgroundOpacity: Config.powerButtonActiveBackgroundOpacity
+                borderSize: Config.powerBorderSize
+                backgroundColor: Config.powerBackgroundColor
+                backgroundOpacity: Config.powerBackgroundOpacity
+                activeBackgroundColor: Config.powerBackgroundColor
+                activeBackgroundOpacity: Config.powerActiveBackgroundOpacity
                 enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
                 activeFocusOnTab: true
                 focus: false
@@ -600,15 +615,15 @@ Item {
 
                 Popup {
                     id: popup
-                    property int popupMargin: 5
+                    property int popupMargin: Config.menuAreaPopupsMargin
                     parent: powerButton
                     background: Rectangle {
-                        color: Config.menuAreaPopupBackgroundColor
-                        opacity: Config.menuAreaPopupBackgroundOpacity
+                        color: Config.menuAreaPopupsBackgroundColor
+                        opacity: Config.menuAreaPopupsBackgroundOpacity
                         radius: 5
                     }
                     dim: true
-                    padding: 5
+                    padding: Config.menuAreaPopupsPadding
                     Overlay.modal: Rectangle {
                         color: "transparent"  // Remove dim background (dim: false doesn't work here)
                         MouseArea {
@@ -647,7 +662,7 @@ Item {
             id: topLeftButtons
 
             height: 30
-            spacing: Config.menuAreaSpacing // 10
+            spacing: Config.menuAreaButtonsSpacing // 10
 
             anchors {
                 top: parent.top
@@ -662,7 +677,7 @@ Item {
             id: topCenterButtons
 
             height: 30
-            spacing: Config.menuAreaSpacing // 10
+            spacing: Config.menuAreaButtonsSpacing // 10
 
             anchors {
                 top: parent.top
@@ -676,7 +691,7 @@ Item {
             id: topRightButtons
 
             height: 30
-            spacing: Config.menuAreaSpacing // 10
+            spacing: Config.menuAreaButtonsSpacing // 10
 
             anchors {
                 top: parent.top
@@ -691,7 +706,7 @@ Item {
             id: centerLeftButtons
 
             width: 30
-            spacing: Config.menuAreaSpacing // 10
+            spacing: Config.menuAreaButtonsSpacing // 10
 
             anchors {
                 left: parent.left
@@ -705,7 +720,7 @@ Item {
             id: centerRightButtons
 
             width: 30
-            spacing: Config.menuAreaSpacing // 10
+            spacing: Config.menuAreaButtonsSpacing // 10
 
             anchors {
                 right: parent.right
@@ -719,7 +734,7 @@ Item {
             id: bottomLeftButtons
 
             height: 30
-            spacing: Config.menuAreaSpacing // 10
+            spacing: Config.menuAreaButtonsSpacing // 10
 
             anchors {
                 bottom: parent.bottom
@@ -734,7 +749,7 @@ Item {
             id: bottomCenterButtons
 
             height: 30
-            spacing: Config.menuAreaSpacing // 10
+            spacing: Config.menuAreaButtonsSpacing // 10
 
             anchors {
                 bottom: parent.bottom
@@ -748,7 +763,7 @@ Item {
             id: bottomRightButtons
 
             height: childrenRect.height
-            spacing: Config.menuAreaSpacing // 10
+            spacing: Config.menuAreaButtonsSpacing // 10
 
             anchors {
                 bottom: parent.bottom

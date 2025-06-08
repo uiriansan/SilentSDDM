@@ -5,7 +5,7 @@ import QtQuick.Effects
 
 ColumnLayout {
     id: selector
-    width: 200
+    width: Config.sessionMaxWidth
 
     signal sessionChanged(sessionIndex: int, iconPath: string, label: string)
     signal close
@@ -18,23 +18,23 @@ ColumnLayout {
         const available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "awesome", "qtile", "i3", "bspwm", "dwm", "xfce", "cinnamon", "niri"];
         for (let i = 0; i < available_session_icons.length; i++) {
             if (name && name.toLowerCase().includes(available_session_icons[i]))
-                return `icons/sessions/${available_session_icons[i]}.svg`;
+                return `../icons/sessions/${available_session_icons[i]}.svg`;
         }
-        return "icons/sessions/default.svg";
+        return "../icons/sessions/default.svg";
     }
 
     ListView {
         id: sessionList
-        Layout.preferredWidth: 200
-        Layout.preferredHeight: Math.min(sessionModel.rowCount() * (35 + spacing), 300)
+        Layout.preferredWidth: Config.sessionMaxWidth
+        Layout.preferredHeight: Math.min(sessionModel.rowCount() * (Config.menuAreaPopupsItemHeight + spacing), Config.menuAreaPopupsMaxHeight)
         orientation: ListView.Vertical
         interactive: true
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-        spacing: 2
+        spacing: Config.menuAreaPopupsSpacing
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 0
-        contentHeight: sessionModel.rowCount() * (35 + spacing)
+        contentHeight: sessionModel.rowCount() * (Config.menuAreaPopupsItemHeight + spacing)
 
         ScrollBar.vertical: ScrollBar {
             id: scrollbar
@@ -44,8 +44,8 @@ ColumnLayout {
             contentItem: Rectangle {
                 implicitWidth: 5
                 radius: 5
-                color: Config.menuAreaPopupActiveOptionBackgroundColor
-                opacity: Config.menuAreaPopupActiveOptionBackgroundOpacity
+                color: Config.menuAreaPopupsActiveOptionBackgroundColor
+                opacity: Config.menuAreaPopupsActiveOptionBackgroundOpacity
             }
         }
 
@@ -61,14 +61,14 @@ ColumnLayout {
 
         delegate: Rectangle {
             width: scrollbar.visible ? parent.width - 10 : parent.width - 5
-            height: 35
+            height: Config.menuAreaPopupsItemHeight
             color: "transparent"
             radius: 5
 
             Rectangle {
                 anchors.fill: parent
-                color: Config.menuAreaPopupActiveOptionBackgroundColor
-                opacity: index === selector.currentSessionIndex ? Config.menuAreaPopupActiveOptionBackgroundOpacity : (itemMouseArea.containsMouse ? Config.menuAreaPopupActiveOptionBackgroundOpacity : 0.0)
+                color: Config.menuAreaPopupsActiveOptionBackgroundColor
+                opacity: index === selector.currentSessionIndex ? Config.menuAreaPopupsActiveOptionBackgroundOpacity : (itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveOptionBackgroundOpacity : 0.0)
                 radius: 5
             }
 
@@ -84,8 +84,8 @@ ColumnLayout {
                     Image {
                         anchors.centerIn: parent
                         source: selector.getSessionIcon(name)
-                        width: Config.menuAreaPopupIconSize
-                        height: Config.menuAreaPopupIconSize
+                        width: Config.menuAreaPopupsIconSize
+                        height: Config.menuAreaPopupsIconSize
                         sourceSize: Qt.size(width, height)
                         fillMode: Image.PreserveAspectFit
 
@@ -93,7 +93,7 @@ ColumnLayout {
                             source: parent
                             anchors.fill: parent
                             colorization: 1
-                            colorizationColor: index === selector.currentSessionIndex ? Config.menuAreaPopupActiveContentColor : Config.menuAreaPopupContentColor
+                            colorizationColor: index === selector.currentSessionIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         }
                     }
                 }
@@ -108,9 +108,9 @@ ColumnLayout {
                         anchors.verticalCenter: parent.verticalCenter
                         // text: (name.length > 25) ? name.slice(0, 24) + '...' : name
                         text: name
-                        color: index === selector.currentSessionIndex ? Config.menuAreaPopupActiveContentColor : Config.menuAreaPopupContentColor
-                        font.pixelSize: Config.menuAreaPopupFontSize
-                        font.family: Config.fontFamily
+                        color: index === selector.currentSessionIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
+                        font.pixelSize: Config.menuAreaPopupsFontSize
+                        font.family: Config.menuAreaPopupsfont.family
                     }
                 }
             }
