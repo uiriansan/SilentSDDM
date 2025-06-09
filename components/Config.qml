@@ -25,7 +25,7 @@ QtObject {
 
     // [LockScreen.Clock]
     property bool clockDisplay: config['LockScreen.Clock/display'] === "false" ? false : true // @desc:Whether or not to display the clock in the lock screen.
-    property string clockPosition: config.stringValue("LockScreen.Clock/position") || "top-center" // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @desc:Position of the clock in the lock screen. <br />See also: <a href="#lockscreenpaddingtop">LockScreen/padding-top</a>
+    property string clockPosition: config.stringValue("LockScreen.Clock/position") || "top-center" // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @desc:Position of the clock and date in the lock screen. <br />See also: <a href="#lockscreenpaddingtop">LockScreen/padding-top</a>
     property string clockAlign: config.stringValue("LockScreen.Clock/align") || "center" // @possible:'left' | 'center' | 'right' @desc:Relative alignment of the clock and date.
     property string clockFormat: config.stringValue("LockScreen.Clock/format") || "hh:mm" // @desc:Format string used for the clock.
     property string clockFontFamily: config.stringValue("LockScreen.Clock/font-family") || "RedHatDisplay" // @desc:Font family used for the clock.
@@ -147,7 +147,7 @@ QtObject {
 
     // [LoginScreen.MenuArea.Popups]
     property int menuAreaPopupsMaxHeight: config.intValue("LoginScreen.MenuArea.Popups/max-height") || 300
-    property int menuAreaPopupsItemHeight: config.intValue("LoginScreen.MenuArea.Popups/item-height") || 35
+    property int menuAreaPopupsItemHeight: config.intValue("LoginScreen.MenuArea.Popups/item-height") || 30
     property int menuAreaPopupsSpacing: config.intValue("LoginScreen.MenuArea.Popups/item-spacing")
     property int menuAreaPopupsPadding: config.intValue("LoginScreen.MenuArea.Popups/padding")
     property int menuAreaPopupsMargin: config.intValue("LoginScreen.MenuArea.Popups/margin")
@@ -200,7 +200,7 @@ QtObject {
 
     // [LoginScreen.MenuArea.Power]
     property string powerPopupDirection: config.stringValue("LoginScreen.MenuArea.Power/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right'
-    property int powerPopupWidth: config.intValue("LoginScreen.MenuArea.Power/popup-width") || 100
+    property int powerPopupWidth: config.intValue("LoginScreen.MenuArea.Power/popup-width") || 90
     property color powerBackgroundColor: config.stringValue("LoginScreen.MenuArea.Power/background-color") || "#FFFFFF"
     property real powerBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Power/background-opacity") // @possible:0.0 ≤ R ≤ 1.0
     property real powerActiveBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Power/active-background-opacity") // @possible:0.0 ≤ R ≤ 1.0

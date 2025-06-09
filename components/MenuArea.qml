@@ -5,52 +5,6 @@ Item {
     id: menuArea
     anchors.fill: parent
 
-    function calculatePopupPos(dir, popup_w, popup_h, parent_w, parent_h, parent_x, parent_y) {
-        let x = 0, y = 0;
-        const popup_margin = Config.menuAreaPopupsMargin;
-
-        // TODO: This positioning is not working correctly
-        print("parent_x: ", parent_x, "parent_w: ", parent_w, "popup_w: ", popup_w);
-        if (dir === "up") {
-            if (parent_x + (parent_w - popup_w) / 2 < 10) {
-                // Align popup left
-                x = 0;
-            } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
-                // Align popup right
-                x = -popup_w + parent_w;
-            } else {
-                // Center popup
-                x = (parent_w - popup_w) / 2;
-            }
-            y = -popup_h - popup_margin;
-        } else if (dir === "down") {
-            if (parent_x + (parent_w - popup_w) / 2 < 10) {
-                // Align popup left
-                x = 0;
-            } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
-                // Align popup right
-                x = -popup_w + parent_w;
-            } else {
-                // Center popup
-                x = (parent_w - popup_w) / 2;
-            }
-            y = parent_h + popup_margin;
-        } else if (dir === "left") {
-            x = -popup_w - popup_margin;
-            if (parent_y + popup_h > loginScreen.height)
-                y = -popup_h + parent_h;
-            else
-                y = 0;
-        } else {
-            x = parent_w + popup_margin;
-            if (parent_y + popup_h > loginScreen.height)
-                y = -popup_h + parent_h;
-            else
-                y = 0;
-        }
-        return [x, y];
-    }
-
     Component {
         id: sessionMenuComponent
 
@@ -483,5 +437,51 @@ Item {
             else if (menus[i].name === "power")
                 powerMenuComponent.createObject(pos, {});
         }
+    }
+
+    function calculatePopupPos(dir, popup_w, popup_h, parent_w, parent_h, parent_x, parent_y) {
+        let x = 0, y = 0;
+        const popup_margin = Config.menuAreaPopupsMargin;
+
+        // TODO: This positioning is not working correctly
+        print("parent_x: ", parent_x, "parent_w: ", parent_w, "popup_w: ", popup_w);
+        if (dir === "up") {
+            if (parent_x + (parent_w - popup_w) / 2 < 10) {
+                // Align popup left
+                x = 0;
+            } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
+                // Align popup right
+                x = -popup_w + parent_w;
+            } else {
+                // Center popup
+                x = (parent_w - popup_w) / 2;
+            }
+            y = -popup_h - popup_margin;
+        } else if (dir === "down") {
+            if (parent_x + (parent_w - popup_w) / 2 < 10) {
+                // Align popup left
+                x = 0;
+            } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
+                // Align popup right
+                x = -popup_w + parent_w;
+            } else {
+                // Center popup
+                x = (parent_w - popup_w) / 2;
+            }
+            y = parent_h + popup_margin;
+        } else if (dir === "left") {
+            x = -popup_w - popup_margin;
+            if (parent_y + popup_h > loginScreen.height)
+                y = -popup_h + parent_h;
+            else
+                y = 0;
+        } else {
+            x = parent_w + popup_margin;
+            if (parent_y + popup_h > loginScreen.height)
+                y = -popup_h + parent_h;
+            else
+                y = 0;
+        }
+        return [x, y];
     }
 }

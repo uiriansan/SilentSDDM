@@ -31,7 +31,7 @@ ColumnLayout {
     ListView {
         id: layoutList
         Layout.preferredWidth: parent.width
-        Layout.preferredHeight: Math.min(keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + spacing) - spacing, Config.menuAreaPopupsMaxHeight)
+        Layout.preferredHeight: Math.min(keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing, Config.menuAreaPopupsMaxHeight)
         orientation: ListView.Vertical
         interactive: true
         clip: true
@@ -39,7 +39,7 @@ ColumnLayout {
         spacing: Config.menuAreaPopupsSpacing
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 0
-        contentHeight: keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + spacing) - spacing
+        contentHeight: keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing
 
         // TODO: Fix scrollbar
         ScrollBar.vertical: ScrollBar {
@@ -71,7 +71,7 @@ ColumnLayout {
 
             RowLayout {
                 width: Config.layoutPopupWidth
-                height: Config.menuAreaPopupsItemHeight
+                height: Config.menuAreaPopupsItemHeight + 5
                 spacing: 0
 
                 Rectangle {
