@@ -13,13 +13,13 @@ QtVersion=6
 
 ConfigFile=configs/default.conf
 
-# ConfigFile=configs/rain.conf
-# ConfigFile=configs/default-left.conf
-# ConfigFile=configs/default-right.conf
-# ConfigFile=configs/default-dark.conf
-# ConfigFile=configs/default-dark-left.conf
-# ConfigFile=configs/default-dark-right.conf
-# ConfigFile=configs/catppuccin-latte.conf
-# ConfigFile=configs/catppuccin-frappe.conf
-# ConfigFile=configs/catppuccin-macchiato.conf
-# ConfigFile=configs/catppuccin-mocha.conf
+; ConfigFile=configs/rain.conf
+; ConfigFile=configs/default-left.conf
+; ConfigFile=configs/default-right.conf
+; ConfigFile=configs/default-dark.conf
+; ConfigFile=configs/default-dark-left.conf
+; ConfigFile=configs/default-dark-right.conf
+; ConfigFile=configs/catppuccin-latte.conf
+; ConfigFile=configs/catppuccin-frappe.conf
+; ConfigFile=configs/catppuccin-macchiato.conf
+; ConfigFile=configs/catppuccin-mocha.conf
