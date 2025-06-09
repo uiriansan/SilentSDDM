@@ -430,7 +430,7 @@ Item {
 
             if (menus[i].name === "session")
                 sessionMenuComponent.createObject(pos, {});
-            else if (menus[i].name === "language")
+            else if (menus[i].name === "layout")
                 languageMenuComponent.createObject(pos, {});
             else if (menus[i].name === "keyboard")
                 keyboardMenuComponent.createObject(pos, {});

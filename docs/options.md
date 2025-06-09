@@ -1001,7 +1001,7 @@ File in `icons/`
 <a href="#menuareapopupsitemheight">item-height</a>
 </td>
 <td align="center">int</td>
-<td align="center">35</td>
+<td align="center">30</td>
 <td align="left">
 
 
@@ -1114,7 +1114,34 @@ File in `icons/`
 
 
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="11" align="right"><a href="#loginscreenmenuareasession">[LoginScreen.MenuArea.Session]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="14" align="right"><a href="#loginscreenmenuareasession">[LoginScreen.MenuArea.Session]</a></td><td align="left">
+<a href="#sessiondisplay">display</a>
+</td>
+<td align="center">bool</td>
+<td align="center">true</td>
+<td align="left">
+
+`true`   `false`
+
+</td></tr><tr><td align="left">
+<a href="#sessionposition">position</a>
+</td>
+<td align="center">string</td>
+<td align="center">bottom-left</td>
+<td align="left">
+
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
+
+</td></tr><tr><td align="left">
+<a href="#sessionindex">index</a>
+</td>
+<td align="center">int</td>
+<td align="center">0</td>
+<td align="left">
+
+
+
+</td></tr><tr><td align="left">
 <a href="#sessionpopupdirection">popup-direction</a>
 </td>
 <td align="center">string</td>
@@ -1213,7 +1240,34 @@ File in `icons/`
 
 
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="12" align="right"><a href="#loginscreenmenuarealayout">[LoginScreen.MenuArea.Layout]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="15" align="right"><a href="#loginscreenmenuarealayout">[LoginScreen.MenuArea.Layout]</a></td><td align="left">
+<a href="#layoutdisplay">display</a>
+</td>
+<td align="center">bool</td>
+<td align="center">true</td>
+<td align="left">
+
+`true`   `false`
+
+</td></tr><tr><td align="left">
+<a href="#layoutposition">position</a>
+</td>
+<td align="center">string</td>
+<td align="center">bottom-right</td>
+<td align="left">
+
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
+
+</td></tr><tr><td align="left">
+<a href="#layoutindex">index</a>
+</td>
+<td align="center">int</td>
+<td align="center">1</td>
+<td align="left">
+
+
+
+</td></tr><tr><td align="left">
 <a href="#layoutpopupdirection">popup-direction</a>
 </td>
 <td align="center">string</td>
@@ -1321,7 +1375,34 @@ File in `icons/`
 
 
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="8" align="right"><a href="#loginscreenmenuareakeyboard">[LoginScreen.MenuArea.Keyboard]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="11" align="right"><a href="#loginscreenmenuareakeyboard">[LoginScreen.MenuArea.Keyboard]</a></td><td align="left">
+<a href="#keyboarddisplay">display</a>
+</td>
+<td align="center">bool</td>
+<td align="center">true</td>
+<td align="left">
+
+`true`   `false`
+
+</td></tr><tr><td align="left">
+<a href="#keyboardposition">position</a>
+</td>
+<td align="center">string</td>
+<td align="center">bottom-right</td>
+<td align="left">
+
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
+
+</td></tr><tr><td align="left">
+<a href="#keyboardindex">index</a>
+</td>
+<td align="center">int</td>
+<td align="center">2</td>
+<td align="left">
+
+
+
+</td></tr><tr><td align="left">
 <a href="#keyboardbackgroundcolor">background-color</a>
 </td>
 <td align="center">color</td>
@@ -1393,7 +1474,34 @@ File in `icons/`
 
 
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="10" align="right"><a href="#loginscreenmenuareapower">[LoginScreen.MenuArea.Power]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="13" align="right"><a href="#loginscreenmenuareapower">[LoginScreen.MenuArea.Power]</a></td><td align="left">
+<a href="#powerdisplay">display</a>
+</td>
+<td align="center">bool</td>
+<td align="center">true</td>
+<td align="left">
+
+`true`   `false`
+
+</td></tr><tr><td align="left">
+<a href="#powerposition">position</a>
+</td>
+<td align="center">string</td>
+<td align="center">bottom-right</td>
+<td align="left">
+
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
+
+</td></tr><tr><td align="left">
+<a href="#powerindex">index</a>
+</td>
+<td align="center">int</td>
+<td align="center">3</td>
+<td align="left">
+
+
+
+</td></tr><tr><td align="left">
 <a href="#powerpopupdirection">popup-direction</a>
 </td>
 <td align="center">string</td>
@@ -1406,7 +1514,7 @@ File in `icons/`
 <a href="#powerpopupwidth">popup-width</a>
 </td>
 <td align="center">int</td>
-<td align="center">100</td>
+<td align="center">90</td>
 <td align="left">
 
 
@@ -1899,7 +2007,7 @@ File in `backgrounds/`
 </details>
 <details name="lockscreenbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p>The color to be used as background of the lock screen. <br/>See also: <a href="lockscreenusebackgroundcolor">user-background-color<a></p></br></br>
+<p>The color to be used as background of the lock screen. <br/>See also: <a href="#lockscreenusebackgroundcolor">use-background-color<a></p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -1991,7 +2099,7 @@ File in `backgrounds/`
 </details>
 <details name="clockposition">
 <summary><strong>position</strong></summary><br/>
-<p>Position of the clock in the lock screen. <br />See also: <a href="#lockscreenpaddingtop">LockScreen/padding-top</a></p></br></br>
+<p>Position of the clock and date in the lock screen. <br />See also: <a href="#lockscreenpaddingtop">LockScreen/padding-top</a></p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4203,7 +4311,7 @@ File in `icons/`
 </tr>
 <tr>
 <td>Default value</td>
-<td>35</td>
+<td>30</td>
 </tr>
 <tr>
 <td>Possible values</td>
@@ -4483,6 +4591,72 @@ File in `icons/`
 -- --
 
 ## [LoginScreen.MenuArea.Session]
+<details name="sessiondisplay">
+<summary><strong>display</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="sessionposition">
+<summary><strong>position</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>string</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>bottom-left</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="sessionindex">
+<summary><strong>index</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>int</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
 <details name="sessionpopupdirection">
 <summary><strong>popup-direction</strong></summary><br/>
 <p></p></br></br>
@@ -4729,6 +4903,72 @@ File in `icons/`
 -- --
 
 ## [LoginScreen.MenuArea.Layout]
+<details name="layoutdisplay">
+<summary><strong>display</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="layoutposition">
+<summary><strong>position</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>string</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>bottom-right</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="layoutindex">
+<summary><strong>index</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>int</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
 <details name="layoutpopupdirection">
 <summary><strong>popup-direction</strong></summary><br/>
 <p></p></br></br>
@@ -4997,6 +5237,72 @@ File in `icons/`
 -- --
 
 ## [LoginScreen.MenuArea.Keyboard]
+<details name="keyboarddisplay">
+<summary><strong>display</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="keyboardposition">
+<summary><strong>position</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>string</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>bottom-right</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="keyboardindex">
+<summary><strong>index</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>int</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
 <details name="keyboardbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
 <p></p></br></br>
@@ -5177,6 +5483,72 @@ File in `icons/`
 -- --
 
 ## [LoginScreen.MenuArea.Power]
+<details name="powerdisplay">
+<summary><strong>display</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="powerposition">
+<summary><strong>position</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>string</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>bottom-right</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="powerindex">
+<summary><strong>index</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>int</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
 <details name="powerpopupdirection">
 <summary><strong>popup-direction</strong></summary><br/>
 <p></p></br></br>
@@ -5209,7 +5581,7 @@ File in `icons/`
 </tr>
 <tr>
 <td>Default value</td>
-<td>100</td>
+<td>90</td>
 </tr>
 <tr>
 <td>Possible values</td>

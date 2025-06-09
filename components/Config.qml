@@ -162,6 +162,9 @@ QtObject {
     property int menuAreaPopupsIconSize: config.intValue("LoginScreen.MenuArea.Popups/icon-size") || 16
 
     // [LoginScreen.MenuArea.Session]
+    property bool sessionDisplay: config["LoginScreen.MenuArea.Session/display"] === "false" ? false : true
+    property string sessionPosition: config.stringValue("LoginScreen.MenuArea.Session/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-left
+    property int sessionIndex: config.intValue("LoginScreen.MenuArea.Session/index") // @default:0
     property string sessionPopupDirection: config.stringValue("LoginScreen.MenuArea.Session/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right'
     property bool sessionDisplaySessionName: config['LoginScreen.MenuArea.Session/display-session-name'] === "false" ? false : true
     property int sessionMaxWidth: config.intValue("LoginScreen.MenuArea.Session/max-width") || 200
@@ -175,6 +178,9 @@ QtObject {
     property int sessionIconSize: config.intValue("LoginScreen.MenuArea.Session/icon-size") || 16
 
     // [LoginScreen.MenuArea.Layout]
+    property bool layoutDisplay: config["LoginScreen.MenuArea.Layout/display"] === "false" ? false : true
+    property string layoutPosition: config.stringValue("LoginScreen.MenuArea.Layout/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-right
+    property int layoutIndex: config.intValue("LoginScreen.MenuArea.Layout/index") // @default:1
     property string layoutPopupDirection: config.stringValue("LoginScreen.MenuArea.Layout/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right'
     property int layoutPopupWidth: config.intValue("LoginScreen.MenuArea.Layout/popup-width") || 180
     property bool layoutDisplayLayoutName: config['LoginScreen.MenuArea.Layout/display-layout-name'] === "false" ? false : true
@@ -189,6 +195,9 @@ QtObject {
     property int layoutIconSize: config.intValue("LoginScreen.MenuArea.Layout/icon-size") || 16
 
     // [LoginScreen.MenuArea.Keyboard]
+    property bool keyboardDisplay: config["LoginScreen.MenuArea.Keyboard/display"] === "false" ? false : true
+    property string keyboardPosition: config.stringValue("LoginScreen.MenuArea.Keyboard/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-right
+    property int keyboardIndex: config.intValue("LoginScreen.MenuArea.Keyboard/index") // @default:2
     property color keyboardBackgroundColor: config.stringValue("LoginScreen.MenuArea.Keyboard/background-color") || "#FFFFFF"
     property real keyboardBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Keyboard/background-opacity") // @possible:0.0 ≤ R ≤ 1.0
     property real keyboardActiveBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Keyboard/active-background-opacity") // @possible:0.0 ≤ R ≤ 1.0
@@ -199,6 +208,9 @@ QtObject {
     property int keyboardIconSize: config.intValue("LoginScreen.MenuArea.Keyboard/icon-size") || 16
 
     // [LoginScreen.MenuArea.Power]
+    property bool powerDisplay: config["LoginScreen.MenuArea.Power/display"] === "false" ? false : true
+    property string powerPosition: config.stringValue("LoginScreen.MenuArea.Power/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-right
+    property int powerIndex: config.intValue("LoginScreen.MenuArea.Power/index") // @default:3
     property string powerPopupDirection: config.stringValue("LoginScreen.MenuArea.Power/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right'
     property int powerPopupWidth: config.intValue("LoginScreen.MenuArea.Power/popup-width") || 90
     property color powerBackgroundColor: config.stringValue("LoginScreen.MenuArea.Power/background-color") || "#FFFFFF"
@@ -238,59 +250,39 @@ QtObject {
     property bool tooltipsDisableLoginButton: config.boolValue("Tooltips/disable-login-button")
 
     function sortMenuButtons() {
-        // LoginScreen.MenuArea.Session
-        const sessionButtonDisplay = config["LoginScreen.MenuArea.Session/display"] === "false" ? false : true;
-        const sessionButtonPosition = config.stringValue("LoginScreen.MenuArea.Session/position");
-        const sessionButtonIndex = config.intValue("LoginScreen.MenuArea.Session/index");
-
-        // LoginScreen.MenuArea.Keyboard
-        const keyboardButtonDisplay = config["LoginScreen.MenuArea.Keyboard/display"] === "false" ? false : true;
-        const keyboardButtonPosition = config.stringValue("LoginScreen.MenuArea.Keyboard/position");
-        const keyboardButtonIndex = config.intValue("LoginScreen.MenuArea.Keyboard/index");
-
-        // LoginScreen.MenuArea.Language
-        const layoutButtonDisplay = config["LoginScreen.MenuArea.Layout/display"] === "false" ? false : true;
-        const layoutButtonPosition = config.stringValue("LoginScreen.MenuArea.Layout/position");
-        const layoutButtonIndex = config.intValue("LoginScreen.MenuArea.Layout/index");
-
-        // LoginScreen.MenuArea.Power
-        const powerButtonDisplay = config["LoginScreen.MenuArea.Power/display"] === "false" ? false : true;
-        const powerButtonPosition = config.stringValue("LoginScreen.MenuArea.Power/position");
-        const powerButtonIndex = config.intValue("LoginScreen.MenuArea.Power/index");
-
         const menus = [];
         const available_positions = ["top-left", "top-center", "top-right", "center-left", "center-right", "bottom-left", "bottom-center", "bottom-right"];
 
-        if (sessionButtonDisplay)
+        if (sessionDisplay)
             menus.push({
                 name: "session",
-                index: sessionButtonIndex,
+                index: sessionIndex,
                 def_index: 0,
-                position: available_positions.includes(sessionButtonPosition) ? sessionButtonPosition : "bottom-left"
+                position: available_positions.includes(sessionPosition) ? sessionPosition : "bottom-left"
             });
 
-        if (layoutButtonDisplay)
+        if (layoutDisplay)
             menus.push({
-                name: "language",
-                index: layoutButtonIndex,
+                name: "layout",
+                index: layoutIndex,
                 def_index: 1,
-                position: available_positions.includes(layoutButtonPosition) ? layoutButtonPosition : "bottom-right"
+                position: available_positions.includes(layoutPosition) ? layoutPosition : "bottom-right"
             });
 
-        if (keyboardButtonDisplay)
+        if (keyboardDisplay)
             menus.push({
                 name: "keyboard",
-                index: keyboardButtonIndex,
+                index: keyboardIndex,
                 def_index: 2,
-                position: available_positions.includes(keyboardButtonPosition) ? keyboardButtonPosition : "bottom-right"
+                position: available_positions.includes(keyboardPosition) ? keyboardPosition : "bottom-right"
             });
 
-        if (powerButtonDisplay)
+        if (powerDisplay)
             menus.push({
                 name: "power",
-                index: powerButtonIndex,
+                index: powerIndex,
                 def_index: 3,
-                position: available_positions.includes(powerButtonPosition) ? powerButtonPosition : "bottom-right"
+                position: available_positions.includes(powerPosition) ? powerPosition : "bottom-right"
             });
 
         // Sort by index or default index if 0

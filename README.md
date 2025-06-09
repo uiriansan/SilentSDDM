@@ -6,15 +6,15 @@
 > **PRE-RELEASE** <br/>
 > Bugs are expected. SDDM itself has some [annoying issues](https://github.com/uiriansan/SilentSDDM/issues?q=is%3Aissue%20label%3Asddm-issue) and limitations that make it very hard to create an actual good theme. If you encounter a bug, feel free to [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose).
 
-<img src="https://github.com/uiriansan/SilentSDDM/blob/main/previews/silent.gif" width="100%" />
+<img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/silent.gif" width="100%" />
 
 # Presets
 
 <details>
   <summary>configs/default.conf</summary>
     <p float="left">
-      <img src="./previews/default_lock.png" width="49%" />
-      <img src="./previews/default_login.png" width="49%" />
+      <img src="./docs/previews/default_lock.png" width="49%" />
+      <img src="./docs/previews/default_login.png" width="49%" />
     </p>
 </details>
 

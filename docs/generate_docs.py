@@ -27,7 +27,9 @@ def parse_config():
                 category = split_quoted_line[0] if "/" in quoted_line else "General"
                 option = split_quoted_line[1] if "/" in quoted_line else split_quoted_line[0]
                 default = ""
-                if "||" in line:
+                if "@default:" in line:
+                    default = line.split("@default:")[1].split("@")[0].strip()
+                elif "||" in line:
                     default = line.split("||")[1].strip().replace('"', "").split("//")[0].strip()
                 elif type == "bool" and "config[" in line:
                     default = "true"
