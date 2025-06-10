@@ -75,7 +75,7 @@ QtObject {
     property int avatarBorderRadius: config.intValue("LoginScreen.LoginArea.Avatar/border-radius")
     property int avatarActiveSize: config.intValue("LoginScreen.LoginArea.Avatar/active-size") || 120
     property int avatarInactiveSize: config.intValue("LoginScreen.LoginArea.Avatar/inactive-size") || 80
-    property real avatarInactiveOpacity: config.realValue("LoginScreen.LoginArea.Avatar/inactive-opacity") || 0.35
+    property real avatarInactiveOpacity: config.realValue("LoginScreen.LoginArea.Avatar/inactive-opacity") || 0.35 // @possible:0.0 ≤ R ≤ 1.0
     property int avatarActiveBorderSize: config.intValue("LoginScreen.LoginArea.Avatar/active-border-size")
     property int avatarInactiveBorderSize: config.intValue("LoginScreen.LoginArea.Avatar/inactive-border-size")
     property color avatarActiveBorderColor: config.stringValue("LoginScreen.LoginArea.Avatar/active-border-color") || "#FFFFFF"
@@ -166,6 +166,7 @@ QtObject {
     property string sessionPosition: config.stringValue("LoginScreen.MenuArea.Session/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-left
     property int sessionIndex: config.intValue("LoginScreen.MenuArea.Session/index") // @default:0
     property string sessionPopupDirection: config.stringValue("LoginScreen.MenuArea.Session/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right'
+    property string sessionPopupAlign: config.stringValue("LoginScreen.MenuArea.Session/popup-align") || "center" // @possible:'start' | 'center' | 'end'
     property bool sessionDisplaySessionName: config['LoginScreen.MenuArea.Session/display-session-name'] === "false" ? false : true
     property int sessionMaxWidth: config.intValue("LoginScreen.MenuArea.Session/max-width") || 200
     property color sessionBackgroundColor: config.stringValue("LoginScreen.MenuArea.Session/background-color") || "#FFFFFF"
@@ -182,6 +183,7 @@ QtObject {
     property string layoutPosition: config.stringValue("LoginScreen.MenuArea.Layout/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-right
     property int layoutIndex: config.intValue("LoginScreen.MenuArea.Layout/index") // @default:1
     property string layoutPopupDirection: config.stringValue("LoginScreen.MenuArea.Layout/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right'
+    property string layoutPopupAlign: config.stringValue("LoginScreen.MenuArea.Layout/popup-align") || "center" // @possible:'start' | 'center' | 'end'
     property int layoutPopupWidth: config.intValue("LoginScreen.MenuArea.Layout/popup-width") || 180
     property bool layoutDisplayLayoutName: config['LoginScreen.MenuArea.Layout/display-layout-name'] === "false" ? false : true
     property color layoutBackgroundColor: config.stringValue("LoginScreen.MenuArea.Layout/background-color") || "#FFFFFF"
@@ -212,6 +214,7 @@ QtObject {
     property string powerPosition: config.stringValue("LoginScreen.MenuArea.Power/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-right
     property int powerIndex: config.intValue("LoginScreen.MenuArea.Power/index") // @default:3
     property string powerPopupDirection: config.stringValue("LoginScreen.MenuArea.Power/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right'
+    property string powerPopupAlign: config.stringValue("LoginScreen.MenuArea.Power/popup-align") || "center" // @possible:'start' | 'center' | 'end'
     property int powerPopupWidth: config.intValue("LoginScreen.MenuArea.Power/popup-width") || 90
     property color powerBackgroundColor: config.stringValue("LoginScreen.MenuArea.Power/background-color") || "#FFFFFF"
     property real powerBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Power/background-opacity") // @possible:0.0 ≤ R ≤ 1.0

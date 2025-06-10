@@ -82,7 +82,7 @@ Item {
                 }
 
                 Component.onCompleted: {
-                    [x, y] = menuArea.calculatePopupPos(Config.sessionPopupDirection, width, height, parent.width, parent.height, parent.parent.x, parent.parent.y);
+                    [x, y] = menuArea.calculatePopupPos(Config.sessionPopupDirection, Config.sessionPopupAlign, popup, sessionButton);
                 }
             }
         }
@@ -92,7 +92,7 @@ Item {
         id: languageMenuComponent
 
         IconButton {
-            id: languageButton
+            id: layoutButton
 
             property bool showLabel: Config.layoutDisplayLayoutName
 
@@ -132,7 +132,7 @@ Item {
 
             Popup {
                 id: popup
-                parent: languageButton
+                parent: layoutButton
                 padding: Config.menuAreaPopupsPadding
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
@@ -163,7 +163,7 @@ Item {
                 LayoutSelector {
                     focus: popup.focus
                     onLayoutChanged: index => {
-                        languageButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
+                        layoutButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
                         VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
                     }
                     onClose: {
@@ -173,7 +173,7 @@ Item {
                 }
 
                 Component.onCompleted: {
-                    [x, y] = menuArea.calculatePopupPos(Config.layoutPopupDirection, width, height, parent.width, parent.height, parent.parent.x, parent.parent.y);
+                    [x, y] = menuArea.calculatePopupPos(Config.layoutPopupDirection, Config.layoutPopupAlign, popup, layoutButton);
                 }
             }
         }
@@ -274,7 +274,7 @@ Item {
                 }
 
                 Component.onCompleted: {
-                    [x, y] = menuArea.calculatePopupPos(Config.powerPopupDirection, width, height, parent.width, parent.height, parent.parent.x, parent.parent.y);
+                    [x, y] = menuArea.calculatePopupPos(Config.powerPopupDirection, Config.powerPopupAlign, popup, powerButton);
                 }
             }
         }
@@ -284,7 +284,8 @@ Item {
         // top_left
         id: topLeftButtons
 
-        height: 30
+        height: childrenRect.height
+        width: childrenRect.width
         spacing: Config.menuAreaButtonsSpacing // 10
 
         anchors {
@@ -299,7 +300,8 @@ Item {
         // top_center
         id: topCenterButtons
 
-        height: 30
+        height: childrenRect.height
+        width: childrenRect.width
         spacing: Config.menuAreaButtonsSpacing // 10
 
         anchors {
@@ -313,7 +315,8 @@ Item {
         // top_right
         id: topRightButtons
 
-        height: 30
+        height: childrenRect.height
+        width: childrenRect.width
         spacing: Config.menuAreaButtonsSpacing // 10
 
         anchors {
@@ -328,7 +331,8 @@ Item {
         // center_left
         id: centerLeftButtons
 
-        width: 30
+        height: childrenRect.height
+        width: childrenRect.width
         spacing: Config.menuAreaButtonsSpacing // 10
 
         anchors {
@@ -342,7 +346,8 @@ Item {
         // center_right
         id: centerRightButtons
 
-        width: 30
+        height: childrenRect.height
+        width: childrenRect.width
         spacing: Config.menuAreaButtonsSpacing // 10
 
         anchors {
@@ -356,7 +361,8 @@ Item {
         // bottom_left
         id: bottomLeftButtons
 
-        height: 30
+        height: childrenRect.height
+        width: childrenRect.width
         spacing: Config.menuAreaButtonsSpacing // 10
 
         anchors {
@@ -371,7 +377,8 @@ Item {
         // bottom_center
         id: bottomCenterButtons
 
-        height: 30
+        height: childrenRect.height
+        width: childrenRect.width
         spacing: Config.menuAreaButtonsSpacing // 10
 
         anchors {
@@ -386,6 +393,7 @@ Item {
         id: bottomRightButtons
 
         height: childrenRect.height
+        width: childrenRect.width
         spacing: Config.menuAreaButtonsSpacing // 10
 
         anchors {
@@ -439,49 +447,87 @@ Item {
         }
     }
 
-    function calculatePopupPos(dir, popup_w, popup_h, parent_w, parent_h, parent_x, parent_y) {
+    function calculatePopupPos(direction, align, popup, button) {
+        const popupMargin = Config.menuAreaPopupsMargin;
         let x = 0, y = 0;
-        const popup_margin = Config.menuAreaPopupsMargin;
+
+        if (direction === "up") {
+            y = -popup.height - popupMargin;
+            if (align === "start") {
+                x = 0;
+            } else if (align === "end") {
+                x = -popup.width + button.width;
+            } else {
+                x = (button.width - popup.width) / 2;
+            }
+        } else if (direction === "down") {
+            y = button.height + popupMargin;
+            if (align === "start") {
+                x = 0;
+            } else if (align === "end") {
+                x = -popup.width + button.width;
+            } else {
+                x = (button.width - popup.width) / 2;
+            }
+        } else if (direction === "left") {
+            x = -popup.width - popupMargin;
+            if (align === "start") {
+                y = 0;
+            } else if (align === "end") {
+                y = -popup.height + button.height;
+            } else {
+                y = (button.height - popup.height) / 2;
+            }
+        } else {
+            x = button.width + popupMargin;
+            if (align === "start") {
+                y = 0;
+            } else if (align === "end") {
+                y = -popup.height + button.height;
+            } else {
+                y = (button.height - popup.height) / 2;
+            }
+        }
 
         // TODO: This positioning is not working correctly
-        print("parent_x: ", parent_x, "parent_w: ", parent_w, "popup_w: ", popup_w);
-        if (dir === "up") {
-            if (parent_x + (parent_w - popup_w) / 2 < 10) {
-                // Align popup left
-                x = 0;
-            } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
-                // Align popup right
-                x = -popup_w + parent_w;
-            } else {
-                // Center popup
-                x = (parent_w - popup_w) / 2;
-            }
-            y = -popup_h - popup_margin;
-        } else if (dir === "down") {
-            if (parent_x + (parent_w - popup_w) / 2 < 10) {
-                // Align popup left
-                x = 0;
-            } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
-                // Align popup right
-                x = -popup_w + parent_w;
-            } else {
-                // Center popup
-                x = (parent_w - popup_w) / 2;
-            }
-            y = parent_h + popup_margin;
-        } else if (dir === "left") {
-            x = -popup_w - popup_margin;
-            if (parent_y + popup_h > loginScreen.height)
-                y = -popup_h + parent_h;
-            else
-                y = 0;
-        } else {
-            x = parent_w + popup_margin;
-            if (parent_y + popup_h > loginScreen.height)
-                y = -popup_h + parent_h;
-            else
-                y = 0;
-        }
+        // print("parent_x: ", parent_x, "parent_w: ", parent_w, "popup_w: ", popup_w);
+        // if (dir === "up") {
+        //     if (parent_x + (parent_w - popup_w) / 2 < 10) {
+        //         // Align popup left
+        //         x = 0;
+        //     } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
+        //         // Align popup right
+        //         x = -popup_w + parent_w;
+        //     } else {
+        //         // Center popup
+        //         x = (parent_w - popup_w) / 2;
+        //     }
+        //     y = -popup_h - popup_margin;
+        // } else if (dir === "down") {
+        //     if (parent_x + (parent_w - popup_w) / 2 < 10) {
+        //         // Align popup left
+        //         x = 0;
+        //     } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
+        //         // Align popup right
+        //         x = -popup_w + parent_w;
+        //     } else {
+        //         // Center popup
+        //         x = (parent_w - popup_w) / 2;
+        //     }
+        //     y = parent_h + popup_margin;
+        // } else if (dir === "left") {
+        //     x = -popup_w - popup_margin;
+        //     if (parent_y + popup_h > loginScreen.height)
+        //         y = -popup_h + parent_h;
+        //     else
+        //         y = 0;
+        // } else {
+        //     x = parent_w + popup_margin;
+        //     if (parent_y + popup_h > loginScreen.height)
+        //         y = -popup_h + parent_h;
+        //     else
+        //         y = 0;
+        // }
         return [x, y];
     }
 }

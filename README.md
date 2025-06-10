@@ -13,8 +13,8 @@
 <details>
   <summary>configs/default.conf</summary>
     <p float="left">
-      <img src="./docs/previews/default_lock.png" width="49%" />
-      <img src="./docs/previews/default_login.png" width="49%" />
+      <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/default_lock.png" width="49%" />
+      <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/default_login.png" width="49%" />
     </p>
 </details>
 
@@ -122,7 +122,7 @@ ConfigFile=configs/<your_preferred_config>.conf
 
 <br/>
 
-You can also create a new config file. There's a detailed guide with the list of available options in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
+You can also create your own config file. There's a guide with the list of available options (there are 200 of them xD) in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
 
 > [!IMPORTANT]
 > Don't forget to test the theme after every change by running `./test`, otherwise you might end up with a broken login screen.
