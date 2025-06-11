@@ -21,6 +21,7 @@ InputPanel {
 
     property string pos: Config.virtualKeyboardPosition
 
+    // TODO: Fix positioning with left|right login area.
     x: {
         if (pos === "top" || pos === "bottom")
             return (parent.width - inputPanel.width) / 2;

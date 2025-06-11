@@ -4,7 +4,7 @@ import QtQuick.Controls
 
 ColumnLayout {
     id: selector
-    width: Config.layoutPopupWidth
+    width: scrollbar.visible ? Config.layoutPopupWidth + Config.menuAreaPopupsPadding + scrollbar.width / 1.5 : Config.layoutPopupWidth
 
     signal layoutChanged(layoutIndex: int)
     signal close
@@ -53,12 +53,9 @@ ColumnLayout {
         highlightMoveDuration: 0
         contentHeight: keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing
 
-        // TODO: Fix scrollbar
         ScrollBar.vertical: ScrollBar {
             id: scrollbar
-            policy: layoutList.contentHeight > layoutList.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
-            padding: 0
-            rightPadding: visible ? 2 : 0
+            policy: Config.menuAreaPopupsDisplayScrollbar && layoutList.contentHeight > layoutList.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
             contentItem: Rectangle {
                 implicitWidth: 5
                 radius: 5
@@ -82,7 +79,7 @@ ColumnLayout {
             }
 
             RowLayout {
-                width: Config.layoutPopupWidth
+                width: scrollbar.visible ? layoutPopupWidth - Config.menuAreaPopupsPadding - scrollbar.width / 1.5 : layoutPopupWidth
                 height: Config.menuAreaPopupsItemHeight + 5
                 spacing: 0
 

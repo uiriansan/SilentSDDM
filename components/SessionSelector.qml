@@ -5,7 +5,7 @@ import QtQuick.Effects
 
 ColumnLayout {
     id: selector
-    width: Config.sessionMaxWidth
+    width: scrollbar.visible ? Config.sessionMaxWidth + Config.menuAreaPopupsPadding + scrollbar.width / 1.5 : Config.sessionMaxWidth
 
     signal sessionChanged(sessionIndex: int, iconPath: string, label: string)
     signal close
@@ -25,7 +25,7 @@ ColumnLayout {
 
     ListView {
         id: sessionList
-        Layout.preferredWidth: Config.sessionMaxWidth
+        Layout.preferredWidth: parent.width
         Layout.preferredHeight: Math.min(sessionModel.rowCount() * (Config.menuAreaPopupsItemHeight + spacing), Config.menuAreaPopupsMaxHeight)
         orientation: ListView.Vertical
         interactive: true
@@ -38,10 +38,9 @@ ColumnLayout {
 
         ScrollBar.vertical: ScrollBar {
             id: scrollbar
-            policy: sessionList.contentHeight > sessionList.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
-            padding: 0
-            rightPadding: visible ? 2 : 0
+            policy: Config.menuAreaPopupsDisplayScrollbar && sessionList.contentHeight > sessionList.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
             contentItem: Rectangle {
+                id: scrollbarBackground
                 implicitWidth: 5
                 radius: 5
                 color: Config.menuAreaPopupsActiveOptionBackgroundColor
@@ -60,16 +59,16 @@ ColumnLayout {
         }
 
         delegate: Rectangle {
-            width: scrollbar.visible ? parent.width - 10 : parent.width - 5
+            width: scrollbar.visible ? parent.width - Config.menuAreaPopupsPadding - scrollbar.width / 1.5 : parent.width
             height: Config.menuAreaPopupsItemHeight
             color: "transparent"
-            radius: 5
+            radius: Config.menuAreaButtonsBorderRadius
 
             Rectangle {
                 anchors.fill: parent
                 color: Config.menuAreaPopupsActiveOptionBackgroundColor
                 opacity: index === selector.currentSessionIndex ? Config.menuAreaPopupsActiveOptionBackgroundOpacity : (itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveOptionBackgroundOpacity : 0.0)
-                radius: 5
+                radius: Config.menuAreaButtonsBorderRadius
             }
 
             RowLayout {
@@ -118,7 +117,6 @@ ColumnLayout {
             MouseArea {
                 id: itemMouseArea
                 anchors.fill: parent
-                z: 2
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
                 onClicked: {

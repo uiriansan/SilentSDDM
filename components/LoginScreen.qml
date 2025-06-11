@@ -76,16 +76,6 @@ Item {
         }
     }
 
-    function resetFocus() {
-        // TODO: ...
-        if (userNeedsPassword) {
-            password.input.forceActiveFocus();
-        } else {
-            loginButton.focus = true;
-        }
-        return;
-    }
-
     GridLayout {
         id: loginPositioner
         anchors.fill: parent

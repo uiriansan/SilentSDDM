@@ -41,7 +41,6 @@ Item {
                 id: popup
                 parent: sessionButton
                 padding: Config.menuAreaPopupsPadding
-                rightPadding: 0 // For the scrollbar
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
                     opacity: Config.menuAreaPopupsBackgroundOpacity

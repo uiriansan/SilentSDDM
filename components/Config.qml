@@ -151,6 +151,7 @@ QtObject {
     property int menuAreaPopupsItemHeight: config.intValue("LoginScreen.MenuArea.Popups/item-height") || 30
     property int menuAreaPopupsSpacing: config.intValue("LoginScreen.MenuArea.Popups/item-spacing")
     property int menuAreaPopupsPadding: config.intValue("LoginScreen.MenuArea.Popups/padding")
+    property bool menuAreaPopupsDisplayScrollbar: config["LoginScreen.MenuArea.Popups/display-scrollbar"] === "false" ? false : true
     property int menuAreaPopupsMargin: config.intValue("LoginScreen.MenuArea.Popups/margin")
     property color menuAreaPopupsBackgroundColor: config.stringValue("LoginScreen.MenuArea.Popups/background-color") || "#FFFFFF"
     property real menuAreaPopupsBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Popups/background-opacity") // @possible:0.0 ≤ R ≤ 1.0
