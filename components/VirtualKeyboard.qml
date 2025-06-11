@@ -25,13 +25,13 @@ InputPanel {
         if (pos === "top" || pos === "bottom")
             return (parent.width - inputPanel.width) / 2;
         else if (pos === "left")
-            return Config.loginScreenPaddingLeft;
+            return Config.loginAreaMargin;
         else
-            return parent.width - inputPanel.width - Config.loginScreenPaddingRight;
+            return parent.width - inputPanel.width - Config.loginAreaMargin;
     }
     y: {
         if (pos === "top")
-            return Config.loginScreenPaddingTop;
+            return Config.loginAreaMargin;
         else if (pos === "bottom")
             return loginMessage.visible ? (loginContainerContainer.mapToGlobal(loginMessage.x, loginMessage.y).y + 25) : loginContainerContainer.mapToGlobal(loginMessage.x, loginMessage.y).y;
         else

@@ -9,7 +9,7 @@ ColumnLayout {
     signal layoutChanged(layoutIndex: int)
     signal close
 
-    property int currentLayoutIndex: keyboard.currentLayout ? keyboard.currentLayout : 0
+    property int currentLayoutIndex: keyboard && keyboard.layouts.length > 0 ? keyboard.currentLayout : 0
     property string layoutName: ""
     property string layoutShortName: ""
 
@@ -21,15 +21,27 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        selector.layoutName = keyboard.layouts[selector.currentLayoutIndex].longName;
-        selector.layoutShortName = keyboard.layouts[selector.currentLayoutIndex].shortName;
+        selector.layoutName = keyboard && keyboard.layouts.length > 0 ? keyboard.layouts[selector.currentLayoutIndex].longName : "";
+        selector.layoutShortName = keyboard && keyboard.layouts.length > 0 ? keyboard.layouts[selector.currentLayoutIndex].shortName : "";
         selector.layoutChanged(selector.currentLayoutIndex);
     }
 
-    // TODO: Missing layout error message
+    Text {
+        id: noLayoutMessage
+        Layout.preferredWidth: parent.width - 5
+        text: "No keyboard layout could be found. This is a known issue with Wayland."
+        visible: keyboard == undefined || keyboard.layouts.length === 0
+        wrapMode: Text.Wrap
+        horizontalAlignment: Text.AlignHCenter
+        color: Config.menuAreaPopupsContentColor
+        font.pixelSize: Config.menuAreaPopupsFontSize
+        font.family: Config.menuAreaPopupsFontFamily
+        padding: 10
+    }
 
     ListView {
         id: layoutList
+        visible: !noLayoutMessage.visible
         Layout.preferredWidth: parent.width
         Layout.preferredHeight: Math.min(keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing, Config.menuAreaPopupsMaxHeight)
         orientation: ListView.Vertical
@@ -98,7 +110,7 @@ ColumnLayout {
                         width: parent.width - 5
                         text: Languages.getLabelFor(shortName)
                         visible: text && text.length > 0
-                        color: index === currentLayoutIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
+                        color: index === currentLayoutIndex || mouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         font.pixelSize: Config.menuAreaPopupsFontSize
                         font.family: Config.menuAreaPopupsFontFamily
                         elide: Text.ElideRight
@@ -107,7 +119,7 @@ ColumnLayout {
                     Text {
                         width: parent.width - 5
                         text: longName
-                        color: index === currentLayoutIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
+                        color: index === currentLayoutIndex || mouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         opacity: 0.75
                         font.pixelSize: Config.menuAreaPopupsFontSize - 2
                         font.family: Config.menuAreaPopupsFontFamily

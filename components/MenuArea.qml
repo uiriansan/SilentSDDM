@@ -45,7 +45,18 @@ Item {
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
                     opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: 5 // Remove dim background (dim: false doesn't work here)
+                    radius: Config.menuAreaButtonsBorderRadius
+
+                    Rectangle {
+                        anchors.fill: parent
+                        visible: Config.menuAreaPopupsBorderSize > 0
+                        radius: parent.radius
+                        color: "transparent"
+                        border {
+                            color: Config.menuAreaPopupsBorderColor
+                            width: Config.menuAreaPopupsBorderSize
+                        }
+                    }
                 }
                 dim: true
                 Overlay.modal: Rectangle {
@@ -89,7 +100,7 @@ Item {
     }
 
     Component {
-        id: languageMenuComponent
+        id: layoutMenuComponent
 
         IconButton {
             id: layoutButton
@@ -137,7 +148,18 @@ Item {
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
                     opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: 5 // Remove dim background (dim: false doesn't work here)
+                    radius: Config.menuAreaButtonsBorderRadius
+
+                    Rectangle {
+                        anchors.fill: parent
+                        visible: Config.menuAreaPopupsBorderSize > 0
+                        radius: parent.radius
+                        color: "transparent"
+                        border {
+                            color: Config.menuAreaPopupsBorderColor
+                            width: Config.menuAreaPopupsBorderSize
+                        }
+                    }
                 }
                 focus: visible
                 dim: true
@@ -163,8 +185,8 @@ Item {
                 LayoutSelector {
                     focus: popup.focus
                     onLayoutChanged: index => {
-                        layoutButton.label = keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase();
-                        VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard.layouts[keyboard.currentLayout].shortName);
+                        layoutButton.label = showLabel ? (keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : "";
+                        VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard && keyboard.layouts.length > 0 ? keyboard.layouts[keyboard.currentLayout].shortName : "");
                     }
                     onClose: {
                         popup.close();
@@ -243,7 +265,18 @@ Item {
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
                     opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: 5
+                    radius: Config.menuAreaButtonsBorderRadius
+
+                    Rectangle {
+                        anchors.fill: parent
+                        visible: Config.menuAreaPopupsBorderSize > 0
+                        radius: parent.radius
+                        color: "transparent"
+                        border {
+                            color: Config.menuAreaPopupsBorderColor
+                            width: Config.menuAreaPopupsBorderSize
+                        }
+                    }
                 }
                 dim: true
                 padding: Config.menuAreaPopupsPadding
@@ -291,8 +324,8 @@ Item {
         anchors {
             top: parent.top
             left: parent.left
-            topMargin: Config.loginScreenPaddingTop
-            leftMargin: Config.loginScreenPaddingLeft
+            topMargin: Config.menuAreaButtonsMarginTop
+            leftMargin: Config.menuAreaButtonsMarginLeft
         }
     }
 
@@ -307,7 +340,7 @@ Item {
         anchors {
             top: parent.top
             horizontalCenter: parent.horizontalCenter
-            topMargin: Config.loginScreenPaddingTop
+            topMargin: Config.menuAreaButtonsMarginTop
         }
     }
 
@@ -322,8 +355,8 @@ Item {
         anchors {
             top: parent.top
             right: parent.right
-            topMargin: Config.loginScreenPaddingTop
-            rightMargin: Config.loginScreenPaddingRight
+            topMargin: Config.menuAreaButtonsMarginTop
+            rightMargin: Config.menuAreaButtonsMarginRight
         }
     }
 
@@ -338,7 +371,7 @@ Item {
         anchors {
             left: parent.left
             verticalCenter: parent.verticalCenter
-            leftMargin: Config.loginScreenPaddingLeft
+            leftMargin: Config.menuAreaButtonsMarginLeft
         }
     }
 
@@ -353,7 +386,7 @@ Item {
         anchors {
             right: parent.right
             verticalCenter: parent.verticalCenter
-            rightMargin: Config.loginScreenPaddingRight
+            rightMargin: Config.menuAreaButtonsMarginRight
         }
     }
 
@@ -368,8 +401,8 @@ Item {
         anchors {
             bottom: parent.bottom
             left: parent.left
-            bottomMargin: Config.loginScreenPaddingBottom
-            leftMargin: Config.loginScreenPaddingLeft
+            bottomMargin: Config.menuAreaButtonsMarginBottom
+            leftMargin: Config.menuAreaButtonsMarginLeft
         }
     }
 
@@ -384,7 +417,7 @@ Item {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            bottomMargin: Config.loginScreenPaddingBottom
+            bottomMargin: Config.menuAreaButtonsMarginBottom
         }
     }
 
@@ -399,8 +432,8 @@ Item {
         anchors {
             bottom: parent.bottom
             right: parent.right
-            bottomMargin: Config.loginScreenPaddingBottom
-            rightMargin: Config.loginScreenPaddingRight
+            bottomMargin: Config.menuAreaButtonsMarginBottom
+            rightMargin: Config.menuAreaButtonsMarginRight
         }
     }
 
@@ -439,7 +472,7 @@ Item {
             if (menus[i].name === "session")
                 sessionMenuComponent.createObject(pos, {});
             else if (menus[i].name === "layout")
-                languageMenuComponent.createObject(pos, {});
+                layoutMenuComponent.createObject(pos, {});
             else if (menus[i].name === "keyboard")
                 keyboardMenuComponent.createObject(pos, {});
             else if (menus[i].name === "power")
@@ -488,46 +521,6 @@ Item {
                 y = (button.height - popup.height) / 2;
             }
         }
-
-        // TODO: This positioning is not working correctly
-        // print("parent_x: ", parent_x, "parent_w: ", parent_w, "popup_w: ", popup_w);
-        // if (dir === "up") {
-        //     if (parent_x + (parent_w - popup_w) / 2 < 10) {
-        //         // Align popup left
-        //         x = 0;
-        //     } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
-        //         // Align popup right
-        //         x = -popup_w + parent_w;
-        //     } else {
-        //         // Center popup
-        //         x = (parent_w - popup_w) / 2;
-        //     }
-        //     y = -popup_h - popup_margin;
-        // } else if (dir === "down") {
-        //     if (parent_x + (parent_w - popup_w) / 2 < 10) {
-        //         // Align popup left
-        //         x = 0;
-        //     } else if (parent_x - (parent_w - popup_w) / 2 > loginScreen.width - 10) {
-        //         // Align popup right
-        //         x = -popup_w + parent_w;
-        //     } else {
-        //         // Center popup
-        //         x = (parent_w - popup_w) / 2;
-        //     }
-        //     y = parent_h + popup_margin;
-        // } else if (dir === "left") {
-        //     x = -popup_w - popup_margin;
-        //     if (parent_y + popup_h > loginScreen.height)
-        //         y = -popup_h + parent_h;
-        //     else
-        //         y = 0;
-        // } else {
-        //     x = parent_w + popup_margin;
-        //     if (parent_y + popup_h > loginScreen.height)
-        //         y = -popup_h + parent_h;
-        //     else
-        //         y = 0;
-        // }
         return [x, y];
     }
 }

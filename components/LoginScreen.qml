@@ -103,10 +103,10 @@ Item {
             // There's probably a better way...
             Component.onCompleted: {
                 if (Config.loginAreaPosition === "left") {
-                    Layout.leftMargin = Config.loginScreenPaddingLeft;
+                    Layout.leftMargin = Config.loginAreaMargin;
                     Layout.alignment = Qt.AlignLeft | Qt.AlignVCenter;
                 } else if (Config.loginAreaPosition === "right") {
-                    Layout.rightMargin = Config.loginScreenPaddingRight;
+                    Layout.rightMargin = Config.loginAreaMargin;
                     Layout.alignment = Qt.AlignRight | Qt.AlignVCenter;
                 } else {
                     Layout.alignment = Qt.AlignHCenter | Qt.AlignVCenter;
@@ -154,7 +154,7 @@ Item {
 
                     Item {
                         // Alignment of the login area. left | center | right
-                        Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
+                        Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft | Qt.AlignVCenter : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight | Qt.AlignVCenter : Qt.AlignCenter)
                         Layout.preferredWidth: childrenRect.width
                         Layout.preferredHeight: childrenRect.height
 
@@ -164,8 +164,8 @@ Item {
                             enabled: !loginScreen.isAuthenticating
                             activeFocusOnTab: true
                             layoutOrientation: loginLayout.loginOrientation
-                            width: layoutOrientation === "vertical" ? loginScreen.width - Config.loginScreenPaddingLeft - Config.loginScreenPaddingRight : Config.avatarActiveSize
-                            height: layoutOrientation === "vertical" ? Config.avatarActiveSize : loginScreen.height - Config.loginScreenPaddingTop - Config.loginScreenPaddingBottom
+                            width: layoutOrientation === "vertical" ? loginScreen.width - Config.loginAreaMargin - Config.loginAreaMargin : Config.avatarActiveSize
+                            height: layoutOrientation === "vertical" ? Config.avatarActiveSize : loginScreen.height - Config.loginAreaMargin - Config.loginAreaMargin
                             onFocusChanged: {
                                 if (!focus && loginScreen.isSelectingUser) {
                                     loginScreen.isSelectingUser = false;
@@ -195,9 +195,10 @@ Item {
 
                     ColumnLayout {
                         // Alignment of the login area. left | center | right
-                        Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
-                        // Layout.preferredWidth: childrenRect.width
-                        // Layout.preferredHeight: childrenRect.height
+                        Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft | Qt.AlignVCenter : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight | Qt.AlignVCenter : Qt.AlignCenter)
+                        Layout.preferredWidth: childrenRect.width
+                        Layout.preferredHeight: childrenRect.height
+                        Layout.fillHeight: false
 
                         spacing: Config.passwordInputMarginTop
 

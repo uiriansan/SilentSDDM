@@ -115,7 +115,7 @@ Item {
                     backgroundVideo.source = Qt.resolvedUrl(`backgrounds/${tsource}`);
 
                     if (placeholder.length > 0)
-                        source = placeholder;
+                        source = `backgrounds/${placeholder}`;
                 }
             }
 
@@ -126,7 +126,7 @@ Item {
                 updateVideo();
             }
             onStatusChanged: {
-                if (status == Image.Error && source !== "backgrounds/default.jpg") {
+                if (status === Image.Error && source !== "backgrounds/default.jpg") {
                     source = "backgrounds/default.jpg";
                 }
             }

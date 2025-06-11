@@ -56,10 +56,6 @@ QtObject {
     property int lockMessageSpacing: config.intValue("LockScreen.Message/spacing") // @desc:Spacing between the icon and the text in the custom message.
 
     // [LoginScreen] *
-    property int loginScreenPaddingTop: config.intValue("LoginScreen/padding-top")
-    property int loginScreenPaddingRight: config.intValue("LoginScreen/padding-right")
-    property int loginScreenPaddingBottom: config.intValue("LoginScreen/padding-bottom")
-    property int loginScreenPaddingLeft: config.intValue("LoginScreen/padding-left")
     property string loginScreenBackground: config.stringValue("LoginScreen/background") || "default.jpg" // @possible:File in `backgrounds/`
     property bool loginScreenUseBackgroundColor: config.boolValue('LoginScreen/use-background-color')
     property color loginScreenBackgroundColor: config.stringValue("LoginScreen/background-color") || "#000000"
@@ -69,6 +65,7 @@ QtObject {
     // [LoginScreen.LoginArea] *
     property string loginAreaPosition: config.stringValue("LoginScreen.LoginArea/position") || "center" // @possible:'left' | 'center' | 'right'
     property string loginAreaAlign: config.stringValue("LoginScreen.LoginArea/align") || "center" // @possible:'left' | 'right'
+    property int loginAreaMargin: config.intValue("LoginScreen.LoginArea/margin")
 
     // [LoginScreen.LoginArea.Avatar]
     property string avatarShape: config.stringValue("LoginScreen.LoginArea.Avatar/shape") || "circle" // @possible:'circle' || 'square'
@@ -140,6 +137,10 @@ QtObject {
     property int warningMessageMarginTop: config.intValue("LoginScreen.LoginArea.WarningMessage/margin-top")
 
     // [LoginScreen.MenuArea.Buttons]
+    property int menuAreaButtonsMarginTop: config.intValue("LoginScreen.MenuArea.Buttons/margin-top")
+    property int menuAreaButtonsMarginRight: config.intValue("LoginScreen.MenuArea.Buttons/margin-right")
+    property int menuAreaButtonsMarginBottom: config.intValue("LoginScreen.MenuArea.Buttons/margin-bottom")
+    property int menuAreaButtonsMarginLeft: config.intValue("LoginScreen.MenuArea.Buttons/margin-left")
     property int menuAreaButtonsSize: config.intValue("LoginScreen.MenuArea.Buttons/size") || 30
     property int menuAreaButtonsBorderRadius: config.intValue("LoginScreen.MenuArea.Buttons/border-radius")
     property int menuAreaButtonsSpacing: config.intValue("LoginScreen.MenuArea.Buttons/spacing")
@@ -158,6 +159,8 @@ QtObject {
     property color menuAreaPopupsContentColor: config.stringValue("LoginScreen.MenuArea.Popups/content-color") || "#FFFFFF"
     property color menuAreaPopupsActiveContentColor: config.stringValue("LoginScreen.MenuArea.Popups/active-content-color") || "#FFFFFF"
     property string menuAreaPopupsFontFamily: config.stringValue("LoginScreen.MenuArea.Popups/font-family") || "RedHatDisplay"
+    property int menuAreaPopupsBorderSize: config.intValue("LoginScreen.MenuArea.Popups/border-size")
+    property color menuAreaPopupsBorderColor: config.stringValue("LoginScreen.MenuArea.Popups/border-color") || "#FFFFFF"
     property int menuAreaPopupsFontSize: config.intValue("LoginScreen.MenuArea.Popups/font-size") || 11
     property int menuAreaPopupsIconSize: config.intValue("LoginScreen.MenuArea.Popups/icon-size") || 16
 

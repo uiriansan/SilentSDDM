@@ -93,7 +93,7 @@ ColumnLayout {
                             source: parent
                             anchors.fill: parent
                             colorization: 1
-                            colorizationColor: index === selector.currentSessionIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
+                            colorizationColor: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         }
                     }
                 }
@@ -108,7 +108,7 @@ ColumnLayout {
                         anchors.verticalCenter: parent.verticalCenter
                         // text: (name.length > 25) ? name.slice(0, 24) + '...' : name
                         text: name
-                        color: index === selector.currentSessionIndex ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
+                        color: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         font.pixelSize: Config.menuAreaPopupsFontSize
                         font.family: Config.menuAreaPopupsFontFamily
                     }
