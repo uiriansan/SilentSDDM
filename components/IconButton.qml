@@ -12,8 +12,8 @@ Item {
     readonly property bool isActive: active || focus || mouseArea.pressed || mouseArea.containsMouse
     property string icon: ""
     property int iconSize: 16
-    property color iconColor: "#FFFFFF"
-    property color activeIconColor: "#FFFFFF"
+    property color contentColor: "#FFFFFF"
+    property color activeContentColor: "#FFFFFF"
     property string label: ""
     property bool showLabel: true
     property string fontFamily: "RedHatDisplay"
@@ -28,7 +28,7 @@ Item {
     property int borderRadiusLeft: borderRadius
     property int borderRadiusRight: borderRadius
     property int borderSize: 0
-    property color borderColor: isActive ? iconButton.activeIconColor : iconButton.iconColor
+    property color borderColor: isActive ? iconButton.activeContentColor : iconButton.contentColor
 
     width: buttonContentRow.width // childrenRect doesn't update for some reason\
     height: iconSize * 2
@@ -97,7 +97,7 @@ Item {
                     source: buttonIcon
                     anchors.fill: buttonIcon
                     colorization: 1
-                    colorizationColor: iconButton.isActive ? iconButton.activeIconColor : iconButton.iconColor
+                    colorizationColor: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
                 }
             }
         }
@@ -111,7 +111,7 @@ Item {
             font.pixelSize: iconButton.fontSize
             font.weight: iconButton.fontWeight
             rightPadding: 10
-            color: iconButton.isActive ? iconButton.activeIconColor : iconButton.iconColor
+            color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
             opacity: iconButton.enabled ? 1.0 : 0.5
             Behavior on opacity {
                 enabled: Config.enableAnimations

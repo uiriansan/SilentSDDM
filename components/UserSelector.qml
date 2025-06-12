@@ -10,7 +10,7 @@ Item {
     signal userChanged(userIndex: int, username: string, userRealName: string, userIcon: string, needsPassword: bool)
 
     property bool listUsers: false
-    property string layoutOrientation: ""
+    property string orientation: ""
     property bool isDragging: false
 
     function prevUser() {
@@ -23,19 +23,19 @@ Item {
     ListView {
         id: userList
         anchors.fill: parent
-        orientation: selector.layoutOrientation === "vertical" ? ListView.Horizontal : ListView.Vertical
+        orientation: selector.orientation === "horizontal" ? ListView.Horizontal : ListView.Vertical
         spacing: 10
         interactive: false
         boundsBehavior: Flickable.StopAtBounds
 
         // Center the active avatar
-        preferredHighlightBegin: selector.layoutOrientation === "vertical" ? (width - Config.avatarActiveSize) / 2 : (height - Config.avatarActiveSize) / 2
+        preferredHighlightBegin: selector.orientation === "horizontal" ? (width - Config.avatarActiveSize) / 2 : (height - Config.avatarActiveSize) / 2
         preferredHighlightEnd: preferredHighlightBegin
         highlightRangeMode: ListView.StrictlyEnforceRange
         // Padding for centering
-        leftMargin: selector.layoutOrientation === "vertical" ? preferredHighlightBegin : 0
+        leftMargin: selector.orientation === "horizontal" ? preferredHighlightBegin : 0
         rightMargin: leftMargin
-        topMargin: selector.layoutOrientation === "vertical" ? 0 : preferredHighlightBegin
+        topMargin: selector.orientation === "horizontal" ? 0 : preferredHighlightBegin
         bottomMargin: topMargin
 
         // Animation properties
@@ -60,8 +60,8 @@ Item {
             width: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
             height: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
             anchors {
-                verticalCenter: selector.layoutOrientation === "vertical" ? parent.verticalCenter : undefined
-                horizontalCenter: selector.layoutOrientation === "vertical" ? undefined : parent.horizontalCenter
+                verticalCenter: selector.orientation === "horizontal" ? parent.verticalCenter : undefined
+                horizontalCenter: selector.orientation === "horizontal" ? undefined : parent.horizontalCenter
             }
             color: "transparent"
             visible: selector.listUsers || index === userList.currentIndex
@@ -142,11 +142,11 @@ Item {
             selector.closeUserList();
             selector.focus = false;
             event.accepted = true;
-        } else if ((selector.layoutOrientation === "vertical" && event.key == Qt.Key_Left) || (selector.layoutOrientation === "horizontal" && event.key == Qt.Key_Up)) {
+        } else if ((selector.orientation === "horizontal" && event.key == Qt.Key_Left) || (selector.orientation === "vertical" && event.key == Qt.Key_Up)) {
             userList.currentIndex = (userList.currentIndex + userModel.rowCount() - 1) % userModel.rowCount();
             selector.focus = true;
             event.accepted = true;
-        } else if ((selector.layoutOrientation === "vertical" && event.key == Qt.Key_Right) || (selector.layoutOrientation === "horizontal" && event.key == Qt.Key_Down)) {
+        } else if ((selector.orientation === "horizontal" && event.key == Qt.Key_Right) || (selector.orientation === "vertical" && event.key == Qt.Key_Down)) {
             userList.currentIndex = (userList.currentIndex + userModel.rowCount() + 1) % userModel.rowCount();
             selector.focus = true;
             event.accepted = true;

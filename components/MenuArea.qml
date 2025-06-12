@@ -17,8 +17,8 @@ Item {
             fontSize: Config.sessionFontSize
             enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
             active: popup.visible
-            iconColor: Config.sessionContentColor
-            activeIconColor: Config.sessionActiveContentColor
+            contentColor: Config.sessionContentColor
+            activeContentColor: Config.sessionActiveContentColor
             borderRadius: Config.menuAreaButtonsBorderRadius
             borderSize: Config.sessionBorderSize
             backgroundColor: Config.sessionBackgroundColor
@@ -117,8 +117,8 @@ Item {
             backgroundOpacity: Config.layoutBackgroundOpacity
             activeBackgroundColor: Config.layoutBackgroundColor
             activeBackgroundOpacity: Config.layoutActiveBackgroundOpacity
-            iconColor: Config.layoutContentColor
-            activeIconColor: Config.layoutActiveContentColor
+            contentColor: Config.layoutContentColor
+            activeContentColor: Config.layoutActiveContentColor
             fontFamily: Config.menuAreaButtonsFontFamily
             activeFocusOnTab: true
             enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
@@ -136,7 +136,11 @@ Item {
             Connections {
                 target: loginScreen
                 function onToggleLayoutPopup() {
-                    popup.visible ? popup.close() : popup.open();
+                    if (popup.visible) {
+                        popup.close();
+                    } else {
+                        popup.open();
+                    }
                 }
             }
 
@@ -189,7 +193,6 @@ Item {
                     }
                     onClose: {
                         popup.close();
-                        password.input.forceActiveFocus();
                     }
                 }
 
@@ -214,8 +217,8 @@ Item {
             backgroundOpacity: Config.keyboardBackgroundOpacity
             activeBackgroundColor: Config.keyboardBackgroundColor
             activeBackgroundOpacity: Config.keyboardActiveBackgroundOpacity
-            iconColor: Config.keyboardContentColor
-            activeIconColor: Config.keyboardActiveContentColor
+            contentColor: Config.keyboardContentColor
+            activeContentColor: Config.keyboardActiveContentColor
             active: showKeyboard
             fontFamily: Config.menuAreaButtonsFontFamily
             borderRadius: Config.menuAreaButtonsBorderRadius
@@ -240,8 +243,8 @@ Item {
             width: Config.menuAreaButtonsSize
             icon: Config.getIcon(Config.powerIcon)
             iconSize: Config.powerIconSize
-            iconColor: Config.powerContentColor
-            activeIconColor: Config.powerActiveContentColor
+            contentColor: Config.powerContentColor
+            activeContentColor: Config.powerActiveContentColor
             fontFamily: Config.menuAreaButtonsFontFamily
             active: popup.visible
             borderRadius: Config.menuAreaButtonsBorderRadius
@@ -302,7 +305,9 @@ Item {
 
                 PowerMenu {
                     focus: popup.focus
-                    onClose: popup.close()
+                    onClose: {
+                        popup.close();
+                    }
                 }
 
                 Component.onCompleted: {

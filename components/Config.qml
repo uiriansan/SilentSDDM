@@ -83,7 +83,7 @@ QtObject {
     property int usernameFontSize: config.intValue("LoginScreen.LoginArea.Username/font-size") || 16
     property int usernameFontWeight: config.intValue("LoginScreen.LoginArea.Username/font-weight") || 900
     property color usernameColor: config.stringValue("LoginScreen.LoginArea.Username/color") || "#FFFFFF"
-    property int usernameMarginTop: config.intValue("LoginScreen.LoginArea.Username/margin-top")
+    property int usernameMargin: config.intValue("LoginScreen.LoginArea.Username/margin")
 
     // [LoginScreen.LoginArea.PasswordInput]
     property int passwordInputWidth: config.intValue("LoginScreen.LoginArea.PasswordInput/width") || 200

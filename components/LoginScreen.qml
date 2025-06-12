@@ -5,25 +5,14 @@ import SddmComponents
 
 Item {
     id: loginScreen
-    signal closeRequested
+    signal close
     signal toggleLayoutPopup
 
     state: "normal"
-    states: [
-        State {
-            name: "normal"
-            PropertyChanges {
-                target: password.input
-                focus: true
-            }
-        },
-        State {
-            name: "popup"
-        },
-        State {
-            name: "user"
-        }
-    ]
+    onStateChanged: {
+        if (state === "normal")
+            resetFocus();
+    }
 
     readonly property alias password: password
     readonly property alias loginButton: loginButton
@@ -59,7 +48,6 @@ Item {
             spinner.visible = false;
             loginMessage.warn(textConstants.loginFailed, "error");
             password.text = "";
-            password.input.forceActiveFocus();
             loginArea.visible = true;
         }
         function onInformationMessage(message) {
@@ -73,6 +61,14 @@ Item {
             loginMessage.warn(textConstants.capslockWarning, "warning");
         } else {
             loginMessage.clear();
+        }
+    }
+
+    function resetFocus() {
+        if (userNeedsPassword) {
+            password.input.forceActiveFocus();
+        } else {
+            loginButton.forceActiveFocus();
         }
     }
 
@@ -123,8 +119,8 @@ Item {
                     rows: loginOrientation === "vertical" ? 2 : 1
                     columns: loginOrientation === "vertical" ? 1 : 2
                     layoutDirection: (Config.loginAreaPosition === "left" && Config.loginAreaAlign === "right") || (Config.loginAreaPosition === "right" && Config.loginAreaAlign === "right") ? Qt.RightToLeft : Qt.LeftToRight
-                    rowSpacing: Config.usernameMarginTop
-                    columnSpacing: Config.usernameMarginTop
+                    rowSpacing: Config.usernameMargin
+                    columnSpacing: Config.usernameMargin
 
                     Keys.onPressed: event => {
                         if (event.key === Qt.Key_Escape) {
@@ -133,7 +129,7 @@ Item {
                                 return;
                             }
                             if (Config.lockScreenDisplay) {
-                                loginScreen.closeRequested();
+                                loginScreen.close();
                             }
                             password.text = "";
                         } else if (event.key === Qt.Key_CapsLock) {
@@ -153,25 +149,19 @@ Item {
                             listUsers: loginScreen.isSelectingUser
                             enabled: !loginScreen.isAuthenticating
                             activeFocusOnTab: true
-                            layoutOrientation: loginLayout.loginOrientation
-                            width: layoutOrientation === "vertical" ? loginScreen.width - Config.loginAreaMargin - Config.loginAreaMargin : Config.avatarActiveSize
-                            height: layoutOrientation === "vertical" ? Config.avatarActiveSize : loginScreen.height - Config.loginAreaMargin - Config.loginAreaMargin
+                            orientation: loginLayout.loginOrientation === "horizontal" ? "vertical" : "horizontal"
+                            width: orientation === "horizontal" ? loginScreen.width - Config.loginAreaMargin - Config.loginAreaMargin : Config.avatarActiveSize
+                            height: orientation === "horizontal" ? Config.avatarActiveSize : loginScreen.height - Config.loginAreaMargin - Config.loginAreaMargin
                             onFocusChanged: {
                                 if (!focus && loginScreen.isSelectingUser) {
                                     loginScreen.isSelectingUser = false;
-                                    password.input.forceActiveFocus();
                                 }
                             }
-
                             onOpenUserList: {
                                 loginScreen.isSelectingUser = true;
                             }
                             onCloseUserList: {
                                 loginScreen.isSelectingUser = false;
-                                if (loginScreen.userNeedsPassword)
-                                    password.input.forceActiveFocus();
-                                else
-                                    loginButton.forceActiveFocus();
                             }
                             onUserChanged: (index, name, realName, icon, needsPassword) => {
                                 loginScreen.userIndex = index;
@@ -248,8 +238,8 @@ Item {
                                     fontFamily: Config.loginButtonFontFamily
                                     fontSize: Config.loginButtonFontSize
                                     fontWeight: Config.loginButtonFontWeight
-                                    iconColor: Config.loginButtonContentColor
-                                    activeIconColor: Config.loginButtonActiveContentColor
+                                    contentColor: Config.loginButtonContentColor
+                                    activeContentColor: Config.loginButtonActiveContentColor
                                     backgroundColor: Config.loginButtonBackgroundColor
                                     backgroundOpacity: Config.loginButtonBackgroundOpacity
                                     activeBackgroundColor: Config.loginButtonActiveBackgroundColor
@@ -330,9 +320,7 @@ Item {
             if (loginScreen.isSelectingUser) {
                 loginScreen.isSelectingUser = false;
             }
-            if (!loginScreen.isAuthenticating) {
-                password.input.forceActiveFocus();
-            }
+            if (!loginScreen.isAuthenticating) {}
         }
         onWheel: event => {
             if (loginScreen.isSelectingUser) {

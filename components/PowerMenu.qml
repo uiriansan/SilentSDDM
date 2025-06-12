@@ -20,8 +20,8 @@ ColumnLayout {
         width: Layout.preferredWidth
         enabled: sddm.canSuspend
         icon: Config.getIcon("power-suspend.svg")
-        iconColor: Config.menuAreaPopupsContentColor
-        activeIconColor: Config.menuAreaPopupsActiveContentColor
+        contentColor: Config.menuAreaPopupsContentColor
+        activeContentColor: Config.menuAreaPopupsActiveContentColor
         fontFamily: Config.menuAreaPopupsFontFamily
         backgroundColor: "transparent"
         activeBackgroundColor: Config.menuAreaPopupsActiveOptionBackgroundColor
@@ -46,8 +46,8 @@ ColumnLayout {
         width: Layout.preferredWidth
         enabled: sddm.canReboot
         icon: Config.getIcon("power-reboot.svg")
-        iconColor: Config.menuAreaPopupsContentColor
-        activeIconColor: Config.menuAreaPopupsActiveContentColor
+        contentColor: Config.menuAreaPopupsContentColor
+        activeContentColor: Config.menuAreaPopupsActiveContentColor
         fontFamily: Config.menuAreaPopupsFontFamily
         backgroundColor: "transparent"
         activeBackgroundColor: Config.menuAreaPopupsActiveOptionBackgroundColor
@@ -72,8 +72,8 @@ ColumnLayout {
         width: Layout.preferredWidth
         enabled: sddm.canPowerOff
         icon: Config.getIcon("power.svg")
-        iconColor: Config.menuAreaPopupsContentColor
-        activeIconColor: Config.menuAreaPopupsActiveContentColor
+        contentColor: Config.menuAreaPopupsContentColor
+        activeContentColor: Config.menuAreaPopupsActiveContentColor
         fontFamily: Config.menuAreaPopupsFontFamily
         backgroundColor: "transparent"
         activeBackgroundColor: Config.menuAreaPopupsActiveOptionBackgroundColor

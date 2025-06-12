@@ -180,7 +180,7 @@ Item {
                 enabled: root.state === "lockState"
                 onLoginRequested: {
                     root.state = "loginState";
-                    loginScreen.password.input.forceActiveFocus();
+                    loginScreen.resetFocus();
                 }
             }
             LoginScreen {
@@ -189,7 +189,7 @@ Item {
                 anchors.fill: parent
                 enabled: root.state === "loginState"
                 opacity: 0.0
-                onCloseRequested: {
+                onClose: {
                     root.state = "lockState";
                 }
             }
