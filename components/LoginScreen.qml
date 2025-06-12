@@ -10,8 +10,9 @@ Item {
 
     state: "normal"
     onStateChanged: {
-        if (state === "normal")
+        if (state === "normal") {
             resetFocus();
+        }
     }
 
     readonly property alias password: password
@@ -27,14 +28,12 @@ Item {
     property string userRealName: ""
     property string userIcon: ""
     property bool userNeedsPassword: false
-    property bool isAuthenticating: false
-    property bool isSelectingUser: false
 
     function login() {
         if (password.text.length > 0 || !userNeedsPassword) {
             loginMessage.visible = false;
             spinner.visible = true;
-            isAuthenticating = true;
+            loginScreen.state = "authenticating";
             sddm.login(userName, password.text, sessionIndex);
         }
     }
@@ -44,7 +43,7 @@ Item {
             loginContainer.scale = 0.0;
         }
         function onLoginFailed() {
-            loginScreen.isAuthenticating = false;
+            loginScreen.state === "normal";
             spinner.visible = false;
             loginMessage.warn(textConstants.loginFailed, "error");
             password.text = "";
@@ -57,7 +56,7 @@ Item {
     }
 
     function updateCapsLock() {
-        if (root.capsLockOn && !loginScreen.isAuthenticating) {
+        if (root.capsLockOn && loginScreen.state !== "authenticating") {
             loginMessage.warn(textConstants.capslockWarning, "warning");
         } else {
             loginMessage.clear();
@@ -65,7 +64,7 @@ Item {
     }
 
     function resetFocus() {
-        if (userNeedsPassword) {
+        if (loginScreen.userNeedsPassword) {
             password.input.forceActiveFocus();
         } else {
             loginButton.forceActiveFocus();
@@ -89,13 +88,14 @@ Item {
             // There's probably a better way...
             Component.onCompleted: {
                 if (Config.loginAreaPosition === "left") {
-                    Layout.leftMargin = Config.loginAreaMargin;
-                    Layout.alignment = Qt.AlignLeft | Qt.AlignVCenter;
+                    Layout.leftMargin = Config.loginAreaMargin !== -1 ? Config.loginAreaMargin : 0;
+                    Layout.alignment = Config.loginAreaMargin !== -1 ? Qt.AlignLeft | Qt.AlignVCenter : Qt.AlignCenter;
                 } else if (Config.loginAreaPosition === "right") {
-                    Layout.rightMargin = Config.loginAreaMargin;
-                    Layout.alignment = Qt.AlignRight | Qt.AlignVCenter;
+                    Layout.rightMargin = Config.loginAreaMargin !== -1 ? Config.loginAreaMargin : 0;
+                    Layout.alignment = Config.loginAreaMargin !== -1 ? Qt.AlignRight | Qt.AlignVCenter : Qt.AlignCenter
                 } else {
-                    Layout.alignment = Qt.AlignHCenter | Qt.AlignVCenter;
+                    Layout.alignment = Config.loginAreaMargin === -1 ? Qt.AlignCenter : Qt.AlignHCenter | Qt.AlignTop;
+                    Layout.topMargin = Config.loginAreaMargin !== -1 ? Config.loginAreaMargin : 0
                 }
             }
 
@@ -124,7 +124,7 @@ Item {
 
                     Keys.onPressed: event => {
                         if (event.key === Qt.Key_Escape) {
-                            if (loginScreen.isAuthenticating) {
+                            if (loginScreen.state === "authenticating") {
                                 event.accepted = false;
                                 return;
                             }
@@ -146,22 +146,18 @@ Item {
 
                         UserSelector {
                             id: userSelector
-                            listUsers: loginScreen.isSelectingUser
-                            enabled: !loginScreen.isAuthenticating
+                            listUsers: loginScreen.state === "selectingUser"
+                            enabled: loginScreen.state !== "authenticating"
                             activeFocusOnTab: true
                             orientation: loginLayout.loginOrientation === "horizontal" ? "vertical" : "horizontal"
-                            width: orientation === "horizontal" ? loginScreen.width - Config.loginAreaMargin - Config.loginAreaMargin : Config.avatarActiveSize
-                            height: orientation === "horizontal" ? Config.avatarActiveSize : loginScreen.height - Config.loginAreaMargin - Config.loginAreaMargin
-                            onFocusChanged: {
-                                if (!focus && loginScreen.isSelectingUser) {
-                                    loginScreen.isSelectingUser = false;
-                                }
-                            }
+                            width: orientation === "horizontal" ? loginScreen.width - Config.loginAreaMargin * 2 : Config.avatarActiveSize
+                            height: orientation === "horizontal" ? Config.avatarActiveSize : loginScreen.height - Config.loginAreaMargin * 2
                             onOpenUserList: {
-                                loginScreen.isSelectingUser = true;
+                                loginScreen.state = "selectingUser";
                             }
                             onCloseUserList: {
-                                loginScreen.isSelectingUser = false;
+                                loginScreen.state = "normal";
+                                loginScreen.resetFocus(); // resetFocus with escape even if the selector is not open
                             }
                             onUserChanged: (index, name, realName, icon, needsPassword) => {
                                 loginScreen.userIndex = index;
@@ -201,7 +197,7 @@ Item {
                             Layout.preferredWidth: loginArea.width
                             Layout.preferredHeight: loginArea.height
                             Layout.fillWidth: false
-                            currentIndex: loginScreen.isAuthenticating ? 1 : 0
+                            currentIndex: loginScreen.state === "authenticating" ? 1 : 0
 
                             RowLayout {
                                 id: loginArea
@@ -213,9 +209,9 @@ Item {
                                 PasswordInput {
                                     id: password
                                     Layout.alignment: Qt.AlignHCenter
-                                    enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating && loginScreen.state === "normal"
+                                    enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating" && loginScreen.state === "normal"
                                     visible: loginScreen.userNeedsPassword
-                                    focus: enabled && visible
+                                    // focus: enabled && visible
                                     onAccepted: {
                                         loginScreen.login();
                                     }
@@ -227,9 +223,8 @@ Item {
                                     Layout.preferredWidth: width // Fix button not resizing when label updates
                                     height: password.height
                                     visible: !Config.loginButtonHideIfNotNeeded || !loginScreen.userNeedsPassword
-                                    enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
+                                    enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
                                     activeFocusOnTab: true
-                                    focus: !loginScreen.userNeedsPassword && !loginScreen.isSelectingUser
                                     icon: Config.getIcon(Config.loginButtonIcon)
                                     label: textConstants.login.toUpperCase()
                                     showLabel: Config.loginButtonShowTextIfNoPassword && !loginScreen.userNeedsPassword
@@ -317,13 +312,13 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         onClicked: {
-            if (loginScreen.isSelectingUser) {
-                loginScreen.isSelectingUser = false;
+            if (loginScreen.state === "selectingUser") {
+                loginScreen.state = "normal";
             }
-            if (!loginScreen.isAuthenticating) {}
+            if (loginScreen.state !== "authenticating") {}
         }
         onWheel: event => {
-            if (loginScreen.isSelectingUser) {
+            if (loginScreen.state === "selectingUser") {
                 if (event.angleDelta.y < 0) {
                     userSelector.nextUser();
                 } else {
