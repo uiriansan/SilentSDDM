@@ -55,17 +55,17 @@ QtObject {
     property color lockMessageColor: config.stringValue("LockScreen.Message/color") || "#FFFFFF" // @desc:Color of the custom message. Apploes for both the icon and the text.
     property int lockMessageSpacing: config.intValue("LockScreen.Message/spacing") // @desc:Spacing between the icon and the text in the custom message.
 
-    // [LoginScreen] *
+    // [LoginScreen]
     property string loginScreenBackground: config.stringValue("LoginScreen/background") || "default.jpg" // @possible:File in `backgrounds/`
     property bool loginScreenUseBackgroundColor: config.boolValue('LoginScreen/use-background-color')
     property color loginScreenBackgroundColor: config.stringValue("LoginScreen/background-color") || "#000000"
     property int loginScreenBlur: config.intValue("LoginScreen/blur")
     property real loginScreenBrightness: config.realValue("LoginScreen/brightness") // @possible:-1.0 ≤ R ≤ 1.0
 
-    // [LoginScreen.LoginArea] *
-    property string loginAreaPosition: config.stringValue("LoginScreen.LoginArea/position") || "center" // @possible:'left' | 'center' | 'right'
-    property string loginAreaAlign: config.stringValue("LoginScreen.LoginArea/align") || "center" // @possible:'left' | 'right'
-    property int loginAreaMargin: config.intValue("LoginScreen.LoginArea/margin")
+    // [LoginScreen.LoginArea]
+    property string loginAreaPosition: config.stringValue("LoginScreen.LoginArea/position") || "center" // @possible:'left' | 'center' | 'right' @desc:Position of the login area.
+    property string loginAreaAlign: config.stringValue("LoginScreen.LoginArea/align") || "center" // @possible:'left' | 'right' @desc:Alignment of the login area. Only applies if position is set to `left` or `right`.
+    property int loginAreaMargin: config.intValue("LoginScreen.LoginArea/margin") // @desc:Margin of the login area relative to its anchor point.<br/>If position is set to `center`, this option specifies the top margin, left/right margin otherwise.<br/><br/><strong>Set this option to `-1` to center the login area.</strong>
 
     // [LoginScreen.LoginArea.Avatar]
     property string avatarShape: config.stringValue("LoginScreen.LoginArea.Avatar/shape") || "circle" // @possible:'circle' || 'square'

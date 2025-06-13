@@ -92,10 +92,10 @@ Item {
                     Layout.alignment = Config.loginAreaMargin !== -1 ? Qt.AlignLeft | Qt.AlignVCenter : Qt.AlignCenter;
                 } else if (Config.loginAreaPosition === "right") {
                     Layout.rightMargin = Config.loginAreaMargin !== -1 ? Config.loginAreaMargin : 0;
-                    Layout.alignment = Config.loginAreaMargin !== -1 ? Qt.AlignRight | Qt.AlignVCenter : Qt.AlignCenter
+                    Layout.alignment = Config.loginAreaMargin !== -1 ? Qt.AlignRight | Qt.AlignVCenter : Qt.AlignCenter;
                 } else {
                     Layout.alignment = Config.loginAreaMargin === -1 ? Qt.AlignCenter : Qt.AlignHCenter | Qt.AlignTop;
-                    Layout.topMargin = Config.loginAreaMargin !== -1 ? Config.loginAreaMargin : 0
+                    Layout.topMargin = Config.loginAreaMargin !== -1 ? Config.loginAreaMargin : 0;
                 }
             }
 
@@ -173,16 +173,14 @@ Item {
                         // Alignment of the login area. left | center | right
                         Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft | Qt.AlignVCenter : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight | Qt.AlignVCenter : Qt.AlignCenter)
                         Layout.preferredWidth: childrenRect.width
-                        Layout.preferredHeight: childrenRect.height
+                        Layout.preferredHeight: childrenRect.height - loginMessage.implicitHeight
                         Layout.fillHeight: false
 
                         spacing: Config.passwordInputMarginTop
 
                         Text {
                             id: activeUserName
-                            // User name
                             Layout.alignment: Config.loginAreaAlign === "left" && Config.loginAreaPosition !== "center" ? Qt.AlignLeft : (Config.loginAreaAlign === "right" && Config.loginAreaPosition !== "center" ? Qt.AlignRight : Qt.AlignCenter)
-                            // horizontalAlignment: Qt.AlignRight
 
                             font.family: Config.usernameFontFamily
                             font.weight: Config.usernameFontWeight
@@ -211,7 +209,6 @@ Item {
                                     Layout.alignment: Qt.AlignHCenter
                                     enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating" && loginScreen.state === "normal"
                                     visible: loginScreen.userNeedsPassword
-                                    // focus: enabled && visible
                                     onAccepted: {
                                         loginScreen.login();
                                     }
@@ -263,43 +260,38 @@ Item {
                     }
                 }
             }
+        }
+    }
 
-            Text {
-                id: loginMessage
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    top: loginContainer.bottom
-                    topMargin: Config.warningMessageMarginTop
-                }
-                font.pixelSize: Config.warningMessageFontSize
-                font.family: Config.warningMessageFontFamily
-                font.weight: Config.warningMessageFontWeight
-                color: Config.warningMessageNormalColor
-                visible: false
-                opacity: visible ? 1.0 : 0.0
-                Component.onCompleted: {
-                    if (root.capsLockOn)
-                        loginMessage.warn(textConstants.capslockWarning, "warning");
-                }
+    Text {
+        id: loginMessage
+        font.pixelSize: Config.warningMessageFontSize
+        font.family: Config.warningMessageFontFamily
+        font.weight: Config.warningMessageFontWeight
+        color: Config.warningMessageNormalColor
+        visible: false
+        opacity: visible ? 1.0 : 0.0
+        Component.onCompleted: {
+            if (root.capsLockOn)
+                loginMessage.warn(textConstants.capslockWarning, "warning");
+        }
 
-                Behavior on opacity {
-                    enabled: Config.enableAnimations
-                    NumberAnimation {
-                        duration: 150
-                    }
-                }
-
-                function warn(message, type) {
-                    text = message;
-                    color = type === "error" ? Config.warningMessageErrorColor : (type === "warning" ? Config.warningMessageWarningColor : Config.warningMessageNormalColor);
-                    visible = true;
-                }
-
-                function clear() {
-                    visible = false;
-                    text = "";
-                }
+        Behavior on opacity {
+            enabled: Config.enableAnimations
+            NumberAnimation {
+                duration: 150
             }
+        }
+
+        function warn(message, type) {
+            text = message;
+            color = type === "error" ? Config.warningMessageErrorColor : (type === "warning" ? Config.warningMessageWarningColor : Config.warningMessageNormalColor);
+            visible = true;
+        }
+
+        function clear() {
+            visible = false;
+            text = "";
         }
     }
 

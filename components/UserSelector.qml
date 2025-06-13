@@ -150,6 +150,9 @@ Item {
             userList.currentIndex = (userList.currentIndex + userModel.rowCount() + 1) % userModel.rowCount();
             selector.focus = true;
             event.accepted = true;
+        } else if (event.key === Qt.Key_CapsLock) {
+            root.capsLockOn = !root.capsLockOn;
+            event.accepted = true;
         } else {
             // Do not steal other keys
             event.accepted = false;
