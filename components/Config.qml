@@ -231,7 +231,7 @@ QtObject {
 
     // [LoginScreen.VirtualKeyboard]
     property int virtualKeyboardScale: config.realValue("LoginScreen.VirtualKeyboard/scale") || 1.0
-    property string virtualKeyboardPosition: config.stringValue("LoginScreen.VirtualKeyboard/position") || "bottom"
+    property string virtualKeyboardPosition: config.stringValue("LoginScreen.VirtualKeyboard/position") || "login" // @possible: 'login' | 'top' | 'bottom' | 'left' | 'right'
     property bool virtualKeyboardStartHidden: config['LoginScreen.VirtualKeyboard/start-hidden'] === "false" ? false : true
     property color virtualKeyboardBackgroundColor: config.stringValue("LoginScreen.VirtualKeyboard/background-color") || "#FFFFFF"
     property real virtualKeyboardBackgroundOpacity: config.realValue("LoginScreen.VirtualKeyboard/background-opacity") // @possible:0.0 ≤ R ≤ 1.0

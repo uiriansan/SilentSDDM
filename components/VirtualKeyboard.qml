@@ -6,9 +6,9 @@ import QtQuick.VirtualKeyboard.Settings
 InputPanel {
     id: inputPanel
 
-    width: Math.min(loginScreen.width / 2, loginArea.width * 3) * Config.virtualKeyboardScale
+    width: Math.min(loginScreen.width / 2, 600) * Config.virtualKeyboardScale
     active: Qt.inputMethod.visible
-    visible: loginScreen.showKeyboard && !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
+    visible: loginScreen.showKeyboard && loginScreen.userNeedsPassword && loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
     externalLanguageSwitchEnabled: true
     onExternalLanguageSwitch: {
         loginScreen.toggleLayoutPopup();
@@ -20,23 +20,38 @@ InputPanel {
     }
 
     property string pos: Config.virtualKeyboardPosition
+    property point loginLayoutPosition: loginContainer.mapToGlobal(loginLayout.x, loginLayout.y)
 
-    // TODO: Fix positioning with left|right login area.
     x: {
-        if (pos === "top" || pos === "bottom")
+        if (pos === "top" || pos === "bottom") {
             return (parent.width - inputPanel.width) / 2;
-        else if (pos === "left")
-            return Config.loginAreaMargin;
-        else
-            return parent.width - inputPanel.width - Config.loginAreaMargin;
+        } else if (pos === "left") {
+            return Config.menuAreaButtonsMarginLeft;
+        } else if (pos === "right") {
+            return parent.width - inputPanel.width - Config.menuAreaButtonsMarginRight;
+        } else {
+            // pos === "login"
+            if (Config.loginAreaPosition === "left") {
+                // return loginLayoutPosition.x;
+                return Config.loginAreaMargin + Config.avatarActiveSize + Config.usernameMargin;
+            } else if (Config.loginAreaPosition === "right") {
+                return parent.width - inputPanel.width - Config.loginAreaMargin;
+            } else {
+                return (parent.width - inputPanel.width) / 2;
+            }
+        }
     }
     y: {
-        if (pos === "top")
-            return Config.loginAreaMargin;
-        else if (pos === "bottom")
-            return loginMessage.visible ? (loginContainerContainer.mapToGlobal(loginMessage.x, loginMessage.y).y + 25) : loginContainerContainer.mapToGlobal(loginMessage.x, loginMessage.y).y;
-        else
+        if (pos === "top") {
+            return Config.menuAreaButtonsMarginTop;
+        } else if (pos === "bottom") {
+            return parent.height - inputPanel.height - Config.menuAreaButtonsMarginBottom;
+        } else if (pos === "right" || pos === "left") {
             return (parent.height - inputPanel.height) / 2;
+        } else {
+            // pos === "login"
+            return loginMessage.visible ? (loginLayoutPosition.y + loginLayout.height + loginMessage.height + Config.warningMessageMarginTop * 2) : (loginLayoutPosition.y + loginLayout.height + Config.warningMessageMarginTop * 2);
+        }
     }
     Behavior on y {
         enabled: Config.enableAnimations
