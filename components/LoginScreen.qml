@@ -138,32 +138,29 @@ Item {
 
             Component.onCompleted: {
                 anchors.top = parent.top;
-                if (Config.loginAreaPosition === "left" || Config.loginAreaPosition === "right") {
-                    if (Config.loginAreaAlign === "right") {
-                        anchors.right = parent.right;
-                    } else {
-                        anchors.left = parent.left;
-                    }
+                if (Config.loginAreaPosition === "left") {
+                    anchors.left = parent.left;
+                } else if (Config.loginAreaPosition === "right") {
+                    anchors.right = parent.right;
                 }
             }
         }
 
         Item {
             id: loginLayout
-            height: activeUserName.height + loginArea.height
+            height: activeUserName.height + Config.passwordInputMarginTop + loginArea.height
             width: loginArea.width > activeUserName.width ? loginArea.width : activeUserName.width
 
             // LoginArea alignment
             Component.onCompleted: {
-                if (Config.loginAreaPosition === "left" || Config.loginAreaPosition === "right") {
+                if (Config.loginAreaPosition === "left") {
                     anchors.verticalCenter = parent.verticalCenter;
-                    if (Config.loginAreaAlign === "right") {
-                        anchors.right = userSelector.left;
-                        anchors.rightMargin = Config.usernameMargin;
-                    } else {
-                        anchors.left = userSelector.right;
-                        anchors.leftMargin = Config.usernameMargin;
-                    }
+                    anchors.left = userSelector.right;
+                    anchors.leftMargin = Config.usernameMargin;
+                } else if (Config.loginAreaPosition === "right") {
+                    anchors.verticalCenter = parent.verticalCenter;
+                    anchors.right = userSelector.left;
+                    anchors.rightMargin = Config.usernameMargin;
                 } else {
                     anchors.top = userSelector.bottom;
                     anchors.topMargin = Config.usernameMargin;
@@ -181,12 +178,10 @@ Item {
 
                 Component.onCompleted: {
                     anchors.top = parent.top;
-                    if (Config.loginAreaPosition === "left" || Config.loginAreaPosition === "right") {
-                        if (Config.loginAreaAlign === "right") {
-                            anchors.right = parent.right;
-                        } else {
-                            anchors.left = parent.left;
-                        }
+                    if (Config.loginAreaPosition === "left") {
+                        anchors.left = parent.left;
+                    } else if (Config.loginAreaPosition === "right") {
+                        anchors.right = parent.right;
                     } else {
                         anchors.horizontalCenter = parent.horizontalCenter;
                     }
@@ -195,17 +190,16 @@ Item {
 
             RowLayout {
                 id: loginArea
+                height: Config.passwordInputHeight
                 spacing: Config.loginButtonMarginLeft
 
                 Component.onCompleted: {
                     anchors.top = activeUserName.bottom;
                     anchors.topMargin = Config.passwordInputMarginTop;
-                    if (Config.loginAreaPosition === "left" || Config.loginAreaPosition === "right") {
-                        if (Config.loginAreaAlign === "right") {
-                            anchors.right = parent.right;
-                        } else {
-                            anchors.left = parent.left;
-                        }
+                    if (Config.loginAreaPosition === "left") {
+                        anchors.left = parent.left;
+                    } else if (Config.loginAreaPosition === "right") {
+                        anchors.right = parent.right;
                     } else {
                         anchors.horizontalCenter = parent.horizontalCenter;
                     }
@@ -250,34 +244,47 @@ Item {
                     onClicked: {
                         loginScreen.login();
                     }
+
+                    Behavior on x {
+                        enabled: Config.enableAnimations
+                        NumberAnimation {
+                            duration: 150
+                        }
+                    }
                 }
             }
 
             Text {
                 id: loginMessage
+                property bool capslockWarning: false
                 font.pixelSize: Config.warningMessageFontSize
                 font.family: Config.warningMessageFontFamily
                 font.weight: Config.warningMessageFontWeight
                 color: Config.warningMessageNormalColor
-                visible: false
+                visible: text !== "" && (capslockWarning ? loginScreen.userNeedsPassword : true)
                 opacity: visible ? 1.0 : 0.0
+                anchors.top: loginArea.bottom
+                anchors.topMargin: visible ? Config.warningMessageMarginTop : 0
+
                 Component.onCompleted: {
                     if (root.capsLockOn)
                         loginMessage.warn(textConstants.capslockWarning, "warning");
 
-                    anchors.top = loginArea.bottom;
-                    anchors.topMargin = Config.warningMessageMarginTop;
-                    if (Config.loginAreaPosition === "left" || Config.loginAreaPosition === "right") {
-                        if (Config.loginAreaAlign === "right") {
-                            anchors.right = parent.right;
-                        } else {
-                            anchors.left = parent.left;
-                        }
+                    if (Config.loginAreaPosition === "left") {
+                        anchors.left = parent.left;
+                    } else if (Config.loginAreaPosition === "right") {
+                        anchors.right = parent.right;
                     } else {
                         anchors.horizontalCenter = parent.horizontalCenter;
                     }
                 }
 
+                Behavior on anchors.topMargin {
+                    enabled: Config.enableAnimations
+                    NumberAnimation {
+                        duration: 150
+                    }
+                }
                 Behavior on opacity {
                     enabled: Config.enableAnimations
                     NumberAnimation {
@@ -286,14 +293,16 @@ Item {
                 }
 
                 function warn(message, type) {
+                    clear();
                     text = message;
                     color = type === "error" ? Config.warningMessageErrorColor : (type === "warning" ? Config.warningMessageWarningColor : Config.warningMessageNormalColor);
-                    visible = true;
+                    if (message === textConstants.capslockWarning)
+                        capslockWarning = true;
                 }
 
                 function clear() {
-                    visible = false;
                     text = "";
+                    capslockWarning = false;
                 }
             }
         }

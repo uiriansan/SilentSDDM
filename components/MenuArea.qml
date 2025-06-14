@@ -15,7 +15,7 @@ Item {
             height: Config.menuAreaButtonsSize
             iconSize: Config.sessionIconSize
             fontSize: Config.sessionFontSize
-            enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
+            enabled: loginScreen.state === "normal" || popup.visible
             active: popup.visible
             contentColor: Config.sessionContentColor
             activeContentColor: Config.sessionActiveContentColor
@@ -121,7 +121,7 @@ Item {
             activeContentColor: Config.layoutActiveContentColor
             fontFamily: Config.menuAreaButtonsFontFamily
             activeFocusOnTab: true
-            enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
+            enabled: loginScreen.state === "normal" || popup.visible
             focus: false
             onClicked: {
                 if (loginScreen.isSelectingUser) {
@@ -223,7 +223,7 @@ Item {
             fontFamily: Config.menuAreaButtonsFontFamily
             borderRadius: Config.menuAreaButtonsBorderRadius
             borderSize: Config.keyboardBorderSize
-            enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
+            enabled: loginScreen.showKeyboard || loginScreen.state === "normal"
             activeFocusOnTab: true
             focus: false
             onClicked: {
@@ -253,7 +253,7 @@ Item {
             backgroundOpacity: Config.powerBackgroundOpacity
             activeBackgroundColor: Config.powerBackgroundColor
             activeBackgroundOpacity: Config.powerActiveBackgroundOpacity
-            enabled: !loginScreen.isSelectingUser && !loginScreen.isAuthenticating
+            enabled: loginScreen.state === "normal" || popup.visible
             activeFocusOnTab: true
             focus: false
             onClicked: {

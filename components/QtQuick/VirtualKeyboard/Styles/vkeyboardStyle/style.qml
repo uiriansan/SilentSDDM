@@ -87,6 +87,12 @@ KeyboardStyle {
             anchors.fill: keyPanel
             anchors.margins: keyBackgroundMargin
             color: "transparent"
+            MouseArea {
+                anchors.fill: parent
+                visible: !loginScreen.userNeedsPassword
+                enabled: visible
+                hoverEnabled: enabled
+            }
 
             Rectangle {
                 id: keyBg
@@ -184,6 +190,12 @@ KeyboardStyle {
             anchors.fill: backspaceKeyPanel
             anchors.margins: keyBackgroundMargin
             color: "transparent"
+            MouseArea {
+                anchors.fill: parent
+                visible: !loginScreen.userNeedsPassword
+                enabled: visible
+                hoverEnabled: enabled
+            }
 
             Rectangle {
                 anchors.fill: parent
@@ -235,6 +247,12 @@ KeyboardStyle {
             anchors.fill: languageKeyPanel
             anchors.margins: keyBackgroundMargin
             color: "transparent"
+            MouseArea {
+                anchors.fill: parent
+                visible: !loginScreen.userNeedsPassword
+                enabled: visible
+                hoverEnabled: enabled
+            }
 
             Rectangle {
                 anchors.fill: parent
@@ -286,6 +304,12 @@ KeyboardStyle {
             anchors.fill: enterKeyPanel
             anchors.margins: keyBackgroundMargin
             color: "transparent"
+            MouseArea {
+                anchors.fill: parent
+                visible: !loginScreen.userNeedsPassword
+                enabled: visible
+                hoverEnabled: enabled
+            }
 
             Rectangle {
                 anchors.fill: parent
@@ -389,6 +413,12 @@ KeyboardStyle {
             anchors.fill: hideKeyPanel
             anchors.margins: keyBackgroundMargin
             color: "transparent"
+            MouseArea {
+                anchors.fill: parent
+                visible: !loginScreen.userNeedsPassword
+                enabled: visible
+                hoverEnabled: enabled
+            }
 
             Rectangle {
                 anchors.fill: parent
@@ -446,6 +476,12 @@ KeyboardStyle {
             anchors.fill: shiftKeyPanel
             anchors.margins: keyBackgroundMargin
             color: "transparent"
+            MouseArea {
+                anchors.fill: parent
+                visible: !loginScreen.userNeedsPassword
+                enabled: visible
+                hoverEnabled: enabled
+            }
 
             Rectangle {
                 anchors.fill: parent
@@ -535,6 +571,12 @@ KeyboardStyle {
             anchors.fill: spaceKeyPanel
             anchors.margins: keyBackgroundMargin
             color: "transparent"
+            MouseArea {
+                anchors.fill: parent
+                visible: !loginScreen.userNeedsPassword
+                enabled: visible
+                hoverEnabled: enabled
+            }
 
             Rectangle {
                 anchors.fill: parent
@@ -588,6 +630,12 @@ KeyboardStyle {
             anchors.fill: symbolKeyPanel
             anchors.margins: keyBackgroundMargin
             color: "transparent"
+            MouseArea {
+                anchors.fill: parent
+                visible: !loginScreen.userNeedsPassword
+                enabled: visible
+                hoverEnabled: enabled
+            }
 
             Rectangle {
                 anchors.fill: parent
@@ -647,6 +695,12 @@ KeyboardStyle {
             anchors.fill: modeKeyPanel
             anchors.margins: keyBackgroundMargin
             color: "transparent"
+            MouseArea {
+                anchors.fill: parent
+                visible: !loginScreen.userNeedsPassword
+                enabled: visible
+                hoverEnabled: enabled
+            }
 
             Rectangle {
                 anchors.fill: parent
@@ -719,6 +773,12 @@ KeyboardStyle {
             anchors.fill: handwritingKeyPanel
             anchors.margins: keyBackgroundMargin
             color: "transparent"
+            MouseArea {
+                anchors.fill: parent
+                visible: !loginScreen.userNeedsPassword
+                enabled: visible
+                hoverEnabled: enabled
+            }
 
             Rectangle {
                 anchors.fill: parent

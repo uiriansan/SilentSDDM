@@ -64,7 +64,6 @@ QtObject {
 
     // [LoginScreen.LoginArea]
     property string loginAreaPosition: config.stringValue("LoginScreen.LoginArea/position") || "center" // @possible:'left' | 'center' | 'right' @desc:Position of the login area.
-    property string loginAreaAlign: config.stringValue("LoginScreen.LoginArea/align") || "center" // @possible:'left' | 'right' @desc:Alignment of the login area. Only applies if position is set to `left` or `right`.
     property int loginAreaMargin: config.intValue("LoginScreen.LoginArea/margin") // @desc:Margin of the login area relative to its anchor point.<br/>If position is set to `center`, this option specifies the top margin, left/right margin otherwise.<br/><br/><strong>Set this option to `-1` to center the login area.</strong>
 
     // [LoginScreen.LoginArea.Avatar]

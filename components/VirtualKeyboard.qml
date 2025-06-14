@@ -8,14 +8,15 @@ InputPanel {
 
     width: Math.min(loginScreen.width / 2, 600) * Config.virtualKeyboardScale
     active: Qt.inputMethod.visible
-    visible: loginScreen.showKeyboard && loginScreen.userNeedsPassword && loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
+    visible: loginScreen.showKeyboard && loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
+    opacity: visible ? 1.0 : 0.0
     externalLanguageSwitchEnabled: true
     onExternalLanguageSwitch: {
         loginScreen.toggleLayoutPopup();
     }
 
     Component.onCompleted: {
-        VirtualKeyboardSettings.styleName = "tstyle";
+        VirtualKeyboardSettings.styleName = "vkeyboardStyle";
         VirtualKeyboardSettings.layout = "symbols";
     }
 
@@ -31,10 +32,10 @@ InputPanel {
             return parent.width - inputPanel.width - Config.menuAreaButtonsMarginRight;
         } else {
             // pos === "login"
-            if (Config.loginAreaPosition === "left") {
+            if (Config.loginAreaPosition === "left" && Config.loginAreaMargin !== -1) {
                 // return loginLayoutPosition.x;
-                return Config.loginAreaMargin + Config.avatarActiveSize + Config.usernameMargin;
-            } else if (Config.loginAreaPosition === "right") {
+                return Config.loginAreaMargin;
+            } else if (Config.loginAreaPosition === "right" && Config.loginAreaMargin !== -1) {
                 return parent.width - inputPanel.width - Config.loginAreaMargin;
             } else {
                 return (parent.width - inputPanel.width) / 2;
@@ -50,7 +51,7 @@ InputPanel {
             return (parent.height - inputPanel.height) / 2;
         } else {
             // pos === "login"
-            return loginMessage.visible ? (loginLayoutPosition.y + loginLayout.height + loginMessage.height + Config.warningMessageMarginTop * 2) : (loginLayoutPosition.y + loginLayout.height + Config.warningMessageMarginTop * 2);
+            return loginLayoutPosition.y + loginLayout.height + loginMessage.height + Config.warningMessageMarginTop;
         }
     }
     Behavior on y {
@@ -59,15 +60,27 @@ InputPanel {
             duration: 150
         }
     }
+    Behavior on x {
+        enabled: Config.enableAnimations
+        NumberAnimation {
+            duration: 150
+        }
+    }
+    Behavior on opacity {
+        enabled: Config.enableAnimations
+        NumberAnimation {
+            duration: 250
+        }
+    }
 
     MouseArea {
         id: vKeyboardDragArea
         anchors.fill: parent
         hoverEnabled: true
-        cursorShape: Qt.ArrowCursor
+        cursorShape: loginScreen.userNeedsPassword ? Qt.ArrowCursor : Qt.ForbiddenCursor
         drag.target: inputPanel
-        acceptedButtons: Qt.MiddleButton
+        acceptedButtons: loginScreen.userNeedsPassword ? Qt.MiddleButton : Qt.MiddleButton
         onPressed: cursorShape = Qt.ClosedHandCursor
-        onReleased: cursorShape = Qt.ArrowCursor
+        onReleased: cursorShape = loginScreen.userNeedsPassword ? Qt.ArrowCursor : Qt.ForbiddenCursor
     }
 }

@@ -11,9 +11,9 @@ Screenshot=preview.jpg
 TranslationsDirectory=translations
 QtVersion=6
 
-ConfigFile=configs/default.conf
+; ConfigFile=configs/default.conf
 ; ConfigFile=configs/blue-light.conf
-; ConfigFile=configs/right.conf
+ConfigFile=configs/right.conf
 
 ; ConfigFile=configs/rain.conf
 ; ConfigFile=configs/default-left.conf
