@@ -9,14 +9,41 @@
 
 <details>
   <summary>configs/default.conf</summary>
-    <p float="left">
-      <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/default_lock.png" width="49%" />
-      <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/default_login.png" width="49%" />
-    </p>
+
+https://github.com/user-attachments/assets/3a03e859-c6b9-4c4b-bf7f-ab610b94eb28
+
 </details>
 
 <details>
   <summary>configs/blue-light.conf</summary>
+
+https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
+
+</details>
+
+<details>
+  <summary>configs/catppuccin-latte.conf</summary>
+
+https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
+
+</details>
+
+<details>
+  <summary>configs/catppuccin-frappé.conf</summary>
+
+https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
+
+</details>
+
+<details>
+  <summary>configs/catppuccin-macchiato.conf</summary>
+
+https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
+
+</details>
+
+<details>
+  <summary>configs/catppuccin-mocha.conf</summary>
 
 https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
 
