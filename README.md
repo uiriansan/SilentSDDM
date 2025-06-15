@@ -3,7 +3,7 @@
 > Bugs are expected. SDDM itself has some [annoying issues](https://github.com/uiriansan/SilentSDDM/issues?q=is%3Aissue%20label%3Asddm-issue) and limitations that make it very hard to create an actual good theme. If you encounter a bug, feel free to [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose). <br/><br/>
 > **This theme is very resource-intensive. Use at your own risk.**
 
-<img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/silent.gif" width="100%" />
+https://github.com/user-attachments/assets/15c52847-a272-4527-9247-34818f5d8704
 
 # Presets
 
@@ -48,7 +48,7 @@ https://github.com/user-attachments/assets/f0538425-c2e6-450e-9f40-d12b7bdbaa86
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-mocha.png" width="100%" />
 </details>
 
-You can find more configs in [this discussion.](https://github.com/uiriansan/SilentSDDM/discussions/3);
+You can find more configs in [this discussion.](https://github.com/uiriansan/SilentSDDM/discussions/3)
 
 # Dependencies
 
