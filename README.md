@@ -18,6 +18,8 @@
 <details>
   <summary>configs/blue-light.conf</summary>
 
+https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
+
 </details>
 
 # Dependencies
