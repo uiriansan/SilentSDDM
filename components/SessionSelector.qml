@@ -5,7 +5,7 @@ import QtQuick.Effects
 
 ColumnLayout {
     id: selector
-    width: scrollbar.visible ? Config.sessionPopupWidth + Config.menuAreaPopupsPadding + scrollbar.width / 1.5 : Config.sessionPopupWidth
+    width: Config.sessionPopupWidth - (Config.menuAreaPopupsPadding * 2)
 
     signal sessionChanged(sessionIndex: int, iconPath: string, label: string)
     signal close
@@ -59,7 +59,7 @@ ColumnLayout {
         }
 
         delegate: Rectangle {
-            width: scrollbar.visible ? parent.width - Config.menuAreaPopupsPadding - scrollbar.width / 1.5 : parent.width
+            width: scrollbar.visible ? parent.width - Config.menuAreaPopupsPadding - scrollbar.width : parent.width
             height: Config.menuAreaPopupsItemHeight
             color: "transparent"
             radius: Config.menuAreaButtonsBorderRadius

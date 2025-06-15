@@ -4,7 +4,7 @@ import QtQuick.Controls
 
 ColumnLayout {
     id: selector
-    width: scrollbar.visible ? Config.layoutPopupWidth + Config.menuAreaPopupsPadding + scrollbar.width / 1.5 : Config.layoutPopupWidth
+    width: Config.layoutPopupWidth - (Config.menuAreaPopupsPadding * 2)
 
     signal layoutChanged(layoutIndex: int)
     signal close
@@ -67,7 +67,7 @@ ColumnLayout {
         model: keyboard.layouts
 
         delegate: Rectangle {
-            width: childrenRect.width
+            width: scrollbar.visible ? selector.width - Config.menuAreaPopupsPadding - scrollbar.width : selector.width
             height: childrenRect.height
             color: "transparent"
 
@@ -79,7 +79,7 @@ ColumnLayout {
             }
 
             RowLayout {
-                width: scrollbar.visible ? Config.layoutPopupWidth - Config.menuAreaPopupsPadding - scrollbar.width / 1.5 : Config.layoutPopupWidth
+                width: parent.width
                 height: Config.menuAreaPopupsItemHeight + 5
                 spacing: 0
 
