@@ -15,6 +15,11 @@
     </p>
 </details>
 
+<details>
+  <summary>configs/blue-light.conf</summary>
+
+</details>
+
 # Dependencies
 
 - SDDM ≥ 0.20;
@@ -130,6 +135,7 @@ You can also create your own config file. There's a guide with the list of avail
 - [Match-Yang/sddm-deepin](https://github.com/Match-Yang/sddm-deepin): inspiration and code reference;
 - [qt/qtvirtualkeyboard](https://github.com/qt/qtvirtualkeyboard): code reference;
 - [Joyston Judah](https://www.pexels.com/photo/white-and-black-mountain-wallpaper-933054/): background;
+- [DesktopHut](https://www.desktophut.com/blue-light-anime-girl-6794): background;
 - [iconify.design](https://iconify.design/): icons
 
 I couldn't find the source for some of the images used here. [E-mail me](mailto:uiriansan@gmail.com?subject=Background%20image%20in%20SilentSDDM) if you are the creator and want it removed or acknowledged.

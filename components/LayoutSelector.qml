@@ -79,7 +79,7 @@ ColumnLayout {
             }
 
             RowLayout {
-                width: scrollbar.visible ? layoutPopupWidth - Config.menuAreaPopupsPadding - scrollbar.width / 1.5 : layoutPopupWidth
+                width: scrollbar.visible ? Config.layoutPopupWidth - Config.menuAreaPopupsPadding - scrollbar.width / 1.5 : Config.layoutPopupWidth
                 height: Config.menuAreaPopupsItemHeight + 5
                 spacing: 0
 
