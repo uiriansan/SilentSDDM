@@ -122,9 +122,15 @@ QtObject {
     property int loginButtonFontWeight: config.intValue("LoginScreen.LoginArea.LoginButton/font-weight") || 600
 
     // [LoginScreen.LoginArea.Spinner]
-    property int spinnerSize: config.intValue("LoginScreen.LoginArea.Spinner/size") || 32
-    property color spinnerColor: config.stringValue("LoginScreen.LoginArea.Spinner/color") || "#FFFFFF"
+    property bool spinnerDisplayText: config['LoginScreen.LoginArea.Spinner/display-text'] === "false" ? false : true
+    property string spinnerText: config.stringValue("LoginScreen.LoginArea.Spinner/text") || "Logging in"
+    property string spinnerFontFamily: config.stringValue("LoginScreen.LoginArea.Spinner/font-family") || "RedHatDisplay"
+    property int spinnerFontWeight: config.intValue("LoginScreen.LoginArea.Spinner/font-weight") || 600
+    property int spinnerFontSize: config.intValue("LoginScreen.LoginArea.Spinner/font-size") || 12
+    property int spinnerIconSize: config.intValue("LoginScreen.LoginArea.Spinner/icon-size") || 32
     property string spinnerIcon: config.stringValue("LoginScreen.LoginArea.Spinner/icon") || "spinner.svg" // @possible:File in `icons/`
+    property color spinnerColor: config.stringValue("LoginScreen.LoginArea.Spinner/color") || "#FFFFFF"
+    property int spinnerSpacing: config.intValue("LoginScreen.LoginArea.Spinner/spacing")
 
     // [LoginScreen.LoginArea.WarningMessage]
     property string warningMessageFontFamily: config.stringValue("LoginScreen.LoginArea.WarningMessage/font-family") || "RedHatDisplay"

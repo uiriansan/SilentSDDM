@@ -31,23 +31,18 @@ Item {
 
     function login() {
         if (password.text.length > 0 || !userNeedsPassword) {
-            loginMessage.visible = false;
-            spinner.visible = true;
             loginScreen.state = "authenticating";
             sddm.login(userName, password.text, sessionIndex);
         }
     }
     Connections {
         function onLoginSucceeded() {
-            spinner.visible = false;
             loginContainer.scale = 0.0;
         }
         function onLoginFailed() {
             loginScreen.state = "normal";
-            spinner.visible = false;
             loginMessage.warn(textConstants.loginFailed, "error");
             password.text = "";
-            loginArea.visible = true;
         }
         function onInformationMessage(message) {
             loginMessage.warn(message, "error");
@@ -192,6 +187,7 @@ Item {
                 id: loginArea
                 height: Config.passwordInputHeight
                 spacing: Config.loginButtonMarginLeft
+                visible: loginScreen.state !== "authenticating"
 
                 Component.onCompleted: {
                     anchors.top = activeUserName.bottom;
@@ -254,6 +250,24 @@ Item {
                 }
             }
 
+            Spinner {
+                id: spinner
+                visible: loginScreen.state === "authenticating"
+                opacity: visible ? 1.0 : 0.0
+
+                Component.onCompleted: {
+                    anchors.top = activeUserName.bottom;
+                    anchors.topMargin = Config.passwordInputMarginTop;
+                    if (Config.loginAreaPosition === "left") {
+                        anchors.left = parent.left;
+                    } else if (Config.loginAreaPosition === "right") {
+                        anchors.right = parent.right;
+                    } else {
+                        anchors.horizontalCenter = parent.horizontalCenter;
+                    }
+                }
+            }
+
             Text {
                 id: loginMessage
                 property bool capslockWarning: false
@@ -261,7 +275,7 @@ Item {
                 font.family: Config.warningMessageFontFamily
                 font.weight: Config.warningMessageFontWeight
                 color: Config.warningMessageNormalColor
-                visible: text !== "" && (capslockWarning ? loginScreen.userNeedsPassword : true)
+                visible: text !== "" && loginScreen.state !== "authenticating" && (capslockWarning ? loginScreen.userNeedsPassword : true)
                 opacity: visible ? 1.0 : 0.0
                 anchors.top: loginArea.bottom
                 anchors.topMargin: visible ? Config.warningMessageMarginTop : 0
@@ -336,7 +350,6 @@ Item {
             if (loginScreen.state === "selectingUser") {
                 loginScreen.state = "normal";
             }
-            if (loginScreen.state !== "authenticating") {}
         }
         onWheel: event => {
             if (loginScreen.state === "selectingUser") {

@@ -51,7 +51,7 @@ InputPanel {
             return (parent.height - inputPanel.height) / 2;
         } else {
             // pos === "login"
-            return loginLayoutPosition.y + loginLayout.height + loginMessage.height + Config.warningMessageMarginTop;
+            return loginLayoutPosition.y + loginLayout.height + loginMessage.height + Config.warningMessageMarginTop * 2;
         }
     }
     Behavior on y {
