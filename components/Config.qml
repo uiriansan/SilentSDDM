@@ -177,7 +177,8 @@ QtObject {
     property string sessionPopupDirection: config.stringValue("LoginScreen.MenuArea.Session/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right'
     property string sessionPopupAlign: config.stringValue("LoginScreen.MenuArea.Session/popup-align") || "center" // @possible:'start' | 'center' | 'end'
     property bool sessionDisplaySessionName: config['LoginScreen.MenuArea.Session/display-session-name'] === "false" ? false : true
-    property int sessionMaxWidth: config.intValue("LoginScreen.MenuArea.Session/max-width") || 200
+    property int sessionButtonWidth: config.intValue("LoginScreen.MenuArea.Session/button-width") || 200
+    property int sessionPopupWidth: config.intValue("LoginScreen.MenuArea.Session/popup-width") || 200
     property color sessionBackgroundColor: config.stringValue("LoginScreen.MenuArea.Session/background-color") || "#FFFFFF"
     property real sessionBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Session/background-opacity") // @possible:0.0 ≤ R ≤ 1.0
     property real sessionActiveBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Session/active-background-opacity") // @possible:0.0 ≤ R ≤ 1.0
@@ -249,6 +250,9 @@ QtObject {
     property color virtualKeyboardSelectionContentColor: config.stringValue("LoginScreen.VirtualKeyboard/selection-content-color") || "#FFFFFF"
     property color virtualKeyboardPrimaryColor: config.stringValue("LoginScreen.VirtualKeyboard/primary-color") || "#000000"
     property color virtualKeyboardAccentColor: config.stringValue("LoginScreen.VirtualKeyboard/accent-color") || "#000000"
+    property int virtualKeyboardBorderSize: config.realValue("LoginScreen.VirtualKeyboard/border-size")
+    property color virtualKeyboardBorderColor: config.stringValue("LoginScreen.VirtualKeyboard/border-color") || "#000000"
+
 
     // [Tooltips]
     property bool tooltipsEnable: config['Tooltips/enable'] === "false" ? false : true

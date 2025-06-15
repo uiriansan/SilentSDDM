@@ -11,7 +11,7 @@ Item {
         IconButton {
             id: sessionButton
             property bool showLabel: Config.sessionDisplaySessionName
-            width: showLabel ? popup.width : Config.menuAreaButtonsSize
+            preferredWidth: showLabel ? (Config.sessionButtonWidth === -1 ? undefined : Config.sessionButtonWidth) : Config.menuAreaButtonsSize
             height: Config.menuAreaButtonsSize
             iconSize: Config.sessionIconSize
             fontSize: Config.sessionFontSize

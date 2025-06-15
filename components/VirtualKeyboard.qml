@@ -22,6 +22,7 @@ InputPanel {
 
     property string pos: Config.virtualKeyboardPosition
     property point loginLayoutPosition: loginContainer.mapToGlobal(loginLayout.x, loginLayout.y)
+    property bool vKeyboardMoved: false
 
     x: {
         if (pos === "top" || pos === "bottom") {
@@ -51,7 +52,14 @@ InputPanel {
             return (parent.height - inputPanel.height) / 2;
         } else {
             // pos === "login"
-            return loginLayoutPosition.y + loginLayout.height + loginMessage.height + Config.warningMessageMarginTop * 2;
+            if (!vKeyboardMoved) {
+                if (loginMessage.visible && Config.loginAreaPosition !== "right" && Config.loginAreaPosition !== "left") {
+                    return loginLayoutPosition.y + loginLayout.height + loginMessage.height * 2 + Config.warningMessageMarginTop + Config.warningMessageMarginTop;
+                } else {
+                    return loginLayoutPosition.y + loginLayout.height + loginMessage.height * 2 + Config.warningMessageMarginTop;
+                }
+            }
+            return y;
         }
     }
     Behavior on y {
@@ -75,12 +83,21 @@ InputPanel {
 
     MouseArea {
         id: vKeyboardDragArea
+        property point initialPosition: Qt.point(-1, -1)
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: loginScreen.userNeedsPassword ? Qt.ArrowCursor : Qt.ForbiddenCursor
         drag.target: inputPanel
         acceptedButtons: loginScreen.userNeedsPassword ? Qt.MiddleButton : Qt.MiddleButton
-        onPressed: cursorShape = Qt.ClosedHandCursor
-        onReleased: cursorShape = loginScreen.userNeedsPassword ? Qt.ArrowCursor : Qt.ForbiddenCursor
+        onPressed: event => {
+            cursorShape = Qt.ClosedHandCursor;
+            initialPosition = Qt.point(event.x, event.y);
+        }
+        onReleased: event => {
+            cursorShape = loginScreen.userNeedsPassword ? Qt.ArrowCursor : Qt.ForbiddenCursor;
+            if (initialPosition !== Qt.point(event.x, event.y) && !inputPanel.vKeyboardMoved) {
+                inputPanel.vKeyboardMoved = true;
+            }
+        }
     }
 }

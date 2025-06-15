@@ -5,7 +5,7 @@ import QtQuick.Effects
 
 ColumnLayout {
     id: selector
-    width: scrollbar.visible ? Config.sessionMaxWidth + Config.menuAreaPopupsPadding + scrollbar.width / 1.5 : Config.sessionMaxWidth
+    width: scrollbar.visible ? Config.sessionPopupWidth + Config.menuAreaPopupsPadding + scrollbar.width / 1.5 : Config.sessionPopupWidth
 
     signal sessionChanged(sessionIndex: int, iconPath: string, label: string)
     signal close

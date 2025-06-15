@@ -63,6 +63,13 @@ KeyboardStyle {
             sourceSize.height: 80 * keyIconScale
             smooth: false
             source: resourcePrefix + "settings.svg"
+
+            MultiEffect {
+                source: parent
+                anchors.fill: parent
+                colorization: 1
+                colorizationColor: vkeyboardStyle.textOnPrimaryColor
+            }
         }
     }
 
@@ -74,9 +81,20 @@ KeyboardStyle {
     keyboardRelativeBottomMargin: 6 / keyboardDesignHeight
 
     keyboardBackground: Rectangle {
-        color: Config.virtualKeyboardBackgroundColor
-        opacity: Config.virtualKeyboardBackgroundOpacity
+        color: "transparent"
+        border {
+            width: Config.virtualKeyboardBorderSize
+            color: Config.virtualKeyboardBorderColor
+        }
         radius: Config.passwordInputBorderRadiusLeft
+
+        Rectangle {
+            z: parent.z - 1
+            anchors.fill: parent
+            color: Config.virtualKeyboardBackgroundColor
+            opacity: Config.virtualKeyboardBackgroundOpacity
+            radius: Config.passwordInputBorderRadiusLeft
+        }
     }
 
     keyPanel: KeyPanel {
@@ -100,6 +118,17 @@ KeyboardStyle {
                 radius: 5
                 color: control && control.highlighted ? highlightedKeyBackgroundColor : normalKeyBackgroundColor
                 opacity: control && control.highlighted ? highlightedKeyBackgroundOpacity : normalKeyBackgroundOpacity
+            }
+
+            Rectangle {
+                anchors.fill: parent
+                visible: Config.virtualKeyboardBorderSize > 0
+                color: "transparent"
+                border {
+                    width: Config.virtualKeyboardBorderSize
+                    color: Config.virtualKeyboardBorderColor
+                }
+                radius: parent.radius
             }
             Text {
                 id: keySmallText
@@ -203,12 +232,30 @@ KeyboardStyle {
                 opacity: control && control.highlighted ? highlightedKeyBackgroundOpacity : normalKeyBackgroundOpacity
                 radius: 5
             }
+
+            Rectangle {
+                anchors.fill: parent
+                visible: Config.virtualKeyboardBorderSize > 0
+                color: "transparent"
+                border {
+                    width: Config.virtualKeyboardBorderSize
+                    color: Config.virtualKeyboardBorderColor
+                }
+                radius: parent.radius
+            }
             Image {
                 id: backspaceKeyIcon
                 anchors.centerIn: parent
                 sourceSize.height: 100 * keyIconScale
                 smooth: false
                 source: resourcePrefix + "backspace.svg"
+
+                MultiEffect {
+                    source: parent
+                    anchors.fill: parent
+                    colorization: 1
+                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
+                }
             }
         }
         states: [
@@ -260,12 +307,30 @@ KeyboardStyle {
                 opacity: control && control.highlighted ? highlightedKeyBackgroundOpacity : normalKeyBackgroundOpacity
                 radius: 5
             }
+
+            Rectangle {
+                anchors.fill: parent
+                visible: Config.virtualKeyboardBorderSize > 0
+                color: "transparent"
+                border {
+                    width: Config.virtualKeyboardBorderSize
+                    color: Config.virtualKeyboardBorderColor
+                }
+                radius: parent.radius
+            }
             Image {
                 id: languageKeyIcon
                 anchors.centerIn: parent
                 sourceSize.height: 100 * keyIconScale
                 smooth: false
                 source: resourcePrefix + "language.svg"
+
+                MultiEffect {
+                    source: parent
+                    anchors.fill: parent
+                    colorization: 1
+                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
+                }
             }
         }
         states: [
@@ -317,6 +382,17 @@ KeyboardStyle {
                 opacity: control && control.highlighted ? highlightedKeyBackgroundOpacity : normalKeyBackgroundOpacity
                 radius: 5
             }
+
+            Rectangle {
+                anchors.fill: parent
+                visible: Config.virtualKeyboardBorderSize > 0
+                color: "transparent"
+                border {
+                    width: Config.virtualKeyboardBorderSize
+                    color: Config.virtualKeyboardBorderColor
+                }
+                radius: parent.radius
+            }
             Image {
                 id: enterKeyIcon
                 visible: enterKeyText.text.length === 0
@@ -348,6 +424,13 @@ KeyboardStyle {
                     default:
                         return resourcePrefix + "enter-key.svg";
                     }
+                }
+
+                MultiEffect {
+                    source: parent
+                    anchors.fill: parent
+                    colorization: 1
+                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
                 }
             }
             Text {
@@ -426,12 +509,30 @@ KeyboardStyle {
                 opacity: control && control.highlighted ? highlightedKeyBackgroundOpacity : normalKeyBackgroundOpacity
                 radius: 5
             }
+
+            Rectangle {
+                anchors.fill: parent
+                visible: Config.virtualKeyboardBorderSize > 0
+                color: "transparent"
+                border {
+                    width: Config.virtualKeyboardBorderSize
+                    color: Config.virtualKeyboardBorderColor
+                }
+                radius: parent.radius
+            }
             Image {
                 id: hideKeyIcon
                 anchors.centerIn: parent
                 sourceSize.height: 127 * keyIconScale
                 smooth: false
                 source: resourcePrefix + "hidekeyboard.svg"
+
+                MultiEffect {
+                    source: parent
+                    anchors.fill: parent
+                    colorization: 1
+                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
+                }
             }
 
             MouseArea {
@@ -489,6 +590,17 @@ KeyboardStyle {
                 opacity: control && control.highlighted ? highlightedKeyBackgroundOpacity : normalKeyBackgroundOpacity
                 radius: 5
             }
+
+            Rectangle {
+                anchors.fill: parent
+                visible: Config.virtualKeyboardBorderSize > 0
+                color: "transparent"
+                border {
+                    width: Config.virtualKeyboardBorderSize
+                    color: Config.virtualKeyboardBorderColor
+                }
+                radius: parent.radius
+            }
             Image {
                 id: shiftKeyIcon
                 anchors.centerIn: parent
@@ -498,10 +610,10 @@ KeyboardStyle {
 
                 MultiEffect {
                     id: shiftKeyColor
-                    source: shiftKeyIcon
-                    anchors.fill: shiftKeyIcon
+                    source: parent
+                    anchors.fill: parent
                     colorization: 1
-                    colorizationColor: textOnPrimaryColor
+                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
                 }
             }
             states: [
@@ -584,6 +696,17 @@ KeyboardStyle {
                 opacity: control && control.highlighted ? highlightedKeyBackgroundOpacity : normalKeyBackgroundOpacity
                 radius: 5
             }
+
+            Rectangle {
+                anchors.fill: parent
+                visible: Config.virtualKeyboardBorderSize > 0
+                color: "transparent"
+                border {
+                    width: Config.virtualKeyboardBorderSize
+                    color: Config.virtualKeyboardBorderColor
+                }
+                radius: parent.radius
+            }
             Text {
                 id: spaceKeyText
                 text: Qt.locale(InputContext.locale).nativeLanguageName
@@ -642,6 +765,17 @@ KeyboardStyle {
                 color: control && control.highlighted ? highlightedKeyBackgroundColor : normalKeyBackgroundColor
                 opacity: control && control.highlighted ? highlightedKeyBackgroundOpacity : normalKeyBackgroundOpacity
                 radius: 5
+            }
+
+            Rectangle {
+                anchors.fill: parent
+                visible: Config.virtualKeyboardBorderSize > 0
+                color: "transparent"
+                border {
+                    width: Config.virtualKeyboardBorderSize
+                    color: Config.virtualKeyboardBorderColor
+                }
+                radius: parent.radius
             }
             Text {
                 id: symbolKeyText
@@ -707,6 +841,17 @@ KeyboardStyle {
                 color: control && control.highlighted ? highlightedKeyBackgroundColor : normalKeyBackgroundColor
                 opacity: control && control.highlighted ? highlightedKeyBackgroundOpacity : normalKeyBackgroundOpacity
                 radius: 5
+            }
+
+            Rectangle {
+                anchors.fill: parent
+                visible: Config.virtualKeyboardBorderSize > 0
+                color: "transparent"
+                border {
+                    width: Config.virtualKeyboardBorderSize
+                    color: Config.virtualKeyboardBorderColor
+                }
+                radius: parent.radius
             }
             Text {
                 id: modeKeyText
@@ -786,12 +931,30 @@ KeyboardStyle {
                 opacity: control && control.highlighted ? highlightedKeyBackgroundOpacity : normalKeyBackgroundOpacity
                 radius: 5
             }
+
+            Rectangle {
+                anchors.fill: parent
+                visible: Config.virtualKeyboardBorderSize > 0
+                color: "transparent"
+                border {
+                    width: Config.virtualKeyboardBorderSize
+                    color: Config.virtualKeyboardBorderColor
+                }
+                radius: parent.radius
+            }
             Image {
                 id: hwrKeyIcon
                 anchors.centerIn: parent
                 sourceSize.height: 100 * keyIconScale
                 smooth: false
                 source: resourcePrefix + (keyboard.handwritingMode ? "textmode.svg" : "handwriting.svg")
+
+                MultiEffect {
+                    source: parent
+                    anchors.fill: parent
+                    colorization: 1
+                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
+                }
             }
         }
         states: [
@@ -1361,6 +1524,13 @@ KeyboardStyle {
     selectionHandle: Image {
         sourceSize.width: 20
         source: resourcePrefix + "selectionhandle.svg"
+
+        MultiEffect {
+            source: parent
+            anchors.fill: parent
+            colorization: 1
+            colorizationColor: vkeyboardStyle.textOnPrimaryColor
+        }
     }
 
     fullScreenInputContainerBackground: Rectangle {
@@ -1404,6 +1574,13 @@ KeyboardStyle {
                 case QtVirtualKeyboard.KeyboardFunction.ToggleHandwritingMode:
                     return resourcePrefix + (keyboard.handwritingMode ? "textmode.svg" : "handwriting.svg");
                 }
+            }
+
+            MultiEffect {
+                source: parent
+                anchors.fill: parent
+                colorization: 1
+                colorizationColor: vkeyboardStyle.textOnPrimaryColor
             }
         }
     }

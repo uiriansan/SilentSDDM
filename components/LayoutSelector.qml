@@ -104,23 +104,25 @@ ColumnLayout {
                     Layout.fillWidth: true
 
                     Text {
-                        width: parent.width - 5
+                        width: parent.width
                         text: Languages.getLabelFor(shortName)
                         visible: text && text.length > 0
                         color: index === currentLayoutIndex || mouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         font.pixelSize: Config.menuAreaPopupsFontSize
                         font.family: Config.menuAreaPopupsFontFamily
                         elide: Text.ElideRight
+                        rightPadding: 10
                     }
 
                     Text {
-                        width: parent.width - 5
+                        width: parent.width
                         text: longName
                         color: index === currentLayoutIndex || mouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         opacity: 0.75
                         font.pixelSize: Config.menuAreaPopupsFontSize - 2
                         font.family: Config.menuAreaPopupsFontFamily
                         elide: Text.ElideRight
+                        rightPadding: 10
                     }
                 }
             }

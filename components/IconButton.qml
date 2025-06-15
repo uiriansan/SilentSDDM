@@ -29,8 +29,9 @@ Item {
     property int borderRadiusRight: borderRadius
     property int borderSize: 0
     property color borderColor: isActive ? iconButton.activeContentColor : iconButton.contentColor
+    property var preferredWidth: undefined
 
-    width: buttonContentRow.width // childrenRect doesn't update for some reason\
+    width: preferredWidth ? preferredWidth : buttonContentRow.width // childrenRect doesn't update for some reason
     height: iconSize * 2
 
     Rectangle {
@@ -105,6 +106,8 @@ Item {
         Text {
             id: buttonLabel
             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            Layout.fillWidth: true
+            elide: Text.ElideRight
             text: iconButton.label
             visible: iconButton.showLabel && text !== ""
             font.family: iconButton.fontFamily
@@ -117,6 +120,11 @@ Item {
                 enabled: Config.enableAnimations
                 NumberAnimation {
                     duration: 250
+                }
+            }
+            Component.onCompleted: {
+                if (iconButton.preferredWidth && iconButton.preferredWidth !== -1) {
+                    Layout.preferredWidth = iconButton.width - iconContainer.width;
                 }
             }
         }
