@@ -59,7 +59,7 @@ ColumnLayout {
             contentItem: Rectangle {
                 implicitWidth: 5
                 radius: 5
-                color: Config.menuAreaPopupsActiveOptionBackgroundColor
+                color: Config.menuAreaPopupsContentColor
                 opacity: Config.menuAreaPopupsActiveOptionBackgroundOpacity
             }
         }

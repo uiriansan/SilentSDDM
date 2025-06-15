@@ -11,16 +11,11 @@ Screenshot=preview.jpg
 TranslationsDirectory=translations
 QtVersion=6
 
-ConfigFile=configs/default.conf
-; ConfigFile=configs/blue-light.conf
-; ConfigFile=configs/right.conf
-
-; ConfigFile=configs/rain.conf
+; ConfigFile=configs/default.conf
 ; ConfigFile=configs/default-left.conf
 ; ConfigFile=configs/default-right.conf
-; ConfigFile=configs/default-dark.conf
-; ConfigFile=configs/default-dark-left.conf
-; ConfigFile=configs/default-dark-right.conf
+; ConfigFile=configs/rei.conf
+ConfigFile=configs/ken.conf
 ; ConfigFile=configs/catppuccin-latte.conf
 ; ConfigFile=configs/catppuccin-frappe.conf
 ; ConfigFile=configs/catppuccin-macchiato.conf

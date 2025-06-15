@@ -15,39 +15,40 @@ https://github.com/user-attachments/assets/3a03e859-c6b9-4c4b-bf7f-ab610b94eb28
 </details>
 
 <details>
-  <summary>configs/blue-light.conf</summary>
+  <summary>configs/rei.conf</summary>
 
 https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
+
+</details>
+
+<details>
+  <summary>configs/ken.conf</summary>
+
+https://github.com/user-attachments/assets/f0538425-c2e6-450e-9f40-d12b7bdbaa86
 
 </details>
 
 <details>
   <summary>configs/catppuccin-latte.conf</summary>
-
-https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
-
+<img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-latte.png" width="100%" />
 </details>
 
 <details>
-  <summary>configs/catppuccin-frappé.conf</summary>
-
-https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
-
+<summary>configs/catppuccin-frappe.conf</summary>
+<img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-frappe.png" width="100%" />
 </details>
 
 <details>
   <summary>configs/catppuccin-macchiato.conf</summary>
-
-https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
-
+<img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-macchiato.png" width="100%" />
 </details>
 
 <details>
   <summary>configs/catppuccin-mocha.conf</summary>
-
-https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
-
+<img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-mocha.png" width="100%" />
 </details>
+
+You can find more configs in [this discussion.](https://github.com/uiriansan/SilentSDDM/discussions/3);
 
 # Dependencies
 
@@ -165,6 +166,7 @@ You can also create your own config file. There's a guide with the list of avail
 - [qt/qtvirtualkeyboard](https://github.com/qt/qtvirtualkeyboard): code reference;
 - [Joyston Judah](https://www.pexels.com/photo/white-and-black-mountain-wallpaper-933054/): background;
 - [DesktopHut](https://www.desktophut.com/blue-light-anime-girl-6794): background;
+- [MoeWalls](https://moewalls.com/anime/ken-kaneki-tokyo-ghoul-re-3-live-wallpaper/): background;
 - [iconify.design](https://iconify.design/): icons
 
 I couldn't find the source for some of the images used here. [E-mail me](mailto:uiriansan@gmail.com?subject=Background%20image%20in%20SilentSDDM) if you are the creator and want it removed or acknowledged.

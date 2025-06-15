@@ -235,7 +235,7 @@ Item {
                     activeBackgroundOpacity: Config.loginButtonActiveBackgroundOpacity
                     borderSize: Config.loginButtonBorderSize
                     borderColor: Config.loginButtonBorderColor
-                    borderRadiusLeft: Config.loginButtonBorderRadiusLeft
+                    borderRadiusLeft: password.visible ? Config.loginButtonBorderRadiusLeft : Config.loginButtonBorderRadiusRight
                     borderRadiusRight: Config.loginButtonBorderRadiusRight
                     onClicked: {
                         loginScreen.login();

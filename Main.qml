@@ -96,7 +96,8 @@ Item {
         width: geometry.width
         height: geometry.height
 
-        AnimatedImage {
+        // AnimatedImage { // `.gif`s are seg faulting with multi monitors... QT/SDDM issue?
+        Image {
             // Background
             id: backgroundImage
             property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
@@ -106,7 +107,6 @@ Item {
 
             anchors.fill: parent
             source: !isVideo ? `backgrounds/${tsource}` : ""
-            asynchronous: true
             cache: true
             mipmap: true
 

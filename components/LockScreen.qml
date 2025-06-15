@@ -70,16 +70,17 @@ Item {
             id: lockIcon
             source: Config.getIcon(Config.lockMessageIcon)
             Layout.alignment: Config.lockMessageAlign === "left" ? Qt.AlignLeft : (Config.lockMessageAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
+            visible: Config.lockMessageDisplayIcon
 
-            width: Config.lockMessageIconSize
-            height: Config.lockMessageIconSize
+            Layout.preferredWidth: Config.lockMessageIconSize
+            Layout.preferredHeight: Config.lockMessageIconSize
             sourceSize: Qt.size(width, height)
             fillMode: Image.PreserveAspectFit
 
             MultiEffect {
                 source: lockIcon
                 anchors.fill: lockIcon
-                colorization: 1
+                colorization: Config.lockMessagePaintIcon ? 1 : 0
                 colorizationColor: Config.lockMessageColor
             }
         }

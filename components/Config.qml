@@ -17,7 +17,7 @@ QtObject {
     property int lockScreenPaddingRight: config.intValue("LockScreen/padding-right") // @desc:Right padding of the lock screen. <br/>See also: <a href="#clockposition">Clock/position</a>, <a href="#lockmessageposition">Message/position</a>.
     property int lockScreenPaddingBottom: config.intValue("LockScreen/padding-bottom") // @desc:Bottom padding of the lock screen. <br/>See also: <a href="#clockposition">Clock/position</a>, <a href="#lockmessageposition">Message/position</a>.
     property int lockScreenPaddingLeft: config.intValue("LockScreen/padding-left") // @desc:Left padding of the lock screen. <br/>See also: <a href="#clockposition">Clock/position</a>, <a href="#lockmessageposition">Message/position</a>.
-    property string lockScreenBackground: config.stringValue("LockScreen/background") || "default.jpg" // @possible:File in `backgrounds/` @desc:Background of the lock screen.<br/>Supported formats: jpg, png, gif, avi, mp4, mov, mkv, m4v, webm. <br/>See also: <a href="#animatedbackgroundplaceholder">animated-background-placeholder</a>
+    property string lockScreenBackground: config.stringValue("LockScreen/background") || "default.jpg" // @possible:File in `backgrounds/` @desc:Background of the lock screen.<br/>Supported formats: jpg, png, avi, mp4, mov, mkv, m4v, webm. <strong>.gifs are supported but not recommended as they may cause SDDM to crash.</strong> <br/>See also: <a href="#animatedbackgroundplaceholder">animated-background-placeholder</a>
     property bool lockScreenUseBackgroundColor: config.boolValue('LockScreen/use-background-color') // @desc:Whether or not to use a plain color as background of the lock screen instead of an image/video file.
     property color lockScreenBackgroundColor: config.stringValue("LockScreen/background-color") || "#000000" // @desc:The color to be used as background of the lock screen. <br/>See also: <a href="#lockscreenusebackgroundcolor">use-background-color<a>
     property int lockScreenBlur: config.intValue("LockScreen/blur") // @desc:Amount of blur to be applied to the background of the lock screen. 0 means no blur.
@@ -50,9 +50,11 @@ QtObject {
     property string lockMessageFontFamily: config.stringValue("LockScreen.Message/font-family") || "RedHatDisplay" // @desc:Font family used for the custom message.
     property int lockMessageFontSize: config.intValue("LockScreen.Message/font-size") || 12 // @desc:Font size of the custom message.
     property int lockMessageFontWeight: config.intValue("LockScreen.Message/font-weight") || 400 // @desc:Font weight of the date. 400 = regular, 600 = bold, 800 = black
+    property bool lockMessageDisplayIcon: config['LockScreen.Message/display-icon'] === "false" ? false : true
     property string lockMessageIcon: config.stringValue("LockScreen.Message/icon") || "enter.svg" // @possible:File in `icons/` @desc:Icon of the custom message.
     property int lockMessageIconSize: config.intValue("LockScreen.Message/icon-size") || 16 // @desc:Size of the custom message's icon.
     property color lockMessageColor: config.stringValue("LockScreen.Message/color") || "#FFFFFF" // @desc:Color of the custom message. Apploes for both the icon and the text.
+    property bool lockMessagePaintIcon: config['LockScreen.Message/paint-icon'] === "false" ? false : true
     property int lockMessageSpacing: config.intValue("LockScreen.Message/spacing") // @desc:Spacing between the icon and the text in the custom message.
 
     // [LoginScreen]
@@ -252,7 +254,6 @@ QtObject {
     property color virtualKeyboardAccentColor: config.stringValue("LoginScreen.VirtualKeyboard/accent-color") || "#000000"
     property int virtualKeyboardBorderSize: config.realValue("LoginScreen.VirtualKeyboard/border-size")
     property color virtualKeyboardBorderColor: config.stringValue("LoginScreen.VirtualKeyboard/border-color") || "#000000"
-
 
     // [Tooltips]
     property bool tooltipsEnable: config['Tooltips/enable'] === "false" ? false : true

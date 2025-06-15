@@ -86,14 +86,14 @@ KeyboardStyle {
             width: Config.virtualKeyboardBorderSize
             color: Config.virtualKeyboardBorderColor
         }
-        radius: Config.passwordInputBorderRadiusLeft
+        radius: 10
 
         Rectangle {
             z: parent.z - 1
             anchors.fill: parent
             color: Config.virtualKeyboardBackgroundColor
             opacity: Config.virtualKeyboardBackgroundOpacity
-            radius: Config.passwordInputBorderRadiusLeft
+            radius: 10
         }
     }
 
