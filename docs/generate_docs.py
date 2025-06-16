@@ -146,16 +146,7 @@ def generate_md_file(json_output):
         file.write("".join(table) + "\n".join(ref))
         print(f"Generated `{MD_FILE}`")
 
-def generate_help(json_output):
-    table = []
-    ref = []
-
-    with open(HELP_FILE, "w") as file:
-        file.write("".join(table) + "\n".join(ref))
-        print(f"Generated `{HELP_FILE}`")
-
 if __name__ == "__main__":
     json_output = parse_config()
-    # generate_json_file(json_output)
+    generate_json_file(json_output)
     generate_md_file(json_output)
-    generate_help(json_output);

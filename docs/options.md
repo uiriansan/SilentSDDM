@@ -1256,7 +1256,7 @@ File in `icons/`
 <td align="center">center</td>
 <td align="left">
 
-`start`   `center`   `end`
+`start`   `center`   `end` //
 
 </td></tr><tr><td align="left">
 <a href="#sessiondisplaysessionname">display-session-name</a>
@@ -1726,7 +1726,7 @@ File in `icons/`
 
 
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="16" align="right"><a href="#loginscreenvirtualkeyboard">[LoginScreen.VirtualKeyboard]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="15" align="right"><a href="#loginscreenvirtualkeyboard">[LoginScreen.VirtualKeyboard]</a></td><td align="left">
 <a href="#virtualkeyboardscale">scale</a>
 </td>
 <td align="center">int</td>
@@ -1836,15 +1836,6 @@ File in `icons/`
 
 </td></tr><tr><td align="left">
 <a href="#virtualkeyboardprimarycolor">primary-color</a>
-</td>
-<td align="center">color</td>
-<td align="center">#000000</td>
-<td align="left">
-
-<a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
-
-</td></tr><tr><td align="left">
-<a href="#virtualkeyboardaccentcolor">accent-color</a>
 </td>
 <td align="center">color</td>
 <td align="center">#000000</td>
@@ -3266,7 +3257,7 @@ File in `backgrounds/`
 </details>
 <details name="usernamefontweight">
 <summary><strong>font-weight</strong></summary><br/>
-<p>Font weight of the username.  400 = regular, 600 = bold, 800 = black</p></br></br>
+<p>Font weight of the username. 400 = regular, 600 = bold, 800 = black</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3670,7 +3661,7 @@ File in `icons/`
 ## [LoginScreen.LoginArea.LoginButton]
 <details name="loginbuttonbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Background color of the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3692,7 +3683,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonbackgroundopacity">
 <summary><strong>background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3714,7 +3705,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonactivebackgroundcolor">
 <summary><strong>active-background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Background color of the login button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3736,7 +3727,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonactivebackgroundopacity">
 <summary><strong>active-background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the login button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3758,7 +3749,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonicon">
 <summary><strong>icon</strong></summary><br/>
-<p></p></br></br>
+<p>Icon in the login button</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3780,7 +3771,7 @@ File in `icons/`
 </details>
 <details name="loginbuttoniconsize">
 <summary><strong>icon-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the icon in the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3802,7 +3793,7 @@ File in `icons/`
 </details>
 <details name="loginbuttoncontentcolor">
 <summary><strong>content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon/text in the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3824,7 +3815,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonactivecontentcolor">
 <summary><strong>active-content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon/text in the login button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3846,7 +3837,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonbordersize">
 <summary><strong>border-size</strong></summary><br/>
-<p></p></br></br>
+<p>Border size of the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3868,7 +3859,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonbordercolor">
 <summary><strong>border-color</strong></summary><br/>
-<p></p></br></br>
+<p>Border color of the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3890,7 +3881,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonborderradiusleft">
 <summary><strong>border-radius-left</strong></summary><br/>
-<p></p></br></br>
+<p>Left border radius of the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3912,7 +3903,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonborderradiusright">
 <summary><strong>border-radius-right</strong></summary><br/>
-<p></p></br></br>
+<p>Right border radius of the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3934,7 +3925,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonmarginleft">
 <summary><strong>margin-left</strong></summary><br/>
-<p></p></br></br>
+<p>Distance of the login button from the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3956,7 +3947,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonshowtextifnopassword">
 <summary><strong>show-text-if-no-password</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to show a label in the login button when the password field is not visible.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3978,7 +3969,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonhideifnotneeded">
 <summary><strong>hide-if-not-needed</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to hide the login button if the password field is visible. You can still log-in with [enter].</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4000,7 +3991,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonfontfamily">
 <summary><strong>font-family</strong></summary><br/>
-<p></p></br></br>
+<p>Font family of the label of the login button/</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4022,7 +4013,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonfontsize">
 <summary><strong>font-size</strong></summary><br/>
-<p></p></br></br>
+<p>Font size of the label of the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4044,7 +4035,7 @@ File in `icons/`
 </details>
 <details name="loginbuttonfontweight">
 <summary><strong>font-weight</strong></summary><br/>
-<p></p></br></br>
+<p>Font weight of the label of the login button. 400 = regular, 600 = bold, 800 = black</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4070,7 +4061,7 @@ File in `icons/`
 ## [LoginScreen.LoginArea.Spinner]
 <details name="spinnerdisplaytext">
 <summary><strong>display-text</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to display the text with the spinning icon.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4092,7 +4083,7 @@ File in `icons/`
 </details>
 <details name="spinnertext">
 <summary><strong>text</strong></summary><br/>
-<p></p></br></br>
+<p>Text to be displayed with the spinning icon.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4114,7 +4105,7 @@ File in `icons/`
 </details>
 <details name="spinnerfontfamily">
 <summary><strong>font-family</strong></summary><br/>
-<p></p></br></br>
+<p>Font family of the text to be displayed with the spinning icon.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4136,7 +4127,7 @@ File in `icons/`
 </details>
 <details name="spinnerfontweight">
 <summary><strong>font-weight</strong></summary><br/>
-<p></p></br></br>
+<p>Font weight of the text to be displayed with the spinning icon. 400 = regular, 600 = bold, 800 = black</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4158,7 +4149,7 @@ File in `icons/`
 </details>
 <details name="spinnerfontsize">
 <summary><strong>font-size</strong></summary><br/>
-<p></p></br></br>
+<p>Font size of the spinner's text.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4180,7 +4171,7 @@ File in `icons/`
 </details>
 <details name="spinnericonsize">
 <summary><strong>icon-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the spinning icon.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4202,7 +4193,7 @@ File in `icons/`
 </details>
 <details name="spinnericon">
 <summary><strong>icon</strong></summary><br/>
-<p></p></br></br>
+<p>Spinning icon.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4224,7 +4215,7 @@ File in `icons/`
 </details>
 <details name="spinnercolor">
 <summary><strong>color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the spinning icon and its text.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4246,7 +4237,7 @@ File in `icons/`
 </details>
 <details name="spinnerspacing">
 <summary><strong>spacing</strong></summary><br/>
-<p></p></br></br>
+<p>Spacing between the spinning icon and its text.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4272,7 +4263,7 @@ File in `icons/`
 ## [LoginScreen.LoginArea.WarningMessage]
 <details name="warningmessagefontfamily">
 <summary><strong>font-family</strong></summary><br/>
-<p></p></br></br>
+<p>Font family of the warning message.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4294,7 +4285,7 @@ File in `icons/`
 </details>
 <details name="warningmessagefontsize">
 <summary><strong>font-size</strong></summary><br/>
-<p></p></br></br>
+<p>Font size of the warning message.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4316,7 +4307,7 @@ File in `icons/`
 </details>
 <details name="warningmessagefontweight">
 <summary><strong>font-weight</strong></summary><br/>
-<p></p></br></br>
+<p>Font weight of the warning message. 400 = regular, 600 = bold, 800 = black</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4338,7 +4329,7 @@ File in `icons/`
 </details>
 <details name="warningmessagenormalcolor">
 <summary><strong>normal-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the warning message for normal messages.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4360,7 +4351,7 @@ File in `icons/`
 </details>
 <details name="warningmessagewarningcolor">
 <summary><strong>warning-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the warning message for warnings.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4382,7 +4373,7 @@ File in `icons/`
 </details>
 <details name="warningmessageerrorcolor">
 <summary><strong>error-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the warning message for error messages.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4404,7 +4395,7 @@ File in `icons/`
 </details>
 <details name="warningmessagemargintop">
 <summary><strong>margin-top</strong></summary><br/>
-<p></p></br></br>
+<p>Distance of the warning message from the password field/login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4430,7 +4421,7 @@ File in `icons/`
 ## [LoginScreen.MenuArea.Buttons]
 <details name="menuareabuttonsmargintop">
 <summary><strong>margin-top</strong></summary><br/>
-<p></p></br></br>
+<p>Top margin of the menu buttons.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4452,7 +4443,7 @@ File in `icons/`
 </details>
 <details name="menuareabuttonsmarginright">
 <summary><strong>margin-right</strong></summary><br/>
-<p></p></br></br>
+<p>Right margin of the menu buttons.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4474,7 +4465,7 @@ File in `icons/`
 </details>
 <details name="menuareabuttonsmarginbottom">
 <summary><strong>margin-bottom</strong></summary><br/>
-<p></p></br></br>
+<p>Bottom margin of the menu buttons.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4496,7 +4487,7 @@ File in `icons/`
 </details>
 <details name="menuareabuttonsmarginleft">
 <summary><strong>margin-left</strong></summary><br/>
-<p></p></br></br>
+<p>Left margin of the menu buttons.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4518,7 +4509,7 @@ File in `icons/`
 </details>
 <details name="menuareabuttonssize">
 <summary><strong>size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the menu buttons.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4540,7 +4531,7 @@ File in `icons/`
 </details>
 <details name="menuareabuttonsborderradius">
 <summary><strong>border-radius</strong></summary><br/>
-<p></p></br></br>
+<p>Border radius of the menu buttons.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4562,7 +4553,7 @@ File in `icons/`
 </details>
 <details name="menuareabuttonsspacing">
 <summary><strong>spacing</strong></summary><br/>
-<p></p></br></br>
+<p>Spacing between menu buttons placed in the same position.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4584,7 +4575,7 @@ File in `icons/`
 </details>
 <details name="menuareabuttonsfontfamily">
 <summary><strong>font-family</strong></summary><br/>
-<p></p></br></br>
+<p>Font family of the menu buttons.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4610,7 +4601,7 @@ File in `icons/`
 ## [LoginScreen.MenuArea.Popups]
 <details name="menuareapopupsmaxheight">
 <summary><strong>max-height</strong></summary><br/>
-<p></p></br></br>
+<p>Max height of the popups.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4632,7 +4623,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsitemheight">
 <summary><strong>item-height</strong></summary><br/>
-<p></p></br></br>
+<p>Height of the items inside a popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4654,7 +4645,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsspacing">
 <summary><strong>item-spacing</strong></summary><br/>
-<p></p></br></br>
+<p>Spacing between items inside a popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4676,7 +4667,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupspadding">
 <summary><strong>padding</strong></summary><br/>
-<p></p></br></br>
+<p>Padding of the popups.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4698,7 +4689,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsdisplayscrollbar">
 <summary><strong>display-scrollbar</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to display a scrollbar in the popups if its items don't fit.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4720,7 +4711,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsmargin">
 <summary><strong>margin</strong></summary><br/>
-<p></p></br></br>
+<p>Distance of the popup from its button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4742,7 +4733,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Background color of the popups.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4764,7 +4755,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsbackgroundopacity">
 <summary><strong>background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the popups.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4786,7 +4777,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsactiveoptionbackgroundcolor">
 <summary><strong>active-option-background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Background color of the hovered/focused item in the popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4808,7 +4799,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsactiveoptionbackgroundopacity">
 <summary><strong>active-option-background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the hovered/focused item in the popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4830,7 +4821,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupscontentcolor">
 <summary><strong>content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the text of the non-selected items in the popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4852,7 +4843,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsactivecontentcolor">
 <summary><strong>active-content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the text of the hovered/focused item in the popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4874,7 +4865,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsfontfamily">
 <summary><strong>font-family</strong></summary><br/>
-<p></p></br></br>
+<p>Font family of the popups.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4896,7 +4887,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsbordersize">
 <summary><strong>border-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the border of the popups.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4918,7 +4909,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsbordercolor">
 <summary><strong>border-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the border of the popups.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4940,7 +4931,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsfontsize">
 <summary><strong>font-size</strong></summary><br/>
-<p></p></br></br>
+<p>Font size of the popups.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4962,7 +4953,7 @@ File in `icons/`
 </details>
 <details name="menuareapopupsiconsize">
 <summary><strong>icon-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the icons in the popups.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -4988,7 +4979,7 @@ File in `icons/`
 ## [LoginScreen.MenuArea.Session]
 <details name="sessiondisplay">
 <summary><strong>display</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to display the session button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5010,7 +5001,7 @@ File in `icons/`
 </details>
 <details name="sessionposition">
 <summary><strong>position</strong></summary><br/>
-<p></p></br></br>
+<p>Position of the session button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5032,7 +5023,7 @@ File in `icons/`
 </details>
 <details name="sessionindex">
 <summary><strong>index</strong></summary><br/>
-<p></p></br></br>
+<p>This number is used to sort menu buttons placed in the same position.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5054,7 +5045,7 @@ File in `icons/`
 </details>
 <details name="sessionpopupdirection">
 <summary><strong>popup-direction</strong></summary><br/>
-<p></p></br></br>
+<p>Which direction to open the session popup to.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5076,7 +5067,7 @@ File in `icons/`
 </details>
 <details name="sessionpopupalign">
 <summary><strong>popup-align</strong></summary><br/>
-<p></p></br></br>
+<p>Alignment of the session popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5090,7 +5081,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`start`   `center`   `end`
+`start`   `center`   `end` //
 
 </td>
 </tr>
@@ -5098,7 +5089,7 @@ File in `icons/`
 </details>
 <details name="sessiondisplaysessionname">
 <summary><strong>display-session-name</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to display the name of the current session in the session button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5120,7 +5111,7 @@ File in `icons/`
 </details>
 <details name="sessionbuttonwidth">
 <summary><strong>button-width</strong></summary><br/>
-<p></p></br></br>
+<p>Width of the session button. Set this to '-1' to make it the same as its contents. <br/>This option is not applied if 'display-session-name' is set to true.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5142,7 +5133,7 @@ File in `icons/`
 </details>
 <details name="sessionpopupwidth">
 <summary><strong>popup-width</strong></summary><br/>
-<p></p></br></br>
+<p>Width of the session popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5164,7 +5155,7 @@ File in `icons/`
 </details>
 <details name="sessionbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Background color of the session button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5186,7 +5177,7 @@ File in `icons/`
 </details>
 <details name="sessionbackgroundopacity">
 <summary><strong>background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the session button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5208,7 +5199,7 @@ File in `icons/`
 </details>
 <details name="sessionactivebackgroundopacity">
 <summary><strong>active-background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the session button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5230,7 +5221,7 @@ File in `icons/`
 </details>
 <details name="sessioncontentcolor">
 <summary><strong>content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon and text in the session button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5252,7 +5243,7 @@ File in `icons/`
 </details>
 <details name="sessionactivecontentcolor">
 <summary><strong>active-content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon and text in the session button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5274,7 +5265,7 @@ File in `icons/`
 </details>
 <details name="sessionbordersize">
 <summary><strong>border-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the border of the session button. The color of the border is defined by 'content-color' and 'active-content-color'.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5296,7 +5287,7 @@ File in `icons/`
 </details>
 <details name="sessionfontsize">
 <summary><strong>font-size</strong></summary><br/>
-<p></p></br></br>
+<p>Font size of the session button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5318,7 +5309,7 @@ File in `icons/`
 </details>
 <details name="sessioniconsize">
 <summary><strong>icon-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the icon in the session button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5344,7 +5335,7 @@ File in `icons/`
 ## [LoginScreen.MenuArea.Layout]
 <details name="layoutdisplay">
 <summary><strong>display</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to display the layout button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5366,7 +5357,7 @@ File in `icons/`
 </details>
 <details name="layoutposition">
 <summary><strong>position</strong></summary><br/>
-<p></p></br></br>
+<p>Position of the layout button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5388,7 +5379,7 @@ File in `icons/`
 </details>
 <details name="layoutindex">
 <summary><strong>index</strong></summary><br/>
-<p></p></br></br>
+<p>This number is used to sort menu buttons placed in the same position.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5410,7 +5401,7 @@ File in `icons/`
 </details>
 <details name="layoutpopupdirection">
 <summary><strong>popup-direction</strong></summary><br/>
-<p></p></br></br>
+<p>Which direction to open the layout popup to.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5432,7 +5423,7 @@ File in `icons/`
 </details>
 <details name="layoutpopupalign">
 <summary><strong>popup-align</strong></summary><br/>
-<p></p></br></br>
+<p>Alignment of the session popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5454,7 +5445,7 @@ File in `icons/`
 </details>
 <details name="layoutpopupwidth">
 <summary><strong>popup-width</strong></summary><br/>
-<p></p></br></br>
+<p>Width of the layout popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5476,7 +5467,7 @@ File in `icons/`
 </details>
 <details name="layoutdisplaylayoutname">
 <summary><strong>display-layout-name</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to display the country code of the current layout in the layout button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5498,7 +5489,7 @@ File in `icons/`
 </details>
 <details name="layoutbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Background color of the layout button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5520,7 +5511,7 @@ File in `icons/`
 </details>
 <details name="layoutbackgroundopacity">
 <summary><strong>background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the layout button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5542,7 +5533,7 @@ File in `icons/`
 </details>
 <details name="layoutactivebackgroundopacity">
 <summary><strong>active-background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the layout button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5564,7 +5555,7 @@ File in `icons/`
 </details>
 <details name="layoutcontentcolor">
 <summary><strong>content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon and text in the layout button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5586,7 +5577,7 @@ File in `icons/`
 </details>
 <details name="layoutactivecontentcolor">
 <summary><strong>active-content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon and text in the layout button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5608,7 +5599,7 @@ File in `icons/`
 </details>
 <details name="layoutbordersize">
 <summary><strong>border-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the border of the layouts button. The color of the border is defined by 'content-color' and 'active-content-color'.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5630,7 +5621,7 @@ File in `icons/`
 </details>
 <details name="layoutfontsize">
 <summary><strong>font-size</strong></summary><br/>
-<p></p></br></br>
+<p>Font size of the layout button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5652,7 +5643,7 @@ File in `icons/`
 </details>
 <details name="layouticon">
 <summary><strong>icon</strong></summary><br/>
-<p></p></br></br>
+<p>Icon in the layout button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5674,7 +5665,7 @@ File in `icons/`
 </details>
 <details name="layouticonsize">
 <summary><strong>icon-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the icon in the layout button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5700,7 +5691,7 @@ File in `icons/`
 ## [LoginScreen.MenuArea.Keyboard]
 <details name="keyboarddisplay">
 <summary><strong>display</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to display the virtual keyboard toggle button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5722,7 +5713,7 @@ File in `icons/`
 </details>
 <details name="keyboardposition">
 <summary><strong>position</strong></summary><br/>
-<p></p></br></br>
+<p>Position of the virtual keyboard toggle button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5744,7 +5735,7 @@ File in `icons/`
 </details>
 <details name="keyboardindex">
 <summary><strong>index</strong></summary><br/>
-<p></p></br></br>
+<p>This number is used to sort menu buttons placed in the same position.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5766,7 +5757,7 @@ File in `icons/`
 </details>
 <details name="keyboardbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Background color of the virtual keyboard toggle button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5788,7 +5779,7 @@ File in `icons/`
 </details>
 <details name="keyboardbackgroundopacity">
 <summary><strong>background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the virtual keyboard toggle button</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5810,7 +5801,7 @@ File in `icons/`
 </details>
 <details name="keyboardactivebackgroundopacity">
 <summary><strong>active-background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the virtual keyboard toggle button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5832,7 +5823,7 @@ File in `icons/`
 </details>
 <details name="keyboardcontentcolor">
 <summary><strong>content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon in the virtual keyboard toggle button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5854,7 +5845,7 @@ File in `icons/`
 </details>
 <details name="keyboardactivecontentcolor">
 <summary><strong>active-content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon in the virtual keyboard toggle button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5876,7 +5867,7 @@ File in `icons/`
 </details>
 <details name="keyboardbordersize">
 <summary><strong>border-size</strong></summary><br/>
-<p></p></br></br>
+<p>Border size of the virtual keyboard toggle button. The color of the border is defined by 'content-color' and 'active-content-color'.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5898,7 +5889,7 @@ File in `icons/`
 </details>
 <details name="keyboardicon">
 <summary><strong>icon</strong></summary><br/>
-<p></p></br></br>
+<p>Icon in the virtual keyboard toggle button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5920,7 +5911,7 @@ File in `icons/`
 </details>
 <details name="keyboardiconsize">
 <summary><strong>icon-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the icon in the virtual keyboard toggle button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5946,7 +5937,7 @@ File in `icons/`
 ## [LoginScreen.MenuArea.Power]
 <details name="powerdisplay">
 <summary><strong>display</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to display the power button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5968,7 +5959,7 @@ File in `icons/`
 </details>
 <details name="powerposition">
 <summary><strong>position</strong></summary><br/>
-<p></p></br></br>
+<p>Position of the power button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -5990,7 +5981,7 @@ File in `icons/`
 </details>
 <details name="powerindex">
 <summary><strong>index</strong></summary><br/>
-<p></p></br></br>
+<p>This number is used to sort menu buttons placed in the same position.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6012,7 +6003,7 @@ File in `icons/`
 </details>
 <details name="powerpopupdirection">
 <summary><strong>popup-direction</strong></summary><br/>
-<p></p></br></br>
+<p>Which direction to open the power popup to.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6056,7 +6047,7 @@ File in `icons/`
 </details>
 <details name="powerpopupwidth">
 <summary><strong>popup-width</strong></summary><br/>
-<p></p></br></br>
+<p>Width of the power popup.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6078,7 +6069,7 @@ File in `icons/`
 </details>
 <details name="powerbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Background color of the power button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6100,7 +6091,7 @@ File in `icons/`
 </details>
 <details name="powerbackgroundopacity">
 <summary><strong>background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the power button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6122,7 +6113,7 @@ File in `icons/`
 </details>
 <details name="poweractivebackgroundopacity">
 <summary><strong>active-background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the power button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6144,7 +6135,7 @@ File in `icons/`
 </details>
 <details name="powercontentcolor">
 <summary><strong>content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon in the power button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6166,7 +6157,7 @@ File in `icons/`
 </details>
 <details name="poweractivecontentcolor">
 <summary><strong>active-content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon in the power button when hovered/focused.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6188,7 +6179,7 @@ File in `icons/`
 </details>
 <details name="powerbordersize">
 <summary><strong>border-size</strong></summary><br/>
-<p></p></br></br>
+<p>Border size of the power button. The color of the border is defined by 'content-color' and 'active-content-color'.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6210,7 +6201,7 @@ File in `icons/`
 </details>
 <details name="powericon">
 <summary><strong>icon</strong></summary><br/>
-<p></p></br></br>
+<p>Icon in the power button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6232,7 +6223,7 @@ File in `icons/`
 </details>
 <details name="powericonsize">
 <summary><strong>icon-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the icon in the power button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6258,7 +6249,7 @@ File in `icons/`
 ## [LoginScreen.VirtualKeyboard]
 <details name="virtualkeyboardscale">
 <summary><strong>scale</strong></summary><br/>
-<p></p></br></br>
+<p>Scale of the virtual keyboard.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6280,7 +6271,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardposition">
 <summary><strong>position</strong></summary><br/>
-<p></p></br></br>
+<p>Initial position of the virtual keyboard. You can drag the keyboard using the middle mouse button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6302,7 +6293,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardstarthidden">
 <summary><strong>start-hidden</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not the virtual keyboard should start hidden.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6324,7 +6315,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the background of the virtual keyboard.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6346,7 +6337,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardbackgroundopacity">
 <summary><strong>background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the virtual keyboard.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6368,7 +6359,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardkeycontentcolor">
 <summary><strong>key-content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the keys' text/icon in the virtual keyboard.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6390,7 +6381,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardkeycolor">
 <summary><strong>key-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the background of the keys in the virtual keyboard.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6412,7 +6403,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardkeyopacity">
 <summary><strong>key-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the keys in the virtual keybaord.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6434,7 +6425,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardkeyactivebackgroundcolor">
 <summary><strong>key-active-background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the background of the special keys in the virtual keyboard.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6456,7 +6447,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardkeyactiveopacity">
 <summary><strong>key-active-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the special keys in the virtual keyboard.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6478,7 +6469,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardselectionbackgroundcolor">
 <summary><strong>selection-background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the background of the selected character in the virtual keyboard.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6500,7 +6491,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardselectioncontentcolor">
 <summary><strong>selection-content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the text of the selected character in the virtual keyboard.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6522,29 +6513,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardprimarycolor">
 <summary><strong>primary-color</strong></summary><br/>
-<p></p></br></br>
-<table>
-<tr>
-<td>Type</td></br>
-<td>color</td>
-</tr>
-<tr>
-<td>Default value</td>
-<td>#000000</td>
-</tr>
-<tr>
-<td>Possible values</td>
-<td>
-
-<a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
-
-</td>
-</tr>
-</table>
-</details>
-<details name="virtualkeyboardaccentcolor">
-<summary><strong>accent-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the icon/text in special keys when they're active.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6566,7 +6535,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardbordersize">
 <summary><strong>border-size</strong></summary><br/>
-<p></p></br></br>
+<p>Border size of the virtual keyboard and its keys.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6588,7 +6557,7 @@ File in `icons/`
 </details>
 <details name="virtualkeyboardbordercolor">
 <summary><strong>border-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the border of the virtual keyboard and its keys.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6614,7 +6583,7 @@ File in `icons/`
 ## [Tooltips]
 <details name="tooltipsenable">
 <summary><strong>enable</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to show tooltips when hovering over buttons.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6636,7 +6605,7 @@ File in `icons/`
 </details>
 <details name="tooltipsfontfamily">
 <summary><strong>font-family</strong></summary><br/>
-<p></p></br></br>
+<p>Font family of the tooltips.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6658,7 +6627,7 @@ File in `icons/`
 </details>
 <details name="tooltipsfontsize">
 <summary><strong>font-size</strong></summary><br/>
-<p></p></br></br>
+<p>Font size of the tooltips.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6680,7 +6649,7 @@ File in `icons/`
 </details>
 <details name="tooltipscontentcolor">
 <summary><strong>content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the text in tooltips.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6702,7 +6671,7 @@ File in `icons/`
 </details>
 <details name="tooltipsbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the background of the tooltips.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6724,7 +6693,7 @@ File in `icons/`
 </details>
 <details name="tooltipsbackgroundopacity">
 <summary><strong>background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the tooltips.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6746,7 +6715,7 @@ File in `icons/`
 </details>
 <details name="tooltipsborderradius">
 <summary><strong>border-radius</strong></summary><br/>
-<p></p></br></br>
+<p>Border radius of the tooltips.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6768,7 +6737,7 @@ File in `icons/`
 </details>
 <details name="tooltipsdisableuser">
 <summary><strong>disable-user</strong></summary><br/>
-<p></p></br></br>
+<p>If false, disables only the tooltip for the user selector.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6790,7 +6759,7 @@ File in `icons/`
 </details>
 <details name="tooltipsdisableloginbutton">
 <summary><strong>disable-login-button</strong></summary><br/>
-<p></p></br></br>
+<p>If false, disabled only the tooltip for the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
