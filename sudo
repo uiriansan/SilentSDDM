@@ -1,0 +1,8 @@
+
+InputMethod=qtvirtualkeyboard /etc/sddm.conf
+
+InputMethod=qtvirtualkeyboard /etc/sddm.conf
+
+InputMethod=asdasdqtvirtualkeyboard /etc/sddm.conf
+
+InputMethod=qtvirtualkeyboard /etc/sddm.conf
