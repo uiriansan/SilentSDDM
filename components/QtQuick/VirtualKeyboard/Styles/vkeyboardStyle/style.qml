@@ -21,7 +21,6 @@ KeyboardStyle {
 
     readonly property string inputLocale: InputContext.locale
     property color primaryColor: Config.virtualKeyboardPrimaryColor
-    property color accentColor: Config.virtualKeyboardAccentColor
     property color primaryLightColor: Config.virtualKeyboardKeyActiveBackgroundColor
     property color primaryDarkColor: Config.virtualKeyboardKeyColor
     property color textOnPrimaryColor: Config.virtualKeyboardKeyContentColor
@@ -44,7 +43,7 @@ KeyboardStyle {
     property color popupHighlightColor: secondaryLightColor
     property color selectionListTextColor: textOnPrimaryColor
     property color selectionListSeparatorColor: primaryLightColor
-    property color selectionListBackgroundColor: accentColor
+    property color selectionListBackgroundColor: primaryColor
     property color navigationHighlightColor: primaryColor
 
     property real inputLocaleIndicatorOpacity: 1.0

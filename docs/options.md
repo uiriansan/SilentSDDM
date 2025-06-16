@@ -5,7 +5,7 @@
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#animatedbackgroundplaceholder">animated-background-placeholder</a>
@@ -23,7 +23,7 @@ File in `backgrounds/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#lockscreenpaddingtop">padding-top</a>
@@ -32,12 +32,16 @@ File in `backgrounds/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#lockscreenpaddingright">padding-right</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#lockscreenpaddingbottom">padding-bottom</a>
@@ -46,12 +50,16 @@ File in `backgrounds/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#lockscreenpaddingleft">padding-left</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#lockscreenbackground">background</a>
@@ -69,7 +77,7 @@ File in `backgrounds/`
 <td align="center">false</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#lockscreenbackgroundcolor">background-color</a>
@@ -87,6 +95,8 @@ File in `backgrounds/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#lockscreenbrightness">brightness</a>
 </td>
@@ -103,7 +113,7 @@ File in `backgrounds/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#clockposition">position</a>
@@ -112,7 +122,7 @@ File in `backgrounds/`
 <td align="center">top-center</td>
 <td align="left">
 
-`top-left` `top-center` `top-right` `center-left` `center` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td></tr><tr><td align="left">
 <a href="#clockalign">align</a>
@@ -121,7 +131,7 @@ File in `backgrounds/`
 <td align="center">center</td>
 <td align="left">
 
-`left` `center` `right`
+`left`   `center`   `right`
 
 </td></tr><tr><td align="left">
 <a href="#clockformat">format</a>
@@ -139,6 +149,8 @@ File in `backgrounds/`
 <td align="center">RedHatDisplay</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#clockfontsize">font-size</a>
 </td>
@@ -146,12 +158,16 @@ File in `backgrounds/`
 <td align="center">70</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#clockfontweight">font-weight</a>
 </td>
 <td align="center">int</td>
 <td align="center">900</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#clockcolor">color</a>
@@ -169,7 +185,7 @@ File in `backgrounds/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#dateformat">format</a>
@@ -187,6 +203,8 @@ File in `backgrounds/`
 <td align="center">RedHatDisplay</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#datefontsize">font-size</a>
 </td>
@@ -194,12 +212,16 @@ File in `backgrounds/`
 <td align="center">14</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#datefontweight">font-weight</a>
 </td>
 <td align="center">int</td>
 <td align="center">400</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#datecolor">color</a>
@@ -217,14 +239,16 @@ File in `backgrounds/`
 <td align="center">0</td>
 <td align="left">
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="11" align="right"><a href="#lockscreenmessage">[LockScreen.Message]</a></td><td align="left">
+
+
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="13" align="right"><a href="#lockscreenmessage">[LockScreen.Message]</a></td><td align="left">
 <a href="#lockmessagedisplay">display</a>
 </td>
 <td align="center">bool</td>
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#lockmessageposition">position</a>
@@ -233,7 +257,7 @@ File in `backgrounds/`
 <td align="center">bottom-center</td>
 <td align="left">
 
-`top-left` `top-center` `top-right` `center-left` `center` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td></tr><tr><td align="left">
 <a href="#lockmessagealign">align</a>
@@ -242,7 +266,7 @@ File in `backgrounds/`
 <td align="center">center</td>
 <td align="left">
 
-`left` `center` `right`
+`left`   `center`   `right`
 
 </td></tr><tr><td align="left">
 <a href="#lockmessagetext">text</a>
@@ -251,12 +275,16 @@ File in `backgrounds/`
 <td align="center">Press any key</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#lockmessagefontfamily">font-family</a>
 </td>
 <td align="center">string</td>
 <td align="center">RedHatDisplay</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#lockmessagefontsize">font-size</a>
@@ -265,12 +293,25 @@ File in `backgrounds/`
 <td align="center">12</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#lockmessagefontweight">font-weight</a>
 </td>
 <td align="center">int</td>
 <td align="center">400</td>
 <td align="left">
+
+
+
+</td></tr><tr><td align="left">
+<a href="#lockmessagedisplayicon">display-icon</a>
+</td>
+<td align="center">bool</td>
+<td align="center">true</td>
+<td align="left">
+
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#lockmessageicon">icon</a>
@@ -288,6 +329,8 @@ File in `icons/`
 <td align="center">16</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#lockmessagecolor">color</a>
 </td>
@@ -298,11 +341,22 @@ File in `icons/`
 <a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
 
 </td></tr><tr><td align="left">
+<a href="#lockmessagepainticon">paint-icon</a>
+</td>
+<td align="center">bool</td>
+<td align="center">true</td>
+<td align="left">
+
+`true`   `false`
+
+</td></tr><tr><td align="left">
 <a href="#lockmessagespacing">spacing</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="5" align="right"><a href="#loginscreen">[LoginScreen]</a></td><td align="left">
 <a href="#loginscreenbackground">background</a>
@@ -320,7 +374,7 @@ File in `backgrounds/`
 <td align="center">false</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#loginscreenbackgroundcolor">background-color</a>
@@ -338,6 +392,8 @@ File in `backgrounds/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#loginscreenbrightness">brightness</a>
 </td>
@@ -347,23 +403,14 @@ File in `backgrounds/`
 
 -1.0 ≤ R ≤ 1.0
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="3" align="right"><a href="#loginscreenloginarea">[LoginScreen.LoginArea]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="2" align="right"><a href="#loginscreenloginarea">[LoginScreen.LoginArea]</a></td><td align="left">
 <a href="#loginareaposition">position</a>
 </td>
 <td align="center">string</td>
 <td align="center">center</td>
 <td align="left">
 
-`left` `center` `right`
-
-</td></tr><tr><td align="left">
-<a href="#loginareaalign">align</a>
-</td>
-<td align="center">string</td>
-<td align="center">center</td>
-<td align="left">
-
-`left` `right`
+`left`   `center`   `right`
 
 </td></tr><tr><td align="left">
 <a href="#loginareamargin">margin</a>
@@ -372,6 +419,8 @@ File in `backgrounds/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="9" align="right"><a href="#loginscreenloginareaavatar">[LoginScreen.LoginArea.Avatar]</a></td><td align="left">
 <a href="#avatarshape">shape</a>
 </td>
@@ -379,7 +428,7 @@ File in `backgrounds/`
 <td align="center">circle</td>
 <td align="left">
 
-`circle` `square`
+`circle`    `square`
 
 </td></tr><tr><td align="left">
 <a href="#avatarborderradius">border-radius</a>
@@ -388,6 +437,8 @@ File in `backgrounds/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#avataractivesize">active-size</a>
 </td>
@@ -395,12 +446,16 @@ File in `backgrounds/`
 <td align="center">120</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#avatarinactivesize">inactive-size</a>
 </td>
 <td align="center">int</td>
 <td align="center">80</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#avatarinactiveopacity">inactive-opacity</a>
@@ -418,12 +473,16 @@ File in `backgrounds/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#avatarinactivebordersize">inactive-border-size</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#avataractivebordercolor">active-border-color</a>
@@ -450,6 +509,8 @@ File in `backgrounds/`
 <td align="center">RedHatDisplay</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#usernamefontsize">font-size</a>
 </td>
@@ -457,12 +518,16 @@ File in `backgrounds/`
 <td align="center">16</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#usernamefontweight">font-weight</a>
 </td>
 <td align="center">int</td>
 <td align="center">900</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#usernamecolor">color</a>
@@ -480,12 +545,16 @@ File in `backgrounds/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="15" align="right"><a href="#loginscreenloginareapasswordinput">[LoginScreen.LoginArea.PasswordInput]</a></td><td align="left">
 <a href="#passwordinputwidth">width</a>
 </td>
 <td align="center">int</td>
 <td align="center">200</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#passwordinputheight">height</a>
@@ -494,6 +563,8 @@ File in `backgrounds/`
 <td align="center">30</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#passwordinputdisplayicon">display-icon</a>
 </td>
@@ -501,7 +572,7 @@ File in `backgrounds/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#passwordinputfontfamily">font-family</a>
@@ -510,12 +581,16 @@ File in `backgrounds/`
 <td align="center">RedHatDisplay</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#passwordinputfontsize">font-size</a>
 </td>
 <td align="center">int</td>
 <td align="center">12</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#passwordinputicon">icon</a>
@@ -532,6 +607,8 @@ File in `icons/`
 <td align="center">int</td>
 <td align="center">16</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#passwordinputcontentcolor">content-color</a>
@@ -567,6 +644,8 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#passwordinputbordercolor">border-color</a>
 </td>
@@ -583,6 +662,8 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#passwordinputborderradiusright">border-radius-right</a>
 </td>
@@ -590,12 +671,16 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#passwordinputmargintop">margin-top</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="18" align="right"><a href="#loginscreenloginarealoginbutton">[LoginScreen.LoginArea.LoginButton]</a></td><td align="left">
 <a href="#loginbuttonbackgroundcolor">background-color</a>
@@ -649,6 +734,8 @@ File in `icons/`
 <td align="center">18</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#loginbuttoncontentcolor">content-color</a>
 </td>
@@ -674,6 +761,8 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#loginbuttonbordercolor">border-color</a>
 </td>
@@ -690,12 +779,16 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#loginbuttonborderradiusright">border-radius-right</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#loginbuttonmarginleft">margin-left</a>
@@ -704,6 +797,8 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#loginbuttonshowtextifnopassword">show-text-if-no-password</a>
 </td>
@@ -711,7 +806,7 @@ File in `icons/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#loginbuttonhideifnotneeded">hide-if-not-needed</a>
@@ -720,7 +815,7 @@ File in `icons/`
 <td align="center">false</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#loginbuttonfontfamily">font-family</a>
@@ -729,12 +824,16 @@ File in `icons/`
 <td align="center">RedHatDisplay</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#loginbuttonfontsize">font-size</a>
 </td>
 <td align="center">int</td>
 <td align="center">12</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#loginbuttonfontweight">font-weight</a>
@@ -743,12 +842,70 @@ File in `icons/`
 <td align="center">600</td>
 <td align="left">
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="3" align="right"><a href="#loginscreenloginareaspinner">[LoginScreen.LoginArea.Spinner]</a></td><td align="left">
-<a href="#spinnersize">size</a>
+
+
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="9" align="right"><a href="#loginscreenloginareaspinner">[LoginScreen.LoginArea.Spinner]</a></td><td align="left">
+<a href="#spinnerdisplaytext">display-text</a>
+</td>
+<td align="center">bool</td>
+<td align="center">true</td>
+<td align="left">
+
+`true`   `false`
+
+</td></tr><tr><td align="left">
+<a href="#spinnertext">text</a>
+</td>
+<td align="center">string</td>
+<td align="center">Logging in</td>
+<td align="left">
+
+
+
+</td></tr><tr><td align="left">
+<a href="#spinnerfontfamily">font-family</a>
+</td>
+<td align="center">string</td>
+<td align="center">RedHatDisplay</td>
+<td align="left">
+
+
+
+</td></tr><tr><td align="left">
+<a href="#spinnerfontweight">font-weight</a>
+</td>
+<td align="center">int</td>
+<td align="center">600</td>
+<td align="left">
+
+
+
+</td></tr><tr><td align="left">
+<a href="#spinnerfontsize">font-size</a>
+</td>
+<td align="center">int</td>
+<td align="center">12</td>
+<td align="left">
+
+
+
+</td></tr><tr><td align="left">
+<a href="#spinnericonsize">icon-size</a>
 </td>
 <td align="center">int</td>
 <td align="center">32</td>
 <td align="left">
+
+
+
+</td></tr><tr><td align="left">
+<a href="#spinnericon">icon</a>
+</td>
+<td align="center">string</td>
+<td align="center">spinner.svg</td>
+<td align="left">
+
+File in `icons/`
 
 </td></tr><tr><td align="left">
 <a href="#spinnercolor">color</a>
@@ -760,13 +917,13 @@ File in `icons/`
 <a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
 
 </td></tr><tr><td align="left">
-<a href="#spinnericon">icon</a>
+<a href="#spinnerspacing">spacing</a>
 </td>
-<td align="center">string</td>
-<td align="center">spinner.svg</td>
+<td align="center">int</td>
+<td align="center">0</td>
 <td align="left">
 
-File in `icons/`
+
 
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="7" align="right"><a href="#loginscreenloginareawarningmessage">[LoginScreen.LoginArea.WarningMessage]</a></td><td align="left">
 <a href="#warningmessagefontfamily">font-family</a>
@@ -775,6 +932,8 @@ File in `icons/`
 <td align="center">RedHatDisplay</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#warningmessagefontsize">font-size</a>
 </td>
@@ -782,12 +941,16 @@ File in `icons/`
 <td align="center">11</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#warningmessagefontweight">font-weight</a>
 </td>
 <td align="center">int</td>
 <td align="center">400</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#warningmessagenormalcolor">normal-color</a>
@@ -823,12 +986,16 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="8" align="right"><a href="#loginscreenmenuareabuttons">[LoginScreen.MenuArea.Buttons]</a></td><td align="left">
 <a href="#menuareabuttonsmargintop">margin-top</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#menuareabuttonsmarginright">margin-right</a>
@@ -837,12 +1004,16 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#menuareabuttonsmarginbottom">margin-bottom</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#menuareabuttonsmarginleft">margin-left</a>
@@ -851,12 +1022,16 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#menuareabuttonssize">size</a>
 </td>
 <td align="center">int</td>
 <td align="center">30</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#menuareabuttonsborderradius">border-radius</a>
@@ -865,12 +1040,16 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#menuareabuttonsspacing">spacing</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#menuareabuttonsfontfamily">font-family</a>
@@ -879,12 +1058,16 @@ File in `icons/`
 <td align="center">RedHatDisplay</td>
 <td align="left">
 
+
+
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="17" align="right"><a href="#loginscreenmenuareapopups">[LoginScreen.MenuArea.Popups]</a></td><td align="left">
 <a href="#menuareapopupsmaxheight">max-height</a>
 </td>
 <td align="center">int</td>
 <td align="center">300</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#menuareapopupsitemheight">item-height</a>
@@ -893,12 +1076,16 @@ File in `icons/`
 <td align="center">30</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#menuareapopupsspacing">item-spacing</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#menuareapopupspadding">padding</a>
@@ -907,6 +1094,8 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#menuareapopupsdisplayscrollbar">display-scrollbar</a>
 </td>
@@ -914,7 +1103,7 @@ File in `icons/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#menuareapopupsmargin">margin</a>
@@ -922,6 +1111,8 @@ File in `icons/`
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#menuareapopupsbackgroundcolor">background-color</a>
@@ -984,12 +1175,16 @@ File in `icons/`
 <td align="center">RedHatDisplay</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#menuareapopupsbordersize">border-size</a>
 </td>
 <td align="center">int</td>
 <td align="center">0</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#menuareapopupsbordercolor">border-color</a>
@@ -1007,6 +1202,8 @@ File in `icons/`
 <td align="center">11</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#menuareapopupsiconsize">icon-size</a>
 </td>
@@ -1014,14 +1211,16 @@ File in `icons/`
 <td align="center">16</td>
 <td align="left">
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="15" align="right"><a href="#loginscreenmenuareasession">[LoginScreen.MenuArea.Session]</a></td><td align="left">
+
+
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="16" align="right"><a href="#loginscreenmenuareasession">[LoginScreen.MenuArea.Session]</a></td><td align="left">
 <a href="#sessiondisplay">display</a>
 </td>
 <td align="center">bool</td>
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#sessionposition">position</a>
@@ -1030,7 +1229,7 @@ File in `icons/`
 <td align="center">bottom-left</td>
 <td align="left">
 
-`top-left` `top-center` `top-right` `center-left` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td></tr><tr><td align="left">
 <a href="#sessionindex">index</a>
@@ -1039,6 +1238,8 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#sessionpopupdirection">popup-direction</a>
 </td>
@@ -1046,7 +1247,7 @@ File in `icons/`
 <td align="center">up</td>
 <td align="left">
 
-`up` `down` `left` `right`
+`up`   `down`   `left`   `right`
 
 </td></tr><tr><td align="left">
 <a href="#sessionpopupalign">popup-align</a>
@@ -1055,7 +1256,7 @@ File in `icons/`
 <td align="center">center</td>
 <td align="left">
 
-`start` `center` `end`
+`start`   `center`   `end`
 
 </td></tr><tr><td align="left">
 <a href="#sessiondisplaysessionname">display-session-name</a>
@@ -1064,14 +1265,25 @@ File in `icons/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
-<a href="#sessionmaxwidth">max-width</a>
+<a href="#sessionbuttonwidth">button-width</a>
 </td>
 <td align="center">int</td>
 <td align="center">200</td>
 <td align="left">
+
+
+
+</td></tr><tr><td align="left">
+<a href="#sessionpopupwidth">popup-width</a>
+</td>
+<td align="center">int</td>
+<td align="center">200</td>
+<td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#sessionbackgroundcolor">background-color</a>
@@ -1125,12 +1337,16 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#sessionfontsize">font-size</a>
 </td>
 <td align="center">int</td>
 <td align="center">10</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#sessioniconsize">icon-size</a>
@@ -1139,6 +1355,8 @@ File in `icons/`
 <td align="center">16</td>
 <td align="left">
 
+
+
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="16" align="right"><a href="#loginscreenmenuarealayout">[LoginScreen.MenuArea.Layout]</a></td><td align="left">
 <a href="#layoutdisplay">display</a>
 </td>
@@ -1146,7 +1364,7 @@ File in `icons/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#layoutposition">position</a>
@@ -1155,7 +1373,7 @@ File in `icons/`
 <td align="center">bottom-right</td>
 <td align="left">
 
-`top-left` `top-center` `top-right` `center-left` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td></tr><tr><td align="left">
 <a href="#layoutindex">index</a>
@@ -1164,6 +1382,8 @@ File in `icons/`
 <td align="center">1</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#layoutpopupdirection">popup-direction</a>
 </td>
@@ -1171,7 +1391,7 @@ File in `icons/`
 <td align="center">up</td>
 <td align="left">
 
-`up` `down` `left` `right`
+`up`   `down`   `left`   `right`
 
 </td></tr><tr><td align="left">
 <a href="#layoutpopupalign">popup-align</a>
@@ -1180,7 +1400,7 @@ File in `icons/`
 <td align="center">center</td>
 <td align="left">
 
-`start` `center` `end`
+`start`   `center`   `end`
 
 </td></tr><tr><td align="left">
 <a href="#layoutpopupwidth">popup-width</a>
@@ -1189,6 +1409,8 @@ File in `icons/`
 <td align="center">180</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#layoutdisplaylayoutname">display-layout-name</a>
 </td>
@@ -1196,7 +1418,7 @@ File in `icons/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#layoutbackgroundcolor">background-color</a>
@@ -1250,12 +1472,16 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#layoutfontsize">font-size</a>
 </td>
 <td align="center">int</td>
 <td align="center">10</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#layouticon">icon</a>
@@ -1273,6 +1499,8 @@ File in `icons/`
 <td align="center">16</td>
 <td align="left">
 
+
+
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="11" align="right"><a href="#loginscreenmenuareakeyboard">[LoginScreen.MenuArea.Keyboard]</a></td><td align="left">
 <a href="#keyboarddisplay">display</a>
 </td>
@@ -1280,7 +1508,7 @@ File in `icons/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#keyboardposition">position</a>
@@ -1289,7 +1517,7 @@ File in `icons/`
 <td align="center">bottom-right</td>
 <td align="left">
 
-`top-left` `top-center` `top-right` `center-left` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td></tr><tr><td align="left">
 <a href="#keyboardindex">index</a>
@@ -1297,6 +1525,8 @@ File in `icons/`
 <td align="center">int</td>
 <td align="center">2</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#keyboardbackgroundcolor">background-color</a>
@@ -1350,6 +1580,8 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#keyboardicon">icon</a>
 </td>
@@ -1366,6 +1598,8 @@ File in `icons/`
 <td align="center">16</td>
 <td align="left">
 
+
+
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="14" align="right"><a href="#loginscreenmenuareapower">[LoginScreen.MenuArea.Power]</a></td><td align="left">
 <a href="#powerdisplay">display</a>
 </td>
@@ -1373,7 +1607,7 @@ File in `icons/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#powerposition">position</a>
@@ -1382,7 +1616,7 @@ File in `icons/`
 <td align="center">bottom-right</td>
 <td align="left">
 
-`top-left` `top-center` `top-right` `center-left` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td></tr><tr><td align="left">
 <a href="#powerindex">index</a>
@@ -1391,6 +1625,8 @@ File in `icons/`
 <td align="center">3</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#powerpopupdirection">popup-direction</a>
 </td>
@@ -1398,7 +1634,7 @@ File in `icons/`
 <td align="center">up</td>
 <td align="left">
 
-`up` `down` `left` `right`
+`up`   `down`   `left`   `right`
 
 </td></tr><tr><td align="left">
 <a href="#powerpopupalign">popup-align</a>
@@ -1407,7 +1643,7 @@ File in `icons/`
 <td align="center">center</td>
 <td align="left">
 
-`start` `center` `end`
+`start`   `center`   `end`
 
 </td></tr><tr><td align="left">
 <a href="#powerpopupwidth">popup-width</a>
@@ -1415,6 +1651,8 @@ File in `icons/`
 <td align="center">int</td>
 <td align="center">90</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#powerbackgroundcolor">background-color</a>
@@ -1468,6 +1706,8 @@ File in `icons/`
 <td align="center">0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#powericon">icon</a>
 </td>
@@ -1484,19 +1724,25 @@ File in `icons/`
 <td align="center">16</td>
 <td align="left">
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="14" align="right"><a href="#loginscreenvirtualkeyboard">[LoginScreen.VirtualKeyboard]</a></td><td align="left">
+
+
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="16" align="right"><a href="#loginscreenvirtualkeyboard">[LoginScreen.VirtualKeyboard]</a></td><td align="left">
 <a href="#virtualkeyboardscale">scale</a>
 </td>
 <td align="center">int</td>
 <td align="center">1.0</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#virtualkeyboardposition">position</a>
 </td>
 <td align="center">string</td>
-<td align="center">bottom</td>
+<td align="center">login</td>
 <td align="left">
+
+`login`   `top`   `bottom`   `left`   `right`
 
 </td></tr><tr><td align="left">
 <a href="#virtualkeyboardstarthidden">start-hidden</a>
@@ -1505,7 +1751,7 @@ File in `icons/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#virtualkeyboardbackgroundcolor">background-color</a>
@@ -1606,6 +1852,24 @@ File in `icons/`
 
 <a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
 
+</td></tr><tr><td align="left">
+<a href="#virtualkeyboardbordersize">border-size</a>
+</td>
+<td align="center">int</td>
+<td align="center">0</td>
+<td align="left">
+
+
+
+</td></tr><tr><td align="left">
+<a href="#virtualkeyboardbordercolor">border-color</a>
+</td>
+<td align="center">color</td>
+<td align="center">#000000</td>
+<td align="left">
+
+<a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
+
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="9" align="right"><a href="#tooltips">[Tooltips]</a></td><td align="left">
 <a href="#tooltipsenable">enable</a>
 </td>
@@ -1613,7 +1877,7 @@ File in `icons/`
 <td align="center">true</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#tooltipsfontfamily">font-family</a>
@@ -1622,12 +1886,16 @@ File in `icons/`
 <td align="center">RedHatDisplay</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#tooltipsfontsize">font-size</a>
 </td>
 <td align="center">int</td>
 <td align="center">11</td>
 <td align="left">
+
+
 
 </td></tr><tr><td align="left">
 <a href="#tooltipscontentcolor">content-color</a>
@@ -1663,6 +1931,8 @@ File in `icons/`
 <td align="center">5</td>
 <td align="left">
 
+
+
 </td></tr><tr><td align="left">
 <a href="#tooltipsdisableuser">disable-user</a>
 </td>
@@ -1670,7 +1940,7 @@ File in `icons/`
 <td align="center">false</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr><tr><td align="left">
 <a href="#tooltipsdisableloginbutton">disable-login-button</a>
@@ -1679,14 +1949,13 @@ File in `icons/`
 <td align="center">false</td>
 <td align="left">
 
-`true` `false`
+`true`   `false`
 
 </td></tr></table>
 
----
+-- --
 
 ## [General]
-
 <details name="enableanimations">
 <summary><strong>enable-animations</strong></summary><br/>
 <p>Enable or disable all animations.</p></br></br>
@@ -1703,7 +1972,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -1732,10 +2001,9 @@ File in `backgrounds/`
 </table>
 </details>
 
----
+-- --
 
 ## [LockScreen]
-
 <details name="lockscreendisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the lock screen. If false, the theme will load straight to the login screen.</p></br></br>
@@ -1752,7 +2020,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -1774,6 +2042,8 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -1793,6 +2063,8 @@ File in `backgrounds/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -1814,6 +2086,8 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -1834,13 +2108,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="lockscreenbackground">
 <summary><strong>background</strong></summary><br/>
-<p>Background of the lock screen.<br/>Supported formats: jpg, png, gif, avi, mp4, mov, mkv, m4v, webm. <br/>See also: <a href="#animatedbackgroundplaceholder">animated-background-placeholder</a></p></br></br>
+<p>Background of the lock screen.<br/>Supported formats: jpg, png, avi, mp4, mov, mkv, m4v, webm. <strong>.gifs are not supported as they may cause SDDM to crash.</strong> <br/>See also: <a href="#animatedbackgroundplaceholder">animated-background-placeholder</a></p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -1876,7 +2152,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -1920,6 +2196,8 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -1947,10 +2225,9 @@ File in `backgrounds/`
 </table>
 </details>
 
----
+-- --
 
 ## [LockScreen.Clock]
-
 <details name="clockdisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the clock in the lock screen.</p></br></br>
@@ -1967,7 +2244,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -1989,7 +2266,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`top-left` `top-center` `top-right` `center-left` `center` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td>
 </tr>
@@ -2011,7 +2288,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`left` `center` `right`
+`left`   `center`   `right`
 
 </td>
 </tr>
@@ -2055,6 +2332,8 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -2075,6 +2354,8 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -2094,6 +2375,8 @@ File in `backgrounds/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -2122,10 +2405,9 @@ File in `backgrounds/`
 </table>
 </details>
 
----
+-- --
 
 ## [LockScreen.Date]
-
 <details name="datedisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the date in the lock screen.</p></br></br>
@@ -2142,7 +2424,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -2186,6 +2468,8 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -2206,6 +2490,8 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -2225,6 +2511,8 @@ File in `backgrounds/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -2268,15 +2556,16 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LockScreen.Message]
-
 <details name="lockmessagedisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the custom message in the lock screen.</p></br></br>
@@ -2293,7 +2582,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -2315,7 +2604,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`top-left` `top-center` `top-right` `center-left` `center` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td>
 </tr>
@@ -2337,7 +2626,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`left` `center` `right`
+`left`   `center`   `right`
 
 </td>
 </tr>
@@ -2359,6 +2648,8 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -2378,6 +2669,8 @@ File in `backgrounds/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -2399,6 +2692,8 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -2419,13 +2714,37 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
+</td>
+</tr>
+</table>
+</details>
+<details name="lockmessagedisplayicon">
+<summary><strong>display-icon</strong></summary><br/>
+<p>Show or hide the icon above the message.</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
+
 </td>
 </tr>
 </table>
 </details>
 <details name="lockmessageicon">
 <summary><strong>icon</strong></summary><br/>
-<p>Icon of the custom message.</p></br></br>
+<p>Icon above the custom message.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2461,13 +2780,15 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="lockmessagecolor">
 <summary><strong>color</strong></summary><br/>
-<p>Color of the custom message. Apploes for both the icon and the text.</p></br></br>
+<p>Color of the custom message.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2482,6 +2803,28 @@ File in `icons/`
 <td>
 
 <a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
+
+</td>
+</tr>
+</table>
+</details>
+<details name="lockmessagepainticon">
+<summary><strong>paint-icon</strong></summary><br/>
+<p>Whether or not to paint the icon with the same color as the text.</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
 
 </td>
 </tr>
@@ -2503,18 +2846,19 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen]
-
 <details name="loginscreenbackground">
 <summary><strong>background</strong></summary><br/>
-<p></p></br></br>
+<p>Background of the login screen.<br/>Supported formats: jpg, png, avi, mp4, mov, mkv, m4v, webm. <strong>.gifs are not supported as they may cause SDDM to crash.</strong> <br/>See also: <a href="#animatedbackgroundplaceholder">animated-background-placeholder</a></p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2536,7 +2880,7 @@ File in `backgrounds/`
 </details>
 <details name="loginscreenusebackgroundcolor">
 <summary><strong>use-background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to use a plain color as background of the login screen instead of an image/video file.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2550,7 +2894,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -2558,7 +2902,7 @@ File in `backgrounds/`
 </details>
 <details name="loginscreenbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p></p></br></br>
+<p>The color to be used as background of the login screen. <br/>See also: <a href="#loginscreenusebackgroundcolor">use-background-color<a></p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2580,7 +2924,7 @@ File in `backgrounds/`
 </details>
 <details name="loginscreenblur">
 <summary><strong>blur</strong></summary><br/>
-<p></p></br></br>
+<p>Amount of blur to be applied to the background of the login screen. 0 means no blur.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2594,13 +2938,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="loginscreenbrightness">
 <summary><strong>brightness</strong></summary><br/>
-<p></p></br></br>
+<p>Brightness of the background of the login screen. 0.0 leaves unchanged, -1.0 makes it black and 1.0 white.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2621,10 +2967,9 @@ File in `backgrounds/`
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.LoginArea]
-
 <details name="loginareaposition">
 <summary><strong>position</strong></summary><br/>
 <p>Position of the login area.</p></br></br>
@@ -2641,29 +2986,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`left` `center` `right`
-
-</td>
-</tr>
-</table>
-</details>
-<details name="loginareaalign">
-<summary><strong>align</strong></summary><br/>
-<p>Alignment of the login area. Only applies if position is set to `left` or `right`.</p></br></br>
-<table>
-<tr>
-<td>Type</td></br>
-<td>string</td>
-</tr>
-<tr>
-<td>Default value</td>
-<td>center</td>
-</tr>
-<tr>
-<td>Possible values</td>
-<td>
-
-`left` `right`
+`left`   `center`   `right`
 
 </td>
 </tr>
@@ -2685,18 +3008,19 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.LoginArea.Avatar]
-
 <details name="avatarshape">
 <summary><strong>shape</strong></summary><br/>
-<p></p></br></br>
+<p>Shape of the avatar. <br/>See also: <a href="#avatarborderradius">border-radius<a></p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2710,7 +3034,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`circle` `square`
+`circle`    `square`
 
 </td>
 </tr>
@@ -2718,7 +3042,7 @@ File in `backgrounds/`
 </details>
 <details name="avatarborderradius">
 <summary><strong>border-radius</strong></summary><br/>
-<p></p></br></br>
+<p>Border radius of the 'square' avatar. <br/>See also: <a href="#avatarshape">shape<a></p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2732,13 +3056,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="avataractivesize">
 <summary><strong>active-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the selected user's avatar.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2752,13 +3078,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="avatarinactivesize">
 <summary><strong>inactive-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the non-selected user avatars.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2772,13 +3100,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="avatarinactiveopacity">
 <summary><strong>inactive-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the non-selected avatars.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2800,7 +3130,7 @@ File in `backgrounds/`
 </details>
 <details name="avataractivebordersize">
 <summary><strong>active-border-size</strong></summary><br/>
-<p></p></br></br>
+<p>Border size of the selected user's avatar.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2813,6 +3143,8 @@ File in `backgrounds/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -2820,7 +3152,7 @@ File in `backgrounds/`
 </details>
 <details name="avatarinactivebordersize">
 <summary><strong>inactive-border-size</strong></summary><br/>
-<p></p></br></br>
+<p>Border size of the non-selected avatars.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2834,13 +3166,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="avataractivebordercolor">
 <summary><strong>active-border-color</strong></summary><br/>
-<p></p></br></br>
+<p>Border color of the selected user's avatar.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2862,7 +3196,7 @@ File in `backgrounds/`
 </details>
 <details name="avatarinactivebordercolor">
 <summary><strong>inactive-border-color</strong></summary><br/>
-<p></p></br></br>
+<p>Border color of the non-selected avatars.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2883,13 +3217,12 @@ File in `backgrounds/`
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.LoginArea.Username]
-
 <details name="usernamefontfamily">
 <summary><strong>font-family</strong></summary><br/>
-<p></p></br></br>
+<p>Font family used for the username.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2903,13 +3236,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="usernamefontsize">
 <summary><strong>font-size</strong></summary><br/>
-<p></p></br></br>
+<p>Font size of the username.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2923,13 +3258,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="usernamefontweight">
 <summary><strong>font-weight</strong></summary><br/>
-<p></p></br></br>
+<p>Font weight of the username.  400 = regular, 600 = bold, 800 = black</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2943,13 +3280,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="usernamecolor">
 <summary><strong>color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the username.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2971,7 +3310,7 @@ File in `backgrounds/`
 </details>
 <details name="usernamemargin">
 <summary><strong>margin</strong></summary><br/>
-<p></p></br></br>
+<p>Distance of the username from the avatar.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2985,18 +3324,19 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.LoginArea.PasswordInput]
-
 <details name="passwordinputwidth">
 <summary><strong>width</strong></summary><br/>
-<p></p></br></br>
+<p>Width of the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3010,13 +3350,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="passwordinputheight">
 <summary><strong>height</strong></summary><br/>
-<p></p></br></br>
+<p>Height of the password field. This option also defines the size of the login button.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3030,13 +3372,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="passwordinputdisplayicon">
 <summary><strong>display-icon</strong></summary><br/>
-<p></p></br></br>
+<p>Whether or not to display the icon in the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3050,7 +3394,7 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -3058,7 +3402,7 @@ File in `backgrounds/`
 </details>
 <details name="passwordinputfontfamily">
 <summary><strong>font-family</strong></summary><br/>
-<p></p></br></br>
+<p>Font family of the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3072,13 +3416,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="passwordinputfontsize">
 <summary><strong>font-size</strong></summary><br/>
-<p></p></br></br>
+<p>Font size of the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3092,13 +3438,15 @@ File in `backgrounds/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="passwordinputicon">
 <summary><strong>icon</strong></summary><br/>
-<p></p></br></br>
+<p>Icon in the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3120,7 +3468,7 @@ File in `icons/`
 </details>
 <details name="passwordinputiconsize">
 <summary><strong>icon-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the icon inside the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3134,13 +3482,15 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="passwordinputcontentcolor">
 <summary><strong>content-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of text/icon in the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3162,7 +3512,7 @@ File in `icons/`
 </details>
 <details name="passwordinputbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
-<p></p></br></br>
+<p>Background color of the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3184,7 +3534,7 @@ File in `icons/`
 </details>
 <details name="passwordinputbackgroundopacity">
 <summary><strong>background-opacity</strong></summary><br/>
-<p></p></br></br>
+<p>Opacity of the background of the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3206,7 +3556,7 @@ File in `icons/`
 </details>
 <details name="passwordinputbordersize">
 <summary><strong>border-size</strong></summary><br/>
-<p></p></br></br>
+<p>Size of the border of the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3220,13 +3570,15 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 <details name="passwordinputbordercolor">
 <summary><strong>border-color</strong></summary><br/>
-<p></p></br></br>
+<p>Color of the border of the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3248,7 +3600,7 @@ File in `icons/`
 </details>
 <details name="passwordinputborderradiusleft">
 <summary><strong>border-radius-left</strong></summary><br/>
-<p></p></br></br>
+<p>Left border radius of the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3261,6 +3613,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -3268,7 +3622,7 @@ File in `icons/`
 </details>
 <details name="passwordinputborderradiusright">
 <summary><strong>border-radius-right</strong></summary><br/>
-<p></p></br></br>
+<p>Right border radius of the password field.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3281,6 +3635,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -3288,7 +3644,7 @@ File in `icons/`
 </details>
 <details name="passwordinputmargintop">
 <summary><strong>margin-top</strong></summary><br/>
-<p></p></br></br>
+<p>Distance of the password field/login button from the username.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -3302,15 +3658,16 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.LoginArea.LoginButton]
-
 <details name="loginbuttonbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
 <p></p></br></br>
@@ -3437,6 +3794,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -3501,6 +3860,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -3543,6 +3904,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -3562,6 +3925,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -3583,6 +3948,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -3603,7 +3970,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -3625,7 +3992,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -3647,6 +4014,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -3666,6 +4035,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -3687,17 +4058,128 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.LoginArea.Spinner]
+<details name="spinnerdisplaytext">
+<summary><strong>display-text</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>true</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
 
-<details name="spinnersize">
-<summary><strong>size</strong></summary><br/>
+`true`   `false`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="spinnertext">
+<summary><strong>text</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>string</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>Logging in</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
+<details name="spinnerfontfamily">
+<summary><strong>font-family</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>string</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>RedHatDisplay</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
+<details name="spinnerfontweight">
+<summary><strong>font-weight</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>int</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>600</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
+<details name="spinnerfontsize">
+<summary><strong>font-size</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>int</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
+<details name="spinnericonsize">
+<summary><strong>icon-size</strong></summary><br/>
 <p></p></br></br>
 <table>
 <tr>
@@ -3712,27 +4194,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-</td>
-</tr>
-</table>
-</details>
-<details name="spinnercolor">
-<summary><strong>color</strong></summary><br/>
-<p></p></br></br>
-<table>
-<tr>
-<td>Type</td></br>
-<td>color</td>
-</tr>
-<tr>
-<td>Default value</td>
-<td>#FFFFFF</td>
-</tr>
-<tr>
-<td>Possible values</td>
-<td>
 
-<a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
 
 </td>
 </tr>
@@ -3760,11 +4222,54 @@ File in `icons/`
 </tr>
 </table>
 </details>
+<details name="spinnercolor">
+<summary><strong>color</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>color</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>#FFFFFF</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
 
----
+<a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
+
+</td>
+</tr>
+</table>
+</details>
+<details name="spinnerspacing">
+<summary><strong>spacing</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>int</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
+
+-- --
 
 ## [LoginScreen.LoginArea.WarningMessage]
-
 <details name="warningmessagefontfamily">
 <summary><strong>font-family</strong></summary><br/>
 <p></p></br></br>
@@ -3780,6 +4285,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -3801,6 +4308,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -3820,6 +4329,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -3907,15 +4418,16 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.MenuArea.Buttons]
-
 <details name="menuareabuttonsmargintop">
 <summary><strong>margin-top</strong></summary><br/>
 <p></p></br></br>
@@ -3931,6 +4443,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -3952,6 +4466,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -3971,6 +4487,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -3992,6 +4510,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -4011,6 +4531,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -4032,6 +4554,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -4051,6 +4575,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -4072,15 +4598,16 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.MenuArea.Popups]
-
 <details name="menuareapopupsmaxheight">
 <summary><strong>max-height</strong></summary><br/>
 <p></p></br></br>
@@ -4096,6 +4623,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -4117,6 +4646,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -4136,6 +4667,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -4157,6 +4690,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -4177,7 +4712,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -4198,6 +4733,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -4351,6 +4888,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -4370,6 +4909,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -4413,6 +4954,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -4433,15 +4976,16 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.MenuArea.Session]
-
 <details name="sessiondisplay">
 <summary><strong>display</strong></summary><br/>
 <p></p></br></br>
@@ -4458,7 +5002,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -4480,7 +5024,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`top-left` `top-center` `top-right` `center-left` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td>
 </tr>
@@ -4502,6 +5046,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -4522,7 +5068,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`up` `down` `left` `right`
+`up`   `down`   `left`   `right`
 
 </td>
 </tr>
@@ -4544,7 +5090,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`start` `center` `end`
+`start`   `center`   `end`
 
 </td>
 </tr>
@@ -4566,14 +5112,14 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
 </table>
 </details>
-<details name="sessionmaxwidth">
-<summary><strong>max-width</strong></summary><br/>
+<details name="sessionbuttonwidth">
+<summary><strong>button-width</strong></summary><br/>
 <p></p></br></br>
 <table>
 <tr>
@@ -4587,6 +5133,30 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
+<details name="sessionpopupwidth">
+<summary><strong>popup-width</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>int</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>200</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
 
 </td>
 </tr>
@@ -4718,6 +5288,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -4737,6 +5309,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -4758,15 +5332,16 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.MenuArea.Layout]
-
 <details name="layoutdisplay">
 <summary><strong>display</strong></summary><br/>
 <p></p></br></br>
@@ -4783,7 +5358,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -4805,7 +5380,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`top-left` `top-center` `top-right` `center-left` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td>
 </tr>
@@ -4827,6 +5402,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -4847,7 +5424,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`up` `down` `left` `right`
+`up`   `down`   `left`   `right`
 
 </td>
 </tr>
@@ -4869,7 +5446,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`start` `center` `end`
+`start`   `center`   `end`
 
 </td>
 </tr>
@@ -4891,6 +5468,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -4911,7 +5490,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -5043,6 +5622,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -5062,6 +5643,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -5105,15 +5688,16 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.MenuArea.Keyboard]
-
 <details name="keyboarddisplay">
 <summary><strong>display</strong></summary><br/>
 <p></p></br></br>
@@ -5130,7 +5714,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -5152,7 +5736,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`top-left` `top-center` `top-right` `center-left` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td>
 </tr>
@@ -5173,6 +5757,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -5304,6 +5890,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -5346,15 +5934,16 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.MenuArea.Power]
-
 <details name="powerdisplay">
 <summary><strong>display</strong></summary><br/>
 <p></p></br></br>
@@ -5371,7 +5960,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -5393,7 +5982,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`top-left` `top-center` `top-right` `center-left` `center-right` `bottom-left` `bottom-center` `bottom-right`
+`top-left`   `top-center`   `top-right`   `center-left`   `center-right`   `bottom-left`   `bottom-center`   `bottom-right`
 
 </td>
 </tr>
@@ -5415,6 +6004,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -5435,7 +6026,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`up` `down` `left` `right`
+`up`   `down`   `left`   `right`
 
 </td>
 </tr>
@@ -5457,7 +6048,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`start` `center` `end`
+`start`   `center`   `end`
 
 </td>
 </tr>
@@ -5478,6 +6069,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -5609,6 +6202,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -5651,15 +6246,16 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
 
 ## [LoginScreen.VirtualKeyboard]
-
 <details name="virtualkeyboardscale">
 <summary><strong>scale</strong></summary><br/>
 <p></p></br></br>
@@ -5676,6 +6272,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -5690,11 +6288,13 @@ File in `icons/`
 </tr>
 <tr>
 <td>Default value</td>
-<td>bottom</td>
+<td>login</td>
 </tr>
 <tr>
 <td>Possible values</td>
 <td>
+
+`login`   `top`   `bottom`   `left`   `right`
 
 </td>
 </tr>
@@ -5716,7 +6316,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -5964,11 +6564,54 @@ File in `icons/`
 </tr>
 </table>
 </details>
+<details name="virtualkeyboardbordersize">
+<summary><strong>border-size</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>int</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
 
----
+
+
+</td>
+</tr>
+</table>
+</details>
+<details name="virtualkeyboardbordercolor">
+<summary><strong>border-color</strong></summary><br/>
+<p></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>color</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>#000000</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+<a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
+
+</td>
+</tr>
+</table>
+</details>
+
+-- --
 
 ## [Tooltips]
-
 <details name="tooltipsenable">
 <summary><strong>enable</strong></summary><br/>
 <p></p></br></br>
@@ -5985,7 +6628,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -6007,6 +6650,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -6026,6 +6671,8 @@ File in `icons/`
 <tr>
 <td>Possible values</td>
 <td>
+
+
 
 </td>
 </tr>
@@ -6113,6 +6760,8 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+
+
 </td>
 </tr>
 </table>
@@ -6133,7 +6782,7 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
@@ -6155,11 +6804,11 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
-`true` `false`
+`true`   `false`
 
 </td>
 </tr>
 </table>
 </details>
 
----
+-- --
