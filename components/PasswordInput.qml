@@ -136,16 +136,6 @@ Item {
             bottomLeftRadius: Config.passwordInputBorderRadiusLeft
             topRightRadius: Config.passwordInputBorderRadiusRight
             bottomRightRadius: Config.passwordInputBorderRadiusRight
-            
-            // Smooth border transitions
-            Behavior on border.width {
-                enabled: Config.enableAnimations
-                NumberAnimation { duration: 150 }
-            }
-            Behavior on border.color {
-                enabled: Config.enableAnimations
-                ColorAnimation { duration: 150 }
-            }
         }
 
         Row {
