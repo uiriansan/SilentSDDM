@@ -29,8 +29,8 @@ Item {
             activeFocusOnTab: true
             focus: false
             onClicked: {
-                if (loginScreen.isSelectingUser) {
-                    loginScreen.isSelectingUser = false;
+                if (loginScreen.state === "selectingUser") {
+                    loginScreen.state = "normal";
                 } else {
                     popup.open();
                 }
@@ -124,8 +124,8 @@ Item {
             enabled: loginScreen.state === "normal" || popup.visible
             focus: false
             onClicked: {
-                if (loginScreen.isSelectingUser) {
-                    loginScreen.isSelectingUser = false;
+                if (loginScreen.state === "selectingUser") {
+                    loginScreen.state = "normal";
                 } else {
                     popup.open();
                 }
