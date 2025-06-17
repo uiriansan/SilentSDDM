@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Effects
 import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 
 Item {
     id: iconButton
@@ -35,8 +35,8 @@ Item {
     width: preferredWidth ? preferredWidth : buttonContentRow.width
     height: iconSize * 2
 
-    // Scale animation for press feedback
-    scale: mouseArea.pressed ? 0.95 : 1.0
+    // Enhanced scale animation for hover and press
+    scale: mouseArea.pressed ? 0.95 : (mouseArea.containsMouse ? 1.05 : 1.0)
     Behavior on scale {
         enabled: Config.enableAnimations
         NumberAnimation {
@@ -71,15 +71,16 @@ Item {
             }
         }
 
-        // Subtle glow effect when hovered
-        layer.enabled: iconButton.isHovered && Config.enableAnimations
-        layer.effect: MultiEffect {
-            shadowEnabled: true
-            shadowColor: iconButton.activeContentColor
-            shadowOpacity: 0.2
-            shadowBlur: 12
-            shadowHorizontalOffset: 0
-            shadowVerticalOffset: 0
+        // Simple glow effect when hovered
+        border.width: iconButton.isHovered ? 1 : 0
+        border.color: iconButton.activeContentColor
+        
+        Behavior on border.width {
+            enabled: Config.enableAnimations
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
         }
     }
 
@@ -192,14 +193,13 @@ Item {
                     }
                 }
 
-                MultiEffect {
+                ColorOverlay {
                     source: buttonIcon
                     anchors.fill: buttonIcon
-                    colorization: 1
-                    colorizationColor: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
+                    color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
                     
                     // Smooth color transitions
-                    Behavior on colorizationColor {
+                    Behavior on color {
                         enabled: Config.enableAnimations
                         ColorAnimation {
                             duration: 200
