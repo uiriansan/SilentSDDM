@@ -21,7 +21,6 @@ InputPanel {
     }
 
     property string pos: Config.virtualKeyboardPosition
-    property point loginLayoutPosition: loginContainer.mapToGlobal(loginLayout.x, loginLayout.y)
     property bool vKeyboardMoved: false
 
     x: {
@@ -53,11 +52,8 @@ InputPanel {
         } else {
             // pos === "login"
             if (!vKeyboardMoved) {
-                if (loginMessage.visible && Config.loginAreaPosition !== "right" && Config.loginAreaPosition !== "left") {
-                    return loginLayoutPosition.y + loginLayout.height + loginMessage.height * 2 + Config.warningMessageMarginTop + Config.warningMessageMarginTop;
-                } else {
-                    return loginLayoutPosition.y + loginLayout.height + loginMessage.height * 2 + Config.warningMessageMarginTop;
-                }
+                // Safe fallback positioning when loginMessage/loginLayout are not accessible
+                return parent.height - inputPanel.height - 50; // 50px margin from bottom
             }
             return y;
         }
