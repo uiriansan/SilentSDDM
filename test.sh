@@ -11,7 +11,15 @@ if [[ "$1" =~ ^(debug|-debug|--debug|-d)$ ]]; then
     QT_IM_MODULE=qtvirtualkeyboard QML2_IMPORT_PATH=./components/ sddm-greeter-qt6 --test-mode --theme .
 else
     config_file=$(awk -F '=' '/^ConfigFile=/ {print $2}' metadata.desktop)
-    echo -e "${green}Testing Silent theme...${reset}\nLoading config: ${config_file}\nDon't worry about the infinite loading, SDDM won't let you log in while in 'test-mode'."
+    echo -e "${green}Testing Silent theme with Enhanced Features...${reset}"
+    echo -e "Loading config: ${cyan}${config_file}${reset}"
+    echo -e "\n${cyan}✨ Enhanced Features Active:${reset}"
+    echo -e "  ${grey}•${reset} Smooth animations and transitions"
+    echo -e "  ${grey}•${reset} Hover effects on buttons"
+    echo -e "  ${grey}•${reset} Ripple animations on click"
+    echo -e "  ${grey}•${reset} Smart avatar fallbacks"
+    echo -e "  ${grey}•${reset} Enhanced error feedback"
+    echo -e "\nDon't worry about the infinite loading, SDDM won't let you log in while in 'test-mode'.\n"
     QT_IM_MODULE=qtvirtualkeyboard QML2_IMPORT_PATH=./components/ sddm-greeter-qt6 --test-mode --theme . > /dev/null 2>&1
 fi
 

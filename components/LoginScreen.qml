@@ -31,23 +31,46 @@ Item {
 
     function login() {
         if (password.text.length > 0 || !userNeedsPassword) {
+            // Clear any existing errors
+            password.clearError();
+            loginMessage.clear();
+            
             loginScreen.state = "authenticating";
             sddm.login(userName, password.text, sessionIndex);
+        } else if (userNeedsPassword) {
+            // Trigger password field error for empty password
+            password.triggerError("Password required");
+            loginMessage.warn("Please enter your password", "error");
         }
     }
+    
     Connections {
         function onLoginSucceeded() {
             loginContainer.scale = 0.0;
         }
         function onLoginFailed() {
             loginScreen.state = "normal";
+            
+            // Enhanced error feedback
+            password.triggerError("Invalid password");
             loginMessage.warn(textConstants.loginFailed, "error");
-            password.text = "";
+            
+            // Clear password after a delay to allow user to see the error
+            clearPasswordTimer.start();
         }
         function onInformationMessage(message) {
             loginMessage.warn(message, "error");
         }
         target: sddm
+    }
+    
+    // Timer to clear password after login failure
+    Timer {
+        id: clearPasswordTimer
+        interval: 1500
+        onTriggered: {
+            password.text = "";
+        }
     }
 
     function updateCapsLock() {
@@ -65,6 +88,7 @@ Item {
             loginButton.forceActiveFocus();
         }
     }
+
 
     Item {
         id: loginContainer
@@ -208,6 +232,10 @@ Item {
                     visible: loginScreen.userNeedsPassword
                     onAccepted: {
                         loginScreen.login();
+                    }
+                    onErrorOccurred: function(message) {
+                        // Additional error handling if needed
+                        console.log("Password error:", message);
                     }
                 }
 

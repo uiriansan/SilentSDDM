@@ -10,6 +10,7 @@ Item {
 
     property bool active: false
     readonly property bool isActive: active || focus || mouseArea.pressed || mouseArea.containsMouse
+    readonly property bool isHovered: mouseArea.containsMouse
     property string icon: ""
     property int iconSize: 16
     property color contentColor: "#FFFFFF"
@@ -31,8 +32,18 @@ Item {
     property color borderColor: isActive ? iconButton.activeContentColor : iconButton.contentColor
     property var preferredWidth: undefined
 
-    width: preferredWidth ? preferredWidth : buttonContentRow.width // childrenRect doesn't update for some reason
+    width: preferredWidth ? preferredWidth : buttonContentRow.width
     height: iconSize * 2
+
+    // Scale animation for press feedback
+    scale: mouseArea.pressed ? 0.95 : 1.0
+    Behavior on scale {
+        enabled: Config.enableAnimations
+        NumberAnimation {
+            duration: 100
+            easing.type: Easing.OutCubic
+        }
+    }
 
     Rectangle {
         id: buttonBackground
@@ -44,10 +55,85 @@ Item {
         bottomLeftRadius: iconButton.borderRadiusLeft
         bottomRightRadius: iconButton.borderRadiusRight
 
+        // Enhanced transitions
         Behavior on opacity {
             enabled: Config.enableAnimations
             NumberAnimation {
-                duration: 250
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
+        }
+        Behavior on color {
+            enabled: Config.enableAnimations
+            ColorAnimation {
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
+        }
+
+        // Subtle glow effect when hovered
+        layer.enabled: iconButton.isHovered && Config.enableAnimations
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: iconButton.activeContentColor
+            shadowOpacity: 0.2
+            shadowBlur: 12
+            shadowHorizontalOffset: 0
+            shadowVerticalOffset: 0
+        }
+    }
+
+    // Ripple effect on click
+    Rectangle {
+        id: rippleEffect
+        anchors.centerIn: parent
+        width: 0
+        height: 0
+        radius: width / 2
+        color: iconButton.activeContentColor
+        opacity: 0
+        topLeftRadius: iconButton.borderRadiusLeft
+        topRightRadius: iconButton.borderRadiusRight
+        bottomLeftRadius: iconButton.borderRadiusLeft
+        bottomRightRadius: iconButton.borderRadiusRight
+
+        SequentialAnimation {
+            id: rippleAnimation
+            running: false
+            ParallelAnimation {
+                NumberAnimation {
+                    target: rippleEffect
+                    property: "width"
+                    to: Math.max(iconButton.width, iconButton.height) * 2
+                    duration: 300
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    target: rippleEffect
+                    property: "height"
+                    to: Math.max(iconButton.width, iconButton.height) * 2
+                    duration: 300
+                    easing.type: Easing.OutCubic
+                }
+                SequentialAnimation {
+                    NumberAnimation {
+                        target: rippleEffect
+                        property: "opacity"
+                        to: 0.3
+                        duration: 100
+                    }
+                    NumberAnimation {
+                        target: rippleEffect
+                        property: "opacity"
+                        to: 0
+                        duration: 200
+                    }
+                }
+            }
+            onFinished: {
+                rippleEffect.width = 0;
+                rippleEffect.height = 0;
+                rippleEffect.opacity = 0;
             }
         }
     }
@@ -87,10 +173,22 @@ Item {
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
                 opacity: iconButton.enabled ? 1.0 : 0.3
+                
+                // Enhanced scale animation for icon
+                scale: iconButton.isHovered ? 1.1 : 1.0
+                
                 Behavior on opacity {
                     enabled: Config.enableAnimations
                     NumberAnimation {
-                        duration: 250
+                        duration: 200
+                        easing.type: Easing.OutCubic
+                    }
+                }
+                Behavior on scale {
+                    enabled: Config.enableAnimations
+                    NumberAnimation {
+                        duration: 200
+                        easing.type: Easing.OutCubic
                     }
                 }
 
@@ -99,6 +197,15 @@ Item {
                     anchors.fill: buttonIcon
                     colorization: 1
                     colorizationColor: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
+                    
+                    // Smooth color transitions
+                    Behavior on colorizationColor {
+                        enabled: Config.enableAnimations
+                        ColorAnimation {
+                            duration: 200
+                            easing.type: Easing.OutCubic
+                        }
+                    }
                 }
             }
         }
@@ -134,7 +241,12 @@ Item {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: parent.enabled
-        onClicked: iconButton.clicked()
+        onClicked: {
+            if (Config.enableAnimations) {
+                rippleAnimation.start();
+            }
+            iconButton.clicked();
+        }
         cursorShape: Qt.PointingHandCursor
         ToolTip {
             parent: mouseArea

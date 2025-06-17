@@ -194,5 +194,7 @@ Item {
                 }
             }
         }
+    
+        focus: true // Enable keyboard input for main interactions
     }
 }

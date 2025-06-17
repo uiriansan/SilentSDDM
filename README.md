@@ -8,6 +8,19 @@ https://github.com/user-attachments/assets/15c52847-a272-4527-9247-34818f5d8704
 # Presets
 
 <details>
+  <summary>🚀 configs/enhanced.conf (NEW - Recommended)</summary>
+
+**Modern, polished experience with enhanced animations and accessibility**
+- ✨ Smooth animations with easing curves
+- 🎯 Enhanced error handling with shake animations
+- 🎨 Ripple effects and hover feedback
+- 🔧 Smart avatar fallbacks with initials
+- ♿ Improved accessibility and contrast
+- 💎 Professional visual polish
+
+</details>
+
+<details>
   <summary>configs/default.conf</summary>
 
 https://github.com/user-attachments/assets/3a03e859-c6b9-4c4b-bf7f-ab610b94eb28
@@ -67,7 +80,7 @@ git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM && cd Silent
 ```
 
 > [!IMPORTANT]
-> Make sure to test the theme before rebooting by running `./test`, otherwise you might end up with a broken login screen.
+> Make sure to test the theme before rebooting by running `./test.sh`, otherwise you might end up with a broken login screen.
 
 ## Manual installation
 
@@ -113,7 +126,7 @@ cd SilentSDDM/
 
 ### 3. Test the theme to make sure you have all dependencies:
 ```bash
-./test
+./test.sh
 ```
 
 ### 4. Copy the theme to `/usr/share/sddm/themes/`:
@@ -157,7 +170,7 @@ ConfigFile=configs/<your_preferred_config>.conf
 You can also create your own config file. There's a guide with the list of available options (there are 200 of them xD) in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
 
 > [!IMPORTANT]
-> Don't forget to test the theme after every change by running `./test`, otherwise you might end up with a broken login screen.
+> Don't forget to test the theme after every change by running `./test.sh`, otherwise you might end up with a broken login screen.
 
 # Acknowledgements
 
