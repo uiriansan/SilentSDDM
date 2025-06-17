@@ -270,7 +270,7 @@ Item {
                 PasswordInput {
                     id: password
                     Layout.alignment: Qt.AlignHCenter
-                    enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating" && loginScreen.state === "normal" && !isLockedOut
+                    enabled: loginScreen.state === "normal" && !isLockedOut
                     visible: loginScreen.userNeedsPassword
                     onAccepted: {
                         loginScreen.login();
@@ -287,7 +287,7 @@ Item {
                     Layout.preferredWidth: width // Fix button not resizing when label updates
                     height: password.height
                     visible: !Config.loginButtonHideIfNotNeeded || !loginScreen.userNeedsPassword
-                    enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating" && !isLockedOut
+                    enabled: loginScreen.state === "normal" && !isLockedOut
                     activeFocusOnTab: true
                     icon: Config.getIcon(Config.loginButtonIcon)
                     label: textConstants.login.toUpperCase()
