@@ -28,6 +28,11 @@ Item {
     property string userRealName: ""
     property string userIcon: ""
     property bool userNeedsPassword: false
+    
+    // Lockout properties
+    property int failedAttempts: 0
+    property int lockoutDuration: 0
+    property bool isLockedOut: false
 
     function login() {
         if (password.text.length > 0 || !userNeedsPassword) {
@@ -47,13 +52,26 @@ Item {
     Connections {
         function onLoginSucceeded() {
             loginContainer.scale = 0.0;
+            // Reset failed attempts on successful login
+            failedAttempts = 0;
         }
         function onLoginFailed() {
             loginScreen.state = "normal";
+            failedAttempts++;
             
             // Enhanced error feedback
             password.triggerError("Invalid password");
-            loginMessage.warn(textConstants.loginFailed, "error");
+            
+            // Check if lockout should be triggered
+            if (failedAttempts >= 3) {
+                isLockedOut = true;
+                lockoutDuration = 600; // 10 minutes in seconds
+                lockoutTimer.start();
+                loginMessage.warn("Too many failed attempts. Locked for 10:00", "error");
+            } else {
+                var attemptText = textConstants.loginFailed + " (" + failedAttempts + "/3)";
+                loginMessage.warn(attemptText, "error");
+            }
             
             // Clear password after a delay to allow user to see the error
             clearPasswordTimer.start();
@@ -70,6 +88,30 @@ Item {
         interval: 1500
         onTriggered: {
             password.text = "";
+        }
+    }
+    
+    // Lockout countdown timer
+    Timer {
+        id: lockoutTimer
+        interval: 1000 // Update every second
+        repeat: true
+        onTriggered: {
+            lockoutDuration--;
+            if (lockoutDuration <= 0) {
+                // Lockout expired
+                isLockedOut = false;
+                failedAttempts = 0;
+                stop();
+                loginMessage.clear();
+            } else {
+                // Update countdown display
+                var minutes = Math.floor(lockoutDuration / 60);
+                var seconds = lockoutDuration % 60;
+                var secondsStr = seconds < 10 ? "0" + seconds : seconds;
+                var timeString = minutes + ":" + secondsStr;
+                loginMessage.warn("Account locked. Try again in " + timeString, "error");
+            }
         }
     }
 
@@ -228,7 +270,7 @@ Item {
                 PasswordInput {
                     id: password
                     Layout.alignment: Qt.AlignHCenter
-                    enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating" && loginScreen.state === "normal"
+                    enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating" && loginScreen.state === "normal" && !isLockedOut
                     visible: loginScreen.userNeedsPassword
                     onAccepted: {
                         loginScreen.login();
@@ -245,7 +287,7 @@ Item {
                     Layout.preferredWidth: width // Fix button not resizing when label updates
                     height: password.height
                     visible: !Config.loginButtonHideIfNotNeeded || !loginScreen.userNeedsPassword
-                    enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
+                    enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating" && !isLockedOut
                     activeFocusOnTab: true
                     icon: Config.getIcon(Config.loginButtonIcon)
                     label: textConstants.login.toUpperCase()
