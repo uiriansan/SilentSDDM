@@ -13,9 +13,9 @@ Canvas {
     property string userName: ""
     property string shape: Config.avatarShape
     property int squareRadius: Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius
-    property bool drawStroke: (active && Config.avatarActiveBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)
-    property color strokeColor: active ? Config.avatarActiveBorderColor : Config.avatarInactiveBorderColor
-    property int strokeSize: active ? Config.avatarActiveBorderSize : Config.avatarInactiveBorderSize
+    property bool drawStroke: false  // Disabled borders
+    property color strokeColor: "transparent"
+    property int strokeSize: 0
     property string tooltipText: ""
     property bool showTooltip: false
     property bool imageLoaded: false
@@ -75,7 +75,7 @@ Canvas {
 
         // Create clipping path
         if (shape === "square") {
-            const r = width * squareRadius / 100;
+            const r = width > 0 ? width * squareRadius / 100 : 0;
             ctx.moveTo(width - r, 0);
             ctx.arcTo(width, 0, width, height, r);
             ctx.arcTo(width, height, 0, height, r);
@@ -87,17 +87,15 @@ Canvas {
         }
         ctx.clip();
 
-        // Try to load image, fallback to initials
+        // Always use user-default.png, ignore system avatar
         let imageDrawn = false;
-        if (source && source !== "") {
-            try {
-                ctx.drawImage(source, 0, 0, width, height);
-                imageLoaded = true;
-                imageDrawn = true;
-            } catch (e) {
-                console.log("Failed to load avatar image:", source);
-                imageLoaded = false;
-            }
+        try {
+            ctx.drawImage(Qt.resolvedUrl("../icons/user-default.png"), 0, 0, width, height);
+            imageLoaded = true;
+            imageDrawn = true;
+        } catch (e) {
+            console.log("Failed to load user-default.png:", e);
+            imageLoaded = false;
         }
 
         // Fallback: Draw initials with colored background
@@ -114,10 +112,12 @@ Canvas {
             // Draw initials
             const initials = getInitials(userName);
             ctx.fillStyle = "#FFFFFF";
-            ctx.font = `${Math.floor(width * 0.4)}px ${Config.usernameFontFamily}`;
+            ctx.font = `${Math.floor(width > 0 ? width * 0.4 : 16)}px ${Config.usernameFontFamily}`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(initials, width / 2, height / 2);
+            const centerX = width > 0 ? width / 2 : 0;
+            const centerY = height > 0 ? height / 2 : 0;
+            ctx.fillText(initials, centerX, centerY);
         }
 
         // Enhanced border with glow effect

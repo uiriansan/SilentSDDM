@@ -122,15 +122,11 @@ Item {
             }
         }
 
-        // Enhanced border with focus and error states
+        // Border disabled - no white outline
         Rectangle {
             anchors.fill: parent
-            border.width: passwordInput.hasError ? 2 :
-                         textField.activeFocus ? Math.max(Config.passwordInputBorderSize, 1) :
-                         Config.passwordInputBorderSize
-            border.color: passwordInput.hasError ? "#FF6B6B" :
-                         textField.activeFocus ? Qt.lighter(Config.passwordInputBorderColor, 1.3) :
-                         Config.passwordInputBorderColor
+            border.width: 0  // No border
+            border.color: "transparent"
             color: "transparent"
             topLeftRadius: Config.passwordInputBorderRadiusLeft
             bottomLeftRadius: Config.passwordInputBorderRadiusLeft

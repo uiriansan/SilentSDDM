@@ -106,8 +106,8 @@ Item {
                 loginMessage.clear();
             } else {
                 // Update countdown display
-                var minutes = Math.floor(lockoutDuration / 60);
-                var seconds = lockoutDuration % 60;
+                var minutes = lockoutDuration > 0 ? Math.floor(lockoutDuration / 60) : 0;
+                var seconds = lockoutDuration > 0 ? lockoutDuration % 60 : 0;
                 var secondsStr = seconds < 10 ? "0" + seconds : seconds;
                 var timeString = minutes + ":" + secondsStr;
                 loginMessage.warn("Account locked. Try again in " + timeString, "error");
