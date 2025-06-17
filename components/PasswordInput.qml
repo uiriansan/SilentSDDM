@@ -20,32 +20,34 @@ Item {
     width: Config.passwordInputWidth
     height: Config.passwordInputHeight
 
-    // Error shake animation
+    // Error shake animation - Fixed to use relative values
+    property real originalX: x
     SequentialAnimation {
         id: shakeAnimation
         running: false
+        onStarted: originalX = passwordInput.x
         NumberAnimation {
             target: passwordInput
             property: "x"
-            to: passwordInput.x + 5
+            to: originalX + 5
             duration: 50
         }
         NumberAnimation {
             target: passwordInput
             property: "x"
-            to: passwordInput.x - 5
+            to: originalX - 5
             duration: 50
         }
         NumberAnimation {
             target: passwordInput
             property: "x"
-            to: passwordInput.x + 3
+            to: originalX + 3
             duration: 50
         }
         NumberAnimation {
             target: passwordInput
             property: "x"
-            to: passwordInput.x
+            to: originalX
             duration: 50
         }
     }
@@ -113,7 +115,7 @@ Item {
             }
         }
         
-        leftPadding: placeholderLabel.x
+        leftPadding: Config.passwordInputDisplayIcon ? iconContainer.width + 2 : 10
         rightPadding: 10
         onAccepted: passwordInput.accepted()
         onTextChanged: {
