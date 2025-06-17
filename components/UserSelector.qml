@@ -91,7 +91,8 @@ Item {
             Avatar {
                 width: parent.width
                 height: parent.height
-                source: model.icon
+                source: Qt.resolvedUrl("../icons/user-default.png")
+                userName: model.name
                 active: index === userList.currentIndex
                 opacity: active ? 1.0 : Config.avatarInactiveOpacity
                 enabled: userModel.rowCount() > 1 // No need to open the selector if there's only one user
@@ -143,11 +144,15 @@ Item {
             selector.focus = false;
             event.accepted = true;
         } else if ((selector.orientation === "horizontal" && event.key == Qt.Key_Left) || (selector.orientation === "vertical" && event.key == Qt.Key_Up)) {
-            userList.currentIndex = (userList.currentIndex + userModel.rowCount() - 1) % userModel.rowCount();
+            if (userModel.rowCount() > 0) {
+                userList.currentIndex = (userList.currentIndex + userModel.rowCount() - 1) % userModel.rowCount();
+            }
             selector.focus = true;
             event.accepted = true;
         } else if ((selector.orientation === "horizontal" && event.key == Qt.Key_Right) || (selector.orientation === "vertical" && event.key == Qt.Key_Down)) {
-            userList.currentIndex = (userList.currentIndex + userModel.rowCount() + 1) % userModel.rowCount();
+            if (userModel.rowCount() > 0) {
+                userList.currentIndex = (userList.currentIndex + userModel.rowCount() + 1) % userModel.rowCount();
+            }
             selector.focus = true;
             event.accepted = true;
         } else if (event.key === Qt.Key_CapsLock) {

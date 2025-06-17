@@ -15,8 +15,13 @@ ColumnLayout {
 
     function updateLayout() {
         keyboard.currentLayout = selector.currentLayoutIndex;
-        selector.layoutName = keyboard.layouts[selector.currentLayoutIndex].longName;
-        selector.layoutShortName = keyboard.layouts[selector.currentLayoutIndex].shortName;
+        if (keyboard && keyboard.layouts.length > 0 && selector.currentLayoutIndex < keyboard.layouts.length) {
+            selector.layoutName = keyboard.layouts[selector.currentLayoutIndex].longName;
+            selector.layoutShortName = keyboard.layouts[selector.currentLayoutIndex].shortName;
+        } else {
+            selector.layoutName = "";
+            selector.layoutShortName = "";
+        }
         selector.layoutChanged(selector.currentLayoutIndex);
     }
 
@@ -143,11 +148,15 @@ ColumnLayout {
     }
     Keys.onPressed: event => {
         if (event.key === Qt.Key_Down) {
-            selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length + 1) % keyboard.layouts.length;
-            selector.updateLayout();
+            if (keyboard && keyboard.layouts.length > 0) {
+                selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length + 1) % keyboard.layouts.length;
+                selector.updateLayout();
+            }
         } else if (event.key === Qt.Key_Up) {
-            selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length - 1) % keyboard.layouts.length;
-            selector.updateLayout();
+            if (keyboard && keyboard.layouts.length > 0) {
+                selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length - 1) % keyboard.layouts.length;
+                selector.updateLayout();
+            }
         } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
             selector.close();
         } else if (event.key === Qt.Key_CapsLock) {
