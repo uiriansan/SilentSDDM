@@ -101,7 +101,13 @@ Item {
             // Background
             id: backgroundImage
             property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
-            property bool isVideo: ["avi", "mp4", "mov", "mkv", "m4v", "webm"].includes(tsource.toString().split(".").slice(-1)[0])
+            property bool isVideo: {
+                if (!tsource || tsource.toString().length === 0) return false;
+                const parts = tsource.toString().split(".");
+                if (parts.length === 0) return false;
+                const ext = parts[parts.length - 1];
+                return ["avi", "mp4", "mov", "mkv", "m4v", "webm"].includes(ext);
+            }
             property bool displayColor: root.state === "lockState" && Config.lockScreenUseBackgroundColor || root.state === "loginState" && Config.loginScreenUseBackgroundColor
             property string placeholder: Config.animatedBackgroundPlaceholder // Idea stolen from astronaut-theme. Not a fan of it, but works...
 

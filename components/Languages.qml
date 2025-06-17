@@ -232,10 +232,10 @@ QtObject {
     }
 
     function getKBCodeFor(country) {
-        return country ? layouts[country]["kb_code"] : "";
+        return (country && layouts[country] && layouts[country]["kb_code"]) ? layouts[country]["kb_code"] : "";
     }
 
     function getLabelFor(country) {
-        return layouts[country]["label"] || null;
+        return (country && layouts[country] && layouts[country]["label"]) ? layouts[country]["label"] : "";
     }
 }

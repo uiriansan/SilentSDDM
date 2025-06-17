@@ -48,7 +48,7 @@ ColumnLayout {
         id: layoutList
         visible: !noLayoutMessage.visible
         Layout.preferredWidth: parent.width
-        Layout.preferredHeight: Math.min(keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing, Config.menuAreaPopupsMaxHeight)
+        Layout.preferredHeight: Math.min((keyboard && keyboard.layouts ? keyboard.layouts.length : 0) * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing, Config.menuAreaPopupsMaxHeight)
         orientation: ListView.Vertical
         interactive: true
         clip: true

@@ -131,7 +131,7 @@ Item {
                 }
             }
             tooltipText: "Change keyboard layout"
-            label: showLabel ? (keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
+            label: showLabel ? (keyboard && keyboard.layouts && keyboard.layouts.length > 0 && keyboard.currentLayout < keyboard.layouts.length && keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
 
             Connections {
                 target: loginScreen
