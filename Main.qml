@@ -16,8 +16,21 @@ Item {
 
     // Break property binding so it doesn't lock to `keyboard.capsLock` state's.
     // `keyboard.capsLock` should be enough, but its value only updates once for some F*ing reason
-    property bool capsLockOn: {
-        capsLockOn = keyboard ? keyboard.capsLock : false;
+    property bool capsLockOn: false
+    
+    Component.onCompleted: {
+        if (keyboard) {
+            capsLockOn = keyboard.capsLock;
+        }
+    }
+    
+    Connections {
+        target: keyboard
+        function onCapsLockChanged() {
+            if (keyboard) {
+                capsLockOn = keyboard.capsLock;
+            }
+        }
     }
     onCapsLockOnChanged: {
         loginScreen.updateCapsLock();
