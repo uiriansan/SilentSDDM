@@ -50,11 +50,7 @@ InputPanel {
         } else if (pos === "right" || pos === "left") {
             return (parent.height - inputPanel.height) / 2;
         } else {
-            // pos === "login"
-            if (!vKeyboardMoved) {
-                // Safe fallback positioning when loginMessage/loginLayout are not accessible
-                return parent.height - inputPanel.height - 50; // 50px margin from bottom
-            }
+            // pos === "login" - will be positioned by loginScreen
             return y;
         }
     }

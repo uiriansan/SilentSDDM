@@ -13,9 +13,9 @@ Canvas {
     property string userName: ""
     property string shape: Config.avatarShape
     property int squareRadius: Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius
-    property bool drawStroke: false  // Disabled borders
-    property color strokeColor: "transparent"
-    property int strokeSize: 0
+    property bool drawStroke: Config.avatarBorderSize > 0
+    property color strokeColor: Config.avatarBorderColor
+    property int strokeSize: Config.avatarBorderSize
     property string tooltipText: ""
     property bool showTooltip: false
     property bool imageLoaded: false
@@ -87,14 +87,21 @@ Canvas {
         }
         ctx.clip();
 
-        // Always use user-default.png, ignore system avatar
+        // Try to draw user avatar first, fallback to default
         let imageDrawn = false;
         try {
-            ctx.drawImage(Qt.resolvedUrl("../icons/user-default.png"), 0, 0, width, height);
-            imageLoaded = true;
-            imageDrawn = true;
+            if (source && source !== "") {
+                ctx.drawImage(source, 0, 0, width, height);
+                imageLoaded = true;
+                imageDrawn = true;
+            } else {
+                // Fallback to default avatar
+                ctx.drawImage(Qt.resolvedUrl("../icons/user-default.png"), 0, 0, width, height);
+                imageLoaded = true;
+                imageDrawn = true;
+            }
         } catch (e) {
-            console.log("Failed to load user-default.png:", e);
+            console.log("Failed to load avatar image:", e);
             imageLoaded = false;
         }
 
@@ -120,13 +127,12 @@ Canvas {
             ctx.fillText(initials, centerX, centerY);
         }
 
-        // Enhanced border with glow effect
-        if (drawStroke) {
-            ctx.restore();
+        // Draw border if enabled
+        if (drawStroke && strokeSize > 0) {
             ctx.beginPath();
             
             if (shape === "square") {
-                const r = width * squareRadius / 100;
+                const r = width > 0 ? width * squareRadius / 100 : 0;
                 ctx.moveTo(width - r, 0);
                 ctx.arcTo(width, 0, width, height, r);
                 ctx.arcTo(width, height, 0, height, r);
@@ -140,13 +146,6 @@ Canvas {
             ctx.strokeStyle = strokeColor;
             ctx.lineWidth = strokeSize;
             ctx.stroke();
-            
-            // Add subtle glow for active avatar
-            if (active && Config.enableAnimations) {
-                ctx.shadowColor = strokeColor;
-                ctx.shadowBlur = strokeSize * 2;
-                ctx.stroke();
-            }
         }
     }
 

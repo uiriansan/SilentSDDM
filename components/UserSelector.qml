@@ -91,7 +91,7 @@ Item {
             Avatar {
                 width: parent.width
                 height: parent.height
-                source: Qt.resolvedUrl("../icons/user-default.png")
+                source: model.icon
                 userName: model.name
                 active: index === userList.currentIndex
                 opacity: active ? 1.0 : Config.avatarInactiveOpacity
