@@ -76,7 +76,7 @@ Item {
     TextField {
         id: textField
         anchors.fill: parent
-        color: passwordInput.hasError ? "#FF6B6B" : Config.passwordInputContentColor
+        color: passwordInput.hasError ? Config.warningMessageErrorColor : Config.passwordInputContentColor
         enabled: passwordInput.enabled
         echoMode: TextInput.Password
         activeFocusOnTab: true
@@ -107,7 +107,7 @@ Item {
             layer.enabled: textField.activeFocus && Config.enableAnimations
             layer.effect: MultiEffect {
                 shadowEnabled: true
-                shadowColor: passwordInput.hasError ? "#FF6B6B" : Config.passwordInputContentColor
+                shadowColor: passwordInput.hasError ? Config.warningMessageErrorColor : Config.passwordInputContentColor
                 shadowOpacity: 0.3
                 shadowBlur: 8
                 shadowHorizontalOffset: 0
@@ -124,11 +124,11 @@ Item {
             }
         }
 
-        // Border disabled - no white outline
+        // Configurable border
         Rectangle {
             anchors.fill: parent
-            border.width: 0  // No border
-            border.color: "transparent"
+            border.width: Config.passwordInputBorderSize
+            border.color: Config.passwordInputBorderColor
             color: "transparent"
             topLeftRadius: Config.passwordInputBorderRadiusLeft
             bottomLeftRadius: Config.passwordInputBorderRadiusLeft
@@ -170,7 +170,7 @@ Item {
                         source: parent
                         anchors.fill: parent
                         colorization: 1
-                        colorizationColor: passwordInput.hasError ? "#FF6B6B" : textField.color
+                        colorizationColor: passwordInput.hasError ? Config.warningMessageErrorColor : textField.color
                         
                         // Smooth color transitions
                         Behavior on colorizationColor {
@@ -209,7 +209,7 @@ Item {
                 padding: 0
                 visible: textField.text.length === 0 && textField.preeditText.length === 0
                 text: passwordInput.hasError ? passwordInput.errorMessage : textConstants.password
-                color: passwordInput.hasError ? "#FF6B6B" :
+                color: passwordInput.hasError ? Config.warningMessageErrorColor :
                        textField.activeFocus ? Qt.lighter(textField.color, 1.2) :
                        Qt.darker(textField.color, 1.3)
                 font.pixelSize: textField.font.pixelSize

@@ -45,6 +45,61 @@ Item {
         }
     }
 
+    // Subtle ripple effect on click
+    Rectangle {
+        id: rippleEffect
+        anchors.centerIn: parent
+        width: 0
+        height: 0
+        radius: width / 2
+        color: iconButton.activeContentColor
+        opacity: 0
+        topLeftRadius: iconButton.borderRadiusLeft
+        topRightRadius: iconButton.borderRadiusRight
+        bottomLeftRadius: iconButton.borderRadiusLeft
+        bottomRightRadius: iconButton.borderRadiusRight
+
+        SequentialAnimation {
+            id: rippleAnimation
+            running: false
+            ParallelAnimation {
+                NumberAnimation {
+                    target: rippleEffect
+                    property: "width"
+                    to: Math.max(iconButton.width, iconButton.height) * 1.3
+                    duration: 180
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    target: rippleEffect
+                    property: "height"
+                    to: Math.max(iconButton.width, iconButton.height) * 1.3
+                    duration: 180
+                    easing.type: Easing.OutCubic
+                }
+                SequentialAnimation {
+                    NumberAnimation {
+                        target: rippleEffect
+                        property: "opacity"
+                        to: 0.1
+                        duration: 60
+                    }
+                    NumberAnimation {
+                        target: rippleEffect
+                        property: "opacity"
+                        to: 0
+                        duration: 120
+                    }
+                }
+            }
+            onFinished: {
+                rippleEffect.width = 0;
+                rippleEffect.height = 0;
+                rippleEffect.opacity = 0;
+            }
+        }
+    }
+
     Rectangle {
         id: buttonBackground
         anchors.fill: parent
@@ -84,60 +139,6 @@ Item {
         }
     }
 
-    // Ripple effect on click
-    Rectangle {
-        id: rippleEffect
-        anchors.centerIn: parent
-        width: 0
-        height: 0
-        radius: width / 2
-        color: iconButton.activeContentColor
-        opacity: 0
-        topLeftRadius: iconButton.borderRadiusLeft
-        topRightRadius: iconButton.borderRadiusRight
-        bottomLeftRadius: iconButton.borderRadiusLeft
-        bottomRightRadius: iconButton.borderRadiusRight
-
-        SequentialAnimation {
-            id: rippleAnimation
-            running: false
-            ParallelAnimation {
-                NumberAnimation {
-                    target: rippleEffect
-                    property: "width"
-                    to: Math.max(iconButton.width, iconButton.height) * 2
-                    duration: 300
-                    easing.type: Easing.OutCubic
-                }
-                NumberAnimation {
-                    target: rippleEffect
-                    property: "height"
-                    to: Math.max(iconButton.width, iconButton.height) * 2
-                    duration: 300
-                    easing.type: Easing.OutCubic
-                }
-                SequentialAnimation {
-                    NumberAnimation {
-                        target: rippleEffect
-                        property: "opacity"
-                        to: 0.3
-                        duration: 100
-                    }
-                    NumberAnimation {
-                        target: rippleEffect
-                        property: "opacity"
-                        to: 0
-                        duration: 200
-                    }
-                }
-            }
-            onFinished: {
-                rippleEffect.width = 0;
-                rippleEffect.height = 0;
-                rippleEffect.opacity = 0;
-            }
-        }
-    }
 
     Rectangle {
         id: buttonBorder
@@ -242,7 +243,7 @@ Item {
         anchors.fill: parent
         hoverEnabled: parent.enabled
         onClicked: {
-            if (Config.enableAnimations) {
+            if (Config.enableAnimations && Config.enableRippleEffect) {
                 rippleAnimation.start();
             }
             iconButton.clicked();

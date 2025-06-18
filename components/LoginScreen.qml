@@ -44,8 +44,8 @@ Item {
             sddm.login(userName, password.text, sessionIndex);
         } else if (userNeedsPassword) {
             // Trigger password field error for empty password
-            password.triggerError("Password required");
-            loginMessage.warn("Please enter your password", "error");
+            password.triggerError(textConstants.emptyPassword);
+            loginMessage.warn(textConstants.emptyPassword, "error");
         }
     }
     
@@ -60,17 +60,27 @@ Item {
             failedAttempts++;
             
             // Enhanced error feedback
-            password.triggerError("Invalid password");
+            password.triggerError(textConstants.loginFailed);
             
-            // Check if lockout should be triggered
+            // Check if this might be PAM lockout (multiple failures in a row with correct attempts)
             if (failedAttempts >= 3) {
+                // Likely PAM lockout - show warning instead of error
+                loginMessage.warn(textConstants.pamMaxtriesError, "warning");
+                // Don't increment further attempts during PAM lockout
+                failedAttempts = 3;
+            } else if (Config.enableThemeLockout && failedAttempts >= Config.maxLoginAttempts) {
                 isLockedOut = true;
-                lockoutDuration = 600; // 10 minutes in seconds
+                lockoutDuration = Config.lockoutDurationMinutes * 60; // Convert minutes to seconds
                 lockoutTimer.start();
-                loginMessage.warn("Too many failed attempts. Locked for 10:00", "error");
-            } else {
-                var attemptText = textConstants.loginFailed + " (" + failedAttempts + "/3)";
+                var lockoutMinutes = Config.lockoutDurationMinutes;
+                var lockoutTime = lockoutMinutes + ":00";
+                loginMessage.warn(textConstants.pamMaxtriesError.replace("10 minutes", lockoutTime), "error");
+            } else if (Config.enableThemeLockout) {
+                var attemptText = textConstants.loginFailed + " (" + failedAttempts + "/" + Config.maxLoginAttempts + ")";
                 loginMessage.warn(attemptText, "error");
+            } else {
+                // Just show generic error when theme lockout is disabled (rely on PAM)
+                loginMessage.warn(textConstants.loginFailed, "error");
             }
             
             // Clear password after a delay to allow user to see the error
@@ -110,15 +120,15 @@ Item {
                 var seconds = lockoutDuration > 0 ? lockoutDuration % 60 : 0;
                 var secondsStr = seconds < 10 ? "0" + seconds : seconds;
                 var timeString = minutes + ":" + secondsStr;
-                loginMessage.warn("Account locked. Try again in " + timeString, "error");
+                loginMessage.warn(textConstants.pamMaxtriesError.replace("10 minutes", timeString), "error");
             }
         }
     }
 
     function updateCapsLock() {
-        if (root.capsLockOn && loginScreen.state !== "authenticating") {
+        if (root.capsLockOn && loginScreen.state !== "authenticating" && !(Config.enableThemeLockout && isLockedOut)) {
             loginMessage.warn(textConstants.capslockWarning, "warning");
-        } else {
+        } else if (!(Config.enableThemeLockout && isLockedOut)) {
             loginMessage.clear();
         }
     }
@@ -270,7 +280,7 @@ Item {
                 PasswordInput {
                     id: password
                     Layout.alignment: Qt.AlignHCenter
-                    enabled: loginScreen.state === "normal" && !isLockedOut
+                    enabled: loginScreen.state === "normal" && !(Config.enableThemeLockout && isLockedOut)
                     visible: loginScreen.userNeedsPassword
                     onAccepted: {
                         loginScreen.login();
@@ -287,7 +297,7 @@ Item {
                     Layout.preferredWidth: width // Fix button not resizing when label updates
                     height: password.height
                     visible: !Config.loginButtonHideIfNotNeeded || !loginScreen.userNeedsPassword
-                    enabled: loginScreen.state === "normal" && !isLockedOut
+                    enabled: loginScreen.state === "normal" && !(Config.enableThemeLockout && isLockedOut)
                     activeFocusOnTab: true
                     icon: Config.getIcon(Config.loginButtonIcon)
                     label: textConstants.login.toUpperCase()

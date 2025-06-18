@@ -50,8 +50,13 @@ InputPanel {
         } else if (pos === "right" || pos === "left") {
             return (parent.height - inputPanel.height) / 2;
         } else {
-            // pos === "login" - will be positioned by loginScreen
-            return y;
+            // pos === "login" - position relative to login area
+            if (loginScreen.loginContainer && loginScreen.loginContainer.y !== undefined) {
+                return loginScreen.loginContainer.y + loginScreen.loginContainer.height + 20;
+            } else {
+                // Fallback to bottom positioning if login container not accessible
+                return parent.height - inputPanel.height - Config.menuAreaButtonsMarginBottom;
+            }
         }
     }
     Behavior on y {

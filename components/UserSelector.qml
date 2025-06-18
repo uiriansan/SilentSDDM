@@ -91,12 +91,12 @@ Item {
             Avatar {
                 width: parent.width
                 height: parent.height
-                source: model.icon
+                source: Qt.resolvedUrl("../icons/user-default.png")
                 userName: model.name
                 active: index === userList.currentIndex
                 opacity: active ? 1.0 : Config.avatarInactiveOpacity
                 enabled: userModel.rowCount() > 1 // No need to open the selector if there's only one user
-                tooltipText: active && selector.listUsers ? "Close user selection" : (active && !listUsers ? "Select user" : `Select user ${model.name}`)
+                tooltipText: !Config.tooltipsDisableUser ? (active && selector.listUsers ? textConstants.closeUserSelection : (active && !listUsers ? textConstants.selectUser : textConstants.selectUser + " " + model.name)) : ""
                 showTooltip: selector.focus && !listUsers && active
 
                 Behavior on opacity {

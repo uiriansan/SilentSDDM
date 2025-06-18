@@ -34,7 +34,7 @@ ColumnLayout {
     Text {
         id: noLayoutMessage
         Layout.preferredWidth: parent.width - 5
-        text: "No keyboard layout could be found. This is a known issue with Wayland."
+        text: textConstants.noKeyboardLayout || "No keyboard layout could be found. This is a known issue with Wayland."
         visible: keyboard == undefined || keyboard.layouts.length === 0
         wrapMode: Text.Wrap
         horizontalAlignment: Text.AlignHCenter

@@ -9,6 +9,10 @@ import QtQuick
 QtObject {
     // [General]
     property bool enableAnimations: config['enable-animations'] === "false" ? false : true // @desc:Enable or disable all animations.
+    property bool enableRippleEffect: config['enable-ripple-effect'] === "false" ? false : true // @desc:Enable or disable ripple effect on button clicks.
+    property bool enableThemeLockout: config['enable-theme-lockout'] === "false" ? false : true // @desc:Enable theme-level lockout. If false, relies on PAM lockout only.
+    property int maxLoginAttempts: config.intValue("max-login-attempts") || 3 // @desc:Maximum number of failed login attempts before lockout.
+    property int lockoutDurationMinutes: config.intValue("lockout-duration-minutes") || 10 // @desc:Lockout duration in minutes after too many failed attempts.
     property string animatedBackgroundPlaceholder: config.stringValue("animated-background-placeholder") // @possible:File in `backgrounds/` @desc:An image file to be used as a placeholder for the animated background while it loads.
 
     // [LockScreen]
@@ -108,8 +112,7 @@ QtObject {
     property real loginButtonBackgroundOpacity: config.realValue("LoginScreen.LoginArea.LoginButton/background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the login button.
     property color loginButtonActiveBackgroundColor: config.stringValue("LoginScreen.LoginArea.LoginButton/active-background-color") || "#FFFFFF" // @desc:Background color of the login button when hovered/focused.
     property real loginButtonActiveBackgroundOpacity: config.realValue("LoginScreen.LoginArea.LoginButton/active-background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the login button when hovered/focused.
-    property string loginButtonIcon: config.stringValue("LoginScreen.LoginArea.LoginButton/icon") || "arrow-right.svg" // @possible:File in `icons/` @desc:Icon in the login button
-    property int loginButtonIconSize: config.intValue("LoginScreen.LoginArea.LoginButton/icon-size") || 18 // @desc:Size of the icon in the login button.
+    property string loginButtonIcon: config.stringValue("LoginScreen.LoginArea.LoginButton/icon") || "arrow-right.png" // @possible:File in `icons/` @desc:Icon in the login button    property int loginButtonIconSize: config.intValue("LoginScreen.LoginArea.LoginButton/icon-size") || 18 // @desc:Size of the icon in the login button.
     property color loginButtonContentColor: config.stringValue("LoginScreen.LoginArea.LoginButton/content-color") || "#FFFFFF" // @desc:Color of the icon/text in the login button.
     property color loginButtonActiveContentColor: config.stringValue("LoginScreen.LoginArea.LoginButton/active-content-color") || "#FFFFFF" // @desc:Color of the icon/text in the login button when hovered/focused.
     property int loginButtonBorderSize: config.intValue("LoginScreen.LoginArea.LoginButton/border-size") // @desc:Border size of the login button.
@@ -264,6 +267,10 @@ QtObject {
     property int tooltipsBorderRadius: config.intValue("Tooltips/border-radius") || 5 // @desc:Border radius of the tooltips.
     property bool tooltipsDisableUser: config.boolValue("Tooltips/disable-user") // @desc:If false, disables only the tooltip for the user selector.
     property bool tooltipsDisableLoginButton: config.boolValue("Tooltips/disable-login-button") // @desc:If false, disabled only the tooltip for the login button.
+    property bool tooltipsDisableSessionButton: config.boolValue("Tooltips/disable-session-button") // @desc:If false, disables only the tooltip for the session button.
+    property bool tooltipsDisableLayoutButton: config.boolValue("Tooltips/disable-layout-button") // @desc:If false, disables only the tooltip for the layout button.
+    property bool tooltipsDisableKeyboardButton: config.boolValue("Tooltips/disable-keyboard-button") // @desc:If false, disables only the tooltip for the keyboard button.
+    property bool tooltipsDisablePowerButton: config.boolValue("Tooltips/disable-power-button") // @desc:If false, disables only the tooltip for the power button.
 
     function sortMenuButtons() {
         const menus = [];

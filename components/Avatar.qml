@@ -9,20 +9,21 @@ Canvas {
     signal clickedOutside
 
     property bool active: false
+    property bool authenticating: false
     property string source: ""
     property string userName: ""
     property string shape: Config.avatarShape
     property int squareRadius: Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius
-    property bool drawStroke: Config.avatarBorderSize > 0
-    property color strokeColor: Config.avatarBorderColor
-    property int strokeSize: Config.avatarBorderSize
+    property bool drawStroke: (active ? Config.avatarActiveBorderSize : Config.avatarInactiveBorderSize) > 0
+    property color strokeColor: active ? Config.avatarActiveBorderColor : Config.avatarInactiveBorderColor
+    property int strokeSize: active ? Config.avatarActiveBorderSize : Config.avatarInactiveBorderSize
     property string tooltipText: ""
     property bool showTooltip: false
     property bool imageLoaded: false
     property bool isHovered: mouseArea.containsMouse && mouseArea.isCursorInsideAvatar()
 
-    // Enhanced visual feedback
-    scale: mouseArea.pressed ? 0.95 : (isHovered ? 1.05 : 1.0)
+    // Enhanced visual feedback - disabled when authenticating/locked
+    scale: authenticating ? 1.0 : (mouseArea.pressed ? 0.95 : (isHovered ? 1.05 : 1.0))
     opacity: active ? 1.0 : Config.avatarInactiveOpacity
     
     Behavior on scale {
@@ -44,7 +45,7 @@ Canvas {
     // Generate initials from username for fallback
     function getInitials(name) {
         if (!name || name.length === 0) return "?";
-        const words = name.trim().split(/\s+/);
+        var words = name.trim().split(/\s+/);
         if (words.length === 1) {
             return words[0].charAt(0).toUpperCase();
         }
@@ -54,11 +55,11 @@ Canvas {
     // Generate color from username
     function getUserColor(name) {
         if (!name) return "#6B7280";
-        let hash = 0;
-        for (let i = 0; i < name.length; i++) {
+        var hash = 0;
+        for (var i = 0; i < name.length; i++) {
             hash = name.charCodeAt(i) + ((hash << 5) - hash);
         }
-        const colors = [
+        var colors = [
             "#EF4444", "#F97316", "#F59E0B", "#EAB308",
             "#84CC16", "#22C55E", "#10B981", "#14B8A6",
             "#06B6D4", "#0EA5E9", "#3B82F6", "#6366F1",
@@ -69,13 +70,13 @@ Canvas {
 
     onSourceChanged: delayPaintTimer.running = true
     onPaint: {
-        const ctx = getContext("2d");
+        var ctx = getContext("2d");
         ctx.reset();
         ctx.beginPath();
 
         // Create clipping path
         if (shape === "square") {
-            const r = width > 0 ? width * squareRadius / 100 : 0;
+            var r = width > 0 ? width * squareRadius / 100 : 0;
             ctx.moveTo(width - r, 0);
             ctx.arcTo(width, 0, width, height, r);
             ctx.arcTo(width, height, 0, height, r);
@@ -87,16 +88,11 @@ Canvas {
         }
         ctx.clip();
 
-        // Try to draw user avatar first, fallback to default
-        let imageDrawn = false;
+        // Try to draw user avatar first, fallback to initials only
+        var imageDrawn = false;
         try {
             if (source && source !== "") {
                 ctx.drawImage(source, 0, 0, width, height);
-                imageLoaded = true;
-                imageDrawn = true;
-            } else {
-                // Fallback to default avatar
-                ctx.drawImage(Qt.resolvedUrl("../icons/user-default.png"), 0, 0, width, height);
                 imageLoaded = true;
                 imageDrawn = true;
             }
@@ -108,8 +104,8 @@ Canvas {
         // Fallback: Draw initials with colored background
         if (!imageDrawn || !imageLoaded) {
             // Background gradient
-            const gradient = ctx.createLinearGradient(0, 0, width, height);
-            const baseColor = getUserColor(userName);
+            var gradient = ctx.createLinearGradient(0, 0, width, height);
+            var baseColor = getUserColor(userName);
             gradient.addColorStop(0, baseColor);
             gradient.addColorStop(1, Qt.darker(baseColor, 1.2));
             
@@ -117,22 +113,24 @@ Canvas {
             ctx.fillRect(0, 0, width, height);
 
             // Draw initials
-            const initials = getInitials(userName);
+            var initials = getInitials(userName);
             ctx.fillStyle = "#FFFFFF";
-            ctx.font = `${Math.floor(width > 0 ? width * 0.4 : 16)}px ${Config.usernameFontFamily}`;
+            var fontSize = Math.max(Math.floor(width * 0.4), 16);
+            ctx.font = fontSize + "px " + Config.usernameFontFamily;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            const centerX = width > 0 ? width / 2 : 0;
-            const centerY = height > 0 ? height / 2 : 0;
+            var centerX = width / 2;
+            var centerY = height / 2;
             ctx.fillText(initials, centerX, centerY);
         }
 
-        // Draw border if enabled
-        if (drawStroke && strokeSize > 0) {
+        // Enhanced border with glow effect
+        if (drawStroke) {
+            ctx.restore();
             ctx.beginPath();
             
             if (shape === "square") {
-                const r = width > 0 ? width * squareRadius / 100 : 0;
+                var r = width * squareRadius / 100;
                 ctx.moveTo(width - r, 0);
                 ctx.arcTo(width, 0, width, height, r);
                 ctx.arcTo(width, height, 0, height, r);
@@ -146,13 +144,20 @@ Canvas {
             ctx.strokeStyle = strokeColor;
             ctx.lineWidth = strokeSize;
             ctx.stroke();
+            
+            // Add subtle glow for active avatar
+            if (active && Config.enableAnimations) {
+                ctx.shadowColor = strokeColor;
+                ctx.shadowBlur = strokeSize * 2;
+                ctx.stroke();
+            }
         }
     }
 
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        hoverEnabled: true
+        hoverEnabled: !authenticating
         cursorShape: Qt.ArrowCursor
 
         function isCursorInsideAvatar() {
@@ -162,21 +167,21 @@ Canvas {
                 return true;
 
             // Ellipse center and radius
-            const centerX = width / 2;
-            const centerY = height / 2;
-            const radiusX = centerX;
-            const radiusY = centerY;
+            var centerX = width / 2;
+            var centerY = height / 2;
+            var radiusX = centerX;
+            var radiusY = centerY;
 
             // Distance from center
-            const dx = (mouseArea.mouseX - centerX) / radiusX;
-            const dy = (mouseArea.mouseY - centerY) / radiusY;
+            var dx = (mouseArea.mouseX - centerX) / radiusX;
+            var dy = (mouseArea.mouseY - centerY) / radiusY;
 
             // Check if pointer is inside the ellipse
             return (dx * dx + dy * dy) <= 1.0;
         }
 
-        onReleased: mouse => {
-            const isInside = isCursorInsideAvatar();
+        onReleased: function(mouse) {
+            var isInside = isCursorInsideAvatar();
             if (isInside) {
                 avatar.clicked();
             } else {
@@ -186,7 +191,9 @@ Canvas {
         }
 
         function updateHover() {
-            if (isCursorInsideAvatar()) {
+            if (authenticating) {
+                cursorShape = Qt.ArrowCursor;
+            } else if (isCursorInsideAvatar()) {
                 cursorShape = Qt.PointingHandCursor;
             } else {
                 cursorShape = Qt.ArrowCursor;
