@@ -14,15 +14,15 @@ Item {
         id: textConstants
     }
 
-    // Break property binding so it doesn't lock to `keyboard.capsLock` state's.
-    // `keyboard.capsLock` should be enough, but its value only updates once for some F*ing reason
-    // FIX: Circular property binding fix
-    property bool capsLockOn: keyboard ? keyboard.capsLock : false
+    property bool capsLockOn: false
+    Component.onCompleted: {
+        if (keyboard)
+            capsLockOn = keyboard.capsLock;
+    }
     onCapsLockOnChanged: {
         loginScreen.updateCapsLock();
     }
 
-    // Maybe it would be a good idea to use StackLayout or something similar instead. Anyway, this works and I'm not touching it...
     states: [
         State {
             name: "lockState"
