@@ -50,10 +50,11 @@ Item {
         }
 
         anchors {
-            topMargin: Config.lockScreenPaddingTop || lockScreen.height / 10
-            rightMargin: Config.lockScreenPaddingRight || lockScreen.height / 10
-            bottomMargin: Config.lockScreenPaddingBottom || lockScreen.height / 10
-            leftMargin: Config.lockScreenPaddingLeft || lockScreen.height / 10
+            // FIX: Height calculation fixes - protect against zero division
+            topMargin: Config.lockScreenPaddingTop || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
+            rightMargin: Config.lockScreenPaddingRight || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
+            bottomMargin: Config.lockScreenPaddingBottom || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
+            leftMargin: Config.lockScreenPaddingLeft || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
         }
         Component.onCompleted: {
             lockScreen.alignItem(timePositioner, Config.clockPosition);
@@ -95,10 +96,11 @@ Item {
         }
 
         anchors {
-            topMargin: Config.lockScreenPaddingTop || lockScreen.height / 10
-            rightMargin: Config.lockScreenPaddingRight || lockScreen.height / 10
-            bottomMargin: Config.lockScreenPaddingBottom || lockScreen.height / 10
-            leftMargin: Config.lockScreenPaddingLeft || lockScreen.height / 10
+            // FIX: Height calculation fixes - protect against zero division
+            topMargin: Config.lockScreenPaddingTop || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
+            rightMargin: Config.lockScreenPaddingRight || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
+            bottomMargin: Config.lockScreenPaddingBottom || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
+            leftMargin: Config.lockScreenPaddingLeft || (lockScreen.height > 0 ? lockScreen.height / 10 : 50)
         }
         Component.onCompleted: lockScreen.alignItem(messagePositioner, Config.lockMessagePosition)
     }

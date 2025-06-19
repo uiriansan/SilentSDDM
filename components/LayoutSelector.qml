@@ -14,9 +14,12 @@ ColumnLayout {
     property string layoutShortName: ""
 
     function updateLayout() {
-        keyboard.currentLayout = selector.currentLayoutIndex;
-        selector.layoutName = keyboard.layouts[selector.currentLayoutIndex].longName;
-        selector.layoutShortName = keyboard.layouts[selector.currentLayoutIndex].shortName;
+        // FIX: Keyboard null checks
+        if (keyboard && keyboard.layouts && selector.currentLayoutIndex >= 0 && selector.currentLayoutIndex < keyboard.layouts.length) {
+            keyboard.currentLayout = selector.currentLayoutIndex;
+            selector.layoutName = keyboard.layouts[selector.currentLayoutIndex].longName;
+            selector.layoutShortName = keyboard.layouts[selector.currentLayoutIndex].shortName;
+        }
         selector.layoutChanged(selector.currentLayoutIndex);
     }
 
@@ -43,7 +46,8 @@ ColumnLayout {
         id: layoutList
         visible: !noLayoutMessage.visible
         Layout.preferredWidth: parent.width
-        Layout.preferredHeight: Math.min(keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing, Config.menuAreaPopupsMaxHeight)
+        // FIX: Keyboard null checks
+        Layout.preferredHeight: Math.min((keyboard && keyboard.layouts ? keyboard.layouts.length : 0) * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing, Config.menuAreaPopupsMaxHeight)
         orientation: ListView.Vertical
         interactive: true
         clip: true
@@ -51,7 +55,8 @@ ColumnLayout {
         spacing: Config.menuAreaPopupsSpacing
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 0
-        contentHeight: keyboard.layouts.length * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing
+        // FIX: Keyboard null checks
+        contentHeight: (keyboard && keyboard.layouts ? keyboard.layouts.length : 0) * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing
 
         ScrollBar.vertical: ScrollBar {
             id: scrollbar
@@ -64,7 +69,8 @@ ColumnLayout {
             }
         }
 
-        model: keyboard.layouts
+        // FIX: Keyboard null checks
+        model: keyboard && keyboard.layouts ? keyboard.layouts : []
 
         delegate: Rectangle {
             width: scrollbar.visible ? selector.width - Config.menuAreaPopupsPadding - scrollbar.width : selector.width
@@ -143,11 +149,17 @@ ColumnLayout {
     }
     Keys.onPressed: event => {
         if (event.key === Qt.Key_Down) {
-            selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length + 1) % keyboard.layouts.length;
-            selector.updateLayout();
+            // FIX: Keyboard null checks
+            if (keyboard && keyboard.layouts && keyboard.layouts.length > 0) {
+                selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length + 1) % keyboard.layouts.length;
+                selector.updateLayout();
+            }
         } else if (event.key === Qt.Key_Up) {
-            selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length - 1) % keyboard.layouts.length;
-            selector.updateLayout();
+            // FIX: Keyboard null checks
+            if (keyboard && keyboard.layouts && keyboard.layouts.length > 0) {
+                selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length - 1) % keyboard.layouts.length;
+                selector.updateLayout();
+            }
         } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
             selector.close();
         } else if (event.key === Qt.Key_CapsLock) {

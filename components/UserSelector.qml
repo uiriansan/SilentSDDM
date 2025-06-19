@@ -143,11 +143,17 @@ Item {
             selector.focus = false;
             event.accepted = true;
         } else if ((selector.orientation === "horizontal" && event.key == Qt.Key_Left) || (selector.orientation === "vertical" && event.key == Qt.Key_Up)) {
-            userList.currentIndex = (userList.currentIndex + userModel.rowCount() - 1) % userModel.rowCount();
+            // FIX: Division by zero protection
+            if (userModel.rowCount() > 0) {
+                userList.currentIndex = (userList.currentIndex + userModel.rowCount() - 1) % userModel.rowCount();
+            }
             selector.focus = true;
             event.accepted = true;
         } else if ((selector.orientation === "horizontal" && event.key == Qt.Key_Right) || (selector.orientation === "vertical" && event.key == Qt.Key_Down)) {
-            userList.currentIndex = (userList.currentIndex + userModel.rowCount() + 1) % userModel.rowCount();
+            // FIX: Division by zero protection
+            if (userModel.rowCount() > 0) {
+                userList.currentIndex = (userList.currentIndex + userModel.rowCount() + 1) % userModel.rowCount();
+            }
             selector.focus = true;
             event.accepted = true;
         } else if (event.key === Qt.Key_CapsLock) {
