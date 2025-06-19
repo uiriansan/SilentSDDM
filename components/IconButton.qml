@@ -66,29 +66,29 @@ Item {
                 NumberAnimation {
                     target: rippleEffect
                     property: "width"
-                    to: Math.max(iconButton.width, iconButton.height) * 1.3
-                    duration: 180
+                    to: Math.max(iconButton.width, iconButton.height) * 1.0
+                    duration: 150
                     easing.type: Easing.OutCubic
                 }
                 NumberAnimation {
                     target: rippleEffect
                     property: "height"
-                    to: Math.max(iconButton.width, iconButton.height) * 1.3
-                    duration: 180
+                    to: Math.max(iconButton.width, iconButton.height) * 1.0
+                    duration: 150
                     easing.type: Easing.OutCubic
                 }
                 SequentialAnimation {
                     NumberAnimation {
                         target: rippleEffect
                         property: "opacity"
-                        to: 0.1
-                        duration: 60
+                        to: 0.06
+                        duration: 50
                     }
                     NumberAnimation {
                         target: rippleEffect
                         property: "opacity"
                         to: 0
-                        duration: 120
+                        duration: 100
                     }
                 }
             }
