@@ -62,19 +62,19 @@ Item {
             // Enhanced error feedback
             password.triggerError(textConstants.loginFailed);
             
-            // Check if this might be PAM lockout (multiple failures in a row with correct attempts)
-            if (failedAttempts >= 3) {
-                // Likely PAM lockout - show warning instead of error
-                loginMessage.warn(textConstants.pamMaxtriesError, "warning");
-                // Don't increment further attempts during PAM lockout
-                failedAttempts = 3;
-            } else if (Config.enableThemeLockout && failedAttempts >= Config.maxLoginAttempts) {
+            // Check theme lockout first (if enabled)
+            if (Config.enableThemeLockout && failedAttempts >= Config.maxLoginAttempts) {
                 isLockedOut = true;
                 lockoutDuration = Config.lockoutDurationMinutes * 60; // Convert minutes to seconds
                 lockoutTimer.start();
                 var lockoutMinutes = Config.lockoutDurationMinutes;
                 var lockoutTime = lockoutMinutes + ":00";
                 loginMessage.warn(textConstants.pamMaxtriesError.replace("10 minutes", lockoutTime), "error");
+            } else if (failedAttempts >= 5) {
+                // Likely PAM lockout after many failures - show warning instead of error
+                loginMessage.warn(textConstants.pamMaxtriesError, "warning");
+                // Don't increment further attempts during PAM lockout
+                failedAttempts = 5;
             } else if (Config.enableThemeLockout) {
                 var attemptText = textConstants.loginFailed + " (" + failedAttempts + "/" + Config.maxLoginAttempts + ")";
                 loginMessage.warn(attemptText, "error");
@@ -83,22 +83,13 @@ Item {
                 loginMessage.warn(textConstants.loginFailed, "error");
             }
             
-            // Clear password after a delay to allow user to see the error
-            clearPasswordTimer.start();
+            // Clear password immediately and allow user to start typing right away
+            password.text = "";
         }
         function onInformationMessage(message) {
             loginMessage.warn(message, "error");
         }
         target: sddm
-    }
-    
-    // Timer to clear password after login failure
-    Timer {
-        id: clearPasswordTimer
-        interval: 1500
-        onTriggered: {
-            password.text = "";
-        }
     }
     
     // Lockout countdown timer
@@ -114,6 +105,8 @@ Item {
                 failedAttempts = 0;
                 stop();
                 loginMessage.clear();
+                // Check and display correct CapsLock state after lockout
+                updateCapsLock();
             } else {
                 // Update countdown display
                 var minutes = lockoutDuration > 0 ? Math.floor(lockoutDuration / 60) : 0;
@@ -372,9 +365,9 @@ Item {
                         anchors.left = parent.left;
                         anchors.right = parent.right;
                     } else {
-                        // Center only on password box, not the entire login area
-                        anchors.horizontalCenter = password.horizontalCenter;
-                        width = password.width;
+                        // Center only on login area
+                        anchors.horizontalCenter = loginArea.horizontalCenter;
+                        width = loginArea.width;
                     }
                     
                     // Check caps lock
@@ -425,7 +418,11 @@ Item {
             }
             password.text = "";
         } else if (event.key === Qt.Key_CapsLock) {
-            root.capsLockOn = !root.capsLockOn;
+            // Ignore CapsLock changes while locked out
+            if (!(Config.enableThemeLockout && isLockedOut)) {
+                root.capsLockOn = !root.capsLockOn;
+                updateCapsLock();
+            }
         }
         event.accepted = true;
     }

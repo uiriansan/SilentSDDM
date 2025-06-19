@@ -96,7 +96,7 @@ Item {
                 active: index === userList.currentIndex
                 opacity: active ? 1.0 : Config.avatarInactiveOpacity
                 enabled: userModel.rowCount() > 1 // No need to open the selector if there's only one user
-                tooltipText: !Config.tooltipsDisableUser ? (active && selector.listUsers ? textConstants.closeUserSelection : (active && !listUsers ? textConstants.selectUser : textConstants.selectUser + " " + model.name)) : ""
+                tooltipText: !Config.tooltipsDisableUser ? (active && selector.listUsers ? (textConstants.closeUserSelection || "Close") : (active && !listUsers ? (textConstants.selectUser || "Select User") : (textConstants.selectUser || "Select User") + " " + model.name)) : ""
                 showTooltip: selector.focus && !listUsers && active
 
                 Behavior on opacity {

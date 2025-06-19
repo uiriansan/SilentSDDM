@@ -183,7 +183,8 @@ Item {
             source: backgroundImage
             anchors.fill: backgroundImage
             blurEnabled: backgroundImage.visible
-            blur: 1.0
+            property real blurMax: Config.loginScreenBlur
+            blur: blurMax
         }
 
         Item {

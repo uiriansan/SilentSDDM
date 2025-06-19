@@ -27,7 +27,7 @@ Canvas {
     opacity: active ? 1.0 : Config.avatarInactiveOpacity
     
     Behavior on scale {
-        enabled: Config.enableAnimations
+        enabled: Config.enableAnimations && !authenticating
         NumberAnimation {
             duration: 200
             easing.type: Easing.OutCubic

@@ -6,10 +6,16 @@ cyan='\033[0;36m'
 grey='\033[2;37m'
 reset="\033[0m"
 
+# Generate timestamp for unique log files
+timestamp=$(date +"%Y%m%d-%H%M%S")
+
 # Test for debug param ( debug | -debug | -d | --debug )
 if [[ "$1" =~ ^(debug|-debug|--debug|-d)$ ]]; then
-    QT_IM_MODULE=qtvirtualkeyboard QML2_IMPORT_PATH=./components/ sddm-greeter-qt6 --test-mode --theme .
+    debug_log="test-debug-${timestamp}.log"
+    echo -e "${cyan}Debug mode - logging to ${debug_log}${reset}"
+    QT_IM_MODULE=qtvirtualkeyboard QML2_IMPORT_PATH=./components/ sddm-greeter-qt6 --test-mode --theme . 2>&1 | tee "$debug_log"
 else
+    test_log="test-${timestamp}.log"
     config_file=$(awk -F '=' '/^ConfigFile=/ {print $2}' metadata.desktop)
     echo -e "${green}Testing Silent theme with Enhanced Features...${reset}"
     echo -e "Loading config: ${cyan}${config_file}${reset}"
@@ -19,8 +25,13 @@ else
     echo -e "  ${grey}•${reset} Ripple animations on click"
     echo -e "  ${grey}•${reset} Smart avatar fallbacks"
     echo -e "  ${grey}•${reset} Enhanced error feedback"
-    echo -e "\nDon't worry about the infinite loading, SDDM won't let you log in while in 'test-mode'.\n"
-    QT_IM_MODULE=qtvirtualkeyboard QML2_IMPORT_PATH=./components/ sddm-greeter-qt6 --test-mode --theme . > /dev/null 2>&1
+    echo -e "\nDon't worry about the infinite loading, SDDM won't let you log in while in 'test-mode'."
+    echo -e "Logs saved to: ${cyan}${test_log}${reset}\n"
+    QT_IM_MODULE=qtvirtualkeyboard QML2_IMPORT_PATH=./components/ sddm-greeter-qt6 --test-mode --theme . > "$test_log" 2>&1 &
+    echo -e "Test running in background (PID: $!). Check ${test_log} for details."
+    
+    # Keep latest log as test.log for compatibility
+    ln -sf "$test_log" test.log
 fi
 
 if [ ! -d "/usr/share/sddm/themes/silent" ]; then

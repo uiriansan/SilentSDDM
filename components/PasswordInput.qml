@@ -127,8 +127,8 @@ Item {
         // Configurable border
         Rectangle {
             anchors.fill: parent
-            border.width: Config.passwordInputBorderSize
-            border.color: Config.passwordInputBorderColor
+            border.width: Config.passwordInputBorderSize || 0
+            border.color: Config.passwordInputBorderSize > 0 ? Config.passwordInputBorderColor : "transparent"
             color: "transparent"
             topLeftRadius: Config.passwordInputBorderRadiusLeft
             bottomLeftRadius: Config.passwordInputBorderRadiusLeft

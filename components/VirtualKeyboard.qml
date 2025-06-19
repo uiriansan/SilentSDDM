@@ -50,13 +50,17 @@ InputPanel {
         } else if (pos === "right" || pos === "left") {
             return (parent.height - inputPanel.height) / 2;
         } else {
-            // pos === "login" - position relative to login area
-            if (loginScreen.loginContainer && loginScreen.loginContainer.y !== undefined) {
-                return loginScreen.loginContainer.y + loginScreen.loginContainer.height + 20;
-            } else {
-                // Fallback to bottom positioning if login container not accessible
-                return parent.height - inputPanel.height - Config.menuAreaButtonsMarginBottom;
-            }
+            // pos === "login" - position right below login area
+            // Calculate position based on loginContainer + potential warning message
+            var baseY = loginScreen.loginContainer.y + loginScreen.loginContainer.height;
+            
+            // Add margin to ensure proper spacing and avoid hiding warning messages
+            var margin = 30;
+            
+            // Ensure keyboard doesn't go off-screen on smaller displays
+            var maxY = parent.height - inputPanel.height - Config.menuAreaButtonsMarginBottom;
+            
+            return Math.min(baseY + margin, maxY);
         }
     }
     Behavior on y {

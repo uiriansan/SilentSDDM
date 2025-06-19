@@ -130,7 +130,7 @@ Item {
                     popup.open();
                 }
             }
-            tooltipText: !Config.tooltipsDisableLayoutButton ? textConstants.keyboardLayout : ""
+            tooltipText: !Config.tooltipsDisableLayoutButton ? (textConstants.keyboardLayout || "Keyboard Layout") : ""
             label: showLabel ? (keyboard && keyboard.layouts && keyboard.layouts.length > 0 && keyboard.currentLayout < keyboard.layouts.length && keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
 
             Connections {
@@ -229,7 +229,7 @@ Item {
             onClicked: {
                 loginScreen.showKeyboard = !loginScreen.showKeyboard;
             }
-            tooltipText: !Config.tooltipsDisableKeyboardButton ? textConstants.virtualKeyboard : ""
+            tooltipText: !Config.tooltipsDisableKeyboardButton ? (textConstants.virtualKeyboard || "Virtual Keyboard") : ""
         }
     }
 
@@ -259,7 +259,7 @@ Item {
             onClicked: {
                 popup.open();
             }
-            tooltipText: !Config.tooltipsDisablePowerButton ? textConstants.powerOff : ""
+            tooltipText: !Config.tooltipsDisablePowerButton ? (textConstants.powerOff || "Power") : ""
 
             Popup {
                 id: popup

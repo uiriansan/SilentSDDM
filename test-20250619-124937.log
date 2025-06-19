@@ -1,0 +1,17 @@
+High-DPI autoscaling Enabled
+qt.qpa.wayland: qtvirtualkeyboard currently is not supported at client-side, use QT_IM_MODULES=qtvirtualkeyboard at compositor-side.
+Reading from "/usr/local/share/wayland-sessions/hyprland-uwsm.desktop"
+Reading from "/usr/share/wayland-sessions/hyprland-uwsm.desktop"
+Reading from "/usr/local/share/wayland-sessions/hyprland.desktop"
+Reading from "/usr/share/wayland-sessions/hyprland.desktop"
+Loading theme configuration from "./configs/enhanced.conf"
+Socket error:  "QLocalSocket::connectToServer: Invalid name"
+Loading file:./Main.qml...
+qt.multimedia.ffmpeg: Using Qt multimedia with FFmpeg version n7.1.1 GPL version 3 or later
+file:///home/everyone/Downloads/SilentSDDM/components/QtQuick/VirtualKeyboard/Styles/vkeyboardStyle/style.qml:29:5: Unable to assign [undefined] to QColor
+file:///home/everyone/Downloads/SilentSDDM/components/QtQuick/VirtualKeyboard/Styles/vkeyboardStyle/style.qml:28:5: Unable to assign [undefined] to QColor
+Adding view for "eDP-1" QRect(0,0 1600x900)
+qt.virtualkeyboard.hunspell: Hunspell dictionary is missing for "en_US". Search paths QList("/usr/share/qt6/qtvirtualkeyboard/hunspell", "/usr/share/hunspell", "/usr/share/myspell/dicts")
+Reading from "/usr/share/wayland-sessions/hyprland-uwsm.desktop"
+QIODevice::write (QLocalSocket): device not open
+The Wayland connection broke. Did the Wayland compositor die?
