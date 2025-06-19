@@ -359,18 +359,27 @@ Item {
                 opacity: visible ? 1.0 : 0.0
                 anchors.top: loginArea.bottom
                 anchors.topMargin: visible ? Config.warningMessageMarginTop : 0
+                
+                horizontalAlignment: Config.loginAreaPosition === "left" ? Text.AlignLeft : (Config.loginAreaPosition === "right" ? Text.AlignRight : Text.AlignHCenter)
+                wrapMode: Text.Wrap
 
                 Component.onCompleted: {
-                    if (root.capsLockOn)
-                        loginMessage.warn(textConstants.capslockWarning, "warning");
-
+                    // Position anchors
                     if (Config.loginAreaPosition === "left") {
                         anchors.left = parent.left;
+                        anchors.right = parent.right;
                     } else if (Config.loginAreaPosition === "right") {
+                        anchors.left = parent.left;
                         anchors.right = parent.right;
                     } else {
-                        anchors.horizontalCenter = parent.horizontalCenter;
+                        // Center only on password box, not the entire login area
+                        anchors.horizontalCenter = password.horizontalCenter;
+                        width = password.width;
                     }
+                    
+                    // Check caps lock
+                    if (root.capsLockOn)
+                        loginMessage.warn(textConstants.capslockWarning, "warning");
                 }
 
                 Behavior on anchors.topMargin {

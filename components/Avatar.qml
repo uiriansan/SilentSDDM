@@ -72,6 +72,9 @@ Canvas {
     onPaint: {
         var ctx = getContext("2d");
         ctx.reset();
+        
+        // Save initial state before clipping
+        ctx.save();
         ctx.beginPath();
 
         // Create clipping path
@@ -124,9 +127,11 @@ Canvas {
             ctx.fillText(initials, centerX, centerY);
         }
 
+        // Restore state and draw border
+        ctx.restore();
+        
         // Enhanced border with glow effect
-        if (drawStroke) {
-            ctx.restore();
+        if (drawStroke && strokeColor.a > 0) {
             ctx.beginPath();
             
             if (shape === "square") {

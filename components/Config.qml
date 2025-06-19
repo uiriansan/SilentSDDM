@@ -50,7 +50,7 @@ QtObject {
     property bool lockMessageDisplay: config['LockScreen.Message/display'] === "false" ? false : true // @desc:Whether or not to display the custom message in the lock screen.
     property string lockMessagePosition: config.stringValue("LockScreen.Message/position") || "bottom-center" // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @desc:Position of the custom message in the lock screen. <br />See also: <a href="#lockscreenpaddingtop">LockScreen/padding-top</a>
     property string lockMessageAlign: config.stringValue("LockScreen.Message/align") || "center" // @possible:'left' | 'center' | 'right' @desc:Relative alignment of the custom message and its icon.
-    property string lockMessageText: config.stringValue("LockScreen.Message/text") || "Press any key" // @desc:Text of the custom message.
+    property string lockMessageText: config.stringValue("LockScreen.Message/text") || textConstants.pressAnyKey || "Press any key" // @desc:Text of the custom message.
     property string lockMessageFontFamily: config.stringValue("LockScreen.Message/font-family") || "RedHatDisplay" // @desc:Font family used for the custom message.
     property int lockMessageFontSize: config.intValue("LockScreen.Message/font-size") || 12 // @desc:Font size of the custom message.
     property int lockMessageFontWeight: config.intValue("LockScreen.Message/font-weight") || 400 // @desc:Font weight of the date. 400 = regular, 600 = bold, 800 = black
@@ -128,7 +128,7 @@ QtObject {
 
     // [LoginScreen.LoginArea.Spinner]
     property bool spinnerDisplayText: config['LoginScreen.LoginArea.Spinner/display-text'] === "false" ? false : true // @desc:Whether or not to display the text with the spinning icon.
-    property string spinnerText: config.stringValue("LoginScreen.LoginArea.Spinner/text") || "Logging in" // @desc:Text to be displayed with the spinning icon.
+    property string spinnerText: config.stringValue("LoginScreen.LoginArea.Spinner/text") || textConstants.authenticating || "Logging in" // @desc:Text to be displayed with the spinning icon.
     property string spinnerFontFamily: config.stringValue("LoginScreen.LoginArea.Spinner/font-family") || "RedHatDisplay" // @desc:Font family of the text to be displayed with the spinning icon.
     property int spinnerFontWeight: config.intValue("LoginScreen.LoginArea.Spinner/font-weight") || 600 // @desc:Font weight of the text to be displayed with the spinning icon. 400 = regular, 600 = bold, 800 = black
     property int spinnerFontSize: config.intValue("LoginScreen.LoginArea.Spinner/font-size") || 12 // @desc:Font size of the spinner's text.
@@ -162,7 +162,7 @@ QtObject {
     property int menuAreaPopupsSpacing: config.intValue("LoginScreen.MenuArea.Popups/item-spacing") // @desc:Spacing between items inside a popup.
     property int menuAreaPopupsPadding: config.intValue("LoginScreen.MenuArea.Popups/padding") // @desc:Padding of the popups.
     property bool menuAreaPopupsDisplayScrollbar: config["LoginScreen.MenuArea.Popups/display-scrollbar"] === "false" ? false : true // @desc:Whether or not to display a scrollbar in the popups if its items don't fit.
-    property int menuAreaPopupsMargin: config.intValue("LoginScreen.MenuArea.Popups/margin") // @desc:Distance of the popup from its button.
+    property int menuAreaPopupsMargin: config.intValue("LoginScreen.MenuArea.Popups/margin") || 5 // @desc:Distance of the popup from its button.
     property color menuAreaPopupsBackgroundColor: config.stringValue("LoginScreen.MenuArea.Popups/background-color") || "#FFFFFF" // @desc:Background color of the popups.
     property real menuAreaPopupsBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Popups/background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the popups.
     property color menuAreaPopupsActiveOptionBackgroundColor: config.stringValue("LoginScreen.MenuArea.Popups/active-option-background-color") || "#FFFFFF" // @desc:Background color of the hovered/focused item in the popup.

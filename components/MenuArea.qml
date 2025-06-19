@@ -493,8 +493,9 @@ Item {
             if (align === "start") {
                 x = 0;
             } else if (align === "end") {
-                x = -popup.width + button.width;
+                x = button.width - popup.width;
             } else {
+                // Center alignment - popup center should match button center
                 x = (button.width - popup.width) / 2;
             }
         } else if (direction === "down") {
@@ -502,8 +503,9 @@ Item {
             if (align === "start") {
                 x = 0;
             } else if (align === "end") {
-                x = -popup.width + button.width;
+                x = button.width - popup.width;
             } else {
+                // Center alignment - popup center should match button center
                 x = (button.width - popup.width) / 2;
             }
         } else if (direction === "left") {
