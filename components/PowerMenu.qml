@@ -55,7 +55,8 @@ ColumnLayout {
         iconSize: Config.menuAreaPopupsIconSize
         fontSize: Config.menuAreaPopupsFontSize
         onClicked: {
-            sddm.suspend();
+            // FIX: Correct SDDM function call for reboot
+            sddm.reboot();
             selector.close();
         }
         label: textConstants.reboot
@@ -81,7 +82,8 @@ ColumnLayout {
         iconSize: Config.menuAreaPopupsIconSize
         fontSize: Config.menuAreaPopupsFontSize
         onClicked: {
-            sddm.suspend();
+            // FIX: Correct SDDM function call for shutdown
+            sddm.powerOff();
             selector.close();
         }
         label: textConstants.shutdown

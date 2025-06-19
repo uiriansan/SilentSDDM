@@ -128,9 +128,15 @@ ColumnLayout {
 
     Keys.onPressed: event => {
         if (event.key === Qt.Key_Down) {
-            sessionList.currentIndex = (sessionList.currentIndex + sessionModel.rowCount() + 1) % sessionModel.rowCount();
+            // FIX: Division by zero protection
+            if (sessionModel.rowCount() > 0) {
+                sessionList.currentIndex = (sessionList.currentIndex + sessionModel.rowCount() + 1) % sessionModel.rowCount();
+            }
         } else if (event.key === Qt.Key_Up) {
-            sessionList.currentIndex = (sessionList.currentIndex + sessionModel.rowCount() - 1) % sessionModel.rowCount();
+            // FIX: Division by zero protection
+            if (sessionModel.rowCount() > 0) {
+                sessionList.currentIndex = (sessionList.currentIndex + sessionModel.rowCount() - 1) % sessionModel.rowCount();
+            }
         } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
             selector.close();
         } else if (event.key === Qt.Key_CapsLock) {

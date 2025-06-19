@@ -41,7 +41,8 @@ Item {
         }
         function onLoginFailed() {
             loginScreen.state = "normal";
-            loginMessage.warn(textConstants.loginFailed, "error");
+            // FIX: String safety improvements
+            loginMessage.warn(textConstants.loginFailed || "Login failed", "error");
             password.text = "";
         }
         function onInformationMessage(message) {
@@ -52,7 +53,8 @@ Item {
 
     function updateCapsLock() {
         if (root.capsLockOn && loginScreen.state !== "authenticating") {
-            loginMessage.warn(textConstants.capslockWarning, "warning");
+            // FIX: String safety improvements
+            loginMessage.warn(textConstants.capslockWarning || "Caps Lock is on", "warning");
         } else {
             loginMessage.clear();
         }
@@ -169,7 +171,8 @@ Item {
                 font.weight: Config.usernameFontWeight
                 font.pixelSize: Config.usernameFontSize
                 color: Config.usernameColor
-                text: loginScreen.userRealName
+                // FIX: String safety improvements
+                text: loginScreen.userRealName || loginScreen.userName || ""
 
                 Component.onCompleted: {
                     anchors.top = parent.top;
@@ -220,9 +223,11 @@ Item {
                     enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
                     activeFocusOnTab: true
                     icon: Config.getIcon(Config.loginButtonIcon)
-                    label: textConstants.login.toUpperCase()
+                    // FIX: String safety improvements
+                    label: textConstants.login ? textConstants.login.toUpperCase() : "LOGIN"
                     showLabel: Config.loginButtonShowTextIfNoPassword && !loginScreen.userNeedsPassword
-                    tooltipText: !Config.tooltipsDisableLoginButton && (!Config.loginButtonShowTextIfNoPassword || loginScreen.userNeedsPassword) ? textConstants.login : ""
+                    // FIX: String safety improvements
+                    tooltipText: !Config.tooltipsDisableLoginButton && (!Config.loginButtonShowTextIfNoPassword || loginScreen.userNeedsPassword) ? (textConstants.login || "Login") : ""
                     iconSize: Config.loginButtonIconSize
                     fontFamily: Config.loginButtonFontFamily
                     fontSize: Config.loginButtonFontSize
@@ -282,7 +287,8 @@ Item {
 
                 Component.onCompleted: {
                     if (root.capsLockOn)
-                        loginMessage.warn(textConstants.capslockWarning, "warning");
+                        // FIX: String safety improvements
+                        loginMessage.warn(textConstants.capslockWarning || "Caps Lock is on", "warning");
 
                     if (Config.loginAreaPosition === "left") {
                         anchors.left = parent.left;
@@ -310,7 +316,8 @@ Item {
                     clear();
                     text = message;
                     color = type === "error" ? Config.warningMessageErrorColor : (type === "warning" ? Config.warningMessageWarningColor : Config.warningMessageNormalColor);
-                    if (message === textConstants.capslockWarning)
+                    // FIX: String safety improvements
+                    if (message === (textConstants.capslockWarning || "Caps Lock is on"))
                         capslockWarning = true;
                 }
 

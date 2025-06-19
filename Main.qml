@@ -16,9 +16,8 @@ Item {
 
     // Break property binding so it doesn't lock to `keyboard.capsLock` state's.
     // `keyboard.capsLock` should be enough, but its value only updates once for some F*ing reason
-    property bool capsLockOn: {
-        capsLockOn = keyboard ? keyboard.capsLock : false;
-    }
+    // FIX: Circular property binding fix
+    property bool capsLockOn: keyboard ? keyboard.capsLock : false
     onCapsLockOnChanged: {
         loginScreen.updateCapsLock();
     }

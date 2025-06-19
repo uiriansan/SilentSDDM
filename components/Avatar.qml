@@ -19,6 +19,9 @@ Canvas {
 
     onSourceChanged: delayPaintTimer.running = true
     onPaint: {
+        // FIX: Canvas zero dimension protection
+        if (width <= 0 || height <= 0) return;
+        
         const ctx = getContext("2d");
         ctx.reset(); // Clear previous drawing
         ctx.beginPath();

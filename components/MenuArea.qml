@@ -131,7 +131,8 @@ Item {
                 }
             }
             tooltipText: "Change keyboard layout"
-            label: showLabel ? (keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
+            // FIX: Array bounds checking for keyboard layouts
+            label: showLabel ? (keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
 
             Connections {
                 target: loginScreen
@@ -188,8 +189,10 @@ Item {
                 LayoutSelector {
                     focus: popup.focus
                     onLayoutChanged: index => {
-                        layoutButton.label = showLabel ? (keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : "";
-                        VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard && keyboard.layouts.length > 0 ? keyboard.layouts[keyboard.currentLayout].shortName : "");
+                        // FIX: Array bounds checking for keyboard layouts
+                        layoutButton.label = showLabel ? (keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : "";
+                        // FIX: Array bounds checking for keyboard layouts
+                        VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName : "");
                     }
                     onClose: {
                         popup.close();
