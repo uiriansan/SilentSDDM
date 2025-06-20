@@ -148,7 +148,7 @@ Current=silent
 
 # Customizing
 
-The preset configs are located in `./configs/`. To change the active config, edit the `./metadata.desktop` file and replace the value of `ConfigFile=`:
+The preset configs are located in `./configs/`. To change the active config, edit `./metadata.desktop` and replace the value of `ConfigFile=`:
 
 ```bash
 ConfigFile=configs/<your_preferred_config>.conf
