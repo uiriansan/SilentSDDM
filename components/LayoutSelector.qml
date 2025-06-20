@@ -9,7 +9,8 @@ ColumnLayout {
     signal layoutChanged(layoutIndex: int)
     signal close
 
-    property int currentLayoutIndex: keyboard && keyboard.layouts.length > 0 ? keyboard.currentLayout : 0
+    // FIX: Enhanced keyboard null safety
+    property int currentLayoutIndex: (keyboard && keyboard.layouts && keyboard.layouts.length > 0) ? keyboard.currentLayout : 0
     property string layoutName: ""
     property string layoutShortName: ""
 
@@ -147,7 +148,8 @@ ColumnLayout {
             }
         }
     }
-    Keys.onPressed: event => {
+    // FIX: Arrow function compatibility
+    Keys.onPressed: function(event) {
         if (event.key === Qt.Key_Down) {
             // FIX: Keyboard null checks
             if (keyboard && keyboard.layouts && keyboard.layouts.length > 0) {

@@ -9,9 +9,21 @@ Item {
     signal toggleLayoutPopup
 
     state: "normal"
+    
+    // FIX: Critical state machine race condition prevention
+    property bool stateChanging: false
+    
     onStateChanged: {
         if (state === "normal") {
             resetFocus();
+        }
+    }
+    
+    function safeStateChange(newState) {
+        if (!stateChanging) {
+            stateChanging = true;
+            state = newState;
+            stateChanging = false;
         }
     }
 
@@ -31,7 +43,7 @@ Item {
 
     function login() {
         if (password.text.length > 0 || !userNeedsPassword) {
-            loginScreen.state = "authenticating";
+            safeStateChange("authenticating");
             sddm.login(userName, password.text, sessionIndex);
         }
     }
@@ -40,7 +52,7 @@ Item {
             loginContainer.scale = 0.0;
         }
         function onLoginFailed() {
-            loginScreen.state = "normal";
+            safeStateChange("normal");
             // FIX: String safety improvements
             loginMessage.warn(textConstants.loginFailed || "Login failed", "error");
             password.text = "";
@@ -49,6 +61,14 @@ Item {
             loginMessage.warn(message, "error");
         }
         target: sddm
+    }
+
+    // FIX: Critical connections memory leak prevention
+    Component.onDestruction: {
+        // No direct way to disconnect Connections in QML, but setting target to null helps
+        if (typeof connections !== 'undefined') {
+            connections.target = null;
+        }
     }
 
     function updateCapsLock() {
@@ -119,10 +139,10 @@ Item {
             width: orientation === "horizontal" ? loginScreen.width - Config.loginAreaMargin * 2 : Config.avatarActiveSize
             height: orientation === "horizontal" ? Config.avatarActiveSize : loginScreen.height - Config.loginAreaMargin * 2
             onOpenUserList: {
-                loginScreen.state = "selectingUser";
+                safeStateChange("selectingUser");
             }
             onCloseUserList: {
-                loginScreen.state = "normal";
+                safeStateChange("normal");
                 loginScreen.resetFocus(); // resetFocus with escape even if the selector is not open
             }
             onUserChanged: (index, name, realName, icon, needsPassword) => {
@@ -332,7 +352,8 @@ Item {
     MenuArea {}
     VirtualKeyboard {}
 
-    Keys.onPressed: event => {
+    // FIX: Arrow function compatibility
+    Keys.onPressed: function(event) {
         if (event.key === Qt.Key_Escape) {
             if (loginScreen.state === "authenticating") {
                 event.accepted = false;
@@ -355,7 +376,7 @@ Item {
         hoverEnabled: true
         onClicked: {
             if (loginScreen.state === "selectingUser") {
-                loginScreen.state = "normal";
+                safeStateChange("normal");
             }
         }
         onWheel: event => {

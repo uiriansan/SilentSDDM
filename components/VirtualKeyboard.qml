@@ -97,11 +97,13 @@ InputPanel {
         drag.target: inputPanel
         // FIX: Scope violation fixes - safe parent property access
         acceptedButtons: loginScreen && loginScreen.userNeedsPassword ? Qt.MiddleButton : Qt.MiddleButton
-        onPressed: event => {
+        // FIX: Arrow function compatibility
+        onPressed: function(event) {
             cursorShape = Qt.ClosedHandCursor;
             initialPosition = Qt.point(event.x, event.y);
         }
-        onReleased: event => {
+        // FIX: Arrow function compatibility - critical mouse event
+        onReleased: function(event) {
             // FIX: Scope violation fixes - safe parent property access
             cursorShape = loginScreen && loginScreen.userNeedsPassword ? Qt.ArrowCursor : Qt.ForbiddenCursor;
             if (initialPosition !== Qt.point(event.x, event.y) && !inputPanel.vKeyboardMoved) {

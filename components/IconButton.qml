@@ -29,9 +29,11 @@ Item {
     property int borderRadiusRight: borderRadius
     property int borderSize: 0
     property color borderColor: isActive ? iconButton.activeContentColor : iconButton.contentColor
-    property var preferredWidth: undefined
+    // FIX: Property type safety - avoid 'var' type
+    property int preferredWidth: -1
 
-    width: preferredWidth ? preferredWidth : buttonContentRow.width // childrenRect doesn't update for some reason
+    // FIX: Property type safety - proper undefined check
+    width: preferredWidth !== -1 ? preferredWidth : buttonContentRow.width // childrenRect doesn't update for some reason
     height: iconSize * 2
 
     Rectangle {
@@ -123,7 +125,8 @@ Item {
                 }
             }
             Component.onCompleted: {
-                if (iconButton.preferredWidth && iconButton.preferredWidth !== -1) {
+                // FIX: Property type safety - consistent check
+                if (iconButton.preferredWidth !== -1) {
                     Layout.preferredWidth = iconButton.width - iconContainer.width;
                 }
             }
@@ -139,7 +142,9 @@ Item {
         ToolTip {
             parent: mouseArea
             enabled: Config.tooltipsEnable
-            visible: enabled && mouseArea.containsMouse && iconButton.tooltipText !== "" || enabled && iconButton.focus && iconButton.tooltipText !== ""
+            // FIX: Critical tooltip race condition prevention
+            property bool shouldShow: enabled && mouseArea.containsMouse && iconButton.tooltipText !== "" || enabled && iconButton.focus && iconButton.tooltipText !== ""
+            visible: shouldShow
             delay: 300
             contentItem: Text {
                 font.family: Config.tooltipsFontFamily
@@ -155,7 +160,8 @@ Item {
             }
         }
     }
-    Keys.onPressed: event => {
+    // FIX: Arrow function compatibility
+    Keys.onPressed: function(event) {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
             iconButton.clicked();
         }

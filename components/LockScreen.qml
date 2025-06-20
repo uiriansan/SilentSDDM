@@ -40,12 +40,20 @@ Item {
         }
 
         Timer {
+            id: clockTimer
             interval: 1000
             repeat: true
             running: true
             onTriggered: {
                 time.updateTime();
                 date.updateDate();
+            }
+        }
+        
+        // FIX: Timer memory leak prevention - critical clock timer
+        Component.onDestruction: {
+            if (clockTimer) {
+                clockTimer.stop();
             }
         }
 
@@ -153,7 +161,8 @@ Item {
         onClicked: lockScreen.loginRequested()
     }
 
-    Keys.onPressed: event => {
+    // FIX: Arrow function compatibility
+    Keys.onPressed: function(event) {
         if (event.key === Qt.Key_CapsLock) {
             root.capsLockOn = !root.capsLockOn;
         }

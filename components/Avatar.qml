@@ -22,13 +22,15 @@ Canvas {
         // FIX: Canvas zero dimension protection
         if (width <= 0 || height <= 0) return;
         
-        const ctx = getContext("2d");
+        // FIX: ES6 const compatibility - use var
+        var ctx = getContext("2d");
         ctx.reset(); // Clear previous drawing
         ctx.beginPath();
 
         if (shape === "square") {
             // Squircle, actually
-            const r = width * squareRadius / 100;
+            // FIX: ES6 const compatibility - use var
+            var r = width * squareRadius / 100;
             ctx.moveTo(width - r, 0);
             ctx.arcTo(width, 0, width, height, r);
             ctx.arcTo(width, height, 0, height, r);
@@ -66,21 +68,24 @@ Canvas {
                 return true;
 
             // Ellipse center and radius
-            const centerX = width / 2;
-            const centerY = height / 2;
-            const radiusX = centerX;
-            const radiusY = centerY;
+            // FIX: ES6 const compatibility - use var
+            var centerX = width / 2;
+            var centerY = height / 2;
+            var radiusX = centerX;
+            var radiusY = centerY;
 
             // Distance from center
-            const dx = (mouseArea.mouseX - centerX) / radiusX;
-            const dy = (mouseArea.mouseY - centerY) / radiusY;
+            var dx = (mouseArea.mouseX - centerX) / radiusX;
+            var dy = (mouseArea.mouseY - centerY) / radiusY;
 
             // Check if pointer is inside the ellipse
             return (dx * dx + dy * dy) <= 1.0;
         }
 
-        onReleased: mouse => {
-            const isInside = isCursorInsideAvatar();
+        // FIX: Arrow function compatibility - critical mouse event
+        onReleased: function(mouse) {
+            // FIX: ES6 const compatibility - use var
+            var isInside = isCursorInsideAvatar();
             if (isInside) {
                 avatar.clicked();
             } else {
@@ -103,7 +108,9 @@ Canvas {
         ToolTip {
             parent: mouseArea
             enabled: Config.tooltipsEnable && !Config.tooltipsDisableUser
-            visible: enabled && avatar.showTooltip || (enabled && mouseArea.isCursorInsideAvatar() && avatar.tooltipText !== "")
+            // FIX: Critical tooltip race condition prevention
+            property bool shouldShow: enabled && avatar.showTooltip || (enabled && mouseArea.isCursorInsideAvatar() && avatar.tooltipText !== "")
+            visible: shouldShow
             delay: 300
             contentItem: Text {
                 font.family: Config.tooltipsFontFamily
@@ -127,5 +134,13 @@ Canvas {
         interval: 150
         onTriggered: avatar.requestPaint()
         running: true
+    }
+
+    // FIX: Critical timer memory leak prevention
+    Component.onDestruction: {
+        if (delayPaintTimer) {
+            delayPaintTimer.running = false;
+            delayPaintTimer.stop();
+        }
     }
 }

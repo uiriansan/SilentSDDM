@@ -100,21 +100,31 @@ Item {
             // Background
             id: backgroundImage
             property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
-            property bool isVideo: ["avi", "mp4", "mov", "mkv", "m4v", "webm"].includes(tsource.toString().split(".").slice(-1)[0])
+            // FIX: Robust file extension checking with null safety
+            property bool isVideo: {
+                if (!tsource || tsource.toString().length === 0) return false;
+                var parts = tsource.toString().split(".");
+                if (parts.length === 0) return false;
+                var ext = parts[parts.length - 1];
+                return ["avi", "mp4", "mov", "mkv", "m4v", "webm"].indexOf(ext) !== -1;
+            }
             property bool displayColor: root.state === "lockState" && Config.lockScreenUseBackgroundColor || root.state === "loginState" && Config.loginScreenUseBackgroundColor
             property string placeholder: Config.animatedBackgroundPlaceholder // Idea stolen from astronaut-theme. Not a fan of it, but works...
 
             anchors.fill: parent
-            source: !isVideo ? `backgrounds/${tsource}` : ""
+            // FIX: Template literal compatibility - use string concatenation
+            source: !isVideo ? "backgrounds/" + tsource : ""
             cache: true
             mipmap: true
 
             function updateVideo() {
                 if (isVideo && tsource.toString().length > 0) {
-                    backgroundVideo.source = Qt.resolvedUrl(`backgrounds/${tsource}`);
+                    // FIX: Template literal compatibility
+                    backgroundVideo.source = Qt.resolvedUrl("backgrounds/" + tsource);
 
                     if (placeholder.length > 0)
-                        source = `backgrounds/${placeholder}`;
+                        // FIX: Template literal compatibility
+                        source = "backgrounds/" + placeholder;
                 }
             }
 
@@ -125,8 +135,14 @@ Item {
                 updateVideo();
             }
             onStatusChanged: {
-                if (status === Image.Error && source !== "backgrounds/default.jpg") {
-                    source = "backgrounds/default.jpg";
+                // FIX: Robust error handling with multiple fallbacks
+                if (status === Image.Error) {
+                    if (source !== "backgrounds/default.jpg" && source !== "") {
+                        source = "backgrounds/default.jpg";
+                    } else if (source === "backgrounds/default.jpg") {
+                        // If even default fails, show color background
+                        displayColor = true;
+                    }
                 }
             }
 
@@ -148,12 +164,24 @@ Item {
                 loops: MediaPlayer.Infinite
                 muted: true
                 onSourceChanged: {
-                    if (source)
+                    // FIX: Video source safety and proper state management
+                    if (source && source.toString().length > 0) {
                         backgroundVideo.play();
+                    }
                 }
                 onErrorOccurred: {
-                    if (error !== MediaPlayer.NoError && backgroundImage.placeholder.length === 0)
+                    // FIX: Null safety for placeholder property
+                    if (error !== MediaPlayer.NoError && (!backgroundImage.placeholder || backgroundImage.placeholder.length === 0)) {
                         backgroundImage.displayColor = true;
+                    }
+                }
+            }
+
+            // FIX: Critical video memory leak prevention
+            Component.onDestruction: {
+                if (backgroundVideo) {
+                    backgroundVideo.stop();
+                    backgroundVideo.source = "";
                 }
             }
         }
@@ -162,8 +190,10 @@ Item {
             id: backgroundBlur
             source: backgroundImage
             anchors.fill: backgroundImage
-            blurEnabled: backgroundImage.visible
-            blur: 1.0
+            // FIX: Blur logic consistency - only enable when blur value > 0
+            blurEnabled: backgroundImage.visible && blurMax > 0
+            // FIX: Dynamic blur value instead of fixed 1.0
+            blur: blurMax > 0 ? 1.0 : 0.0
         }
 
         Item {

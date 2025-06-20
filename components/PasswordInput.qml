@@ -26,8 +26,9 @@ Item {
         activeFocusOnTab: true
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
-        font.family: Config.passwordInputFontFamily
-        font.pixelSize: Config.passwordInputFontSize
+        // FIX: Font properties null safety
+        font.family: Config.passwordInputFontFamily || "sans-serif"
+        font.pixelSize: Math.max(8, Config.passwordInputFontSize || 12)
         background: Rectangle {
             anchors.fill: parent
             color: Config.passwordInputBackgroundColor
@@ -66,9 +67,11 @@ Item {
 
                 Image {
                     id: icon
-                    source: Config.getIcon(Config.passwordInputIcon)
+                    // FIX: Icon source null safety
+                    source: Config.passwordInputIcon ? Config.getIcon(Config.passwordInputIcon) : ""
                     anchors.centerIn: parent
-                    width: Config.passwordInputIconSize
+                    // FIX: Icon size safety
+                    width: Math.max(1, Config.passwordInputIconSize || 16)
                     height: width
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit
@@ -95,11 +98,14 @@ Item {
                     verticalCenter: parent.verticalCenter
                 }
                 padding: 0
-                visible: textField.text.length === 0 && textField.preeditText.length === 0
-                text: textConstants.password
+                // FIX: Preedit text null safety and improved visibility check
+                visible: textField.text.length === 0 && (!textField.preeditText || textField.preeditText.length === 0)
+                // FIX: Text constants null safety
+                text: (textConstants && textConstants.password) ? textConstants.password : "Password"
                 color: textField.color
-                font.pixelSize: textField.font.pixelSize
-                font.family: textField.font.family
+                // FIX: Font size null safety
+                font.pixelSize: Math.max(8, textField.font.pixelSize || 12)
+                font.family: textField.font.family || "sans-serif"
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: textField.verticalAlignment
                 font.italic: true

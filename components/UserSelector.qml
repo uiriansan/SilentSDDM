@@ -47,10 +47,16 @@ Item {
         model: userModel
         currentIndex: userModel.lastIndex
         onCurrentIndexChanged: {
-            const username = userModel.data(userModel.index(currentIndex, 0), 257);
-            const userRealName = userModel.data(userModel.index(currentIndex, 0), 258);
-            const userIcon = userModel.data(userModel.index(currentIndex, 0), 260);
-            const needsPasswd = userModel.data(userModel.index(currentIndex, 0), 261);
+            // FIX: Critical model data race condition prevention
+            if (!userModel || currentIndex < 0 || currentIndex >= userModel.rowCount()) {
+                return;
+            }
+            
+            // FIX: ES6 const compatibility - use var
+            var username = userModel.data(userModel.index(currentIndex, 0), 257);
+            var userRealName = userModel.data(userModel.index(currentIndex, 0), 258);
+            var userIcon = userModel.data(userModel.index(currentIndex, 0), 260);
+            var needsPasswd = userModel.data(userModel.index(currentIndex, 0), 261);
 
             sddm.currentUser = username;
             selector.userChanged(currentIndex, username, userRealName, userIcon, needsPasswd);
@@ -128,7 +134,8 @@ Item {
         }
     }
 
-    Keys.onPressed: event => {
+    // FIX: Arrow function compatibility
+    Keys.onPressed: function(event) {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
             if (selector.listUsers) {
                 selector.closeUserList();

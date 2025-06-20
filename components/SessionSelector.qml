@@ -10,15 +10,19 @@ ColumnLayout {
     signal sessionChanged(sessionIndex: int, iconPath: string, label: string)
     signal close
 
-    property int currentSessionIndex: sessionModel.lastIndex >= 0 ? sessionModel.lastIndex : 0
+    // FIX: SessionModel null safety improvement
+    property int currentSessionIndex: (sessionModel && sessionModel.lastIndex >= 0) ? sessionModel.lastIndex : 0
     property string sessionName: ""
     property string sessionIconPath: ""
 
     function getSessionIcon(name) {
-        const available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "awesome", "qtile", "i3", "bspwm", "dwm", "xfce", "cinnamon", "niri"];
-        for (let i = 0; i < available_session_icons.length; i++) {
-            if (name && name.toLowerCase().includes(available_session_icons[i]))
-                return `../icons/sessions/${available_session_icons[i]}.svg`;
+        // FIX: ES6 const/let compatibility - use var
+        var available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "awesome", "qtile", "i3", "bspwm", "dwm", "xfce", "cinnamon", "niri"];
+        for (var i = 0; i < available_session_icons.length; i++) {
+            // FIX: ES6 includes() compatibility - use indexOf()
+            if (name && name.toLowerCase().indexOf(available_session_icons[i]) !== -1)
+                // FIX: Template literal compatibility - use string concatenation
+                return "../icons/sessions/" + available_session_icons[i] + ".svg";
         }
         return "../icons/sessions/default.svg";
     }
@@ -26,7 +30,8 @@ ColumnLayout {
     ListView {
         id: sessionList
         Layout.preferredWidth: parent.width
-        Layout.preferredHeight: Math.min(sessionModel.rowCount() * (Config.menuAreaPopupsItemHeight + spacing), Config.menuAreaPopupsMaxHeight)
+        // FIX: SessionModel null safety
+        Layout.preferredHeight: Math.min((sessionModel ? sessionModel.rowCount() : 0) * (Config.menuAreaPopupsItemHeight + spacing), Config.menuAreaPopupsMaxHeight)
         orientation: ListView.Vertical
         interactive: true
         clip: true
@@ -51,7 +56,13 @@ ColumnLayout {
         model: sessionModel
         currentIndex: selector.currentSessionIndex
         onCurrentIndexChanged: {
-            const session_name = sessionModel.data(sessionModel.index(currentIndex, 0), 260);
+            // FIX: Critical model data race condition prevention
+            if (!sessionModel || currentIndex < 0 || currentIndex >= sessionModel.rowCount()) {
+                return;
+            }
+            
+            // FIX: ES6 const compatibility - use var
+            var session_name = sessionModel.data(sessionModel.index(currentIndex, 0), 260);
 
             selector.currentSessionIndex = currentIndex;
             selector.sessionName = session_name;
@@ -126,7 +137,8 @@ ColumnLayout {
         }
     }
 
-    Keys.onPressed: event => {
+    // FIX: Arrow function compatibility
+    Keys.onPressed: function(event) {
         if (event.key === Qt.Key_Down) {
             // FIX: Division by zero protection
             if (sessionModel.rowCount() > 0) {
