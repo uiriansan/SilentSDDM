@@ -25,8 +25,8 @@ KeyboardStyle {
     property color primaryDarkColor: Config.virtualKeyboardKeyColor
     property color textOnPrimaryColor: Config.virtualKeyboardKeyContentColor
     property color secondaryColor: Config.virtualKeyboardSelectionBackgroundColor
-    property color secondaryLightColor: Config.virtualKeyboardAccentColor
-    property color secondaryDarkColor: Config.virtualKeyboardAccentColor
+    property color secondaryLightColor: Config.virtualKeyboardPrimaryColor
+    property color secondaryDarkColor: Config.virtualKeyboardPrimaryColor
     property color textOnSecondaryColor: Config.virtualKeyboardSelectionContentColor
 
     property color normalKeyBackgroundColor: primaryDarkColor

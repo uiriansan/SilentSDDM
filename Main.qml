@@ -151,7 +151,7 @@ Item {
                     if (source)
                         backgroundVideo.play();
                 }
-                onErrorOccurred: {
+                onErrorOccurred: error => {
                     if (error !== MediaPlayer.NoError && backgroundImage.placeholder.length === 0)
                         backgroundImage.displayColor = true;
                 }

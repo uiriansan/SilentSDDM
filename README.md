@@ -29,6 +29,13 @@ https://github.com/user-attachments/assets/f0538425-c2e6-450e-9f40-d12b7bdbaa86
 </details>
 
 <details>
+  <summary>configs/silvia.conf</summary>
+
+https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
+
+</details>
+
+<details>
   <summary>configs/catppuccin-latte.conf</summary>
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-latte.png" width="100%" />
 </details>
@@ -67,7 +74,7 @@ git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM && cd Silent
 ```
 
 > [!IMPORTANT]
-> Make sure to test the theme before rebooting by running `./test`, otherwise you might end up with a broken login screen.
+> Make sure to test the theme before rebooting by running `./test.sh`, otherwise you might end up with a broken login screen.
 
 ## Manual installation
 
@@ -113,7 +120,7 @@ cd SilentSDDM/
 
 ### 3. Test the theme to make sure you have all dependencies:
 ```bash
-./test
+./test.sh
 ```
 
 ### 4. Copy the theme to `/usr/share/sddm/themes/`:
@@ -157,7 +164,7 @@ ConfigFile=configs/<your_preferred_config>.conf
 You can also create your own config file. There's a guide with the list of available options (there are 200 of them xD) in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
 
 > [!IMPORTANT]
-> Don't forget to test the theme after every change by running `./test`, otherwise you might end up with a broken login screen.
+> Don't forget to test the theme after every change by running `./test.sh`, otherwise you might end up with a broken login screen.
 
 # Acknowledgements
 

@@ -9,4 +9,4 @@ if [[ ! -f "$1" ]]; then
     exit
 fi
 
-ffmpeg -i "$1" -vf "select=eq(n\,34)" -vframes 1 $(basename backgrounds/ken.mp4 | cut -d"." -f1).png
+ffmpeg -i "$1" -vf "select=eq(n\,34)" -vframes 1 $(basename backgrounds/$1 | cut -d"." -f1).png
