@@ -40,12 +40,19 @@ Item {
         }
 
         Timer {
+            id: clockTimer
             interval: 1000
             repeat: true
             running: true
             onTriggered: {
                 time.updateTime();
                 date.updateDate();
+            }
+        }
+
+        Component.onDestruction: {
+            if (clockTimer) {
+                clockTimer.stop();
             }
         }
 
@@ -153,7 +160,7 @@ Item {
         onClicked: lockScreen.loginRequested()
     }
 
-    Keys.onPressed: event => {
+    Keys.onPressed: function (event) {
         if (event.key === Qt.Key_CapsLock) {
             root.capsLockOn = !root.capsLockOn;
         }

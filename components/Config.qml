@@ -251,7 +251,7 @@ QtObject {
     property color virtualKeyboardSelectionBackgroundColor: config.stringValue("LoginScreen.VirtualKeyboard/selection-background-color") || "#CCCCCC" // @desc:Color of the background of the selected character in the virtual keyboard.
     property color virtualKeyboardSelectionContentColor: config.stringValue("LoginScreen.VirtualKeyboard/selection-content-color") || "#FFFFFF" // @desc:Color of the text of the selected character in the virtual keyboard.
     property color virtualKeyboardPrimaryColor: config.stringValue("LoginScreen.VirtualKeyboard/primary-color") || "#000000" // @desc:Color of the icon/text in special keys when they're active.
-    property int virtualKeyboardBorderSize: config.realValue("LoginScreen.VirtualKeyboard/border-size") // @desc:Border size of the virtual keyboard and its keys.
+    property int virtualKeyboardBorderSize: config.intValue("LoginScreen.VirtualKeyboard/border-size") // @desc:Border size of the virtual keyboard and its keys.
     property color virtualKeyboardBorderColor: config.stringValue("LoginScreen.VirtualKeyboard/border-color") || "#000000" // @desc:Color of the border of the virtual keyboard and its keys.
 
     // [Tooltips]
@@ -266,8 +266,8 @@ QtObject {
     property bool tooltipsDisableLoginButton: config.boolValue("Tooltips/disable-login-button") // @desc:If false, disabled only the tooltip for the login button.
 
     function sortMenuButtons() {
-        const menus = [];
-        const available_positions = ["top-left", "top-center", "top-right", "center-left", "center-right", "bottom-left", "bottom-center", "bottom-right"];
+        var menus = [];
+        var available_positions = ["top-left", "top-center", "top-right", "center-left", "center-right", "bottom-left", "bottom-center", "bottom-right"];
 
         if (sessionDisplay)
             menus.push({

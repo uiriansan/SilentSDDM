@@ -3,8 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Effects
 
-// Custom TextField that doesn't hide the placeholder when it gets focused.
-// Why the hell isn't this the default behavior???????????????????
 Item {
     id: passwordInput
 
@@ -27,7 +25,7 @@ Item {
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
         font.family: Config.passwordInputFontFamily
-        font.pixelSize: Config.passwordInputFontSize
+        font.pixelSize: Math.max(8, Config.passwordInputFontSize || 12)
         background: Rectangle {
             anchors.fill: parent
             color: Config.passwordInputBackgroundColor
@@ -68,7 +66,8 @@ Item {
                     id: icon
                     source: Config.getIcon(Config.passwordInputIcon)
                     anchors.centerIn: parent
-                    width: Config.passwordInputIconSize
+                    // FIX: Icon size safety
+                    width: Math.max(1, Config.passwordInputIconSize || 16)
                     height: width
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit
@@ -95,11 +94,11 @@ Item {
                     verticalCenter: parent.verticalCenter
                 }
                 padding: 0
-                visible: textField.text.length === 0 && textField.preeditText.length === 0
-                text: textConstants.password
+                visible: textField.text.length === 0 && (!textField.preeditText || textField.preeditText.length === 0)
+                text: (textConstants && textConstants.password) ? textConstants.password : "Password"
                 color: textField.color
-                font.pixelSize: textField.font.pixelSize
-                font.family: textField.font.family
+                font.pixelSize: Math.max(8, textField.font.pixelSize || 12)
+                font.family: textField.font.family || "sans-serif"
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: textField.verticalAlignment
                 font.italic: true

@@ -29,8 +29,8 @@ ColumnLayout {
         iconSize: Config.menuAreaPopupsIconSize
         fontSize: Config.menuAreaPopupsFontSize
         onClicked: {
-            sddm.suspend();
             selector.close();
+            sddm.suspend();
         }
         label: textConstants.suspend
 
@@ -55,9 +55,8 @@ ColumnLayout {
         iconSize: Config.menuAreaPopupsIconSize
         fontSize: Config.menuAreaPopupsFontSize
         onClicked: {
-            // FIX: Correct SDDM function call for reboot
-            sddm.reboot();
             selector.close();
+            sddm.reboot();
         }
         label: textConstants.reboot
 
@@ -82,9 +81,8 @@ ColumnLayout {
         iconSize: Config.menuAreaPopupsIconSize
         fontSize: Config.menuAreaPopupsFontSize
         onClicked: {
-            // FIX: Correct SDDM function call for shutdown
-            sddm.powerOff();
             selector.close();
+            sddm.powerOff();
         }
         label: textConstants.shutdown
 
@@ -92,7 +90,7 @@ ColumnLayout {
         KeyNavigation.down: suspendButton
     }
 
-    Keys.onPressed: event => {
+    Keys.onPressed: function (event) {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
             selector.close();
         } else if (event.key === Qt.Key_CapsLock) {

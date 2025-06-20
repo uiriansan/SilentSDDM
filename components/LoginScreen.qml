@@ -9,6 +9,14 @@ Item {
     signal toggleLayoutPopup
 
     state: "normal"
+    property bool stateChanging: false
+    function safeStateChange(newState) { // This is probably overkill, but whatever
+        if (!stateChanging) {
+            stateChanging = true;
+            state = newState;
+            stateChanging = false;
+        }
+    }
     onStateChanged: {
         if (state === "normal") {
             resetFocus();
@@ -31,7 +39,7 @@ Item {
 
     function login() {
         if (password.text.length > 0 || !userNeedsPassword) {
-            loginScreen.state = "authenticating";
+            safeStateChange("authenticating");
             sddm.login(userName, password.text, sessionIndex);
         }
     }
@@ -40,8 +48,7 @@ Item {
             loginContainer.scale = 0.0;
         }
         function onLoginFailed() {
-            loginScreen.state = "normal";
-            // FIX: String safety improvements
+            safeStateChange("normal");
             loginMessage.warn(textConstants.loginFailed || "Login failed", "error");
             password.text = "";
         }
@@ -51,9 +58,15 @@ Item {
         target: sddm
     }
 
+    // FIX: Critical connections memory leak prevention?
+    Component.onDestruction: {
+        if (typeof connections !== 'undefined') {
+            connections.target = null;
+        }
+    }
+
     function updateCapsLock() {
         if (root.capsLockOn && loginScreen.state !== "authenticating") {
-            // FIX: String safety improvements
             loginMessage.warn(textConstants.capslockWarning || "Caps Lock is on", "warning");
         } else {
             loginMessage.clear();
@@ -119,10 +132,10 @@ Item {
             width: orientation === "horizontal" ? loginScreen.width - Config.loginAreaMargin * 2 : Config.avatarActiveSize
             height: orientation === "horizontal" ? Config.avatarActiveSize : loginScreen.height - Config.loginAreaMargin * 2
             onOpenUserList: {
-                loginScreen.state = "selectingUser";
+                safeStateChange("selectingUser");
             }
             onCloseUserList: {
-                loginScreen.state = "normal";
+                safeStateChange("normal");
                 loginScreen.resetFocus(); // resetFocus with escape even if the selector is not open
             }
             onUserChanged: (index, name, realName, icon, needsPassword) => {
@@ -171,7 +184,6 @@ Item {
                 font.weight: Config.usernameFontWeight
                 font.pixelSize: Config.usernameFontSize
                 color: Config.usernameColor
-                // FIX: String safety improvements
                 text: loginScreen.userRealName || loginScreen.userName || ""
 
                 Component.onCompleted: {
@@ -223,10 +235,8 @@ Item {
                     enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
                     activeFocusOnTab: true
                     icon: Config.getIcon(Config.loginButtonIcon)
-                    // FIX: String safety improvements
                     label: textConstants.login ? textConstants.login.toUpperCase() : "LOGIN"
                     showLabel: Config.loginButtonShowTextIfNoPassword && !loginScreen.userNeedsPassword
-                    // FIX: String safety improvements
                     tooltipText: !Config.tooltipsDisableLoginButton && (!Config.loginButtonShowTextIfNoPassword || loginScreen.userNeedsPassword) ? (textConstants.login || "Login") : ""
                     iconSize: Config.loginButtonIconSize
                     fontFamily: Config.loginButtonFontFamily
@@ -287,7 +297,6 @@ Item {
 
                 Component.onCompleted: {
                     if (root.capsLockOn)
-                        // FIX: String safety improvements
                         loginMessage.warn(textConstants.capslockWarning || "Caps Lock is on", "warning");
 
                     if (Config.loginAreaPosition === "left") {
@@ -316,7 +325,6 @@ Item {
                     clear();
                     text = message;
                     color = type === "error" ? Config.warningMessageErrorColor : (type === "warning" ? Config.warningMessageWarningColor : Config.warningMessageNormalColor);
-                    // FIX: String safety improvements
                     if (message === (textConstants.capslockWarning || "Caps Lock is on"))
                         capslockWarning = true;
                 }
@@ -332,7 +340,7 @@ Item {
     MenuArea {}
     VirtualKeyboard {}
 
-    Keys.onPressed: event => {
+    Keys.onPressed: function (event) {
         if (event.key === Qt.Key_Escape) {
             if (loginScreen.state === "authenticating") {
                 event.accepted = false;
@@ -355,7 +363,7 @@ Item {
         hoverEnabled: true
         onClicked: {
             if (loginScreen.state === "selectingUser") {
-                loginScreen.state = "normal";
+                safeStateChange("normal");
             }
         }
         onWheel: event => {

@@ -56,6 +56,16 @@ KeyboardStyle {
         inputLocaleIndicatorHighlightTimer.restart();
     }
 
+    Component.onDestruction: {
+        if (inputLocaleIndicatorHighlightTimer) {
+            inputLocaleIndicatorHighlightTimer.running = false;
+            inputLocaleIndicatorHighlightTimer.stop();
+        }
+        if (traceInputGuideConnections) {
+            traceInputGuideConnections.target = null;
+        }
+    }
+
     property Component component_settingsIcon: Component {
         Image {
             sourceSize.width: 80 * keyIconScale
@@ -106,7 +116,7 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                visible: !loginScreen.userNeedsPassword
+                visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
             }
@@ -946,7 +956,7 @@ KeyboardStyle {
                 anchors.centerIn: parent
                 sourceSize.height: 100 * keyIconScale
                 smooth: false
-                source: resourcePrefix + (keyboard.handwritingMode ? "textmode.svg" : "handwriting.svg")
+                source: resourcePrefix + ((keyboard && keyboard.handwritingMode) ? "textmode.svg" : "handwriting.svg")
 
                 MultiEffect {
                     source: parent
@@ -1314,7 +1324,7 @@ KeyboardStyle {
                             ctx.lineTo(rightMargin, y);
                         } else {
                             var dashLen = Math.round(20 * scaleHint);
-                            for (var dash = margindashCount = 0; dash < rightMargin; dash += dashLen, dashCount++) {
+                            for (var dash = margin, dashCount = 0; dash < rightMargin; dash += dashLen, dashCount++) {
                                 if ((dashCount & 1) === 0) {
                                     ctx.moveTo(dash, y);
                                     ctx.lineTo(Math.min(dash + dashLen, rightMargin), y);
@@ -1334,6 +1344,7 @@ KeyboardStyle {
                 }
             }
             Connections {
+                id: traceInputGuideConnections
                 target: control
                 function onHorizontalRulersChanged() {
                     traceInputKeyGuideLines.requestPaint();

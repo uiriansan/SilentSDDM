@@ -9,12 +9,11 @@ ColumnLayout {
     signal layoutChanged(layoutIndex: int)
     signal close
 
-    property int currentLayoutIndex: keyboard && keyboard.layouts.length > 0 ? keyboard.currentLayout : 0
+    property int currentLayoutIndex: (keyboard && keyboard.layouts && keyboard.layouts.length > 0) ? keyboard.currentLayout : 0
     property string layoutName: ""
     property string layoutShortName: ""
 
     function updateLayout() {
-        // FIX: Keyboard null checks
         if (keyboard && keyboard.layouts && selector.currentLayoutIndex >= 0 && selector.currentLayoutIndex < keyboard.layouts.length) {
             keyboard.currentLayout = selector.currentLayoutIndex;
             selector.layoutName = keyboard.layouts[selector.currentLayoutIndex].longName;
@@ -46,7 +45,6 @@ ColumnLayout {
         id: layoutList
         visible: !noLayoutMessage.visible
         Layout.preferredWidth: parent.width
-        // FIX: Keyboard null checks
         Layout.preferredHeight: Math.min((keyboard && keyboard.layouts ? keyboard.layouts.length : 0) * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing, Config.menuAreaPopupsMaxHeight)
         orientation: ListView.Vertical
         interactive: true
@@ -55,7 +53,7 @@ ColumnLayout {
         spacing: Config.menuAreaPopupsSpacing
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 0
-        // FIX: Keyboard null checks
+
         contentHeight: (keyboard && keyboard.layouts ? keyboard.layouts.length : 0) * (Config.menuAreaPopupsItemHeight + 5 + spacing) - spacing
 
         ScrollBar.vertical: ScrollBar {
@@ -69,7 +67,6 @@ ColumnLayout {
             }
         }
 
-        // FIX: Keyboard null checks
         model: keyboard && keyboard.layouts ? keyboard.layouts : []
 
         delegate: Rectangle {
@@ -147,15 +144,13 @@ ColumnLayout {
             }
         }
     }
-    Keys.onPressed: event => {
+    Keys.onPressed: function (event) {
         if (event.key === Qt.Key_Down) {
-            // FIX: Keyboard null checks
             if (keyboard && keyboard.layouts && keyboard.layouts.length > 0) {
                 selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length + 1) % keyboard.layouts.length;
                 selector.updateLayout();
             }
         } else if (event.key === Qt.Key_Up) {
-            // FIX: Keyboard null checks
             if (keyboard && keyboard.layouts && keyboard.layouts.length > 0) {
                 selector.currentLayoutIndex = (selector.currentLayoutIndex + keyboard.layouts.length - 1) % keyboard.layouts.length;
                 selector.updateLayout();

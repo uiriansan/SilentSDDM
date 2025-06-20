@@ -29,9 +29,9 @@ Item {
     property int borderRadiusRight: borderRadius
     property int borderSize: 0
     property color borderColor: isActive ? iconButton.activeContentColor : iconButton.contentColor
-    property var preferredWidth: undefined
+    property int preferredWidth: -1
 
-    width: preferredWidth ? preferredWidth : buttonContentRow.width // childrenRect doesn't update for some reason
+    width: preferredWidth !== -1 ? preferredWidth : buttonContentRow.width // childrenRect doesn't update for some reason
     height: iconSize * 2
 
     Rectangle {
@@ -123,7 +123,7 @@ Item {
                 }
             }
             Component.onCompleted: {
-                if (iconButton.preferredWidth && iconButton.preferredWidth !== -1) {
+                if (iconButton.preferredWidth !== -1) {
                     Layout.preferredWidth = iconButton.width - iconContainer.width;
                 }
             }
@@ -139,7 +139,8 @@ Item {
         ToolTip {
             parent: mouseArea
             enabled: Config.tooltipsEnable
-            visible: enabled && mouseArea.containsMouse && iconButton.tooltipText !== "" || enabled && iconButton.focus && iconButton.tooltipText !== ""
+            property bool shouldShow: enabled && mouseArea.containsMouse && iconButton.tooltipText !== "" || enabled && iconButton.focus && iconButton.tooltipText !== ""
+            visible: shouldShow
             delay: 300
             contentItem: Text {
                 font.family: Config.tooltipsFontFamily
@@ -155,7 +156,7 @@ Item {
             }
         }
     }
-    Keys.onPressed: event => {
+    Keys.onPressed: function (event) {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
             iconButton.clicked();
         }

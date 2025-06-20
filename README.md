@@ -70,7 +70,7 @@ You can find more configs in [this discussion.](https://github.com/uiriansan/Sil
 Just run the script:
 
 ```bash
-git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && ./install.sh | bash
+git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && ./install.sh
 ```
 
 > [!IMPORTANT]

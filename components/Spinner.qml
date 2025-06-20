@@ -100,10 +100,12 @@ Item {
         }
 
         onVisibleChanged: {
-            if (visible && Config.enableAnimations && Config.spinnerDisplayText)
+            if (visible && Config.enableAnimations && Config.spinnerDisplayText) {
                 spinnerTextInterval.running = true;
-            else
+            } else {
                 spinnerTextAnimation.running = false;
+                spinnerTextInterval.running = false;
+            }
         }
 
         SequentialAnimation on scale {
@@ -132,6 +134,17 @@ Item {
         running: false
         onTriggered: {
             spinnerTextAnimation.running = true;
+        }
+    }
+
+    Component.onDestruction: {
+        if (spinnerTextInterval) {
+            spinnerTextInterval.running = false;
+            spinnerTextInterval.stop();
+        }
+        if (spinnerTextAnimation) {
+            spinnerTextAnimation.running = false;
+            spinnerTextAnimation.stop();
         }
     }
 }
