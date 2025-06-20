@@ -2,18 +2,15 @@ import QtQuick
 import QtQuick.VirtualKeyboard
 import QtQuick.VirtualKeyboard.Settings
 
-// FIX: Virtual keyboard not working on the second loginScreen.
 InputPanel {
     id: inputPanel
 
-    // FIX: Scope violation fixes - proper parent scope access
     width: Math.min(loginScreen && loginScreen.width ? loginScreen.width / 2 : 800, 600) * Config.virtualKeyboardScale
     active: Qt.inputMethod.visible
     visible: loginScreen && loginScreen.showKeyboard && loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
     opacity: visible ? 1.0 : 0.0
     externalLanguageSwitchEnabled: true
     onExternalLanguageSwitch: {
-        // FIX: Scope violation fixes - safe parent method call
         if (loginScreen && loginScreen.toggleLayoutPopup) {
             loginScreen.toggleLayoutPopup();
         }
@@ -25,7 +22,6 @@ InputPanel {
     }
 
     property string pos: Config.virtualKeyboardPosition
-    // FIX: Scope violation fixes - safe parent object access
     property point loginLayoutPosition: loginContainer && loginLayout ? loginContainer.mapToGlobal(loginLayout.x, loginLayout.y) : Qt.point(0, 0)
     property bool vKeyboardMoved: false
 
@@ -39,7 +35,6 @@ InputPanel {
         } else {
             // pos === "login"
             if (Config.loginAreaPosition === "left" && Config.loginAreaMargin !== -1) {
-                // return loginLayoutPosition.x;
                 return Config.loginAreaMargin;
             } else if (Config.loginAreaPosition === "right" && Config.loginAreaMargin !== -1) {
                 return parent.width - inputPanel.width - Config.loginAreaMargin;
@@ -58,7 +53,6 @@ InputPanel {
         } else {
             // pos === "login"
             if (!vKeyboardMoved) {
-                // FIX: Scope violation fixes - safe parent object access
                 if (loginMessage && loginMessage.visible && Config.loginAreaPosition !== "right" && Config.loginAreaPosition !== "left") {
                     return loginLayoutPosition.y + (loginLayout ? loginLayout.height : 0) + (loginMessage ? loginMessage.height * 2 : 0) + Config.warningMessageMarginTop + Config.warningMessageMarginTop;
                 } else {
@@ -92,19 +86,14 @@ InputPanel {
         property point initialPosition: Qt.point(-1, -1)
         anchors.fill: parent
         hoverEnabled: true
-        // FIX: Scope violation fixes - safe parent property access
         cursorShape: loginScreen && loginScreen.userNeedsPassword ? Qt.ArrowCursor : Qt.ForbiddenCursor
         drag.target: inputPanel
-        // FIX: Scope violation fixes - safe parent property access
         acceptedButtons: loginScreen && loginScreen.userNeedsPassword ? Qt.MiddleButton : Qt.MiddleButton
-        // FIX: Arrow function compatibility
-        onPressed: function(event) {
+        onPressed: function (event) {
             cursorShape = Qt.ClosedHandCursor;
             initialPosition = Qt.point(event.x, event.y);
         }
-        // FIX: Arrow function compatibility - critical mouse event
-        onReleased: function(event) {
-            // FIX: Scope violation fixes - safe parent property access
+        onReleased: function (event) {
             cursorShape = loginScreen && loginScreen.userNeedsPassword ? Qt.ArrowCursor : Qt.ForbiddenCursor;
             if (initialPosition !== Qt.point(event.x, event.y) && !inputPanel.vKeyboardMoved) {
                 inputPanel.vKeyboardMoved = true;

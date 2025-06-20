@@ -100,11 +100,13 @@ Item {
             // Background
             id: backgroundImage
             property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
-            // FIX: Robust file extension checking with null safety
+
             property bool isVideo: {
-                if (!tsource || tsource.toString().length === 0) return false;
+                if (!tsource || tsource.toString().length === 0)
+                    return false;
                 var parts = tsource.toString().split(".");
-                if (parts.length === 0) return false;
+                if (parts.length === 0)
+                    return false;
                 var ext = parts[parts.length - 1];
                 return ["avi", "mp4", "mov", "mkv", "m4v", "webm"].indexOf(ext) !== -1;
             }
@@ -112,18 +114,15 @@ Item {
             property string placeholder: Config.animatedBackgroundPlaceholder // Idea stolen from astronaut-theme. Not a fan of it, but works...
 
             anchors.fill: parent
-            // FIX: Template literal compatibility - use string concatenation
             source: !isVideo ? "backgrounds/" + tsource : ""
             cache: true
             mipmap: true
 
             function updateVideo() {
                 if (isVideo && tsource.toString().length > 0) {
-                    // FIX: Template literal compatibility
                     backgroundVideo.source = Qt.resolvedUrl("backgrounds/" + tsource);
 
                     if (placeholder.length > 0)
-                        // FIX: Template literal compatibility
                         source = "backgrounds/" + placeholder;
                 }
             }
@@ -135,7 +134,6 @@ Item {
                 updateVideo();
             }
             onStatusChanged: {
-                // FIX: Robust error handling with multiple fallbacks
                 if (status === Image.Error) {
                     if (source !== "backgrounds/default.jpg" && source !== "") {
                         source = "backgrounds/default.jpg";
@@ -164,20 +162,18 @@ Item {
                 loops: MediaPlayer.Infinite
                 muted: true
                 onSourceChanged: {
-                    // FIX: Video source safety and proper state management
                     if (source && source.toString().length > 0) {
                         backgroundVideo.play();
                     }
                 }
                 onErrorOccurred: {
-                    // FIX: Null safety for placeholder property
                     if (error !== MediaPlayer.NoError && (!backgroundImage.placeholder || backgroundImage.placeholder.length === 0)) {
                         backgroundImage.displayColor = true;
                     }
                 }
             }
 
-            // FIX: Critical video memory leak prevention
+            // Overkill, but fine...
             Component.onDestruction: {
                 if (backgroundVideo) {
                     backgroundVideo.stop();
@@ -190,9 +186,7 @@ Item {
             id: backgroundBlur
             source: backgroundImage
             anchors.fill: backgroundImage
-            // FIX: Blur logic consistency - only enable when blur value > 0
             blurEnabled: backgroundImage.visible && blurMax > 0
-            // FIX: Dynamic blur value instead of fixed 1.0
             blur: blurMax > 0 ? 1.0 : 0.0
         }
 

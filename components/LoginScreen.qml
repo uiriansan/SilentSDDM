@@ -9,21 +9,17 @@ Item {
     signal toggleLayoutPopup
 
     state: "normal"
-    
-    // FIX: Critical state machine race condition prevention
     property bool stateChanging: false
-    
-    onStateChanged: {
-        if (state === "normal") {
-            resetFocus();
-        }
-    }
-    
-    function safeStateChange(newState) {
+    function safeStateChange(newState) { // This is probably overkill, but whatever
         if (!stateChanging) {
             stateChanging = true;
             state = newState;
             stateChanging = false;
+        }
+    }
+    onStateChanged: {
+        if (state === "normal") {
+            resetFocus();
         }
     }
 
@@ -53,7 +49,6 @@ Item {
         }
         function onLoginFailed() {
             safeStateChange("normal");
-            // FIX: String safety improvements
             loginMessage.warn(textConstants.loginFailed || "Login failed", "error");
             password.text = "";
         }
@@ -63,9 +58,8 @@ Item {
         target: sddm
     }
 
-    // FIX: Critical connections memory leak prevention
+    // FIX: Critical connections memory leak prevention?
     Component.onDestruction: {
-        // No direct way to disconnect Connections in QML, but setting target to null helps
         if (typeof connections !== 'undefined') {
             connections.target = null;
         }
@@ -73,7 +67,6 @@ Item {
 
     function updateCapsLock() {
         if (root.capsLockOn && loginScreen.state !== "authenticating") {
-            // FIX: String safety improvements
             loginMessage.warn(textConstants.capslockWarning || "Caps Lock is on", "warning");
         } else {
             loginMessage.clear();
@@ -191,7 +184,6 @@ Item {
                 font.weight: Config.usernameFontWeight
                 font.pixelSize: Config.usernameFontSize
                 color: Config.usernameColor
-                // FIX: String safety improvements
                 text: loginScreen.userRealName || loginScreen.userName || ""
 
                 Component.onCompleted: {
@@ -243,10 +235,8 @@ Item {
                     enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
                     activeFocusOnTab: true
                     icon: Config.getIcon(Config.loginButtonIcon)
-                    // FIX: String safety improvements
                     label: textConstants.login ? textConstants.login.toUpperCase() : "LOGIN"
                     showLabel: Config.loginButtonShowTextIfNoPassword && !loginScreen.userNeedsPassword
-                    // FIX: String safety improvements
                     tooltipText: !Config.tooltipsDisableLoginButton && (!Config.loginButtonShowTextIfNoPassword || loginScreen.userNeedsPassword) ? (textConstants.login || "Login") : ""
                     iconSize: Config.loginButtonIconSize
                     fontFamily: Config.loginButtonFontFamily
@@ -307,7 +297,6 @@ Item {
 
                 Component.onCompleted: {
                     if (root.capsLockOn)
-                        // FIX: String safety improvements
                         loginMessage.warn(textConstants.capslockWarning || "Caps Lock is on", "warning");
 
                     if (Config.loginAreaPosition === "left") {
@@ -336,7 +325,6 @@ Item {
                     clear();
                     text = message;
                     color = type === "error" ? Config.warningMessageErrorColor : (type === "warning" ? Config.warningMessageWarningColor : Config.warningMessageNormalColor);
-                    // FIX: String safety improvements
                     if (message === (textConstants.capslockWarning || "Caps Lock is on"))
                         capslockWarning = true;
                 }
@@ -352,8 +340,7 @@ Item {
     MenuArea {}
     VirtualKeyboard {}
 
-    // FIX: Arrow function compatibility
-    Keys.onPressed: function(event) {
+    Keys.onPressed: function (event) {
         if (event.key === Qt.Key_Escape) {
             if (loginScreen.state === "authenticating") {
                 event.accepted = false;

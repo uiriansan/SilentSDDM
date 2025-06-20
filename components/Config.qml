@@ -8,13 +8,11 @@ import QtQuick
 */
 QtObject {
     // [General]
-    // FIX: Simplified boolean logic
-    property bool enableAnimations: config['enable-animations'] !== "false" // @desc:Enable or disable all animations.
+    property bool enableAnimations: config['enable-animations'] === "false" ? false : true // @desc:Enable or disable all animations.
     property string animatedBackgroundPlaceholder: config.stringValue("animated-background-placeholder") // @possible:File in `backgrounds/` @desc:An image file to be used as a placeholder for the animated background while it loads.
 
     // [LockScreen]
-    // FIX: Simplified boolean logic
-    property bool lockScreenDisplay: config['LockScreen/display'] !== "false" // @desc:Whether or not to display the lock screen. If false, the theme will load straight to the login screen.
+    property bool lockScreenDisplay: config['LockScreen/display'] === "false" ? false : true // @desc:Whether or not to display the lock screen. If false, the theme will load straight to the login screen.
     property int lockScreenPaddingTop: config.intValue("LockScreen/padding-top") // @desc:Top padding of the lock screen. <br/>See also: <a href="#clockposition">Clock/position</a>, <a href="#lockmessageposition">Message/position</a>.
     property int lockScreenPaddingRight: config.intValue("LockScreen/padding-right") // @desc:Right padding of the lock screen. <br/>See also: <a href="#clockposition">Clock/position</a>, <a href="#lockmessageposition">Message/position</a>.
     property int lockScreenPaddingBottom: config.intValue("LockScreen/padding-bottom") // @desc:Bottom padding of the lock screen. <br/>See also: <a href="#clockposition">Clock/position</a>, <a href="#lockmessageposition">Message/position</a>.
@@ -26,8 +24,7 @@ QtObject {
     property real lockScreenBrightness: config.realValue("LockScreen/brightness") // @possible:-1.0 ≤ R ≤ 1.0 @desc:Brightness of the background of the lock screen. 0.0 leaves unchanged, -1.0 makes it black and 1.0 white.
 
     // [LockScreen.Clock]
-    // FIX: Simplified boolean logic
-    property bool clockDisplay: config['LockScreen.Clock/display'] !== "false" // @desc:Whether or not to display the clock in the lock screen.
+    property bool clockDisplay: config['LockScreen.Clock/display'] === "false" ? false : true // @desc:Whether or not to display the clock in the lock screen.
     property string clockPosition: config.stringValue("LockScreen.Clock/position") || "top-center" // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @desc:Position of the clock and date in the lock screen. <br />See also: <a href="#lockscreenpaddingtop">LockScreen/padding-top</a>
     property string clockAlign: config.stringValue("LockScreen.Clock/align") || "center" // @possible:'left' | 'center' | 'right' @desc:Relative alignment of the clock and date.
     property string clockFormat: config.stringValue("LockScreen.Clock/format") || "hh:mm" // @desc:Format string used for the clock.
@@ -37,8 +34,7 @@ QtObject {
     property color clockColor: config.stringValue("LockScreen.Clock/color") || "#FFFFFF" // @desc:Color of the clock.
 
     // [LockScreen.Date]
-    // FIX: Simplified boolean logic
-    property bool dateDisplay: config['LockScreen.Date/display'] !== "false" // @desc:Whether or not to display the date in the lock screen.
+    property bool dateDisplay: config['LockScreen.Date/display'] === "false" ? false : true // @desc:Whether or not to display the date in the lock screen.
     property string dateFormat: config.stringValue("LockScreen.Date/format") || "dddd, MMMM dd, yyyy" // @desc:Format string used for the date.
     property string dateFontFamily: config.stringValue("LockScreen.Date/font-family") || "RedHatDisplay" // @desc:Font family used for the date.
     property int dateFontSize: config.intValue("LockScreen.Date/font-size") || 14 // @desc:Font size of the date.
@@ -47,21 +43,18 @@ QtObject {
     property int dateMarginTop: config.intValue("LockScreen.Date/margin-top") // @desc:Top margin from the clock
 
     // [LockScreen.Message]
-    // FIX: Simplified boolean logic
-    property bool lockMessageDisplay: config['LockScreen.Message/display'] !== "false" // @desc:Whether or not to display the custom message in the lock screen.
+    property bool lockMessageDisplay: config['LockScreen.Message/display'] === "false" ? false : true // @desc:Whether or not to display the custom message in the lock screen.
     property string lockMessagePosition: config.stringValue("LockScreen.Message/position") || "bottom-center" // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @desc:Position of the custom message in the lock screen. <br />See also: <a href="#lockscreenpaddingtop">LockScreen/padding-top</a>
     property string lockMessageAlign: config.stringValue("LockScreen.Message/align") || "center" // @possible:'left' | 'center' | 'right' @desc:Relative alignment of the custom message and its icon.
     property string lockMessageText: config.stringValue("LockScreen.Message/text") || "Press any key" // @desc:Text of the custom message.
     property string lockMessageFontFamily: config.stringValue("LockScreen.Message/font-family") || "RedHatDisplay" // @desc:Font family used for the custom message.
     property int lockMessageFontSize: config.intValue("LockScreen.Message/font-size") || 12 // @desc:Font size of the custom message.
     property int lockMessageFontWeight: config.intValue("LockScreen.Message/font-weight") || 400 // @desc:Font weight of the date. 400 = regular, 600 = bold, 800 = black
-    // FIX: Simplified boolean logic
-    property bool lockMessageDisplayIcon: config['LockScreen.Message/display-icon'] !== "false" // @desc:Show or hide the icon above the message.
+    property bool lockMessageDisplayIcon: config['LockScreen.Message/display-icon'] === "false" ? false : true // @desc:Show or hide the icon above the message.
     property string lockMessageIcon: config.stringValue("LockScreen.Message/icon") || "enter.svg" // @possible:File in `icons/` @desc:Icon above the custom message.
     property int lockMessageIconSize: config.intValue("LockScreen.Message/icon-size") || 16 // @desc:Size of the custom message's icon.
     property color lockMessageColor: config.stringValue("LockScreen.Message/color") || "#FFFFFF" // @desc:Color of the custom message.
-    // FIX: Simplified boolean logic
-    property bool lockMessagePaintIcon: config['LockScreen.Message/paint-icon'] !== "false" // @desc:Whether or not to paint the icon with the same color as the text.
+    property bool lockMessagePaintIcon: config['LockScreen.Message/paint-icon'] === "false" ? false : true // @desc:Whether or not to paint the icon with the same color as the text.
     property int lockMessageSpacing: config.intValue("LockScreen.Message/spacing") // @desc:Spacing between the icon and the text in the custom message.
 
     // [LoginScreen]
@@ -96,8 +89,7 @@ QtObject {
     // [LoginScreen.LoginArea.PasswordInput]
     property int passwordInputWidth: config.intValue("LoginScreen.LoginArea.PasswordInput/width") || 200 // @desc:Width of the password field.
     property int passwordInputHeight: config.intValue("LoginScreen.LoginArea.PasswordInput/height") || 30 // @desc:Height of the password field. This option also defines the size of the login button.
-    // FIX: Simplified boolean logic
-    property bool passwordInputDisplayIcon: config['LoginScreen.LoginArea.PasswordInput/display-icon'] !== "false" // @desc:Whether or not to display the icon in the password field.
+    property bool passwordInputDisplayIcon: config['LoginScreen.LoginArea.PasswordInput/display-icon'] === "false" ? false : true // @desc:Whether or not to display the icon in the password field.
     property string passwordInputFontFamily: config.stringValue("LoginScreen.LoginArea.PasswordInput/font-family") || "RedHatDisplay" // @desc:Font family of the password field.
     property int passwordInputFontSize: config.intValue("LoginScreen.LoginArea.PasswordInput/font-size") || 12 // @desc:Font size of the password field.
     property string passwordInputIcon: config.stringValue("LoginScreen.LoginArea.PasswordInput/icon") || "password.svg" // @possible:File in `icons/` @desc:Icon in the password field.
@@ -125,16 +117,14 @@ QtObject {
     property int loginButtonBorderRadiusLeft: config.intValue("LoginScreen.LoginArea.LoginButton/border-radius-left") // @desc:Left border radius of the login button.
     property int loginButtonBorderRadiusRight: config.intValue("LoginScreen.LoginArea.LoginButton/border-radius-right") // @desc:Right border radius of the login button.
     property int loginButtonMarginLeft: config.intValue("LoginScreen.LoginArea.LoginButton/margin-left") // @desc:Distance of the login button from the password field.
-    // FIX: Simplified boolean logic
-    property bool loginButtonShowTextIfNoPassword: config['LoginScreen.LoginArea.LoginButton/show-text-if-no-password'] !== "false" // @desc:Whether or not to show a label in the login button when the password field is not visible.
+    property bool loginButtonShowTextIfNoPassword: config['LoginScreen.LoginArea.LoginButton/show-text-if-no-password'] === "false" ? false : true // @desc:Whether or not to show a label in the login button when the password field is not visible.
     property bool loginButtonHideIfNotNeeded: config.boolValue("LoginScreen.LoginArea.LoginButton/hide-if-not-needed") // @desc:Whether or not to hide the login button if the password field is visible. You can still log-in with [enter].
     property string loginButtonFontFamily: config.stringValue("LoginScreen.LoginArea.LoginButton/font-family") || "RedHatDisplay" // @desc:Font family of the label of the login button/
     property int loginButtonFontSize: config.intValue("LoginScreen.LoginArea.LoginButton/font-size") || 12 // @desc:Font size of the label of the login button.
     property int loginButtonFontWeight: config.intValue("LoginScreen.LoginArea.LoginButton/font-weight") || 600 // @desc:Font weight of the label of the login button. 400 = regular, 600 = bold, 800 = black
 
     // [LoginScreen.LoginArea.Spinner]
-    // FIX: Simplified boolean logic
-    property bool spinnerDisplayText: config['LoginScreen.LoginArea.Spinner/display-text'] !== "false" // @desc:Whether or not to display the text with the spinning icon.
+    property bool spinnerDisplayText: config['LoginScreen.LoginArea.Spinner/display-text'] === "false" ? false : true // @desc:Whether or not to display the text with the spinning icon.
     property string spinnerText: config.stringValue("LoginScreen.LoginArea.Spinner/text") || "Logging in" // @desc:Text to be displayed with the spinning icon.
     property string spinnerFontFamily: config.stringValue("LoginScreen.LoginArea.Spinner/font-family") || "RedHatDisplay" // @desc:Font family of the text to be displayed with the spinning icon.
     property int spinnerFontWeight: config.intValue("LoginScreen.LoginArea.Spinner/font-weight") || 600 // @desc:Font weight of the text to be displayed with the spinning icon. 400 = regular, 600 = bold, 800 = black
@@ -168,8 +158,7 @@ QtObject {
     property int menuAreaPopupsItemHeight: config.intValue("LoginScreen.MenuArea.Popups/item-height") || 30 // @desc:Height of the items inside a popup.
     property int menuAreaPopupsSpacing: config.intValue("LoginScreen.MenuArea.Popups/item-spacing") // @desc:Spacing between items inside a popup.
     property int menuAreaPopupsPadding: config.intValue("LoginScreen.MenuArea.Popups/padding") // @desc:Padding of the popups.
-    // FIX: Simplified boolean logic
-    property bool menuAreaPopupsDisplayScrollbar: config["LoginScreen.MenuArea.Popups/display-scrollbar"] !== "false" // @desc:Whether or not to display a scrollbar in the popups if its items don't fit.
+    property bool menuAreaPopupsDisplayScrollbar: config["LoginScreen.MenuArea.Popups/display-scrollbar"] === "false" ? false : true // @desc:Whether or not to display a scrollbar in the popups if its items don't fit.
     property int menuAreaPopupsMargin: config.intValue("LoginScreen.MenuArea.Popups/margin") // @desc:Distance of the popup from its button.
     property color menuAreaPopupsBackgroundColor: config.stringValue("LoginScreen.MenuArea.Popups/background-color") || "#FFFFFF" // @desc:Background color of the popups.
     property real menuAreaPopupsBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Popups/background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the popups.
@@ -184,14 +173,12 @@ QtObject {
     property int menuAreaPopupsIconSize: config.intValue("LoginScreen.MenuArea.Popups/icon-size") || 16 // @desc:Size of the icons in the popups.
 
     // [LoginScreen.MenuArea.Session]
-    // FIX: Simplified boolean logic
-    property bool sessionDisplay: config["LoginScreen.MenuArea.Session/display"] !== "false" // @desc:Whether or not to display the session button.
+    property bool sessionDisplay: config["LoginScreen.MenuArea.Session/display"] === "false" ? false : true // @desc:Whether or not to display the session button.
     property string sessionPosition: config.stringValue("LoginScreen.MenuArea.Session/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-left @desc:Position of the session button.
     property int sessionIndex: config.intValue("LoginScreen.MenuArea.Session/index") // @default:0 @desc:This number is used to sort menu buttons placed in the same position.
     property string sessionPopupDirection: config.stringValue("LoginScreen.MenuArea.Session/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right' @desc:Which direction to open the session popup to.
     property string sessionPopupAlign: config.stringValue("LoginScreen.MenuArea.Session/popup-align") || "center" // @possible:'start' | 'center' | 'end' // @desc:Alignment of the session popup.
-    // FIX: Simplified boolean logic
-    property bool sessionDisplaySessionName: config['LoginScreen.MenuArea.Session/display-session-name'] !== "false" // @desc:Whether or not to display the name of the current session in the session button.
+    property bool sessionDisplaySessionName: config['LoginScreen.MenuArea.Session/display-session-name'] === "false" ? false : true // @desc:Whether or not to display the name of the current session in the session button.
     property int sessionButtonWidth: config.intValue("LoginScreen.MenuArea.Session/button-width") || 200 // @desc:Width of the session button. Set this to '-1' to make it the same as its contents. <br/>This option is not applied if 'display-session-name' is set to true.
     property int sessionPopupWidth: config.intValue("LoginScreen.MenuArea.Session/popup-width") || 200 // @desc:Width of the session popup.
     property color sessionBackgroundColor: config.stringValue("LoginScreen.MenuArea.Session/background-color") || "#FFFFFF" // @desc:Background color of the session button.
@@ -204,15 +191,13 @@ QtObject {
     property int sessionIconSize: config.intValue("LoginScreen.MenuArea.Session/icon-size") || 16 // @desc:Size of the icon in the session button.
 
     // [LoginScreen.MenuArea.Layout]
-    // FIX: Simplified boolean logic
-    property bool layoutDisplay: config["LoginScreen.MenuArea.Layout/display"] !== "false" // @desc:Whether or not to display the layout button.
+    property bool layoutDisplay: config["LoginScreen.MenuArea.Layout/display"] === "false" ? false : true // @desc:Whether or not to display the layout button.
     property string layoutPosition: config.stringValue("LoginScreen.MenuArea.Layout/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-right @desc:Position of the layout button.
     property int layoutIndex: config.intValue("LoginScreen.MenuArea.Layout/index") // @default:1 @desc:This number is used to sort menu buttons placed in the same position.
     property string layoutPopupDirection: config.stringValue("LoginScreen.MenuArea.Layout/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right' @desc:Which direction to open the layout popup to.
     property string layoutPopupAlign: config.stringValue("LoginScreen.MenuArea.Layout/popup-align") || "center" // @possible:'start' | 'center' | 'end' @desc:Alignment of the session popup.
     property int layoutPopupWidth: config.intValue("LoginScreen.MenuArea.Layout/popup-width") || 180 // @desc:Width of the layout popup.
-    // FIX: Simplified boolean logic
-    property bool layoutDisplayLayoutName: config['LoginScreen.MenuArea.Layout/display-layout-name'] !== "false" // @desc:Whether or not to display the country code of the current layout in the layout button.
+    property bool layoutDisplayLayoutName: config['LoginScreen.MenuArea.Layout/display-layout-name'] === "false" ? false : true // @desc:Whether or not to display the country code of the current layout in the layout button.
     property color layoutBackgroundColor: config.stringValue("LoginScreen.MenuArea.Layout/background-color") || "#FFFFFF" // @desc:Background color of the layout button.
     property real layoutBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Layout/background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the layout button.
     property real layoutActiveBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Layout/active-background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the layout button when hovered/focused.
@@ -224,8 +209,7 @@ QtObject {
     property int layoutIconSize: config.intValue("LoginScreen.MenuArea.Layout/icon-size") || 16 // @desc:Size of the icon in the layout button.
 
     // [LoginScreen.MenuArea.Keyboard]
-    // FIX: Simplified boolean logic
-    property bool keyboardDisplay: config["LoginScreen.MenuArea.Keyboard/display"] !== "false" // @desc:Whether or not to display the virtual keyboard toggle button.
+    property bool keyboardDisplay: config["LoginScreen.MenuArea.Keyboard/display"] === "false" ? false : true // @desc:Whether or not to display the virtual keyboard toggle button.
     property string keyboardPosition: config.stringValue("LoginScreen.MenuArea.Keyboard/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-right @desc:Position of the virtual keyboard toggle button.
     property int keyboardIndex: config.intValue("LoginScreen.MenuArea.Keyboard/index") // @default:2 @desc:This number is used to sort menu buttons placed in the same position.
     property color keyboardBackgroundColor: config.stringValue("LoginScreen.MenuArea.Keyboard/background-color") || "#FFFFFF" // @desc:Background color of the virtual keyboard toggle button.
@@ -238,8 +222,7 @@ QtObject {
     property int keyboardIconSize: config.intValue("LoginScreen.MenuArea.Keyboard/icon-size") || 16 // @desc:Size of the icon in the virtual keyboard toggle button.
 
     // [LoginScreen.MenuArea.Power]
-    // FIX: Simplified boolean logic
-    property bool powerDisplay: config["LoginScreen.MenuArea.Power/display"] !== "false" // @desc:Whether or not to display the power button.
+    property bool powerDisplay: config["LoginScreen.MenuArea.Power/display"] === "false" ? false : true // @desc:Whether or not to display the power button.
     property string powerPosition: config.stringValue("LoginScreen.MenuArea.Power/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-right @desc:Position of the power button.
     property int powerIndex: config.intValue("LoginScreen.MenuArea.Power/index") // @default:3 @desc:This number is used to sort menu buttons placed in the same position.
     property string powerPopupDirection: config.stringValue("LoginScreen.MenuArea.Power/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right' @desc:Which direction to open the power popup to.
@@ -257,8 +240,7 @@ QtObject {
     // [LoginScreen.VirtualKeyboard]
     property int virtualKeyboardScale: config.realValue("LoginScreen.VirtualKeyboard/scale") || 1.0 // @desc:Scale of the virtual keyboard.
     property string virtualKeyboardPosition: config.stringValue("LoginScreen.VirtualKeyboard/position") || "login" // @possible: 'login' | 'top' | 'bottom' | 'left' | 'right' @desc:Initial position of the virtual keyboard. You can drag the keyboard using the middle mouse button.
-    // FIX: Simplified boolean logic
-    property bool virtualKeyboardStartHidden: config['LoginScreen.VirtualKeyboard/start-hidden'] !== "false" // @desc:Whether or not the virtual keyboard should start hidden.
+    property bool virtualKeyboardStartHidden: config['LoginScreen.VirtualKeyboard/start-hidden'] === "false" ? false : true // @desc:Whether or not the virtual keyboard should start hidden.
     property color virtualKeyboardBackgroundColor: config.stringValue("LoginScreen.VirtualKeyboard/background-color") || "#FFFFFF" // @desc:Color of the background of the virtual keyboard.
     property real virtualKeyboardBackgroundOpacity: config.realValue("LoginScreen.VirtualKeyboard/background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the virtual keyboard.
     property color virtualKeyboardKeyContentColor: config.stringValue("LoginScreen.VirtualKeyboard/key-content-color") || "#FFFFFF" // @desc:Color of the keys' text/icon in the virtual keyboard.
@@ -269,13 +251,11 @@ QtObject {
     property color virtualKeyboardSelectionBackgroundColor: config.stringValue("LoginScreen.VirtualKeyboard/selection-background-color") || "#CCCCCC" // @desc:Color of the background of the selected character in the virtual keyboard.
     property color virtualKeyboardSelectionContentColor: config.stringValue("LoginScreen.VirtualKeyboard/selection-content-color") || "#FFFFFF" // @desc:Color of the text of the selected character in the virtual keyboard.
     property color virtualKeyboardPrimaryColor: config.stringValue("LoginScreen.VirtualKeyboard/primary-color") || "#000000" // @desc:Color of the icon/text in special keys when they're active.
-    // FIX: Border size should be integer, not real
     property int virtualKeyboardBorderSize: config.intValue("LoginScreen.VirtualKeyboard/border-size") // @desc:Border size of the virtual keyboard and its keys.
     property color virtualKeyboardBorderColor: config.stringValue("LoginScreen.VirtualKeyboard/border-color") || "#000000" // @desc:Color of the border of the virtual keyboard and its keys.
 
     // [Tooltips]
-    // FIX: Simplified boolean logic
-    property bool tooltipsEnable: config['Tooltips/enable'] !== "false" // @desc:Whether or not to show tooltips when hovering over buttons.
+    property bool tooltipsEnable: config['Tooltips/enable'] === "false" ? false : true // @desc:Whether or not to show tooltips when hovering over buttons.
     property string tooltipsFontFamily: config.stringValue("Tooltips/font-family") || "RedHatDisplay" // @desc:Font family of the tooltips.
     property int tooltipsFontSize: config.intValue("Tooltips/font-size") || 11 // @desc:Font size of the tooltips.
     property color tooltipsContentColor: config.stringValue("Tooltips/content-color") || "#FFFFFF" // @desc:Color of the text in tooltips.
@@ -286,64 +266,46 @@ QtObject {
     property bool tooltipsDisableLoginButton: config.boolValue("Tooltips/disable-login-button") // @desc:If false, disabled only the tooltip for the login button.
 
     function sortMenuButtons() {
-        // FIX: ES6 const compatibility - use var
         var menus = [];
         var available_positions = ["top-left", "top-center", "top-right", "center-left", "center-right", "bottom-left", "bottom-center", "bottom-right"];
 
         if (sessionDisplay)
             menus.push({
                 name: "session",
-                // FIX: Null safety for index properties - prevent NaN in sort
-                index: sessionIndex || 0,
+                index: sessionIndex,
                 def_index: 0,
-                // FIX: ES6 includes() compatibility - use indexOf()
-                position: available_positions.indexOf(sessionPosition) !== -1 ? sessionPosition : "bottom-left"
+                position: available_positions.includes(sessionPosition) ? sessionPosition : "bottom-left"
             });
 
         if (layoutDisplay)
             menus.push({
                 name: "layout",
-                // FIX: Null safety for index properties - prevent NaN in sort
-                index: layoutIndex || 1,
+                index: layoutIndex,
                 def_index: 1,
-                // FIX: ES6 includes() compatibility - use indexOf()
-                position: available_positions.indexOf(layoutPosition) !== -1 ? layoutPosition : "bottom-right"
+                position: available_positions.includes(layoutPosition) ? layoutPosition : "bottom-right"
             });
 
         if (keyboardDisplay)
             menus.push({
                 name: "keyboard",
-                // FIX: Null safety for index properties - prevent NaN in sort
-                index: keyboardIndex || 2,
+                index: keyboardIndex,
                 def_index: 2,
-                // FIX: ES6 includes() compatibility - use indexOf()
-                position: available_positions.indexOf(keyboardPosition) !== -1 ? keyboardPosition : "bottom-right"
+                position: available_positions.includes(keyboardPosition) ? keyboardPosition : "bottom-right"
             });
 
         if (powerDisplay)
             menus.push({
                 name: "power",
-                // FIX: Null safety for index properties - prevent NaN in sort
-                index: powerIndex || 3,
+                index: powerIndex,
                 def_index: 3,
-                // FIX: ES6 includes() compatibility - use indexOf()
-                position: available_positions.indexOf(powerPosition) !== -1 ? powerPosition : "bottom-right"
+                position: available_positions.includes(powerPosition) ? powerPosition : "bottom-right"
             });
 
         // Sort by index or default index if 0
-        // FIX: JavaScript arrow function compatibility + NaN safety
-        return menus.sort(function(c, n) {
-            var indexDiff = (c.index || c.def_index) - (n.index || n.def_index);
-            return indexDiff || c.def_index - n.def_index;
-        });
+        return menus.sort((c, n) => c.index - n.index || c.def_index - n.def_index);
     }
 
-    // FIX: Template literal compatibility - use string concatenation + null safety
     function getIcon(iconName) {
-        // FIX: Input validation - prevent null/undefined icon names
-        if (!iconName || typeof iconName !== 'string') {
-            return "../icons/default.svg";
-        }
-        return "../icons/" + iconName;
+        return `../icons/${iconName}`;
     }
 }

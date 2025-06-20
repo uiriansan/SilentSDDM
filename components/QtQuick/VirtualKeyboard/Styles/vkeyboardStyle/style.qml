@@ -13,8 +13,7 @@ KeyboardStyle {
     id: vkeyboardStyle
 
     readonly property bool compactSelectionList: [InputEngine.InputMode.Pinyin, InputEngine.InputMode.Cangjie, InputEngine.InputMode.Zhuyin].indexOf(InputContext.inputEngine.inputMode) !== -1
-    // FIX: Font family null safety
-    readonly property string fontFamily: Config.menuAreaButtonsFontFamily || "sans-serif"
+    readonly property string fontFamily: Config.menuAreaButtonsFontFamily
     readonly property real keyBackgroundMargin: Math.round(8 * scaleHint)
     readonly property real keyContentMargin: Math.round(40 * scaleHint)
     readonly property real keyIconScale: scaleHint * 0.8
@@ -48,7 +47,6 @@ KeyboardStyle {
     property color navigationHighlightColor: primaryColor
 
     property real inputLocaleIndicatorOpacity: 1.0
-    // FIX: Timer with memory leak prevention
     property Timer inputLocaleIndicatorHighlightTimer: Timer {
         interval: 1000
         onTriggered: inputLocaleIndicatorOpacity = 0.5
@@ -57,8 +55,7 @@ KeyboardStyle {
         inputLocaleIndicatorOpacity = 1.0;
         inputLocaleIndicatorHighlightTimer.restart();
     }
-    
-    // FIX: Cleanup timer and connections on component destruction
+
     Component.onDestruction: {
         if (inputLocaleIndicatorHighlightTimer) {
             inputLocaleIndicatorHighlightTimer.running = false;
@@ -119,7 +116,6 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                // FIX: Login screen null safety
                 visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
@@ -960,7 +956,6 @@ KeyboardStyle {
                 anchors.centerIn: parent
                 sourceSize.height: 100 * keyIconScale
                 smooth: false
-                // FIX: Keyboard null safety
                 source: resourcePrefix + ((keyboard && keyboard.handwritingMode) ? "textmode.svg" : "handwriting.svg")
 
                 MultiEffect {
@@ -1329,7 +1324,6 @@ KeyboardStyle {
                             ctx.lineTo(rightMargin, y);
                         } else {
                             var dashLen = Math.round(20 * scaleHint);
-                            // FIX: Critical syntax error - separate variable declarations
                             for (var dash = margin, dashCount = 0; dash < rightMargin; dash += dashLen, dashCount++) {
                                 if ((dashCount & 1) === 0) {
                                     ctx.moveTo(dash, y);

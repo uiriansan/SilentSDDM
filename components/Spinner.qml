@@ -100,7 +100,6 @@ Item {
         }
 
         onVisibleChanged: {
-            // FIX: Timer memory leak prevention
             if (visible && Config.enableAnimations && Config.spinnerDisplayText) {
                 spinnerTextInterval.running = true;
             } else {
@@ -138,7 +137,6 @@ Item {
         }
     }
 
-    // FIX: Critical timer memory leak prevention
     Component.onDestruction: {
         if (spinnerTextInterval) {
             spinnerTextInterval.running = false;

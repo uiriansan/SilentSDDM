@@ -47,12 +47,6 @@ Item {
         model: userModel
         currentIndex: userModel.lastIndex
         onCurrentIndexChanged: {
-            // FIX: Critical model data race condition prevention
-            if (!userModel || currentIndex < 0 || currentIndex >= userModel.rowCount()) {
-                return;
-            }
-            
-            // FIX: ES6 const compatibility - use var
             var username = userModel.data(userModel.index(currentIndex, 0), 257);
             var userRealName = userModel.data(userModel.index(currentIndex, 0), 258);
             var userIcon = userModel.data(userModel.index(currentIndex, 0), 260);
@@ -134,8 +128,7 @@ Item {
         }
     }
 
-    // FIX: Arrow function compatibility
-    Keys.onPressed: function(event) {
+    Keys.onPressed: function (event) {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
             if (selector.listUsers) {
                 selector.closeUserList();
@@ -150,14 +143,12 @@ Item {
             selector.focus = false;
             event.accepted = true;
         } else if ((selector.orientation === "horizontal" && event.key == Qt.Key_Left) || (selector.orientation === "vertical" && event.key == Qt.Key_Up)) {
-            // FIX: Division by zero protection
             if (userModel.rowCount() > 0) {
                 userList.currentIndex = (userList.currentIndex + userModel.rowCount() - 1) % userModel.rowCount();
             }
             selector.focus = true;
             event.accepted = true;
         } else if ((selector.orientation === "horizontal" && event.key == Qt.Key_Right) || (selector.orientation === "vertical" && event.key == Qt.Key_Down)) {
-            // FIX: Division by zero protection
             if (userModel.rowCount() > 0) {
                 userList.currentIndex = (userList.currentIndex + userModel.rowCount() + 1) % userModel.rowCount();
             }

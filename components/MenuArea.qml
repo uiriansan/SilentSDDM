@@ -59,13 +59,11 @@ Item {
                 }
                 dim: true
                 Overlay.modal: Rectangle {
-                    color: "transparent"  // Use whatever color/opacity you like
+                    color: "transparent"
                     MouseArea {
-                        // Fix popup not closing sometimes
                         anchors.fill: parent
                         hoverEnabled: true
-                        // FIX: Arrow function compatibility
-                        onClicked: function(event) {
+                        onClicked: function (event) {
                             popup.close();
                             event.accepted = true;
                         }
@@ -82,8 +80,7 @@ Item {
 
                 SessionSelector {
                     focus: popup.focus
-                    // FIX: Arrow function compatibility - missed in previous scan
-                    onSessionChanged: function(newSessionIndex, sessionIcon, sessionLabel) {
+                    onSessionChanged: function (newSessionIndex, sessionIcon, sessionLabel) {
                         loginScreen.sessionIndex = newSessionIndex;
                         sessionButton.icon = sessionIcon;
                         sessionButton.label = sessionButton.showLabel ? sessionLabel : "";
@@ -94,10 +91,7 @@ Item {
                 }
 
                 Component.onCompleted: {
-                    // FIX: ES6 array destructuring compatibility - use separate assignments
-                    var pos = menuArea.calculatePopupPos(Config.sessionPopupDirection, Config.sessionPopupAlign, popup, sessionButton);
-                    x = pos[0];
-                    y = pos[1];
+                    [x, y] = menuArea.calculatePopupPos(Config.sessionPopupDirection, Config.sessionPopupAlign, popup, sessionButton);
                 }
             }
         }
@@ -150,9 +144,7 @@ Item {
                 }
             }
 
-            // FIX: Critical connections memory leak prevention
             Component.onDestruction: {
-                // No direct way to disconnect Connections in QML, but setting target to null helps
                 if (typeof connections !== 'undefined') {
                     connections.target = null;
                 }
@@ -183,11 +175,9 @@ Item {
                 Overlay.modal: Rectangle {
                     color: "transparent" // Remove dim background (dim: false doesn't work here)
                     MouseArea {
-                        // Fix popup not closing sometimes
                         anchors.fill: parent
                         hoverEnabled: true
-                        // FIX: Arrow function compatibility
-                        onClicked: function(event) {
+                        onClicked: function (event) {
                             popup.close();
                             event.accepted = true;
                         }
@@ -202,11 +192,9 @@ Item {
                 closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
                 LayoutSelector {
                     focus: popup.focus
-                    // FIX: Arrow function compatibility - another missed one
-                    onLayoutChanged: function(index) {
+                    onLayoutChanged: function (index) {
                         // FIX: Array bounds checking for keyboard layouts
                         layoutButton.label = showLabel ? (keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : "";
-                        // FIX: Array bounds checking for keyboard layouts
                         VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName : "");
                     }
                     onClose: {
@@ -215,10 +203,7 @@ Item {
                 }
 
                 Component.onCompleted: {
-                    // FIX: ES6 array destructuring compatibility - use separate assignments
-                    var pos = menuArea.calculatePopupPos(Config.layoutPopupDirection, Config.layoutPopupAlign, popup, layoutButton);
-                    x = pos[0];
-                    y = pos[1];
+                    [x, y] = menuArea.calculatePopupPos(Config.layoutPopupDirection, Config.layoutPopupAlign, popup, layoutButton);
                 }
             }
         }
@@ -306,11 +291,9 @@ Item {
                 Overlay.modal: Rectangle {
                     color: "transparent"  // Remove dim background (dim: false doesn't work here)
                     MouseArea {
-                        // Fix popup not closing sometimes
                         anchors.fill: parent
                         hoverEnabled: true
-                        // FIX: Arrow function compatibility
-                        onClicked: function(event) {
+                        onClicked: function (event) {
                             popup.close();
                             event.accepted = true;
                         }
@@ -333,10 +316,7 @@ Item {
                 }
 
                 Component.onCompleted: {
-                    // FIX: ES6 array destructuring compatibility - use separate assignments
-                    var pos = menuArea.calculatePopupPos(Config.powerPopupDirection, Config.powerPopupAlign, popup, powerButton);
-                    x = pos[0];
-                    y = pos[1];
+                    [x, y] = menuArea.calculatePopupPos(Config.powerPopupDirection, Config.powerPopupAlign, popup, powerButton);
                 }
             }
         }
@@ -470,7 +450,6 @@ Item {
     property var createdObjects: []
 
     Component.onCompleted: {
-        // FIX: ES6 const/let compatibility - use var
         var menus = Config.sortMenuButtons();
 
         for (var i = 0; i < menus.length; i++) {
@@ -511,7 +490,7 @@ Item {
                 createdObject = keyboardMenuComponent.createObject(pos, {});
             else if (menus[i].name === "power")
                 createdObject = powerMenuComponent.createObject(pos, {});
-            
+
             if (createdObject) {
                 createdObjects.push(createdObject);
             }
@@ -529,7 +508,6 @@ Item {
     }
 
     function calculatePopupPos(direction, align, popup, button) {
-        // FIX: ES6 const/let compatibility - use var
         var popupMargin = Config.menuAreaPopupsMargin;
         var x = 0, y = 0;
 

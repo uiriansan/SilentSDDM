@@ -20,16 +20,15 @@ Canvas {
     onSourceChanged: delayPaintTimer.running = true
     onPaint: {
         // FIX: Canvas zero dimension protection
-        if (width <= 0 || height <= 0) return;
-        
-        // FIX: ES6 const compatibility - use var
+        if (width <= 0 || height <= 0)
+            return;
+
         var ctx = getContext("2d");
         ctx.reset(); // Clear previous drawing
         ctx.beginPath();
 
         if (shape === "square") {
             // Squircle, actually
-            // FIX: ES6 const compatibility - use var
             var r = width * squareRadius / 100;
             ctx.moveTo(width - r, 0);
             ctx.arcTo(width, 0, width, height, r);
@@ -68,7 +67,6 @@ Canvas {
                 return true;
 
             // Ellipse center and radius
-            // FIX: ES6 const compatibility - use var
             var centerX = width / 2;
             var centerY = height / 2;
             var radiusX = centerX;
@@ -82,9 +80,7 @@ Canvas {
             return (dx * dx + dy * dy) <= 1.0;
         }
 
-        // FIX: Arrow function compatibility - critical mouse event
-        onReleased: function(mouse) {
-            // FIX: ES6 const compatibility - use var
+        onReleased: function (mouse) {
             var isInside = isCursorInsideAvatar();
             if (isInside) {
                 avatar.clicked();
@@ -108,7 +104,6 @@ Canvas {
         ToolTip {
             parent: mouseArea
             enabled: Config.tooltipsEnable && !Config.tooltipsDisableUser
-            // FIX: Critical tooltip race condition prevention
             property bool shouldShow: enabled && avatar.showTooltip || (enabled && mouseArea.isCursorInsideAvatar() && avatar.tooltipText !== "")
             visible: shouldShow
             delay: 300
@@ -137,6 +132,7 @@ Canvas {
     }
 
     // FIX: Critical timer memory leak prevention
+    // Overkill, but fine...
     Component.onDestruction: {
         if (delayPaintTimer) {
             delayPaintTimer.running = false;

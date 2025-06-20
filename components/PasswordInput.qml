@@ -3,8 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Effects
 
-// Custom TextField that doesn't hide the placeholder when it gets focused.
-// Why the hell isn't this the default behavior???????????????????
 Item {
     id: passwordInput
 
@@ -26,8 +24,7 @@ Item {
         activeFocusOnTab: true
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
-        // FIX: Font properties null safety
-        font.family: Config.passwordInputFontFamily || "sans-serif"
+        font.family: Config.passwordInputFontFamily
         font.pixelSize: Math.max(8, Config.passwordInputFontSize || 12)
         background: Rectangle {
             anchors.fill: parent
@@ -67,8 +64,7 @@ Item {
 
                 Image {
                     id: icon
-                    // FIX: Icon source null safety
-                    source: Config.passwordInputIcon ? Config.getIcon(Config.passwordInputIcon) : ""
+                    source: Config.getIcon(Config.passwordInputIcon)
                     anchors.centerIn: parent
                     // FIX: Icon size safety
                     width: Math.max(1, Config.passwordInputIconSize || 16)
@@ -98,12 +94,9 @@ Item {
                     verticalCenter: parent.verticalCenter
                 }
                 padding: 0
-                // FIX: Preedit text null safety and improved visibility check
                 visible: textField.text.length === 0 && (!textField.preeditText || textField.preeditText.length === 0)
-                // FIX: Text constants null safety
                 text: (textConstants && textConstants.password) ? textConstants.password : "Password"
                 color: textField.color
-                // FIX: Font size null safety
                 font.pixelSize: Math.max(8, textField.font.pixelSize || 12)
                 font.family: textField.font.family || "sans-serif"
                 horizontalAlignment: Text.AlignLeft

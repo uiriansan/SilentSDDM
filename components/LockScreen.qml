@@ -49,8 +49,7 @@ Item {
                 date.updateDate();
             }
         }
-        
-        // FIX: Timer memory leak prevention - critical clock timer
+
         Component.onDestruction: {
             if (clockTimer) {
                 clockTimer.stop();
@@ -161,8 +160,7 @@ Item {
         onClicked: lockScreen.loginRequested()
     }
 
-    // FIX: Arrow function compatibility
-    Keys.onPressed: function(event) {
+    Keys.onPressed: function (event) {
         if (event.key === Qt.Key_CapsLock) {
             root.capsLockOn = !root.capsLockOn;
         }
