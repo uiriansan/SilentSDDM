@@ -55,8 +55,6 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-mocha.png" width="100%" />
 </details>
 
-You can find more configs in [this discussion.](https://github.com/uiriansan/SilentSDDM/discussions/3)
-
 # Dependencies
 
 - SDDM ≥ 0.20;
