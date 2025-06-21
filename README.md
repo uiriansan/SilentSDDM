@@ -3,7 +3,7 @@
 > Bugs are expected. SDDM itself has some [annoying issues](https://github.com/uiriansan/SilentSDDM/issues?q=is%3Aissue%20label%3Asddm-issue) and limitations that make it very hard to create an actual good theme. If you encounter a bug, feel free to [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose). <br/><br/>
 > **This theme is very resource-intensive. Use at your own risk.**
 
-https://github.com/user-attachments/assets/15c52847-a272-4527-9247-34818f5d8704
+https://github.com/user-attachments/assets/dd63c526-34d6-45ec-8a7d-5c29bf08c702
 
 # Presets
 
