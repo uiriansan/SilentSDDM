@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 green='\033[0;32m'
 red='\033[0;31m'
 bred='\033[1;31m'
