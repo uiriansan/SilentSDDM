@@ -76,6 +76,15 @@ git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM && cd Silent
 
 ## Manual installation
 
+If you run Arch Linux, consider installing one of the AUR packages:
+```bash
+# stable version
+yay -S sddm-silent-theme
+# git version
+yay -S sddm-silent-theme-git
+```
+Then, skip to step `6` to finish the installation.
+
 ### 1. Install dependencies:
 
 #### Arch Linux
@@ -159,7 +168,7 @@ ConfigFile=configs/<your_preferred_config>.conf
 
 <br/>
 
-You can also create your own config file. There's a guide with the list of available options (there are 200 of them xD) in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
+You can also create your own config file. There's a guide with the list of available options (there are more than 200 of them xD) in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
 
 > [!IMPORTANT]
 > Don't forget to test the theme after every change by running `./test.sh`, otherwise you might end up with a broken login screen.
@@ -172,6 +181,7 @@ You can also create your own config file. There's a guide with the list of avail
 - [Joyston Judah](https://www.pexels.com/photo/white-and-black-mountain-wallpaper-933054/): background;
 - [DesktopHut](https://www.desktophut.com/blue-light-anime-girl-6794): background;
 - [MoeWalls](https://moewalls.com/anime/ken-kaneki-tokyo-ghoul-re-3-live-wallpaper/): background;
+- [MoeWalls](https://moewalls.com/anime/anime-girl-nissan-silvia-live-wallpaper/): background;
 - [iconify.design](https://iconify.design/): icons
 
 I couldn't find the source for some of the images used here. [E-mail me](mailto:uiriansan@gmail.com?subject=Background%20image%20in%20SilentSDDM) if you are the creator and want it removed or acknowledged.
