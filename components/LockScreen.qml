@@ -21,7 +21,7 @@ Item {
             Layout.alignment: Config.clockAlign === "left" ? Qt.AlignLeft : (Config.clockAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
 
             function updateTime() {
-                text = new Date().toLocaleString(Qt.locale(""), Config.clockFormat);
+                text = new Date().toLocaleString(Qt.locale(Config.dateLocale), Config.clockFormat);
             }
         }
 
@@ -35,7 +35,7 @@ Item {
             color: Config.dateColor
 
             function updateDate() {
-                text = new Date().toLocaleString(Qt.locale(""), Config.dateFormat);
+                text = new Date().toLocaleString(Qt.locale(Config.dateLocale), Config.dateFormat);
             }
         }
 

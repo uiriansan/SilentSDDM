@@ -1,5 +1,5 @@
 /*
-    Map country codes to IETF language codes, so we can use the system's keyboard layouts with the virtual keyboard
+    Map country codes to ' ISO 639_ISO 3166' language codes, so we can use the system's keyboard layouts with the virtual keyboard
     The keyboard layout isn't detected under Wayland, so I'm still not sure if that's a good idea.
 
     Avaialble layouts   -> https://doc.qt.io/qt-6/qtvirtualkeyboard-layouts.html

@@ -36,6 +36,7 @@ QtObject {
     // [LockScreen.Date]
     property bool dateDisplay: config['LockScreen.Date/display'] === "false" ? false : true // @desc:Whether or not to display the date in the lock screen.
     property string dateFormat: config.stringValue("LockScreen.Date/format") || "dddd, MMMM dd, yyyy" // @desc:Format string used for the date.
+    property string dateLocale: config.stringValue("LockScreen.Date/locale") || "en_US" // @possible:<a href="https://doc.qt.io/qt-6/qml-qtqml-qt.html#locale-method">QFormat</a> @desc:Language of the date defined by lang_COUNTRY.<br/>'lang' is a lowercase, two-letter, <a href="https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes">ISO 639 language code</a><br/>'COUNTRY' is an uppercase, two-letter, <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes">ISO 3166 country code.</a>
     property string dateFontFamily: config.stringValue("LockScreen.Date/font-family") || "RedHatDisplay" // @desc:Font family used for the date.
     property int dateFontSize: config.intValue("LockScreen.Date/font-size") || 14 // @desc:Font size of the date.
     property int dateFontWeight: config.intValue("LockScreen.Date/font-weight") || 400 // @desc:Font weight of the date. 400 = regular, 600 = bold, 800 = black
