@@ -64,6 +64,7 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 - qt6-multimedia
 
 # Installation
+> NixOS users go to the [NixOS](#NixOS) section
 
 Just run the script:
 
@@ -153,6 +154,42 @@ InputMethod=qtvirtualkeyboard
 
 [Theme]
 Current=silent
+```
+
+## NixOS
+For nixos with flakes enabled, first include this flake into your flake inputs
+```nix
+inputs = {
+   silentSDDM = {
+      url = "github:uiriansan/SilentSDDM";
+      inputs.nixpkgs.follows = "nixpkgs";
+   };
+};
+```
+then you may configure sddm like so to use the theme
+```nix
+{
+  pkgs,
+  inputs,
+  ...
+}: let
+   # for a more exhaustive example look at example package in flake.nix
+   sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+      # select the config of your choice
+      theme = "rei";
+   };
+in  {
+   environment.systemPackages = [sddm-theme];
+   qt.enable = true;
+   services.displayManager.sddm = {
+      package = pkgs.kdePackages.sddm; # use qt6 version of sddm
+      enable = true;
+      theme = sddm-theme.pname;
+      # this change in particular will require sddm to be restarted to take
+      # effect correctly. It is recomend to reboot after this
+      extraPackages = sddm-theme.propagatedBuildInputs;
+   };
+}
 ```
 
 # Customizing

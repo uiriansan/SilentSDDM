@@ -23,7 +23,7 @@
         gitRev = self.rev or self.dirtyRev or null;
       };
 
-      # example illustrating how themes can be configured
+      # an exhaustive example illustrating how themes can be configured
       example = let
         zero-bg = pkgs.fetchurl {
           url = "https://www.desktophut.com/files/kV1sBGwNvy-Wallpaperghgh2Prob4.mp4";
@@ -31,11 +31,15 @@
         };
       in
         default.override {
+          # one of configs/<$theme>.conf
           theme = "rei";
+          # aditional backgrounds
           extraBackgrounds = [zero-bg];
+          # overrides config set by <$theme>.conf
           theme-overrides = {
             "LoginScreen.LoginArea.Avatar" = {
-              border-radius = 10;
+              shape = "circle";
+              active-border-color = "#ffcfce";
             };
             "LoginScreen" = {
               background = "${zero-bg.name}";
