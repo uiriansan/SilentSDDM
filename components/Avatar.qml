@@ -22,6 +22,7 @@ Rectangle {
     color: "transparent"
     border.width: strokeSize
     border.color: strokeColor
+    antialiasing: true
 
     Image {
         anchors.margins: avatar.strokeSize / 2;
@@ -31,6 +32,7 @@ Rectangle {
         mipmap: true
         antialiasing: true
         visible: false
+        smooth: true
     }
 
     MultiEffect {
@@ -49,6 +51,7 @@ Rectangle {
 
         height: this.width
         layer.enabled: true
+        layer.smooth: true
         visible: false
         width: faceImage.width
 

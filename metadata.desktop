@@ -11,10 +11,10 @@ Screenshot=docs/previews/default.png
 TranslationsDirectory=translations
 QtVersion=6
 
-ConfigFile=configs/default.conf
+; ConfigFile=configs/default.conf
 ; ConfigFile=configs/default-left.conf
 ; ConfigFile=configs/default-right.conf
-; ConfigFile=configs/rei.conf
+  ConfigFile=configs/rei.conf
 ; ConfigFile=configs/ken.conf
 ; ConfigFile=configs/silvia.conf
 ; ConfigFile=configs/catppuccin-latte.conf
