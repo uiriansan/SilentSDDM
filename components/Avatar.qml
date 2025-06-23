@@ -2,30 +2,22 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Controls
 
-Rectangle {
+Item {
     id: avatar
     property string shape: Config.avatarShape
     property string source: ""
     property bool active: false
-    property int squareRadius: (shape == "circle")? this.width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius) // min: 1
+    property int squareRadius: (shape == "circle") ? this.width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius) // min: 1
     property bool drawStroke: (active && Config.avatarActiveBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)
     property color strokeColor: active ? Config.avatarActiveBorderColor : Config.avatarInactiveBorderColor
     property int strokeSize: active ? Config.avatarActiveBorderSize : Config.avatarInactiveBorderSize
     property string tooltipText: ""
     property bool showTooltip: false
 
-
     signal clicked
     signal clickedOutside
 
-    radius: squareRadius
-    color: "transparent"
-    border.width: strokeSize
-    border.color: strokeColor
-    antialiasing: true
-
     Image {
-        anchors.margins: avatar.strokeSize / 2;
         id: faceImage
         source: parent.source
         anchors.fill: parent
@@ -33,6 +25,15 @@ Rectangle {
         antialiasing: true
         visible: false
         smooth: true
+
+        Rectangle {
+            anchors.fill: parent
+            radius: avatar.squareRadius
+            color: "transparent"
+            border.width: avatar.strokeSize
+            border.color: avatar.strokeColor
+            antialiasing: true
+        }
     }
 
     MultiEffect {
