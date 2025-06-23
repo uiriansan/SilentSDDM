@@ -1,56 +1,61 @@
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Controls
 
-Canvas {
+Rectangle {
     id: avatar
-
-    signal clicked
-    signal clickedOutside
-
-    property bool active: false
-    property string source: ""
     property string shape: Config.avatarShape
-    property int squareRadius: Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius // min: 1
+    property string source: ""
+    property bool active: false
+    property int squareRadius: (shape == "circle")? this.width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius) // min: 1
     property bool drawStroke: (active && Config.avatarActiveBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)
     property color strokeColor: active ? Config.avatarActiveBorderColor : Config.avatarInactiveBorderColor
     property int strokeSize: active ? Config.avatarActiveBorderSize : Config.avatarInactiveBorderSize
     property string tooltipText: ""
     property bool showTooltip: false
 
-    onSourceChanged: delayPaintTimer.running = true
-    onPaint: {
-        // FIX: Canvas zero dimension protection
-        if (width <= 0 || height <= 0)
-            return;
 
-        var ctx = getContext("2d");
-        ctx.reset(); // Clear previous drawing
-        ctx.beginPath();
+    signal clicked
+    signal clickedOutside
 
-        if (shape === "square") {
-            // Squircle, actually
-            var r = width * squareRadius / 100;
-            ctx.moveTo(width - r, 0);
-            ctx.arcTo(width, 0, width, height, r);
-            ctx.arcTo(width, height, 0, height, r);
-            ctx.arcTo(0, height, 0, 0, r);
-            ctx.arcTo(0, 0, width, 0, r);
-            ctx.closePath();
-        } else {
-            // Circle
-            ctx.ellipse(0, 0, width, height);
-        }
-        ctx.clip();
+    radius: squareRadius
+    color: "transparent"
+    border.width: strokeSize
+    border.color: strokeColor
 
-        if (source === "")
-            source = "../icons/user-default.png";
-        ctx.drawImage(source, 0, 0, width, height);
+    Image {
+        anchors.margins: avatar.strokeSize / 2;
+        id: faceImage
+        source: parent.source
+        anchors.fill: parent
+        mipmap: true
+        antialiasing: true
+        visible: false
+    }
 
-        // Border
-        if (drawStroke) {
-            ctx.strokeStyle = strokeColor;
-            ctx.lineWidth = strokeSize;
-            ctx.stroke();
+    MultiEffect {
+        anchors.fill: faceImage
+        antialiasing: true
+        maskEnabled: true
+        maskSource: faceImageMask
+        maskSpreadAtMin: 1.0
+        maskThresholdMax: 1.0
+        maskThresholdMin: 0.5
+        source: faceImage
+    }
+
+    Item {
+        id: faceImageMask
+
+        height: this.width
+        layer.enabled: true
+        visible: false
+        width: faceImage.width
+
+        Rectangle {
+            height: this.width
+            radius: avatar.squareRadius
+            width: faceImage.width
         }
     }
 
@@ -119,24 +124,6 @@ Canvas {
                 border.width: 0
                 radius: Config.tooltipsBorderRadius
             }
-        }
-    }
-
-    // FIX: paint() not affect event if source is not empty in initialization
-    Timer {
-        id: delayPaintTimer
-        repeat: false
-        interval: 150
-        onTriggered: avatar.requestPaint()
-        running: true
-    }
-
-    // FIX: Critical timer memory leak prevention
-    // Overkill, but fine...
-    Component.onDestruction: {
-        if (delayPaintTimer) {
-            delayPaintTimer.running = false;
-            delayPaintTimer.stop();
         }
     }
 }
