@@ -178,7 +178,7 @@ File in `backgrounds/`
 
 <a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="7" align="right"><a href="#lockscreendate">[LockScreen.Date]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="8" align="right"><a href="#lockscreendate">[LockScreen.Date]</a></td><td align="left">
 <a href="#datedisplay">display</a>
 </td>
 <td align="center">bool</td>
@@ -195,6 +195,15 @@ File in `backgrounds/`
 <td align="left">
 
 <a href="https://doc.qt.io/qt-6/qdate.html#toString">QDate format string</a>
+
+</td></tr><tr><td align="left">
+<a href="#datelocale">locale</a>
+</td>
+<td align="center">string</td>
+<td align="center">en_US</td>
+<td align="left">
+
+<a href="https://doc.qt.io/qt-6/qml-qtqml-qt.html#locale-method">QFormat</a>
 
 </td></tr><tr><td align="left">
 <a href="#datefontfamily">font-family</a>
@@ -2438,6 +2447,28 @@ File in `backgrounds/`
 <td>
 
 <a href="https://doc.qt.io/qt-6/qdate.html#toString">QDate format string</a>
+
+</td>
+</tr>
+</table>
+</details>
+<details name="datelocale">
+<summary><strong>locale</strong></summary><br/>
+<p>Language of the date defined by lang_COUNTRY.<br/>'lang' is a lowercase, two-letter, <a href="https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes">ISO 639 language code</a><br/>'COUNTRY' is an uppercase, two-letter, <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes">ISO 3166 country code.</a></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>string</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>en_US</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+<a href="https://doc.qt.io/qt-6/qml-qtqml-qt.html#locale-method">QFormat</a>
 
 </td>
 </tr>
