@@ -9,12 +9,46 @@
     self,
     nixpkgs,
   }: let
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+    # unsure if we need to include darwin but no harm in doing so
+    systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+    forAllSystems = f:
+      nixpkgs.lib.genAttrs systems (
+        system:
+          f (import nixpkgs {inherit system;})
+      );
   in {
-    packages.${system} = {
-      sddm-silent = pkgs.callPackage ./default.nix {};
-      default = self.packages.${system}.sddm-silent;
-    };
+    packages = forAllSystems (pkgs: rec {
+      default = pkgs.callPackage ./default.nix {
+        # accurate versioning based on git rev for non tagged releases
+        gitRev = self.rev or self.dirtyRev or null;
+      };
+
+      # an exhaustive example illustrating how themes can be configured
+      example = let
+        zero-bg = pkgs.fetchurl {
+          url = "https://www.desktophut.com/files/kV1sBGwNvy-Wallpaperghgh2Prob4.mp4";
+          hash = "sha256-VkOAkmFrK9L00+CeYR7BKyij/R1b/WhWuYf0nWjsIkM=";
+        };
+      in
+        default.override {
+          # one of configs/<$theme>.conf
+          theme = "rei";
+          # aditional backgrounds
+          extraBackgrounds = [zero-bg];
+          # overrides config set by <$theme>.conf
+          theme-overrides = {
+            "LoginScreen.LoginArea.Avatar" = {
+              shape = "circle";
+              active-border-color = "#ffcfce";
+            };
+            "LoginScreen" = {
+              background = "${zero-bg.name}";
+            };
+            "LockScreen" = {
+              background = "${zero-bg.name}";
+            };
+          };
+        };
+    });
   };
 }
