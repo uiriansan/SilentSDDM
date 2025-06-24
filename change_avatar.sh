@@ -5,7 +5,7 @@ cyan='\033[0;36m'
 reset="\033[0m"
 
 print_help () {
-    echo -e "Usage: ./create_avatar.sh ${cyan}<username> <path_to_image>${reset}"
+    echo -e "Usage: ./change_avatar.sh ${cyan}<username> <path_to_image>${reset}"
 }
 if [ "$#" -ne 2 ]; then
     print_help

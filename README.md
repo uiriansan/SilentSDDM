@@ -1,8 +1,3 @@
-> [!WARNING]
-> **PRE-RELEASE** <br/>
-> Bugs are expected. SDDM itself has some [annoying issues](https://github.com/uiriansan/SilentSDDM/issues?q=is%3Aissue%20label%3Asddm-issue) and limitations that make it very hard to create an actual good theme. If you encounter a bug, feel free to [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose). <br/><br/>
-> **This theme is very resource-intensive. Use at your own risk.**
-
 https://github.com/user-attachments/assets/dd63c526-34d6-45ec-8a7d-5c29bf08c702
 
 # Presets
@@ -64,19 +59,19 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 - qt6-multimedia
 
 # Installation
-> NixOS users go to the [NixOS](#NixOS) section
+[`Install script`](#Install-script) [`AUR packages for Arch`](#AUR-packages-for-arch) [`NixOS flake`](#NixOS-flake) [`Manual installation`](#Manual-installation)
 
-Just run the script:
+## Install script
+Just clone the repo and run the script:
 
 ```bash
 git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && ./install.sh
 ```
 
 > [!IMPORTANT]
-> Make sure to test the theme before rebooting by running `./test.sh`, otherwise you might end up with a broken login screen.
+> Make sure to test the theme before rebooting by running `./test.sh`, otherwise you might end up with a broken login screen. Refer to the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose) if you don't find the solution there.
 
-## Manual installation
-
+## AUR packages for Arch
 If you run Arch Linux, consider installing one of the AUR packages:
 ```bash
 # stable version
@@ -84,7 +79,79 @@ yay -S sddm-silent-theme
 # git version
 yay -S sddm-silent-theme-git
 ```
-Then, skip to step `6` to finish the installation.
+Then, replace the current theme and set the environment variables in `/etc/sddm.conf`:
+```bash
+sudoedit /etc/sddm.conf
+
+# Make sure these options are correct:
+[General]
+GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard
+InputMethod=qtvirtualkeyboard
+
+[Theme]
+Current=silent
+```
+Finally, test the theme to make sure everything is working:
+```bash
+cd /usr/share/sddm/themes/silent/
+./test.sh
+```
+> [!IMPORTANT]
+> Refer to the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose) if you don't find the solution there.
+
+
+## NixOS flake
+For NixOS with flakes enabled, first include this flake into your flake inputs:
+```nix
+inputs = {
+   silentSDDM = {
+      url = "github:uiriansan/SilentSDDM";
+      inputs.nixpkgs.follows = "nixpkgs";
+   };
+};
+```
+Then you may configure sddm like so to use the theme:
+```nix
+{
+  pkgs,
+  inputs,
+  ...
+}: let
+   # for a more exhaustive example look at example package in flake.nix
+   sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+      theme = "rei"; # select the config of your choice
+   };
+in  {
+   environment.systemPackages = [sddm-theme];
+   qt.enable = true;
+   services.displayManager.sddm = {
+      package = pkgs.kdePackages.sddm; # use qt6 version of sddm
+      enable = true;
+      theme = sddm-theme.pname;
+      # the following changes will require sddm to be restarted to take
+      # effect correctly. It is recomend to reboot after this
+      extraPackages = sddm-theme.propagatedBuildInputs;
+      settings = {
+        # required for styling the virtual keyboard
+        General = {
+          GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+          InputMethod = "qtvirtualkeyboard";
+        };
+      };
+   };
+}
+```
+> For a more exhaustive example look at the example package in [flake.nix](https://github.com/uiriansan/SilentSDDM/blob/main/flake.nix).
+
+Make sure to test the theme before rebooting:
+```bash
+nix run .#test
+```
+
+> [!IMPORTANT]
+> Refer to the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose) if you don't find the solution there.
+
+## Manual installation
 
 ### 1. Install dependencies:
 
@@ -130,6 +197,8 @@ cd SilentSDDM/
 ```bash
 ./test.sh
 ```
+> [!IMPORTANT]
+> Refer to the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose) if you don't find the solution there.
 
 ### 4. Copy the theme to `/usr/share/sddm/themes/`:
 ```bash
@@ -156,50 +225,6 @@ InputMethod=qtvirtualkeyboard
 Current=silent
 ```
 
-## NixOS
-For nixos with flakes enabled, first include this flake into your flake inputs
-```nix
-inputs = {
-   silentSDDM = {
-      url = "github:uiriansan/SilentSDDM";
-      inputs.nixpkgs.follows = "nixpkgs";
-   };
-};
-```
-then you may configure sddm like so to use the theme
-```nix
-{
-  pkgs,
-  inputs,
-  ...
-}: let
-   # for a more exhaustive example look at example package in flake.nix
-   sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
-      theme = "rei"; # select the config of your choice
-   };
-in  {
-   environment.systemPackages = [sddm-theme];
-   qt.enable = true;
-   services.displayManager.sddm = {
-      package = pkgs.kdePackages.sddm; # use qt6 version of sddm
-      enable = true;
-      theme = sddm-theme.pname;
-      # the following changes will require sddm to be restarted to take
-      # effect correctly. It is recomend to reboot after this
-      extraPackages = sddm-theme.propagatedBuildInputs;
-      settings = {
-        # required for styling the virtual keyboard
-        General = {
-          GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
-          InputMethod = "qtvirtualkeyboard";
-        };
-      };
-   };
-}
-```
-
-you may use `nix run .#test` for testing changes
-
 # Customizing
 
 The preset configs are located in `./configs/`. To change the active config, edit `./metadata.desktop` and replace the value of `ConfigFile=`:
@@ -217,6 +242,8 @@ You can also create your own config file. There's a guide with the list of avail
 
 > [!IMPORTANT]
 > Don't forget to test the theme after every change by running `./test.sh`, otherwise you might end up with a broken login screen.
+
+There are some extra tips on how to customize the theme on the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets).
 
 # Acknowledgements
 
