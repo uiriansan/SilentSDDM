@@ -245,7 +245,7 @@ You can also create your own config file. There's a guide with the list of avail
 > [!IMPORTANT]
 > Don't forget to test the theme after every change by running `./test.sh`, otherwise you might end up with a broken login screen.
 
-There are a few extra tips on customizing the theme in the [snippets page].
+There are some extra tips on how to customize the theme on the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets).
 
 # Acknowledgements
 
