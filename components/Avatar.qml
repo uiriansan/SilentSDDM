@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Controls
 
-Item {
+Rectangle {
     id: avatar
     property string shape: Config.avatarShape
     property string source: ""
@@ -16,6 +16,10 @@ Item {
 
     signal clicked
     signal clickedOutside
+
+    radius: squareRadius
+    color: "transparent"
+    antialiasing: true
 
     Image {
         id: faceImage
