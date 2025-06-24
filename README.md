@@ -198,6 +198,8 @@ in  {
 }
 ```
 
+you may use `nix run .#test` for testing changes
+
 # Customizing
 
 The preset configs are located in `./configs/`. To change the active config, edit `./metadata.desktop` and replace the value of `ConfigFile=`:
