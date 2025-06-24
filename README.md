@@ -145,9 +145,7 @@ in  {
 
 Make sure to test the theme before rebooting:
 ```bash
-./test.sh -d
-# to run the output produced by nix build:
-sddm-greeter-qt6 --test-mode --theme ./result/share/sddm/themes/silent/
+nix run .#test
 ```
 
 > [!IMPORTANT]

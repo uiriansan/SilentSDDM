@@ -23,6 +23,20 @@
         gitRev = self.rev or self.dirtyRev or null;
       };
 
+      test = let
+        sddm-wrapped = pkgs.kdePackages.sddm.override {
+            extraPackages = default.propagatedBuildInputs;
+            # set the below to false if not on wayland
+            withWayland = true;
+            withLayerShellQt = true;
+          };
+      in
+        pkgs.writeShellScriptBin "tester.sh" ''
+          QML2_IMPORT_PATH=${self}/components QT_IM_MODULE=qtvirtualkeyboard ${sddm-wrapped}/bin/sddm-greeter-qt6 \
+            --test-mode \
+            --theme ${default}/share/sddm/themes/${default.pname}
+        '';
+
       # an exhaustive example illustrating how themes can be configured
       example = let
         zero-bg = pkgs.fetchurl {
