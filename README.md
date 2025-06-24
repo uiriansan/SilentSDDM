@@ -83,13 +83,13 @@ Then, replace the current theme and set the environment variables in `/etc/sddm.
 ```bash
 sudoedit /etc/sddm.conf
 
-# Make sure these options are correct:
-[General]
-GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard
-InputMethod=qtvirtualkeyboard
+    # Make sure these options are correct:
+    [General]
+    InputMethod=qtvirtualkeyboard
+    GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard
 
-[Theme]
-Current=silent
+    [Theme]
+    Current=silent
 ```
 Finally, test the theme to make sure everything is working:
 ```bash
@@ -216,13 +216,13 @@ sudo cp -r /usr/share/sddm/themes/silent/fonts/* /usr/share/fonts/
 ```bash
 sudoedit /etc/sddm.conf
 
-# Make sure these options are correct:
-[General]
-GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard
-InputMethod=qtvirtualkeyboard
+    # Make sure these options are correct:
+    [General]
+    InputMethod=qtvirtualkeyboard
+    GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard
 
-[Theme]
-Current=silent
+    [Theme]
+    Current=silent
 ```
 
 # Customizing

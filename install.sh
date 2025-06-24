@@ -10,14 +10,19 @@ SHPATH=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 install_dependencies () {
     if command -v pacman &>/dev/null; then
+        echo -e "Installing dependencies with 'pacman'..."
         sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
     elif command -v apt-get &>/dev/null; then
+        echo -e "Installing dependencies with 'apt'..."
         sudo apt-get install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
     elif command -v xbps-install &>/dev/null; then
+        echo -e "Installing dependencies with 'xbps'..."
         sudo xbps-install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
     elif command -v dnf &>/dev/null; then
+        echo -e "Installing dependencies with 'dnf'..."
         sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard qt6-qtmultimedia
     elif command -v zypper &>/dev/null; then
+        echo -e "Installing dependencies with 'zypper'..."
         sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimedia qt6-multimedia-imports
     else
         echo -e "\n${red}Could not install dependencies!\nDo it manually: ${cyan}https://github.com/uiriansan/SilentSDDM/wiki#dependencies${reset}\n"
