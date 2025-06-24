@@ -15,7 +15,7 @@ ColumnLayout {
     property string sessionIconPath: ""
 
     function getSessionIcon(name) {
-        var available_session_icons = ["hyprland", "kde", "gnome", "ubuntu", "sway", "awesome", "qtile", "i3", "bspwm", "dwm", "xfce", "cinnamon", "niri"];
+        var available_session_icons = ["hyprland", "plasma", "gnome", "ubuntu", "sway", "awesome", "qtile", "i3", "bspwm", "dwm", "xfce", "cinnamon", "niri"];
         for (var i = 0; i < available_session_icons.length; i++) {
             if (name && name.toLowerCase().includes(available_session_icons[i]))
                 return "../icons/sessions/" + available_session_icons[i] + ".svg";
