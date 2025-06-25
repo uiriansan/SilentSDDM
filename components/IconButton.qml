@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 
 Item {
     id: iconButton
@@ -94,11 +95,18 @@ Item {
                     }
                 }
 
-                MultiEffect {
+                ColorOverlay {
                     source: buttonIcon
                     anchors.fill: buttonIcon
-                    colorization: 1
-                    colorizationColor: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
+                    color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
+
+                    Behavior on color {
+                        enabled: Config.enableAnimations
+                        ColorAnimation {
+                            duration: 200
+                            easing.type: Easing.OutCubic
+                        }
+                    }
                 }
             }
         }
