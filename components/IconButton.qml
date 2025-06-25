@@ -99,6 +99,7 @@ Item {
                     source: buttonIcon
                     anchors.fill: buttonIcon
                     color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
+                    antialiasing: true
 
                     Behavior on color {
                         enabled: Config.enableAnimations
