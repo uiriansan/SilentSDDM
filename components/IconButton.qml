@@ -88,6 +88,8 @@ Item {
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
                 opacity: iconButton.enabled ? 1.0 : 0.3
+                smooth: true
+                antialiasing: true
                 Behavior on opacity {
                     enabled: Config.enableAnimations
                     NumberAnimation {
