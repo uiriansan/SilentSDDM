@@ -185,7 +185,7 @@ Item {
             // Background blur
             id: backgroundBlur
             source: backgroundImage
-            anchors.fill: backgroundImage
+            anchors.fill: parent
             blurEnabled: backgroundImage.visible && blurMax > 0
             blur: blurMax > 0 ? 1.0 : 0.0
         }
