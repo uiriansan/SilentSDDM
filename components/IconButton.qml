@@ -89,7 +89,7 @@ Item {
                 fillMode: Image.PreserveAspectFit
                 opacity: iconButton.enabled ? 1.0 : 0.3
                 smooth: true
-                antialiasing: true
+                mipmap: true
                 Behavior on opacity {
                     enabled: Config.enableAnimations
                     NumberAnimation {
@@ -102,6 +102,8 @@ Item {
                     anchors.fill: buttonIcon
                     color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
                     antialiasing: true
+                    smooth: true
+                    cached: false
 
                     Behavior on color {
                         enabled: Config.enableAnimations
