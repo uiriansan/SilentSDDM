@@ -87,9 +87,15 @@ Item {
                 height: width
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
-                opacity: iconButton.enabled ? 1.0 : 0.3
-                smooth: true
-                mipmap: true
+                visible: false // Apparently `MultiEffect.colorization` replaces the Image
+            }
+            MultiEffect {
+                id: iconEffect
+                source: buttonIcon
+                anchors.fill: buttonIcon
+                colorization: 1
+                colorizationColor: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
+                opacity: iconButton.enabled ? 1.0 : 0.5
                 Behavior on opacity {
                     enabled: Config.enableAnimations
                     NumberAnimation {
@@ -97,20 +103,10 @@ Item {
                     }
                 }
 
-                ColorOverlay {
-                    source: buttonIcon
-                    anchors.fill: buttonIcon
-                    color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
-                    antialiasing: true
-                    smooth: true
-                    cached: false
-
-                    Behavior on color {
-                        enabled: Config.enableAnimations
-                        ColorAnimation {
-                            duration: 200
-                            easing.type: Easing.OutCubic
-                        }
+                Behavior on colorizationColor {
+                    enabled: Config.enableAnimations
+                    ColorAnimation {
+                        duration: 250
                     }
                 }
             }
