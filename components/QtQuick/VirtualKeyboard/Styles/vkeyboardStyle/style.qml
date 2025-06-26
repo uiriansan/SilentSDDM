@@ -67,15 +67,19 @@ KeyboardStyle {
     }
 
     property Component component_settingsIcon: Component {
-        Image {
-            sourceSize.width: 80 * keyIconScale
-            sourceSize.height: 80 * keyIconScale
-            smooth: false
-            source: resourcePrefix + "settings.svg"
-
+        Item {
+            Image {
+                id: settingsIcon
+                sourceSize.width: 80 * keyIconScale
+                sourceSize.height: 80 * keyIconScale
+                smooth: false
+                source: resourcePrefix + "settings.svg"
+                visible: false
+            }
             MultiEffect {
-                source: parent
-                anchors.fill: parent
+                id: settingsIconEffect
+                source: settingsIcon
+                anchors.fill: settingsIcon
                 colorization: 1
                 colorizationColor: vkeyboardStyle.textOnPrimaryColor
             }
@@ -258,13 +262,14 @@ KeyboardStyle {
                 sourceSize.height: 100 * keyIconScale
                 smooth: false
                 source: resourcePrefix + "backspace.svg"
-
-                MultiEffect {
-                    source: parent
-                    anchors.fill: parent
-                    colorization: 1
-                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
-                }
+                visible: false
+            }
+            MultiEffect {
+                id: backspaceIconEffect
+                source: backspaceKeyIcon
+                anchors.fill: backspaceKeyIcon
+                colorization: 1
+                colorizationColor: vkeyboardStyle.textOnPrimaryColor
             }
         }
         states: [
@@ -333,13 +338,14 @@ KeyboardStyle {
                 sourceSize.height: 100 * keyIconScale
                 smooth: false
                 source: resourcePrefix + "language.svg"
-
-                MultiEffect {
-                    source: parent
-                    anchors.fill: parent
-                    colorization: 1
-                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
-                }
+                visible: false
+            }
+            MultiEffect {
+                id: languageIconEffect
+                source: languageKeyIcon
+                anchors.fill: languageKeyIcon
+                colorization: 1
+                colorizationColor: vkeyboardStyle.textOnPrimaryColor
             }
         }
         states: [
@@ -404,7 +410,6 @@ KeyboardStyle {
             }
             Image {
                 id: enterKeyIcon
-                visible: enterKeyText.text.length === 0
                 anchors.centerIn: parent
                 readonly property size enterKeyIconSize: {
                     switch (control.actionId) {
@@ -434,13 +439,15 @@ KeyboardStyle {
                         return resourcePrefix + "enter-key.svg";
                     }
                 }
-
-                MultiEffect {
-                    source: parent
-                    anchors.fill: parent
-                    colorization: 1
-                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
-                }
+                visible: false
+            }
+            MultiEffect {
+                id: enterIconEffect
+                source: enterKeyIcon
+                anchors.fill: enterKeyIcon
+                colorization: 1
+                visible: enterKeyText.text.length === 0
+                colorizationColor: vkeyboardStyle.textOnPrimaryColor
             }
             Text {
                 id: enterKeyText
@@ -537,6 +544,7 @@ KeyboardStyle {
                 source: resourcePrefix + "hidekeyboard.svg"
 
                 MultiEffect {
+                    id: hideIconEffect
                     source: parent
                     anchors.fill: parent
                     colorization: 1
@@ -616,14 +624,14 @@ KeyboardStyle {
                 sourceSize.height: 100 * keyIconScale
                 smooth: false
                 source: resourcePrefix + "shift.svg"
-
-                MultiEffect {
-                    id: shiftKeyColor
-                    source: parent
-                    anchors.fill: parent
-                    colorization: 1
-                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
-                }
+                visible: false
+            }
+            MultiEffect {
+                id: shiftKeyColor
+                source: shiftKeyIcon
+                anchors.fill: shiftKeyIcon
+                colorization: 1
+                colorizationColor: vkeyboardStyle.textOnPrimaryColor
             }
             states: [
                 State {
@@ -957,13 +965,14 @@ KeyboardStyle {
                 sourceSize.height: 100 * keyIconScale
                 smooth: false
                 source: resourcePrefix + ((keyboard && keyboard.handwritingMode) ? "textmode.svg" : "handwriting.svg")
-
-                MultiEffect {
-                    source: parent
-                    anchors.fill: parent
-                    colorization: 1
-                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
-                }
+                visible: false
+            }
+            MultiEffect {
+                id: hwrIconEffect
+                source: hwrKeyIcon
+                anchors.fill: hwrKeyIcon
+                colorization: 1
+                colorizationColor: vkeyboardStyle.textOnPrimaryColor
             }
         }
         states: [
@@ -1585,13 +1594,14 @@ KeyboardStyle {
                     return resourcePrefix + (keyboard.handwritingMode ? "textmode.svg" : "handwriting.svg");
                 }
             }
-
-            MultiEffect {
-                source: parent
-                anchors.fill: parent
-                colorization: 1
-                colorizationColor: vkeyboardStyle.textOnPrimaryColor
-            }
+            visible: false
+        }
+        MultiEffect {
+            id: functionIconEffect
+            source: functionIcon
+            anchors.fill: functionIcon
+            colorization: 1
+            colorizationColor: vkeyboardStyle.textOnPrimaryColor
         }
     }
 

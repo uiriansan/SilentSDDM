@@ -66,7 +66,6 @@ Item {
                     id: icon
                     source: Config.getIcon(Config.passwordInputIcon)
                     anchors.centerIn: parent
-                    // FIX: Icon size safety
                     width: Math.max(1, Config.passwordInputIconSize || 16)
                     height: width
                     sourceSize: Qt.size(width, height)

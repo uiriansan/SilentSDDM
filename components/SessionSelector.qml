@@ -81,19 +81,21 @@ ColumnLayout {
                     color: "transparent"
 
                     Image {
+                        id: sessionIcon
                         anchors.centerIn: parent
                         source: selector.getSessionIcon(name)
                         width: Config.menuAreaPopupsIconSize
                         height: Config.menuAreaPopupsIconSize
                         sourceSize: Qt.size(width, height)
                         fillMode: Image.PreserveAspectFit
-
-                        MultiEffect {
-                            source: parent
-                            anchors.fill: parent
-                            colorization: 1
-                            colorizationColor: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
-                        }
+                        visible: false
+                    }
+                    MultiEffect {
+                        id: sessionIconEffect
+                        source: sessionIcon
+                        anchors.fill: sessionIcon
+                        colorization: 1
+                        colorizationColor: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                     }
                 }
 
