@@ -26,7 +26,7 @@ Item {
                 easing.type: Easing.OutQuart
             }
             NumberAnimation {
-                target: spinner
+                target: spinnerEffect
                 property: "opacity"
                 from: 0.0
                 to: 1.0
@@ -42,23 +42,7 @@ Item {
         height: width
         sourceSize.width: width
         sourceSize.height: height
-        opacity: Config.spinnerDisplayText ? 0.0 : 1.0
-
-        RotationAnimation {
-            target: spinner
-            running: spinnerContainer.visible && Config.enableAnimations
-            from: 0
-            to: 360
-            loops: Animation.Infinite
-            duration: 1200
-        }
-
-        MultiEffect {
-            source: spinner
-            anchors.fill: spinner
-            colorization: 1
-            colorizationColor: Config.spinnerColor
-        }
+        visible: false
 
         Component.onCompleted: {
             if (Config.loginAreaPosition === "left") {
@@ -72,6 +56,22 @@ Item {
                 anchors.horizontalCenter = parent.horizontalCenter;
             }
         }
+    }
+    MultiEffect {
+        id: spinnerEffect
+        source: spinner
+        anchors.fill: spinner
+        colorization: 1
+        colorizationColor: Config.spinnerColor
+        opacity: Config.spinnerDisplayText ? 0.0 : 1.0
+    }
+    RotationAnimation {
+        target: spinnerEffect
+        running: spinnerContainer.visible && Config.enableAnimations
+        from: 0
+        to: 360
+        loops: Animation.Infinite
+        duration: 1200
     }
 
     Text {

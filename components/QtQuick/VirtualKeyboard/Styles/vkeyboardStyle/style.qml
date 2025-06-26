@@ -234,7 +234,7 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                visible: !loginScreen.userNeedsPassword
+                visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
             }
@@ -310,7 +310,7 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                visible: !loginScreen.userNeedsPassword
+                visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
             }
@@ -386,7 +386,7 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                visible: !loginScreen.userNeedsPassword
+                visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
             }
@@ -514,7 +514,7 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                visible: !loginScreen.userNeedsPassword
+                visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
             }
@@ -596,7 +596,7 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                visible: !loginScreen.userNeedsPassword
+                visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
             }
@@ -702,7 +702,7 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                visible: !loginScreen.userNeedsPassword
+                visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
             }
@@ -772,7 +772,7 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                visible: !loginScreen.userNeedsPassword
+                visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
             }
@@ -848,7 +848,7 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                visible: !loginScreen.userNeedsPassword
+                visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
             }
@@ -937,7 +937,7 @@ KeyboardStyle {
             color: "transparent"
             MouseArea {
                 anchors.fill: parent
-                visible: !loginScreen.userNeedsPassword
+                visible: !(loginScreen && loginScreen.userNeedsPassword)
                 enabled: visible
                 hoverEnabled: enabled
             }

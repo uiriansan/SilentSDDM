@@ -239,7 +239,7 @@ QtObject {
     property int powerIconSize: config.intValue("LoginScreen.MenuArea.Power/icon-size") || 16 // @desc:Size of the icon in the power button.
 
     // [LoginScreen.VirtualKeyboard]
-    property int virtualKeyboardScale: config.realValue("LoginScreen.VirtualKeyboard/scale") || 1.0 // @desc:Scale of the virtual keyboard.
+    property real virtualKeyboardScale: config.realValue("LoginScreen.VirtualKeyboard/scale") || 1.0 // @desc:Scale of the virtual keyboard.
     property string virtualKeyboardPosition: config.stringValue("LoginScreen.VirtualKeyboard/position") || "login" // @possible: 'login' | 'top' | 'bottom' | 'left' | 'right' @desc:Initial position of the virtual keyboard. You can drag the keyboard using the middle mouse button.
     property bool virtualKeyboardStartHidden: config['LoginScreen.VirtualKeyboard/start-hidden'] === "false" ? false : true // @desc:Whether or not the virtual keyboard should start hidden.
     property color virtualKeyboardBackgroundColor: config.stringValue("LoginScreen.VirtualKeyboard/background-color") || "#FFFFFF" // @desc:Color of the background of the virtual keyboard.
