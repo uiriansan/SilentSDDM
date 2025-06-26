@@ -259,7 +259,10 @@ KeyboardStyle {
             Image {
                 id: backspaceKeyIcon
                 anchors.centerIn: parent
-                sourceSize.height: 100 * keyIconScale
+                width: 100 * keyIconScale
+                height: width
+                sourceSize.width: width
+                sourceSize.height: height
                 smooth: false
                 source: resourcePrefix + "backspace.svg"
                 visible: false
@@ -270,6 +273,7 @@ KeyboardStyle {
                 anchors.fill: backspaceKeyIcon
                 colorization: 1
                 colorizationColor: vkeyboardStyle.textOnPrimaryColor
+                antialiasing: true
             }
         }
         states: [
@@ -335,7 +339,10 @@ KeyboardStyle {
             Image {
                 id: languageKeyIcon
                 anchors.centerIn: parent
-                sourceSize.height: 100 * keyIconScale
+                width: 100 * keyIconScale
+                height: width
+                sourceSize.width: width
+                sourceSize.height: height
                 smooth: false
                 source: resourcePrefix + "language.svg"
                 visible: false
@@ -346,6 +353,7 @@ KeyboardStyle {
                 anchors.fill: languageKeyIcon
                 colorization: 1
                 colorizationColor: vkeyboardStyle.textOnPrimaryColor
+                antialiasing: true
             }
         }
         states: [
@@ -424,21 +432,12 @@ KeyboardStyle {
                         return Qt.size(211, 80);
                     }
                 }
-                sourceSize.height: enterKeyIconSize.height * keyIconScale
+                width: enterKeyIconSize.height * keyIconScale
+                height: width
+                sourceSize.width: width
+                sourceSize.height: height
                 smooth: false
-                source: {
-                    switch (control.actionId) {
-                    case EnterKeyAction.Go:
-                    case EnterKeyAction.Send:
-                    case EnterKeyAction.Next:
-                    case EnterKeyAction.Done:
-                        return resourcePrefix + "check.svg";
-                    case EnterKeyAction.Search:
-                        return resourcePrefix + "search.svg";
-                    default:
-                        return resourcePrefix + "enter-key.svg";
-                    }
-                }
+                source: resourcePrefix + "enter-key.svg"
                 visible: false
             }
             MultiEffect {
@@ -448,6 +447,7 @@ KeyboardStyle {
                 colorization: 1
                 visible: enterKeyText.text.length === 0
                 colorizationColor: vkeyboardStyle.textOnPrimaryColor
+                antialiasing: true
             }
             Text {
                 id: enterKeyText
@@ -539,17 +539,21 @@ KeyboardStyle {
             Image {
                 id: hideKeyIcon
                 anchors.centerIn: parent
-                sourceSize.height: 127 * keyIconScale
+                width: 127 * keyIconScale
+                height: width
+                sourceSize.width: width
+                sourceSize.height: height
                 smooth: false
                 source: resourcePrefix + "hidekeyboard.svg"
-
-                MultiEffect {
-                    id: hideIconEffect
-                    source: parent
-                    anchors.fill: parent
-                    colorization: 1
-                    colorizationColor: vkeyboardStyle.textOnPrimaryColor
-                }
+                visible: false
+            }
+            MultiEffect {
+                id: hideIconEffect
+                source: hideKeyIcon
+                anchors.fill: hideKeyIcon
+                colorization: 1
+                colorizationColor: vkeyboardStyle.textOnPrimaryColor
+                antialiasing: true
             }
 
             MouseArea {
@@ -621,7 +625,10 @@ KeyboardStyle {
             Image {
                 id: shiftKeyIcon
                 anchors.centerIn: parent
-                sourceSize.height: 100 * keyIconScale
+                width: 100 * keyIconScale
+                height: width
+                sourceSize.width: width
+                sourceSize.height: height
                 smooth: false
                 source: resourcePrefix + "shift.svg"
                 visible: false
@@ -632,6 +639,7 @@ KeyboardStyle {
                 anchors.fill: shiftKeyIcon
                 colorization: 1
                 colorizationColor: vkeyboardStyle.textOnPrimaryColor
+                antialiasing: true
             }
             states: [
                 State {
@@ -962,7 +970,10 @@ KeyboardStyle {
             Image {
                 id: hwrKeyIcon
                 anchors.centerIn: parent
-                sourceSize.height: 100 * keyIconScale
+                width: 100 * keyIconScale
+                height: width
+                sourceSize.width: width
+                sourceSize.height: height
                 smooth: false
                 source: resourcePrefix + ((keyboard && keyboard.handwritingMode) ? "textmode.svg" : "handwriting.svg")
                 visible: false
@@ -973,6 +984,7 @@ KeyboardStyle {
                 anchors.fill: hwrKeyIcon
                 colorization: 1
                 colorizationColor: vkeyboardStyle.textOnPrimaryColor
+                antialiasing: true
             }
         }
         states: [
@@ -1582,7 +1594,10 @@ KeyboardStyle {
         Image {
             id: functionIcon
             anchors.centerIn: parent
-            sourceSize.height: iconHeight
+            width: iconHeight
+            height: iconHeight
+            sourceSize.width: width
+            sourceSize.height: height
             smooth: false
             source: {
                 switch (keyboardFunction) {
@@ -1602,6 +1617,7 @@ KeyboardStyle {
             anchors.fill: functionIcon
             colorization: 1
             colorizationColor: vkeyboardStyle.textOnPrimaryColor
+            antialiasing: true
         }
     }
 
