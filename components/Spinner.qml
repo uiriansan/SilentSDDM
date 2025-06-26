@@ -64,6 +64,7 @@ Item {
         colorization: 1
         colorizationColor: Config.spinnerColor
         opacity: Config.spinnerDisplayText ? 0.0 : 1.0
+        antialiasing: true
     }
     RotationAnimation {
         target: spinnerEffect

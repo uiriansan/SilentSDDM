@@ -74,24 +74,30 @@ Item {
         id: messagePositioner
         visible: Config.lockMessageDisplay
         spacing: Config.lockMessageSpacing
-        Image {
-            id: lockIcon
-            source: Config.getIcon(Config.lockMessageIcon)
+        Item {
             Layout.alignment: Config.lockMessageAlign === "left" ? Qt.AlignLeft : (Config.lockMessageAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
-            visible: Config.lockMessageDisplayIcon
-
             Layout.preferredWidth: Config.lockMessageIconSize
             Layout.preferredHeight: Config.lockMessageIconSize
-            sourceSize: Qt.size(width, height)
-            fillMode: Image.PreserveAspectFit
 
+            Image {
+                id: lockIcon
+                source: Config.getIcon(Config.lockMessageIcon)
+                width: Config.lockMessageIconSize
+                height: Config.lockMessageIconSize
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+                visible: false
+            }
             MultiEffect {
                 source: lockIcon
                 anchors.fill: lockIcon
                 colorization: Config.lockMessagePaintIcon ? 1 : 0
                 colorizationColor: Config.lockMessageColor
+                visible: Config.lockMessageDisplayIcon
+                antialiasing: true
             }
         }
+
         Text {
             id: lockMessage
             Layout.alignment: Config.lockMessageAlign === "left" ? Qt.AlignLeft : (Config.lockMessageAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)

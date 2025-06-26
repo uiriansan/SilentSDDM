@@ -96,6 +96,7 @@ ColumnLayout {
                         anchors.fill: sessionIcon
                         colorization: 1
                         colorizationColor: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
+                        antialiasing: true
                     }
                 }
 
@@ -122,6 +123,7 @@ ColumnLayout {
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
                 onClicked: {
+                    // FIXME: Some clicks seem to be ignored
                     sessionList.currentIndex = index;
                 }
             }

@@ -94,6 +94,7 @@ Item {
                 anchors.fill: buttonIcon
                 colorization: 1
                 colorizationColor: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
+                antialiasing: true
                 opacity: iconButton.enabled ? 1.0 : 0.5
                 Behavior on opacity {
                     enabled: Config.enableAnimations
