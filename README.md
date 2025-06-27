@@ -1,3 +1,6 @@
+> [!WARNING]
+> This theme requires **SDDM v0.21**. Make sure your distro provides the correct version before installing.
+
 https://github.com/user-attachments/assets/dd63c526-34d6-45ec-8a7d-5c29bf08c702
 
 # Presets
@@ -52,7 +55,7 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 
 # Dependencies
 
-- SDDM ≥ 0.20;
+- SDDM ≥ 0.21;
 - QT ≥ 6.5;
 - qt6-svg;
 - qt6-virtualkeyboard
