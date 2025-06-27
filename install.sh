@@ -12,9 +12,6 @@ install_dependencies () {
     if command -v pacman &>/dev/null; then
         echo -e "${grey}Installing dependencies with 'pacman'...${reset}"
         sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
-    elif command -v apt-get &>/dev/null; then
-        echo -e "${grey}Installing dependencies with 'apt'...${reset}"
-        sudo apt-get install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
     elif command -v xbps-install &>/dev/null; then
         echo -e "${grey}Installing dependencies with 'xbps'...${reset}"
         sudo xbps-install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia

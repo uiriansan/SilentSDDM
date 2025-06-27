@@ -164,12 +164,6 @@ nix run .#test
 sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
 ```
 
-#### Debian
-
-```bash
-sudo apt-get install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
-```
-
 #### Void Linux
 
 ```bash
