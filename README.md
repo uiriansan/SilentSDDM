@@ -148,7 +148,7 @@ in  {
 
 Make sure to test the theme before rebooting:
 ```bash
-nix run github:uiriansan/SilentSDDM#test
+nix run .#test
 ```
 
 > [!IMPORTANT]
