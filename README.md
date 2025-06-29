@@ -146,7 +146,16 @@ in  {
 ```
 > For a more exhaustive example look at the example package in [flake.nix](https://github.com/uiriansan/SilentSDDM/blob/main/flake.nix).
 
-Make sure to test the theme before rebooting:
+### Local development and testing under nix
+First git clone the repository and cd into the resulting directory
+```bash
+git clone https://github.com/uiriansan/SilentSDDM.git
+cd SilentSDDM/
+```
+
+Now you may make changes to the contents and test them out using the
+following
+
 ```bash
 nix run .#test
 ```
