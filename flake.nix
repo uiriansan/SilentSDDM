@@ -20,7 +20,7 @@
     packages = forAllSystems (pkgs: rec {
       default = pkgs.callPackage ./default.nix {
         # accurate versioning based on git rev for non tagged releases
-        gitRev = self.rev or self.dirtyRev or null;
+        gitRev = self.rev or self.dirtyRev or "unknown";
       };
 
       test = let
