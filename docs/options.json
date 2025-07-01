@@ -109,6 +109,15 @@
       "possible": "-1.0 \u2264 R \u2264 1.0",
       "desc": "Brightness of the background of the lock screen. 0.0 leaves unchanged, -1.0 makes it black and 1.0 white.",
       "property": "lockScreenBrightness"
+    },
+    {
+      "category": "LockScreen",
+      "option": "saturation",
+      "type": "real",
+      "default": "0.0",
+      "possible": "-1.0 \u2264 R \u2264 1.0",
+      "desc": "Saturation of the background of the lock screen. 0.0 leaves unchanged, -1.0 makes it grayscale and 1.0 very saturated.",
+      "property": "lockScreenSaturation"
     }
   ],
   "LockScreen.Clock": [
@@ -423,6 +432,15 @@
       "possible": "-1.0 \u2264 R \u2264 1.0",
       "desc": "Brightness of the background of the login screen. 0.0 leaves unchanged, -1.0 makes it black and 1.0 white.",
       "property": "loginScreenBrightness"
+    },
+    {
+      "category": "LoginScreen",
+      "option": "saturation",
+      "type": "real",
+      "default": "0.0",
+      "possible": "-1.0 \u2264 R \u2264 1.0",
+      "desc": "Saturation of the background of the login screen. 0.0 leaves unchanged, -1.0 makes it grayscale and 1.0 very saturated.",
+      "property": "loginScreenSaturation"
     }
   ],
   "LoginScreen.LoginArea": [
@@ -1778,7 +1796,7 @@
     {
       "category": "LoginScreen.VirtualKeyboard",
       "option": "scale",
-      "type": "int",
+      "type": "real",
       "default": "1.0",
       "possible": "",
       "desc": "Scale of the virtual keyboard.",

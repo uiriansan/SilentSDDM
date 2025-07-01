@@ -16,7 +16,7 @@
 
 File in `backgrounds/`
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="10" align="right"><a href="#lockscreen">[LockScreen]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="11" align="right"><a href="#lockscreen">[LockScreen]</a></td><td align="left">
 <a href="#lockscreendisplay">display</a>
 </td>
 <td align="center">bool</td>
@@ -99,6 +99,15 @@ File in `backgrounds/`
 
 </td></tr><tr><td align="left">
 <a href="#lockscreenbrightness">brightness</a>
+</td>
+<td align="center">real</td>
+<td align="center">0.0</td>
+<td align="left">
+
+-1.0 ≤ R ≤ 1.0
+
+</td></tr><tr><td align="left">
+<a href="#lockscreensaturation">saturation</a>
 </td>
 <td align="center">real</td>
 <td align="center">0.0</td>
@@ -367,7 +376,7 @@ File in `icons/`
 
 
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="5" align="right"><a href="#loginscreen">[LoginScreen]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="6" align="right"><a href="#loginscreen">[LoginScreen]</a></td><td align="left">
 <a href="#loginscreenbackground">background</a>
 </td>
 <td align="center">string</td>
@@ -405,6 +414,15 @@ File in `backgrounds/`
 
 </td></tr><tr><td align="left">
 <a href="#loginscreenbrightness">brightness</a>
+</td>
+<td align="center">real</td>
+<td align="center">0.0</td>
+<td align="left">
+
+-1.0 ≤ R ≤ 1.0
+
+</td></tr><tr><td align="left">
+<a href="#loginscreensaturation">saturation</a>
 </td>
 <td align="center">real</td>
 <td align="center">0.0</td>
@@ -1738,7 +1756,7 @@ File in `icons/`
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="15" align="right"><a href="#loginscreenvirtualkeyboard">[LoginScreen.VirtualKeyboard]</a></td><td align="left">
 <a href="#virtualkeyboardscale">scale</a>
 </td>
-<td align="center">int</td>
+<td align="center">real</td>
 <td align="center">1.0</td>
 <td align="left">
 
@@ -2205,6 +2223,28 @@ File in `backgrounds/`
 <details name="lockscreenbrightness">
 <summary><strong>brightness</strong></summary><br/>
 <p>Brightness of the background of the lock screen. 0.0 leaves unchanged, -1.0 makes it black and 1.0 white.</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>real</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+-1.0 ≤ R ≤ 1.0
+
+</td>
+</tr>
+</table>
+</details>
+<details name="lockscreensaturation">
+<summary><strong>saturation</strong></summary><br/>
+<p>Saturation of the background of the lock screen. 0.0 leaves unchanged, -1.0 makes it grayscale and 1.0 very saturated.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2969,6 +3009,28 @@ File in `backgrounds/`
 <details name="loginscreenbrightness">
 <summary><strong>brightness</strong></summary><br/>
 <p>Brightness of the background of the login screen. 0.0 leaves unchanged, -1.0 makes it black and 1.0 white.</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>real</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+-1.0 ≤ R ≤ 1.0
+
+</td>
+</tr>
+</table>
+</details>
+<details name="loginscreensaturation">
+<summary><strong>saturation</strong></summary><br/>
+<p>Saturation of the background of the login screen. 0.0 leaves unchanged, -1.0 makes it grayscale and 1.0 very saturated.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -6284,7 +6346,7 @@ File in `icons/`
 <table>
 <tr>
 <td>Type</td></br>
-<td>int</td>
+<td>real</td>
 </tr>
 <tr>
 <td>Default value</td>
