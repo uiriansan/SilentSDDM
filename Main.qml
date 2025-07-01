@@ -35,16 +35,14 @@ Item {
                 opacity: 0.0
             }
             PropertyChanges {
-                target: backgroundBlur
-                blurMax: Config.lockScreenBlur
-            }
-            PropertyChanges {
                 target: loginScreen.loginContainer
                 scale: 0.5
             }
             PropertyChanges {
-                target: backgroundBlur
+                target: backgroundEffect
+                blurMax: Config.lockScreenBlur
                 brightness: Config.lockScreenBrightness
+                saturation: Config.lockScreenSaturation
             }
         },
         State {
@@ -58,16 +56,14 @@ Item {
                 opacity: 1.0
             }
             PropertyChanges {
-                target: backgroundBlur
-                blurMax: Config.loginScreenBlur
-            }
-            PropertyChanges {
                 target: loginScreen.loginContainer
                 scale: 1.0
             }
             PropertyChanges {
-                target: backgroundBlur
+                target: backgroundEffect
+                blurMax: Config.loginScreenBlur
                 brightness: Config.loginScreenBrightness
+                saturation: Config.loginScreenSaturation
             }
         }
     ]
@@ -84,6 +80,10 @@ Item {
         PropertyAnimation {
             duration: 400
             properties: "brightness"
+        }
+        PropertyAnimation {
+            duration: 400
+            properties: "saturation"
         }
     }
 
@@ -182,8 +182,8 @@ Item {
             }
         }
         MultiEffect {
-            // Background blur
-            id: backgroundBlur
+            // Background effects
+            id: backgroundEffect
             source: backgroundImage
             anchors.fill: parent
             blurEnabled: backgroundImage.visible && blurMax > 0
