@@ -50,6 +50,7 @@
     '';
 
     meta.licenses = licenses.gpl3;
+    passthru.test = test;
   });
 
   sddm-wrapped = kdePackages.sddm.override {
@@ -69,8 +70,4 @@
     '';
   };
 in
-  symlinkJoin {
-    inherit (theme-package) pname version;
-    paths = [theme-package];
-    passthru.test = test;
-  }
+  theme-package
