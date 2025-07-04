@@ -9,6 +9,9 @@
   theme ? "default",
   theme-overrides ? {},
   extraBackgrounds ? [],
+  # override the below to false if not on wayland (only matters for test script)
+  withWayland ? true,
+  withLayerShellQt ? true,
 }: let
   inherit (lib) cleanSource licenses;
 
@@ -51,9 +54,7 @@
 
   sddm-wrapped = kdePackages.sddm.override {
     extraPackages = theme-package.propagatedBuildInputs;
-    # set the below to false if not on wayland
-    withWayland = true;
-    withLayerShellQt = true;
+    inherit withLayerShellQt withWayland;
   };
 
   test = symlinkJoin {
