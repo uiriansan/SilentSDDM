@@ -3,14 +3,19 @@
   stdenvNoCC,
   kdePackages,
   writeText,
+  makeWrapper,
+  symlinkJoin,
   gitRev ? "unknown",
   theme ? "default",
   theme-overrides ? {},
   extraBackgrounds ? [],
+  # override the below to false if not on wayland (only matters for test script)
+  withWayland ? true,
+  withLayerShellQt ? true,
 }: let
   inherit (lib) cleanSource licenses;
-in
-  stdenvNoCC.mkDerivation (final: {
+
+  theme-package = stdenvNoCC.mkDerivation (final: {
     pname = "silent";
     version = "${builtins.substring 0 8 gitRev}";
 
@@ -45,4 +50,24 @@ in
     '';
 
     meta.licenses = licenses.gpl3;
-  })
+    passthru.test = test;
+  });
+
+  sddm-wrapped = kdePackages.sddm.override {
+    extraPackages = theme-package.propagatedBuildInputs;
+    inherit withLayerShellQt withWayland;
+  };
+
+  test = symlinkJoin {
+    name = "test-sddm-silent";
+    paths = [sddm-wrapped];
+    nativeBuildInputs = [makeWrapper];
+    postBuild = ''
+      makeWrapper $out/bin/sddm-greeter-qt6 $out/bin/test-sddm-silent \
+        --suffix QML2_IMPORT_PATH ':' ${theme-package}/share/sddm/themes/${theme-package.pname}/components \
+        --set QT_IM_MODULE qtvirtualkeyboard \
+        --add-flags '--test-mode --theme ${theme-package}/share/sddm/themes/${theme-package.pname}'
+    '';
+  };
+in
+  theme-package
