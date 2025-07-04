@@ -120,12 +120,13 @@ Then you may configure sddm like so to use the theme:
   inputs,
   ...
 }: let
-   # for a more exhaustive example look at example package in flake.nix
+   # an exhaustive example can be found in flake.nix
    sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
       theme = "rei"; # select the config of your choice
    };
 in  {
-   environment.systemPackages = [sddm-theme];
+   # include the test package which can be run using test-sddm-silent
+   environment.systemPackages = [sddm-theme sddm-theme.test];
    qt.enable = true;
    services.displayManager.sddm = {
       package = pkgs.kdePackages.sddm; # use qt6 version of sddm
@@ -144,6 +145,10 @@ in  {
    };
 }
 ```
+The above example includes the test script (`sddm-theme.test`) into your
+systemPackages, which lets you test the theme by running `test-sddm-silent`.
+However, it is optional and can be omitted
+
 > For a more exhaustive example look at the example package in [flake.nix](https://github.com/uiriansan/SilentSDDM/blob/main/flake.nix).
 
 ### Local development and testing under nix
