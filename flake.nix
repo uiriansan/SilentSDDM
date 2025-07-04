@@ -18,24 +18,15 @@
       );
   in {
     packages = forAllSystems (pkgs: rec {
+      # you may test these themes with `nix run .#default.test`
+      # similiarly `nix run .#example.test` will work too
       default = pkgs.callPackage ./default.nix {
         # accurate versioning based on git rev for non tagged releases
         gitRev = self.rev or self.dirtyRev or "unknown";
       };
 
-      test = let
-        sddm-wrapped = pkgs.kdePackages.sddm.override {
-            extraPackages = default.propagatedBuildInputs;
-            # set the below to false if not on wayland
-            withWayland = true;
-            withLayerShellQt = true;
-          };
-      in
-        pkgs.writeShellScriptBin "tester.sh" ''
-          QML2_IMPORT_PATH=${self}/components QT_IM_MODULE=qtvirtualkeyboard ${sddm-wrapped}/bin/sddm-greeter-qt6 \
-            --test-mode \
-            --theme ${default}/share/sddm/themes/${default.pname}
-        '';
+      # here to not break the old test package
+      test = default.test;
 
       # an exhaustive example illustrating how themes can be configured
       example = let
