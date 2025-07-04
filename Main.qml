@@ -158,7 +158,7 @@ Item {
                 anchors.fill: parent
                 visible: parent.isVideo && !parent.displayColor
                 enabled: visible
-                autoPlay: true
+                autoPlay: false
                 loops: MediaPlayer.Infinite
                 muted: true
                 onSourceChanged: {
