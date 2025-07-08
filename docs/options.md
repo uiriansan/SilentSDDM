@@ -1,4 +1,4 @@
-<table><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="2" align="right"><a href="#general">[General]</a></td><td align="left">
+<table><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="3" align="right"><a href="#general">[General]</a></td><td align="left">
 <a href="#enableanimations">enable-animations</a>
 </td>
 <td align="center">bool</td>
@@ -15,6 +15,15 @@
 <td align="left">
 
 File in `backgrounds/`
+
+</td></tr><tr><td align="left">
+<a href="#backgroundfillmode">background-fill-mode</a>
+</td>
+<td align="center">string</td>
+<td align="center">fit</td>
+<td align="left">
+
+`fit`   `fill`   `stretch`
 
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="11" align="right"><a href="#lockscreen">[LockScreen]</a></td><td align="left">
 <a href="#lockscreendisplay">display</a>
@@ -2013,6 +2022,28 @@ File in `icons/`
 <td>
 
 File in `backgrounds/`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="backgroundfillmode">
+<summary><strong>background-fill-mode</strong></summary><br/>
+<p>Fill mode for <a href="#lockscreenbackground">LockScreen/background</a> and <a href="#loginscreenbackground">LoginScreen/background</a>.<br/><table><tr><th>Value</th><th>QML equivalent</th><th>Description</th></tr><tr><td>fit</td><td><a href="https://doc.qt.io/qt-6/qml-qtquick-image.html#fillMode-prop">Image.PreserveAspectFit</a> and <a href="https://doc.qt.io/qt-6/qml-qtmultimedia-video.html#fillMode-prop">VideoOutput.PreserveAspectFit</a></td><td>The image/video is scaled uniformly to fit without cropping.</td></tr><tr><td>fill</td><td><a href="https://doc.qt.io/qt-6/qml-qtquick-image.html#fillMode-prop">Image.PreserveAspectCrop</a> and <a href="https://doc.qt.io/qt-6/qml-qtmultimedia-video.html#fillMode-prop">VideoOutput.PreserveAspectCrop</a></td><td>The image/video is scaled uniformly to fill, cropping if necessary.</td></tr><tr><td>stretch</td><td><a href="https://doc.qt.io/qt-6/qml-qtquick-image.html#fillMode-prop">Image.Stretch</a> and <a href="https://doc.qt.io/qt-6/qml-qtmultimedia-video.html#fillMode-prop">VideoOutput.Stretch</a></td><td>The image/video is scaled to fit, stretching if necessary.</td></tr></table></p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>string</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>fit</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`fit`   `fill`   `stretch`
 
 </td>
 </tr>
