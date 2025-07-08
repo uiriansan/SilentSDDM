@@ -117,6 +117,15 @@ Item {
             source: !isVideo ? "backgrounds/" + tsource : ""
             cache: true
             mipmap: true
+            fillMode: {
+                if (Config.backgroundFillMode === "stretch") {
+                    return Image.Stretch;
+                } else if (Config.backgroundFillMode === "fill") {
+                    return Image.PreserveAspectCrop;
+                } else {
+                    return Image.PreserveAspectFit;
+                }
+            }
 
             function updateVideo() {
                 if (isVideo && tsource.toString().length > 0) {
@@ -161,6 +170,16 @@ Item {
                 autoPlay: false
                 loops: MediaPlayer.Infinite
                 muted: true
+                fillMode: {
+                    if (Config.backgroundFillMode === "stretch") {
+                        return VideoOutput.Stretch;
+                    } else if (Config.backgroundFillMode === "fill") {
+                        return VideoOutput.PreserveAspectCrop;
+                    } else {
+                        return VideoOutput.PreserveAspectFit;
+                    }
+                }
+
                 onSourceChanged: {
                     if (source && source.toString().length > 0) {
                         backgroundVideo.play();
