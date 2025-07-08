@@ -38,10 +38,8 @@ Item {
     property bool userNeedsPassword: false
 
     function login() {
-        if (password.text.length > 0 || !userNeedsPassword) {
-            safeStateChange("authenticating");
-            sddm.login(userName, password.text, sessionIndex);
-        }
+        safeStateChange("authenticating");
+        sddm.login(userName, password.text, sessionIndex);
     }
     Connections {
         function onLoginSucceeded() {
