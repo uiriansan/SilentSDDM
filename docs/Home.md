@@ -53,7 +53,7 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-mocha.png" width="100%" />
 </details>
 
-[`Customization guide`](#Customizing)
+[`Customization guide`](https://github.com/uiriansan/SilentSDDM/wiki/Customizing)
 
 # Dependencies
 
@@ -238,35 +238,12 @@ sudoedit /etc/sddm.conf
     Current=silent
 ```
 
-# Customizing
-
-The preset configs are located in `./configs/`. To change the active config, edit `./metadata.desktop` and replace the value of `ConfigFile=`:
-
-```bash
-ConfigFile=configs/<your_preferred_config>.conf
-```
-
-> [!NOTE]
-> Changes to the login screen will only take effect when made in `/usr/share/sddm/themes/silent/`. If you've changed things in the cloned directory, copy them with `sudo cp -rf SilentSDDM/. /usr/share/sddm/themes/silent/`
-
-<br/>
-
-You can also create your own config file. There's a guide with the list of available options (there are more than 200 of them xD) in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
-
-> [!IMPORTANT]
-> Don't forget to test the theme after every change by running `./test.sh`, otherwise you might end up with a broken login screen.
-
-There are some extra tips on how to customize the theme on the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets).
-
 # Acknowledgements
 
 - [Keyitdev/sddm-astronaut-theme](https://github.com/Keyitdev/sddm-astronaut-theme): inspiration and code reference;
 - [Match-Yang/sddm-deepin](https://github.com/Match-Yang/sddm-deepin): inspiration and code reference;
 - [qt/qtvirtualkeyboard](https://github.com/qt/qtvirtualkeyboard): code reference;
 - [Joyston Judah](https://www.pexels.com/photo/white-and-black-mountain-wallpaper-933054/): background;
-- [DesktopHut](https://www.desktophut.com/blue-light-anime-girl-6794): background;
-- [MoeWalls](https://moewalls.com/anime/ken-kaneki-tokyo-ghoul-re-3-live-wallpaper/): background;
-- [MoeWalls](https://moewalls.com/anime/anime-girl-nissan-silvia-live-wallpaper/): background;
 - [iconify.design](https://iconify.design/): icons
 
-I couldn't find the source of some of the images used here. [E-mail me](mailto:uiriansan@gmail.com?subject=Background%20image%20in%20SilentSDDM) if you are the creator and want it removed or acknowledged.
+I couldn't find the source for some of the images used here. [E-mail me](mailto:uiriansan@gmail.com?subject=Background%20image%20in%20SilentSDDM) if you are the creator and want it removed or acknowledged.

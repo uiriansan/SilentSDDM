@@ -10,7 +10,7 @@ import json, re
 
 CONFIG_FILE = "../components/Config.qml"
 JSON_FILE = "options.json"
-MD_FILE = "options.md"
+MD_FILE = "Options.md"
 HELP_FILE = "help.html"
 
 def parse_config():
