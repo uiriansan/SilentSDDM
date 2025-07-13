@@ -120,10 +120,10 @@ Item {
             fillMode: {
                 if (Config.backgroundFillMode === "stretch") {
                     return Image.Stretch;
-                } else if (Config.backgroundFillMode === "fill") {
-                    return Image.PreserveAspectCrop;
-                } else {
+                } else if (Config.backgroundFillMode === "fit") {
                     return Image.PreserveAspectFit;
+                } else {
+                    return Image.PreserveAspectCrop;
                 }
             }
 
@@ -173,10 +173,10 @@ Item {
                 fillMode: {
                     if (Config.backgroundFillMode === "stretch") {
                         return VideoOutput.Stretch;
-                    } else if (Config.backgroundFillMode === "fill") {
-                        return VideoOutput.PreserveAspectCrop;
-                    } else {
+                    } else if (Config.backgroundFillMode === "fit") {
                         return VideoOutput.PreserveAspectFit;
+                    } else {
+                        return VideoOutput.PreserveAspectCrop;
                     }
                 }
 

@@ -22,8 +22,8 @@
       "category": "General",
       "option": "background-fill-mode",
       "type": "string",
-      "default": "fit",
-      "possible": "'fit' | 'fill' | 'stretch'",
+      "default": "fill",
+      "possible": "'fill' | 'fit' | 'stretch'",
       "desc": "Fill mode for <a href=\"#lockscreenbackground\">LockScreen/background</a> and <a href=\"#loginscreenbackground\">LoginScreen/background</a>.<br/><table><tr><th>Value</th><th>QML equivalent</th><th>Description</th></tr><tr><td>fit</td><td><a href=\"https://doc.qt.io/qt-6/qml-qtquick-image.html#fillMode-prop\">Image.PreserveAspectFit</a> and <a href=\"https://doc.qt.io/qt-6/qml-qtmultimedia-video.html#fillMode-prop\">VideoOutput.PreserveAspectFit</a></td><td>The image/video is scaled uniformly to fit without cropping.</td></tr><tr><td>fill</td><td><a href=\"https://doc.qt.io/qt-6/qml-qtquick-image.html#fillMode-prop\">Image.PreserveAspectCrop</a> and <a href=\"https://doc.qt.io/qt-6/qml-qtmultimedia-video.html#fillMode-prop\">VideoOutput.PreserveAspectCrop</a></td><td>The image/video is scaled uniformly to fill, cropping if necessary.</td></tr><tr><td>stretch</td><td><a href=\"https://doc.qt.io/qt-6/qml-qtquick-image.html#fillMode-prop\">Image.Stretch</a> and <a href=\"https://doc.qt.io/qt-6/qml-qtmultimedia-video.html#fillMode-prop\">VideoOutput.Stretch</a></td><td>The image/video is scaled to fit, stretching if necessary.</td></tr></table>",
       "property": "backgroundFillMode"
     }

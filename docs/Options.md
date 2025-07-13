@@ -20,10 +20,10 @@ File in `backgrounds/`
 <a href="#backgroundfillmode">background-fill-mode</a>
 </td>
 <td align="center">string</td>
-<td align="center">fit</td>
+<td align="center">fill</td>
 <td align="left">
 
-`fit`   `fill`   `stretch`
+`fill`   `fit`   `stretch`
 
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="11" align="right"><a href="#lockscreen">[LockScreen]</a></td><td align="left">
 <a href="#lockscreendisplay">display</a>
@@ -2037,13 +2037,13 @@ File in `backgrounds/`
 </tr>
 <tr>
 <td>Default value</td>
-<td>fit</td>
+<td>fill</td>
 </tr>
 <tr>
 <td>Possible values</td>
 <td>
 
-`fit`   `fill`   `stretch`
+`fill`   `fit`   `stretch`
 
 </td>
 </tr>
