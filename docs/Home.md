@@ -1,5 +1,5 @@
 > [!WARNING]
-> This theme requires **SDDM v0.21**. Make sure your distro provides the correct version before installing.
+> This theme requires **SDDM v0.21.0 or newer**. Make sure your distro provides the correct version before installing.
 
 https://github.com/user-attachments/assets/dd63c526-34d6-45ec-8a7d-5c29bf08c702
 
