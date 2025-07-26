@@ -127,8 +127,8 @@ Item {
             enabled: loginScreen.state !== "authenticating"
             activeFocusOnTab: true
             orientation: Config.loginAreaPosition === "left" || Config.loginAreaPosition === "right" ? "vertical" : "horizontal"
-            width: orientation === "horizontal" ? loginScreen.width - Config.loginAreaMargin * 2 : Config.avatarActiveSize
-            height: orientation === "horizontal" ? Config.avatarActiveSize : loginScreen.height - Config.loginAreaMargin * 2
+            width: orientation === "horizontal" ? loginScreen.width - Config.loginAreaMargin * 2 : (Config.avatarActiveSize * Config.generalScale)
+            height: orientation === "horizontal" ? (Config.avatarActiveSize * Config.generalScale) : loginScreen.height - Config.loginAreaMargin * 2
             onOpenUserList: {
                 safeStateChange("selectingUser");
             }
@@ -180,7 +180,7 @@ Item {
                 id: activeUserName
                 font.family: Config.usernameFontFamily
                 font.weight: Config.usernameFontWeight
-                font.pixelSize: Config.usernameFontSize
+                font.pixelSize: Config.usernameFontSize * Config.generalScale
                 color: Config.usernameColor
                 text: loginScreen.userRealName || loginScreen.userName || ""
 
@@ -198,7 +198,7 @@ Item {
 
             RowLayout {
                 id: loginArea
-                height: Config.passwordInputHeight
+                height: Config.passwordInputHeight * Config.generalScale
                 spacing: Config.loginButtonMarginLeft
                 visible: loginScreen.state !== "authenticating"
 
@@ -284,7 +284,7 @@ Item {
             Text {
                 id: loginMessage
                 property bool capslockWarning: false
-                font.pixelSize: Config.warningMessageFontSize
+                font.pixelSize: Config.warningMessageFontSize * Config.generalScale
                 font.family: Config.warningMessageFontFamily
                 font.weight: Config.warningMessageFontWeight
                 color: Config.warningMessageNormalColor

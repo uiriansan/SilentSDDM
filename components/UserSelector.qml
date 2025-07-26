@@ -29,7 +29,7 @@ Item {
         boundsBehavior: Flickable.StopAtBounds
 
         // Center the active avatar
-        preferredHighlightBegin: selector.orientation === "horizontal" ? (width - Config.avatarActiveSize) / 2 : (height - Config.avatarActiveSize) / 2
+        preferredHighlightBegin: selector.orientation === "horizontal" ? (width - Config.avatarActiveSize * Config.generalScale) / 2 : (height - Config.avatarActiveSize * Config.generalScale) / 2
         preferredHighlightEnd: preferredHighlightBegin
         highlightRangeMode: ListView.StrictlyEnforceRange
         // Padding for centering
@@ -57,8 +57,8 @@ Item {
         }
 
         delegate: Rectangle {
-            width: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
-            height: index === userList.currentIndex ? Config.avatarActiveSize : Config.avatarInactiveSize
+            width: index === userList.currentIndex ? (Config.avatarActiveSize * Config.generalScale) : (Config.avatarInactiveSize * Config.generalScale)
+            height: index === userList.currentIndex ? (Config.avatarActiveSize * Config.generalScale) : (Config.avatarInactiveSize * Config.generalScale)
             anchors {
                 verticalCenter: selector.orientation === "horizontal" ? parent.verticalCenter : undefined
                 horizontalCenter: selector.orientation === "horizontal" ? undefined : parent.horizontalCenter

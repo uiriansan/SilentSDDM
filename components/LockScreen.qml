@@ -14,7 +14,7 @@ Item {
         Text {
             id: time
             visible: Config.clockDisplay
-            font.pixelSize: Config.clockFontSize
+            font.pixelSize: Config.clockFontSize * Config.generalScale
             font.weight: Config.clockFontWeight
             font.family: Config.clockFontFamily
             color: Config.clockColor
@@ -29,7 +29,7 @@ Item {
             id: date
             Layout.alignment: Config.clockAlign === "left" ? Qt.AlignLeft : (Config.clockAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
             visible: Config.dateDisplay
-            font.pixelSize: Config.dateFontSize
+            font.pixelSize: Config.dateFontSize * Config.generalScale
             font.family: Config.dateFontFamily
             font.weight: Config.dateFontWeight
             color: Config.dateColor
@@ -82,8 +82,8 @@ Item {
             Image {
                 id: lockIcon
                 source: Config.getIcon(Config.lockMessageIcon)
-                width: Config.lockMessageIconSize
-                height: Config.lockMessageIconSize
+                width: Config.lockMessageIconSize * Config.generalScale
+                height: width
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
                 visible: false
@@ -101,7 +101,7 @@ Item {
         Text {
             id: lockMessage
             Layout.alignment: Config.lockMessageAlign === "left" ? Qt.AlignLeft : (Config.lockMessageAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
-            font.pixelSize: Config.lockMessageFontSize
+            font.pixelSize: Config.lockMessageFontSize * Config.generalScale
             font.family: Config.lockMessageFontFamily
             font.weight: Config.lockMessageFontWeight
             color: Config.lockMessageColor

@@ -4,7 +4,7 @@ import QtQuick.Controls
 
 ColumnLayout {
     id: selector
-    width: Config.powerPopupWidth
+    width: Config.powerPopupWidth * Config.generalScale
     spacing: 2
 
     signal close
@@ -14,8 +14,8 @@ ColumnLayout {
 
     IconButton {
         id: suspendButton
-        Layout.preferredHeight: Config.menuAreaPopupsItemHeight
-        Layout.preferredWidth: Config.powerPopupWidth
+        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
+        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
         focus: selector.visible
         width: Layout.preferredWidth
         enabled: sddm.canSuspend
@@ -40,8 +40,8 @@ ColumnLayout {
 
     IconButton {
         id: rebootButton
-        Layout.preferredHeight: Config.menuAreaPopupsItemHeight
-        Layout.preferredWidth: Config.powerPopupWidth
+        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
+        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
         focus: selector.visible
         width: Layout.preferredWidth
         enabled: sddm.canReboot
@@ -66,8 +66,8 @@ ColumnLayout {
 
     IconButton {
         id: shutdownButton
-        Layout.preferredHeight: Config.menuAreaPopupsItemHeight
-        Layout.preferredWidth: Config.powerPopupWidth
+        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
+        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
         focus: selector.visible
         width: Layout.preferredWidth
         enabled: sddm.canPowerOff

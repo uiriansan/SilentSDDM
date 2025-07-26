@@ -2,6 +2,15 @@
   "General": [
     {
       "category": "General",
+      "option": "scale",
+      "type": "real",
+      "default": "1.0",
+      "possible": "",
+      "desc": "Overall scale of the UI. This option can cause the UI to break, so it is recommended to use the individual width/height/size options instead.",
+      "property": "generalScale"
+    },
+    {
+      "category": "General",
       "option": "enable-animations",
       "type": "bool",
       "default": "true",

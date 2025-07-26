@@ -5,7 +5,7 @@ import QtQuick.VirtualKeyboard.Settings
 InputPanel {
     id: inputPanel
 
-    width: Math.min(loginScreen && loginScreen.width ? loginScreen.width / 2 : 800, 600) * Config.virtualKeyboardScale
+    width: Math.min(loginScreen && loginScreen.width ? loginScreen.width / 2 : 800, 600) * Config.virtualKeyboardScale * Config.generalScale
     active: Qt.inputMethod.visible
     visible: loginScreen && loginScreen.showKeyboard && loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
     opacity: visible ? 1.0 : 0.0

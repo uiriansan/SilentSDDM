@@ -7,10 +7,10 @@ Rectangle {
     property string shape: Config.avatarShape
     property string source: ""
     property bool active: false
-    property int squareRadius: (shape == "circle") ? this.width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius) // min: 1
+    property int squareRadius: (shape == "circle") ? this.width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius * Config.generalScale) // min: 1
     property bool drawStroke: (active && Config.avatarActiveBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)
     property color strokeColor: active ? Config.avatarActiveBorderColor : Config.avatarInactiveBorderColor
-    property int strokeSize: active ? Config.avatarActiveBorderSize : Config.avatarInactiveBorderSize
+    property int strokeSize: active ? (Config.avatarActiveBorderSize * Config.generalScale) : (Config.avatarInactiveBorderSize * Config.generalScale)
     property string tooltipText: ""
     property bool showTooltip: false
 
@@ -122,7 +122,7 @@ Rectangle {
             delay: 300
             contentItem: Text {
                 font.family: Config.tooltipsFontFamily
-                font.pixelSize: Config.tooltipsFontSize
+                font.pixelSize: Config.tooltipsFontSize * Config.generalScale
                 text: avatar.tooltipText
                 color: Config.tooltipsContentColor
             }
@@ -130,7 +130,7 @@ Rectangle {
                 color: Config.tooltipsBackgroundColor
                 opacity: Config.tooltipsBackgroundOpacity
                 border.width: 0
-                radius: Config.tooltipsBorderRadius
+                radius: Config.tooltipsBorderRadius * Config.generalScale
             }
         }
     }

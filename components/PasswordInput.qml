@@ -12,8 +12,8 @@ Item {
     property alias text: textField.text
     property bool enabled: true
 
-    width: Config.passwordInputWidth
-    height: Config.passwordInputHeight
+    width: Config.passwordInputWidth * Config.generalScale
+    height: Config.passwordInputHeight * Config.generalScale
 
     TextField {
         id: textField
@@ -25,7 +25,7 @@ Item {
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
         font.family: Config.passwordInputFontFamily
-        font.pixelSize: Math.max(8, Config.passwordInputFontSize || 12)
+        font.pixelSize: Math.max(8, Config.passwordInputFontSize * Config.generalScale)
         background: Rectangle {
             anchors.fill: parent
             color: Config.passwordInputBackgroundColor
@@ -41,13 +41,13 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            border.width: Config.passwordInputBorderSize
+            border.width: Config.passwordInputBorderSize * Config.generalScale
             border.color: Config.passwordInputBorderColor
             color: "transparent"
-            topLeftRadius: Config.passwordInputBorderRadiusLeft
-            bottomLeftRadius: Config.passwordInputBorderRadiusLeft
-            topRightRadius: Config.passwordInputBorderRadiusRight
-            bottomRightRadius: Config.passwordInputBorderRadiusRight
+            topLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
+            bottomLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
+            topRightRadius: Config.passwordInputBorderRadiusRight * Config.generalScale
+            bottomRightRadius: Config.passwordInputBorderRadiusRight * Config.generalScale
         }
 
         Row {
@@ -66,7 +66,7 @@ Item {
                     id: icon
                     source: Config.getIcon(Config.passwordInputIcon)
                     anchors.centerIn: parent
-                    width: Math.max(1, Config.passwordInputIconSize || 16)
+                    width: Math.max(1, Config.passwordInputIconSize * Config.generalScale)
                     height: width
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit

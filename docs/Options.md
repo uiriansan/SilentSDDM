@@ -1,4 +1,13 @@
-<table><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="3" align="right"><a href="#general">[General]</a></td><td align="left">
+<table><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="4" align="right"><a href="#general">[General]</a></td><td align="left">
+<a href="#generalscale">scale</a>
+</td>
+<td align="center">real</td>
+<td align="center">1.0</td>
+<td align="left">
+
+
+
+</td></tr><tr><td align="left">
 <a href="#enableanimations">enable-animations</a>
 </td>
 <td align="center">bool</td>
@@ -1983,6 +1992,28 @@ File in `icons/`
 -- --
 
 ## [General]
+<details name="generalscale">
+<summary><strong>scale</strong></summary><br/>
+<p>Overall scale of the UI. This option can cause the UI to break, so it is recommended to use the individual width/height/size options instead.</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>real</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
+
+</td>
+</tr>
+</table>
+</details>
 <details name="enableanimations">
 <summary><strong>enable-animations</strong></summary><br/>
 <p>Enable or disable all animations.</p></br></br>

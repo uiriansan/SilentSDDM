@@ -12,7 +12,7 @@ Item {
             id: sessionButton
             property bool showLabel: Config.sessionDisplaySessionName
             preferredWidth: showLabel ? (Config.sessionButtonWidth === -1 ? undefined : Config.sessionButtonWidth) : Config.menuAreaButtonsSize
-            height: Config.menuAreaButtonsSize
+            height: Config.menuAreaButtonsSize * Config.generalScale
             iconSize: Config.sessionIconSize
             fontSize: Config.sessionFontSize
             enabled: loginScreen.state === "normal" || popup.visible
@@ -44,7 +44,7 @@ Item {
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
                     opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: Config.menuAreaButtonsBorderRadius
+                    radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
 
                     Rectangle {
                         anchors.fill: parent
@@ -53,7 +53,7 @@ Item {
                         color: "transparent"
                         border {
                             color: Config.menuAreaPopupsBorderColor
-                            width: Config.menuAreaPopupsBorderSize
+                            width: Config.menuAreaPopupsBorderSize * Config.generalScale
                         }
                     }
                 }
@@ -105,7 +105,7 @@ Item {
 
             property bool showLabel: Config.layoutDisplayLayoutName
 
-            height: Config.menuAreaButtonsSize
+            height: Config.menuAreaButtonsSize * Config.generalScale
             icon: Config.getIcon(Config.layoutIcon)
             active: popup.visible
             borderRadius: Config.menuAreaButtonsBorderRadius
@@ -157,7 +157,7 @@ Item {
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
                     opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: Config.menuAreaButtonsBorderRadius
+                    radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
 
                     Rectangle {
                         anchors.fill: parent
@@ -166,7 +166,7 @@ Item {
                         color: "transparent"
                         border {
                             color: Config.menuAreaPopupsBorderColor
-                            width: Config.menuAreaPopupsBorderSize
+                            width: Config.menuAreaPopupsBorderSize * Config.generalScale
                         }
                     }
                 }
@@ -215,8 +215,8 @@ Item {
         IconButton {
             id: keyboardButton
 
-            height: Config.menuAreaButtonsSize
-            width: Config.menuAreaButtonsSize
+            height: Config.menuAreaButtonsSize * Config.generalScale
+            width: Config.menuAreaButtonsSize * Config.generalScale
             icon: Config.getIcon(Config.keyboardIcon)
             iconSize: Config.keyboardIconSize
             backgroundColor: Config.keyboardBackgroundColor
@@ -245,8 +245,8 @@ Item {
         IconButton {
             id: powerButton
 
-            height: Config.menuAreaButtonsSize
-            width: Config.menuAreaButtonsSize
+            height: Config.menuAreaButtonsSize * Config.generalScale
+            width: Config.menuAreaButtonsSize * Config.generalScale
             icon: Config.getIcon(Config.powerIcon)
             iconSize: Config.powerIconSize
             contentColor: Config.powerContentColor
@@ -273,7 +273,7 @@ Item {
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
                     opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: Config.menuAreaButtonsBorderRadius
+                    radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
 
                     Rectangle {
                         anchors.fill: parent
@@ -282,7 +282,7 @@ Item {
                         color: "transparent"
                         border {
                             color: Config.menuAreaPopupsBorderColor
-                            width: Config.menuAreaPopupsBorderSize
+                            width: Config.menuAreaPopupsBorderSize * Config.generalScale
                         }
                     }
                 }

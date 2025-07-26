@@ -31,18 +31,18 @@ Item {
     property color borderColor: isActive ? iconButton.activeContentColor : iconButton.contentColor
     property int preferredWidth: -1
 
-    width: preferredWidth !== -1 ? preferredWidth : buttonContentRow.width // childrenRect doesn't update for some reason
-    height: iconSize * 2
+    width: preferredWidth !== -1 ? (preferredWidth * Config.generalScale) : buttonContentRow.width // childrenRect doesn't update for some reason
+    height: iconSize * 2 * Config.generalScale
 
     Rectangle {
         id: buttonBackground
         anchors.fill: parent
         color: iconButton.isActive ? iconButton.activeBackgroundColor : iconButton.backgroundColor
         opacity: iconButton.isActive ? iconButton.activeBackgroundOpacity : iconButton.backgroundOpacity
-        topLeftRadius: iconButton.borderRadiusLeft
-        topRightRadius: iconButton.borderRadiusRight
-        bottomLeftRadius: iconButton.borderRadiusLeft
-        bottomRightRadius: iconButton.borderRadiusRight
+        topLeftRadius: iconButton.borderRadiusLeft * Config.generalScale
+        topRightRadius: iconButton.borderRadiusRight * Config.generalScale
+        bottomLeftRadius: iconButton.borderRadiusLeft * Config.generalScale
+        bottomRightRadius: iconButton.borderRadiusRight * Config.generalScale
 
         Behavior on opacity {
             enabled: Config.enableAnimations
@@ -55,15 +55,15 @@ Item {
     Rectangle {
         id: buttonBorder
         color: "transparent"
-        topLeftRadius: iconButton.borderRadiusLeft
-        topRightRadius: iconButton.borderRadiusRight
-        bottomLeftRadius: iconButton.borderRadiusLeft
-        bottomRightRadius: iconButton.borderRadiusRight
+        topLeftRadius: iconButton.borderRadiusLeft * Config.generalScale
+        topRightRadius: iconButton.borderRadiusRight * Config.generalScale
+        bottomLeftRadius: iconButton.borderRadiusLeft * Config.generalScale
+        bottomRightRadius: iconButton.borderRadiusRight * Config.generalScale
         anchors.fill: parent
         visible: iconButton.borderSize > 0 || iconButton.focus
         border {
             color: iconButton.borderColor
-            width: iconButton.focus ? iconButton.borderSize || 2 : (iconButton.borderSize > 0 ? iconButton.borderSize : 0)
+            width: iconButton.focus ? (iconButton.borderSize * Config.generalScale) || 2 : (iconButton.borderSize > 0 ? (iconButton.borderSize * Config.generalScale) : 0)
         }
     }
 
@@ -82,7 +82,7 @@ Item {
                 id: buttonIcon
                 source: iconButton.icon
                 anchors.centerIn: parent
-                width: iconButton.iconSize
+                width: iconButton.iconSize * Config.generalScale
                 height: width
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
@@ -120,7 +120,7 @@ Item {
             text: iconButton.label
             visible: iconButton.showLabel && text !== ""
             font.family: iconButton.fontFamily
-            font.pixelSize: iconButton.fontSize
+            font.pixelSize: iconButton.fontSize * Config.generalScale
             font.weight: iconButton.fontWeight
             rightPadding: 10
             color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
@@ -153,7 +153,7 @@ Item {
             delay: 300
             contentItem: Text {
                 font.family: Config.tooltipsFontFamily
-                font.pixelSize: Config.tooltipsFontSize
+                font.pixelSize: Config.tooltipsFontSize * Config.generalScale
                 text: iconButton.tooltipText
                 color: Config.tooltipsContentColor
             }
@@ -161,7 +161,7 @@ Item {
                 color: Config.tooltipsBackgroundColor
                 opacity: Config.tooltipsBackgroundOpacity
                 border.width: 0
-                radius: Config.tooltipsBorderRadius
+                radius: Config.tooltipsBorderRadius * Config.generalScale
             }
         }
     }

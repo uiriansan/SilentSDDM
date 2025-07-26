@@ -5,7 +5,7 @@ import QtQuick.Effects
 
 ColumnLayout {
     id: selector
-    width: Config.sessionPopupWidth - (Config.menuAreaPopupsPadding * 2)
+    width: (Config.sessionPopupWidth - Config.menuAreaPopupsPadding * 2) * Config.generalScale
 
     signal sessionChanged(sessionIndex: int, iconPath: string, label: string)
     signal close
@@ -26,7 +26,7 @@ ColumnLayout {
     ListView {
         id: sessionList
         Layout.preferredWidth: parent.width
-        Layout.preferredHeight: Math.min((sessionModel ? sessionModel.rowCount() : 0) * (Config.menuAreaPopupsItemHeight + spacing), Config.menuAreaPopupsMaxHeight)
+        Layout.preferredHeight: Math.min((sessionModel ? sessionModel.rowCount() : 0) * (Config.menuAreaPopupsItemHeight * Config.generalScale + spacing), Config.menuAreaPopupsMaxHeight * Config.generalScale)
         orientation: ListView.Vertical
         interactive: true
         clip: true
@@ -34,15 +34,15 @@ ColumnLayout {
         spacing: Config.menuAreaPopupsSpacing
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 0
-        contentHeight: sessionModel.rowCount() * (Config.menuAreaPopupsItemHeight + spacing)
+        contentHeight: sessionModel.rowCount() * (Config.menuAreaPopupsItemHeight * Config.generalScale + spacing)
 
         ScrollBar.vertical: ScrollBar {
             id: scrollbar
             policy: Config.menuAreaPopupsDisplayScrollbar && sessionList.contentHeight > sessionList.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
             contentItem: Rectangle {
                 id: scrollbarBackground
-                implicitWidth: 5
-                radius: 5
+                implicitWidth: 5 * Config.generalScale
+                radius: 5 * Config.generalScale
                 color: Config.menuAreaPopupsContentColor
                 opacity: Config.menuAreaPopupsActiveOptionBackgroundOpacity
             }
@@ -60,15 +60,15 @@ ColumnLayout {
 
         delegate: Rectangle {
             width: scrollbar.visible ? parent.width - Config.menuAreaPopupsPadding - scrollbar.width : parent.width
-            height: Config.menuAreaPopupsItemHeight
+            height: Config.menuAreaPopupsItemHeight * Config.generalScale
             color: "transparent"
-            radius: Config.menuAreaButtonsBorderRadius
+            radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
 
             Rectangle {
                 anchors.fill: parent
                 color: Config.menuAreaPopupsActiveOptionBackgroundColor
                 opacity: index === selector.currentSessionIndex ? Config.menuAreaPopupsActiveOptionBackgroundOpacity : (itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveOptionBackgroundOpacity : 0.0)
-                radius: Config.menuAreaButtonsBorderRadius
+                radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
             }
 
             RowLayout {
@@ -84,8 +84,8 @@ ColumnLayout {
                         id: sessionIcon
                         anchors.centerIn: parent
                         source: selector.getSessionIcon(name)
-                        width: Config.menuAreaPopupsIconSize
-                        height: Config.menuAreaPopupsIconSize
+                        width: Config.menuAreaPopupsIconSize * Config.generalScale
+                        height: Config.menuAreaPopupsIconSize * Config.generalScale
                         sourceSize: Qt.size(width, height)
                         fillMode: Image.PreserveAspectFit
                         visible: false
@@ -111,7 +111,7 @@ ColumnLayout {
                         // text: (name.length > 25) ? name.slice(0, 24) + '...' : name
                         text: name
                         color: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
-                        font.pixelSize: Config.menuAreaPopupsFontSize
+                        font.pixelSize: Config.menuAreaPopupsFontSize * Config.generalScale
                         font.family: Config.menuAreaPopupsFontFamily
                     }
                 }
