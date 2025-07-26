@@ -42,6 +42,7 @@
           extraBackgrounds = [zero-bg];
           # overrides config set by <$theme>.conf
           theme-overrides = {
+            # Available options: https://github.com/uiriansan/SilentSDDM/wiki/Options
             "LoginScreen.LoginArea.Avatar" = {
               shape = "circle";
               active-border-color = "#ffcfce";
