@@ -96,6 +96,3 @@ inactive-border-color = #FFFFFF
 > Don't forget to test the theme after every change by running `./test.sh`, otherwise you might end up with a broken login screen.
 
 There are some extra tips on how to customize the theme on the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets).
-
-
-<br/>Created a sick config? Share it in [this discussion](https://github.com/uiriansan/SilentSDDM/discussions/3).
