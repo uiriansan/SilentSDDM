@@ -117,7 +117,7 @@ Item {
         Rectangle {
             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             Layout.fillWidth: true
-        
+
             Text {
                 id: buttonLabel
                 anchors.verticalCenter: parent.verticalCenter
@@ -132,7 +132,8 @@ Item {
                 color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
                 opacity: iconButton.enabled ? 1.0 : 0.5
                 Behavior on opacity {
-                    enabled: Config.enableAnimations NumberAnimation {
+                    enabled: Config.enableAnimations
+                    NumberAnimation {
                         duration: 250
                     }
                 }
