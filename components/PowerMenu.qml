@@ -14,8 +14,11 @@ ColumnLayout {
 
     IconButton {
         id: suspendButton
+
+        preferredWidth: Layout.preferredWidth
         Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
         Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
+
         focus: selector.visible
         width: Layout.preferredWidth
         enabled: sddm.canSuspend
@@ -40,8 +43,11 @@ ColumnLayout {
 
     IconButton {
         id: rebootButton
+
+        preferredWidth: Layout.preferredWidth
         Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
         Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
+
         focus: selector.visible
         width: Layout.preferredWidth
         enabled: sddm.canReboot
@@ -66,8 +72,11 @@ ColumnLayout {
 
     IconButton {
         id: shutdownButton
+
+        preferredWidth: Layout.preferredWidth
         Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
         Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
+
         focus: selector.visible
         width: Layout.preferredWidth
         enabled: sddm.canPowerOff

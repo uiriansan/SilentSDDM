@@ -30,6 +30,11 @@ Rectangle {
         visible: false
         smooth: true
 
+        // FIX: Visual bug with the avatar – if the user uploads an image that is too large, the avatar appears distorted. The code below fixes this and works similarly to the CSS property `object-fit: cover;`.
+        fillMode: Image.PreserveAspectCrop
+        horizontalAlignment: Image.AlignHCenter
+        verticalAlignment: Image.AlignVCenter
+
         Rectangle {
             anchors.fill: parent
             radius: avatar.squareRadius
