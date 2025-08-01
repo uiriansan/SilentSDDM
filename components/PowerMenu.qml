@@ -4,16 +4,10 @@ import QtQuick.Controls
 
 ColumnLayout {
     id: selector
+    width: Config.powerPopupWidth * Config.generalScale
     spacing: 2
 
     signal close
-
-    // Read the FIXED.md file for details.
-    width: Math.max(
-        suspendButton.implicitWidth,
-        rebootButton.implicitWidth,
-        shutdownButton.implicitWidth
-    )
 
     KeyNavigation.up: shutdownButton
     KeyNavigation.down: suspendButton
@@ -22,9 +16,10 @@ ColumnLayout {
         id: suspendButton
 
         Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
-        Layout.preferredWidth: implicitWidth
+        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
 
         focus: selector.visible
+        width: Layout.preferredWidth
         enabled: sddm.canSuspend
         icon: Config.getIcon("power-suspend.svg")
         contentColor: Config.menuAreaPopupsContentColor
@@ -49,9 +44,10 @@ ColumnLayout {
         id: rebootButton
 
         Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
-        Layout.preferredWidth: implicitWidth
+        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
 
         focus: selector.visible
+        width: Layout.preferredWidth
         enabled: sddm.canReboot
         icon: Config.getIcon("power-reboot.svg")
         contentColor: Config.menuAreaPopupsContentColor
@@ -76,9 +72,10 @@ ColumnLayout {
         id: shutdownButton
 
         Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
-        Layout.preferredWidth: implicitWidth
+        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
 
         focus: selector.visible
+        width: Layout.preferredWidth
         enabled: sddm.canPowerOff
         icon: Config.getIcon("power.svg")
         contentColor: Config.menuAreaPopupsContentColor
