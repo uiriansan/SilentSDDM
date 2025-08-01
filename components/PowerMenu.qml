@@ -15,6 +15,7 @@ ColumnLayout {
     IconButton {
         id: suspendButton
 
+        preferredWidth: Layout.preferredWidth
         Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
         Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
 
@@ -43,6 +44,7 @@ ColumnLayout {
     IconButton {
         id: rebootButton
 
+        preferredWidth: Layout.preferredWidth
         Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
         Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
 
@@ -71,6 +73,7 @@ ColumnLayout {
     IconButton {
         id: shutdownButton
 
+        preferredWidth: Layout.preferredWidth
         Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
         Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
 
