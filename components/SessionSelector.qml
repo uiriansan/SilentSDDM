@@ -108,7 +108,8 @@ ColumnLayout {
 
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
-                        // text: (name.length > 25) ? name.slice(0, 24) + '...' : name
+                        elide: Text.ElideRight
+                        width: parent.width - 5
                         text: name
                         color: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         font.pixelSize: Config.menuAreaPopupsFontSize * Config.generalScale
