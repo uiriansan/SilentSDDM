@@ -114,31 +114,25 @@ Item {
             }
         }
 
-        Rectangle {
+        Text {
+            id: buttonLabel
             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             Layout.fillWidth: true
-
-            Text {
-                id: buttonLabel
-                anchors.verticalCenter: parent.verticalCenter
-                width: parent.width
-                elide: Text.ElideRight
-                text: iconButton.label
-                visible: iconButton.showLabel && text !== ""
-                font.family: iconButton.fontFamily
-                font.pixelSize: iconButton.fontSize * Config.generalScale
-                font.weight: iconButton.fontWeight
-                rightPadding: 10
-                color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
-                opacity: iconButton.enabled ? 1.0 : 0.5
-                Behavior on opacity {
-                    enabled: Config.enableAnimations
-                    NumberAnimation {
-                        duration: 250
-                    }
+            elide: Text.ElideRight
+            text: iconButton.label
+            visible: iconButton.showLabel && text !== ""
+            font.family: iconButton.fontFamily
+            font.pixelSize: iconButton.fontSize * Config.generalScale
+            font.weight: iconButton.fontWeight
+            rightPadding: 10
+            color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
+            opacity: iconButton.enabled ? 1.0 : 0.5
+            Behavior on opacity {
+                enabled: Config.enableAnimations
+                NumberAnimation {
+                    duration: 250
                 }
             }
-
             Component.onCompleted: {
                 if (iconButton.preferredWidth !== -1) {
                     Layout.preferredWidth = iconButton.width - iconContainer.width;
