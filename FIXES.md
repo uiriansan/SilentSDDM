@@ -1,4 +1,4 @@
-*FIX*: FIX: Visual bug with the avatar – if the user uploads an image that is too large, the avatar appears distorted. The code below fixes this and works similarly to the CSS property `object-fit: cover;`.
+*FIX*: Visual bug with the avatar – if the user uploads an image that is too large, the avatar appears distorted. The code below fixes this and works similarly to the CSS property `object-fit: cover;`.
 
 *FIX*: Visual bug when using any language other than English:
 In the shutdown menu, the container collapses and the buttons appear distorted.
