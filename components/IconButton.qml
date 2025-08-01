@@ -31,8 +31,14 @@ Item {
     property color borderColor: isActive ? iconButton.activeContentColor : iconButton.contentColor
     property int preferredWidth: -1
 
-    width: preferredWidth !== -1 ? (preferredWidth * Config.generalScale) : buttonContentRow.width // childrenRect doesn't update for some reason
-    height: iconSize * 2 * Config.generalScale
+    // Read the FIXED.md file for details.
+    Layout.preferredWidth: preferredWidth !== -1 ? (preferredWidth * Config.generalScale) : implicitWidth
+    // height with 2 column lines style
+    height: (iconSize * 2 + fontSize * 0.5) * Config.generalScale
+
+    Layout.fillWidth: true
+    implicitWidth: buttonContentRow.implicitWidth
+    implicitHeight: buttonContentRow.implicitHeight
 
     Rectangle {
         id: buttonBackground
@@ -88,6 +94,7 @@ Item {
                 fillMode: Image.PreserveAspectFit
                 visible: false // Apparently `MultiEffect.colorization` replaces the Image
             }
+
             MultiEffect {
                 id: iconEffect
                 source: buttonIcon
@@ -96,6 +103,7 @@ Item {
                 colorizationColor: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
                 antialiasing: true
                 opacity: iconButton.enabled ? 1.0 : 0.5
+
                 Behavior on opacity {
                     enabled: Config.enableAnimations
                     NumberAnimation {
@@ -116,7 +124,12 @@ Item {
             id: buttonLabel
             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             Layout.fillWidth: true
-            elide: Text.ElideRight
+
+            // 2 column text style and wrap mode
+            wrapMode: Text.Wrap
+            elide: Text.ElideNone
+            maximumLineCount: 2
+
             text: iconButton.label
             visible: iconButton.showLabel && text !== ""
             font.family: iconButton.fontFamily
@@ -125,12 +138,14 @@ Item {
             rightPadding: 10
             color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
             opacity: iconButton.enabled ? 1.0 : 0.5
+
             Behavior on opacity {
                 enabled: Config.enableAnimations
                 NumberAnimation {
                     duration: 250
                 }
             }
+
             Component.onCompleted: {
                 if (iconButton.preferredWidth !== -1) {
                     Layout.preferredWidth = iconButton.width - iconContainer.width;
@@ -145,18 +160,21 @@ Item {
         hoverEnabled: parent.enabled
         onClicked: iconButton.clicked()
         cursorShape: Qt.PointingHandCursor
+
         ToolTip {
             parent: mouseArea
             enabled: Config.tooltipsEnable
             property bool shouldShow: enabled && mouseArea.containsMouse && iconButton.tooltipText !== "" || enabled && iconButton.focus && iconButton.tooltipText !== ""
             visible: shouldShow
             delay: 300
+
             contentItem: Text {
                 font.family: Config.tooltipsFontFamily
                 font.pixelSize: Config.tooltipsFontSize * Config.generalScale
                 text: iconButton.tooltipText
                 color: Config.tooltipsContentColor
             }
+
             background: Rectangle {
                 color: Config.tooltipsBackgroundColor
                 opacity: Config.tooltipsBackgroundOpacity
@@ -165,6 +183,7 @@ Item {
             }
         }
     }
+
     Keys.onPressed: function (event) {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key === Qt.Key_Space) {
             iconButton.clicked();
