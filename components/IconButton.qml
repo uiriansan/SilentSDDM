@@ -31,14 +31,8 @@ Item {
     property color borderColor: isActive ? iconButton.activeContentColor : iconButton.contentColor
     property int preferredWidth: -1
 
-    // Read the FIXED.md file for details.
-    Layout.preferredWidth: preferredWidth !== -1 ? (preferredWidth * Config.generalScale) : implicitWidth
-    // height with 2 column lines style
-    height: (iconSize * 2 + fontSize * 0.5) * Config.generalScale
-
-    Layout.fillWidth: true
-    implicitWidth: buttonContentRow.implicitWidth
-    implicitHeight: buttonContentRow.implicitHeight
+    width: preferredWidth !== -1 ? (preferredWidth * Config.generalScale) : buttonContentRow.width // childrenRect doesn't update for some reason
+    height: iconSize * 2 * Config.generalScale
 
     Rectangle {
         id: buttonBackground
@@ -124,12 +118,7 @@ Item {
             id: buttonLabel
             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             Layout.fillWidth: true
-
-            // 2 column text style and wrap mode
-            wrapMode: Text.Wrap
-            elide: Text.ElideNone
-            maximumLineCount: 2
-
+            elide: Text.ElideRight
             text: iconButton.label
             visible: iconButton.showLabel && text !== ""
             font.family: iconButton.fontFamily
