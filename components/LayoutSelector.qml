@@ -60,7 +60,7 @@ ColumnLayout {
             id: scrollbar
             policy: Config.menuAreaPopupsDisplayScrollbar && layoutList.contentHeight > layoutList.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
             contentItem: Rectangle {
-                implicitWidth: 5  * Config.generalScale
+                implicitWidth: 5 * Config.generalScale
                 radius: 5 * Config.generalScale
                 color: Config.menuAreaPopupsContentColor
                 opacity: Config.menuAreaPopupsActiveOptionBackgroundOpacity
@@ -94,7 +94,7 @@ ColumnLayout {
 
                     Image {
                         anchors.centerIn: parent
-                        source: `/usr/share/sddm/flags/${shortName}.png`
+                        source: shortName && shortName.length > 0 ? `/usr/share/sddm/flags/${shortName}.png` : Config.getIcon("language")
                         width: Config.menuAreaPopupsIconSize * Config.generalScale
                         height: width
                         sourceSize: Qt.size(width, height)
