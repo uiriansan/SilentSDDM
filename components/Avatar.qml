@@ -22,6 +22,15 @@ Rectangle {
     color: "transparent"
     antialiasing: true
 
+    // Background
+    Rectangle {
+        anchors.fill: parent
+        radius: avatar.squareRadius
+        color: Config.passwordInputBackgroundColor
+        opacity: Config.passwordInputBackgroundOpacity
+        visible: true
+    }
+
     Image {
         id: faceImage
         source: parent.source
@@ -31,11 +40,18 @@ Rectangle {
         visible: false
         smooth: true
 
-        // FIX: Visual bug with the avatar – if the user uploads an image that is too large, the avatar appears distorted. The code below fixes this and works similarly to the CSS property `object-fit: cover;`.
         fillMode: Image.PreserveAspectCrop
         horizontalAlignment: Image.AlignHCenter
         verticalAlignment: Image.AlignVCenter
 
+        onStatusChanged: {
+            if (status === Image.Error) {
+                source = Config.getIcon("user-default");
+                faceEffects.colorization = 1;
+            }
+        }
+
+        // Border
         Rectangle {
             anchors.fill: parent
             radius: avatar.squareRadius
@@ -44,50 +60,19 @@ Rectangle {
             border.color: avatar.strokeColor
             antialiasing: true
         }
-
-        onStatusChanged: {
-            if (status === Image.Error) {
-                facePlaceholder.visible = true;
-                facePlaceholderBG.visible = true;
-            }
-        }
-
-        Rectangle {
-            id: facePlaceholderBG
-            anchors.fill: parent
-            radius: avatar.squareRadius
-            color: Config.passwordInputBackgroundColor
-            opacity: Config.passwordInputBackgroundOpacity > 0.1 ? Config.passwordInputBackgroundOpacity : 0.1
-            visible: false
-        }
-        Text {
-            id: facePlaceholder
-            visible: false
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-            }
-            text: avatar.username && avatar.username !== "" ? avatar.username[0].toUpperCase() : "~"
-            font.pixelSize: parent.width / 2
-            lineHeight: font.pixelSize
-            fontSizeMode: Text.Fit
-            font.bold: true
-            font.family: Config.passwordInputFontFamily
-            color: avatar.strokeColor === Config.passwordInputBackgroundColor && Config.passwordInputBackgroundOpacity === 1.0 ? Config.passwordInputContentColor : avatar.strokeColor
-        }
     }
-
     MultiEffect {
+        id: faceEffects
         anchors.fill: faceImage
+        source: faceImage
         antialiasing: true
         maskEnabled: true
         maskSource: faceImageMask
         maskSpreadAtMin: 1.0
         maskThresholdMax: 1.0
         maskThresholdMin: 0.5
-        source: faceImage
+        colorization: 0
+        colorizationColor: avatar.strokeColor === Config.passwordInputBackgroundColor && (1.0 - Config.passwordInputBackgroundOpacity < 0.2) ? Config.passwordInputContentColor : avatar.strokeColor
     }
 
     Item {
