@@ -72,7 +72,7 @@ Rectangle {
         maskThresholdMax: 1.0
         maskThresholdMin: 0.5
         colorization: 0
-        colorizationColor: avatar.strokeColor === Config.passwordInputBackgroundColor && (1.0 - Config.passwordInputBackgroundOpacity < 0.2) ? Config.passwordInputContentColor : avatar.strokeColor
+        colorizationColor: avatar.strokeColor === Config.passwordInputBackgroundColor && (1.0 - Config.passwordInputBackgroundOpacity < 0.3) ? Config.passwordInputContentColor : avatar.strokeColor
     }
 
     Item {

@@ -311,6 +311,8 @@ QtObject {
     }
 
     function getIcon(iconName) {
-        return `../icons/${iconName}`;
+        var ext_arr = iconName.split(".");
+        var ext = ext_arr.length > 1 ? ext_arr[ext_arr.length - 1] : "";
+        return `../icons/${iconName}${ext === "" ? ".svg" : ""}`;
     }
 }
