@@ -6,6 +6,7 @@ Rectangle {
     id: avatar
     property string shape: Config.avatarShape
     property string source: ""
+    property string username: ""
     property bool active: false
     property int squareRadius: (shape == "circle") ? this.width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius * Config.generalScale) // min: 1
     property bool drawStroke: (active && Config.avatarActiveBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)
@@ -42,6 +43,39 @@ Rectangle {
             border.width: avatar.strokeSize
             border.color: avatar.strokeColor
             antialiasing: true
+        }
+
+        onStatusChanged: {
+            if (status === Image.Error) {
+                facePlaceholder.visible = true;
+                facePlaceholderBG.visible = true;
+            }
+        }
+
+        Rectangle {
+            id: facePlaceholderBG
+            anchors.fill: parent
+            radius: avatar.squareRadius
+            color: Config.passwordInputBackgroundColor
+            opacity: Config.passwordInputBackgroundOpacity > 0.1 ? Config.passwordInputBackgroundOpacity : 0.1
+            visible: false
+        }
+        Text {
+            id: facePlaceholder
+            visible: false
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                verticalCenter: parent.verticalCenter
+            }
+            text: avatar.username && avatar.username !== "" ? avatar.username[0].toUpperCase() : "~"
+            font.pixelSize: parent.width / 2
+            lineHeight: font.pixelSize
+            fontSizeMode: Text.Fit
+            font.bold: true
+            font.family: Config.passwordInputFontFamily
+            color: avatar.strokeColor === Config.passwordInputBackgroundColor && Config.passwordInputBackgroundOpacity === 1.0 ? Config.passwordInputContentColor : avatar.strokeColor
         }
     }
 
