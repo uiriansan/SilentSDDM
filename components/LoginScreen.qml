@@ -40,9 +40,13 @@ Item {
     property bool userNeedsPassword: true
 
     function login() {
-        safeStateChange("authenticating");
         var user = foundUsers ? userName : userInput.text;
-        sddm.login(user, password.text, sessionIndex);
+        if (user && user !== "") {
+            safeStateChange("authenticating");
+            sddm.login(user, password.text, sessionIndex);
+        } else {
+            loginMessage.warn(textConstants.promptUser || "Enter your user!", "error");
+        }
     }
     Connections {
         function onLoginSucceeded() {
@@ -173,6 +177,9 @@ Item {
                 isPassword: false
                 splitBorderRadius: false
                 enabled: loginScreen.state !== "authenticating"
+                onAccepted: {
+                    loginScreen.login();
+                }
             }
 
             Component.onCompleted: {
