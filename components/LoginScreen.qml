@@ -29,7 +29,7 @@ Item {
 
     property bool showKeyboard: !Config.virtualKeyboardStartHidden
 
-    property bool foundUsers: userModel.count > 5
+    property bool foundUsers: userModel.count > 0
 
     // Login info
     property int sessionIndex: 0
