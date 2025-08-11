@@ -6,7 +6,6 @@ Rectangle {
     id: avatar
     property string shape: Config.avatarShape
     property string source: ""
-    property string username: ""
     property bool active: false
     property int squareRadius: (shape == "circle") ? this.width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius * Config.generalScale) // min: 1
     property bool drawStroke: (active && Config.avatarActiveBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)

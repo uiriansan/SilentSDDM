@@ -4,12 +4,16 @@ import QtQuick.Layouts
 import QtQuick.Effects
 
 Item {
-    id: passwordInput
+    id: input
 
     signal accepted
 
+    property string placeholder: ""
     property alias input: textField
+    property bool isPassword: false
+    property bool splitBorderRadius: false
     property alias text: textField.text
+    property string icon: ""
     property bool enabled: true
 
     width: Config.passwordInputWidth * Config.generalScale
@@ -19,8 +23,8 @@ Item {
         id: textField
         anchors.fill: parent
         color: Config.passwordInputContentColor
-        enabled: passwordInput.enabled
-        echoMode: TextInput.Password
+        enabled: input.enabled
+        echoMode: input.isPassword ? TextInput.Password : TextInput.Normal
         activeFocusOnTab: true
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
@@ -30,14 +34,14 @@ Item {
             anchors.fill: parent
             color: Config.passwordInputBackgroundColor
             opacity: Config.passwordInputBackgroundOpacity
-            topLeftRadius: Config.passwordInputBorderRadiusLeft
-            bottomLeftRadius: Config.passwordInputBorderRadiusLeft
-            topRightRadius: Config.passwordInputBorderRadiusRight
-            bottomRightRadius: Config.passwordInputBorderRadiusRight
+            topLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
+            bottomLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
+            topRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
+            bottomRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
         }
         leftPadding: placeholderLabel.x
         rightPadding: 10
-        onAccepted: passwordInput.accepted()
+        onAccepted: input.accepted()
 
         Rectangle {
             anchors.fill: parent
@@ -46,8 +50,8 @@ Item {
             color: "transparent"
             topLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
             bottomLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
-            topRightRadius: Config.passwordInputBorderRadiusRight * Config.generalScale
-            bottomRightRadius: Config.passwordInputBorderRadiusRight * Config.generalScale
+            topRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
+            bottomRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
         }
 
         Row {
@@ -64,13 +68,13 @@ Item {
 
                 Image {
                     id: icon
-                    source: Config.getIcon(Config.passwordInputIcon)
+                    source: input.icon
                     anchors.centerIn: parent
                     width: Math.max(1, Config.passwordInputIconSize * Config.generalScale)
                     height: width
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit
-                    opacity: passwordInput.enabled ? 1.0 : 0.3
+                    opacity: input.enabled ? 1.0 : 0.3
                     Behavior on opacity {
                         enabled: Config.enableAnimations
                         NumberAnimation {
@@ -94,7 +98,7 @@ Item {
                 }
                 padding: 0
                 visible: textField.text.length === 0 && (!textField.preeditText || textField.preeditText.length === 0)
-                text: (textConstants && textConstants.password) ? textConstants.password : "Password"
+                text: input.placeholder
                 color: textField.color
                 font.pixelSize: Math.max(8, textField.font.pixelSize || 12)
                 font.family: textField.font.family || "sans-serif"
