@@ -38,10 +38,7 @@ in
 
     installPhase = let
       basePath = "$out/share/sddm/themes/${final.pname}";
-      baseConfigFile = "${final.src}/configs/${theme}.conf";
       overrides = toINI {} theme-overrides;
-      finalConfig = (readFile baseConfigFile) + "\n" + overrides;
-      finalConfigFile = writeText "${theme}.conf" finalConfig;
     in ''
       mkdir -p ${basePath}
       cp -r $src/* ${basePath}
@@ -50,7 +47,7 @@ in
         --replace-warn configs/default.conf configs/${theme}.conf
 
       chmod +w ${basePath}/configs/${theme}.conf
-      cp ${finalConfigFile} ${basePath}/configs/${theme}.conf
+      echo '${overrides}' >> ${basePath}/configs/${theme}.conf
 
       chmod -R +w ${basePath}/backgrounds
       ${concatStringsSep "\n" (map (bg: "cp ${bg} ${basePath}/backgrounds/${bg.name}") extraBackgrounds)}
