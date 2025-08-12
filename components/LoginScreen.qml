@@ -300,8 +300,8 @@ Item {
                 Input {
                     id: password
                     Layout.alignment: Qt.AlignHCenter
-                    enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating" && loginScreen.state === "normal"
-                    visible: loginScreen.userNeedsPassword
+                    enabled: loginScreen.state === "normal"
+                    visible: loginScreen.userNeedsPassword || !loginScreen.foundUsers
                     icon: Config.getIcon(Config.passwordInputIcon)
                     placeholder: (textConstants && textConstants.password) ? textConstants.password : "Password"
                     isPassword: true
