@@ -17,6 +17,7 @@
           f (import nixpkgs {inherit system;})
       );
   in {
+    nixosModules.sddm-cache-clear = import ./modules/sddm-cache-clear.nix;
     packages = forAllSystems (pkgs: rec {
       # you may test these themes with `nix run .#default.test`
       # similiarly `nix run .#example.test` will work too
