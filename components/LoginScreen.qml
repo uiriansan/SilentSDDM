@@ -211,11 +211,13 @@ Item {
                 loginScreen.resetFocus(); // resetFocus with escape even if the selector is not open
             }
             onUserChanged: (index, name, realName, icon, needsPassword) => {
-                loginScreen.userIndex = index;
-                loginScreen.userName = name;
-                loginScreen.userRealName = realName;
-                loginScreen.userIcon = icon;
-                loginScreen.userNeedsPassword = needsPassword;
+                if (loginScreen.foundUsers) {
+                    loginScreen.userIndex = index;
+                    loginScreen.userName = name;
+                    loginScreen.userRealName = realName;
+                    loginScreen.userIcon = icon;
+                    loginScreen.userNeedsPassword = needsPassword;
+                }
             }
 
             Component.onCompleted: {

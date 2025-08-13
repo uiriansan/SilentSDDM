@@ -47,15 +47,13 @@ Item {
         model: userModel
         currentIndex: userModel.lastIndex
         onCurrentIndexChanged: {
-            if (loginScreen.foundUsers) {
-                var username = userModel.data(userModel.index(currentIndex, 0), 257);
-                var userRealName = userModel.data(userModel.index(currentIndex, 0), 258);
-                var userIcon = userModel.data(userModel.index(currentIndex, 0), 260);
-                var needsPasswd = userModel.data(userModel.index(currentIndex, 0), 261);
+            var username = userModel.data(userModel.index(currentIndex, 0), 257);
+            var userRealName = userModel.data(userModel.index(currentIndex, 0), 258);
+            var userIcon = userModel.data(userModel.index(currentIndex, 0), 260);
+            var needsPasswd = userModel.data(userModel.index(currentIndex, 0), 261);
 
-                sddm.currentUser = username;
-                selector.userChanged(currentIndex, username, userRealName, userIcon, needsPasswd);
-            }
+            sddm.currentUser = username;
+            selector.userChanged(currentIndex, username, userRealName, userIcon, needsPasswd);
         }
 
         delegate: Rectangle {
