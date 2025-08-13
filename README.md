@@ -76,6 +76,12 @@ git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM && cd Silent
 > [!IMPORTANT]
 > Make sure to test the theme before rebooting by running `./test.sh`, otherwise you might end up with a broken login screen. Refer to the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose) if you don't find the solution there.
 
+> [!NOTE]
+> If you encounter issues with the login screen not updating after changes, try clearing SDDM's cache:
+> ```bash
+> sudo rm -rf /var/lib/sddm/.cache
+> ```
+
 ## AUR packages for Arch
 If you run Arch Linux, consider installing one of the AUR packages:
 ```bash
