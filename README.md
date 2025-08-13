@@ -126,21 +126,35 @@ Then you may configure sddm like so to use the theme:
    sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
       theme = "rei"; # select the config of your choice
    };
-in  {
+in {
+
+  # Required only to enable automatic cache clearing (if you didn't want to enable automatic caching, it's not necessary to import it)
+  
+   imports = [
+     inputs.silentSDDM.nixosModules.sddm-cache-clear
+   ];
+
+   sddm.cache.clearOnBoot = true; # (optional) enable automatic cache clearing at boot
+
    # include the test package which can be run using test-sddm-silent
-   environment.systemPackages = [sddm-theme sddm-theme.test];
+   environment.systemPackages = [ sddm-theme sddm-theme.test ];
+
    qt.enable = true;
+
    services.displayManager.sddm = {
       package = pkgs.kdePackages.sddm; # use qt6 version of sddm
       enable = true;
       theme = sddm-theme.pname;
+
       # the following changes will require sddm to be restarted to take
-      # effect correctly. It is recomend to reboot after this
+      # effect correctly. It is recommended to reboot after this
       extraPackages = sddm-theme.propagatedBuildInputs;
+
       settings = {
         # required for styling the virtual keyboard
         General = {
-          GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+          GreeterEnvironment =
+            "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
           InputMethod = "qtvirtualkeyboard";
         };
       };
