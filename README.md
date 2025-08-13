@@ -129,7 +129,7 @@ Then you may configure sddm like so to use the theme:
 in {
 
   # Required only to enable automatic cache clearing (if you didn't want to enable automatic caching, it's not necessary to import it)
-  
+
    imports = [
      inputs.silentSDDM.nixosModules.sddm-cache-clear
    ];
@@ -153,8 +153,7 @@ in {
       settings = {
         # required for styling the virtual keyboard
         General = {
-          GreeterEnvironment =
-            "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+          GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
           InputMethod = "qtvirtualkeyboard";
         };
       };
