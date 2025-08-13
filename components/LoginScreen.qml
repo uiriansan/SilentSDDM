@@ -320,7 +320,7 @@ Item {
                     enabled: loginScreen.state !== "selectingUser" && loginScreen.state !== "authenticating"
                     activeFocusOnTab: true
                     icon: Config.getIcon(Config.loginButtonIcon)
-                    label: textConstants.login ? textConstants.login.toUpperCase() : "LOGIN"
+                    label: textConstants.login ? textConstants.login : "Login"
                     showLabel: Config.loginButtonShowTextIfNoPassword && !loginScreen.userNeedsPassword
                     tooltipText: !Config.tooltipsDisableLoginButton && (!Config.loginButtonShowTextIfNoPassword || loginScreen.userNeedsPassword) ? (textConstants.login || "Login") : ""
                     iconSize: Config.loginButtonIconSize

@@ -34,7 +34,7 @@ sudoedit /etc/pam.d/sddm
     auth        include     system-login
 ```
 
-The theme should now hide the password input if you select the user. You can test this by running `./test`.
+The theme should now hide the password input if you select the user. You can test this by running `./test.sh`.
 
 # Change user face (avatar)
 There is a script included with the theme:
@@ -73,4 +73,10 @@ sudoedit /etc/sddm.conf
 
     # Append `LIBVA_DRIVER_NAME=` and `QT_MULTIMEDIA_PREFERRED_PLUGINS=` to the end of the line:
     GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard,LIBVA_DRIVER_NAME=,QT_MULTIMEDIA_PREFERRED_PLUGINS=
+```
+
+# Fix theme not updating after changes or SDDM loading fallback theme with errors:
+Try clearing SDDM's cache:
+```bash
+sudo rm -rf /var/lib/sddm/.cache
 ```
