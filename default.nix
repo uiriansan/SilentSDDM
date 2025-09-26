@@ -2,6 +2,7 @@
   lib,
   stdenvNoCC,
   kdePackages,
+  qt6,
   writeText,
   makeWrapper,
   symlinkJoin,
@@ -23,8 +24,10 @@
   };
 
   sddm-wrapped = kdePackages.sddm.override {
-    extraPackages = propagatedBuildInputs;
-    inherit withLayerShellQt withWayland;
+    extraPackages =
+      propagatedBuildInputs
+      ++ lib.optionals withWayland [ qt6.qtwayland ]
+      ++ lib.optionals withLayerShellQt [ kdePackages.layer-shell-qt ];
   };
 in
   mkDerivation (final: {
