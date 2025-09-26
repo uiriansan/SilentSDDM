@@ -10,12 +10,13 @@
     nixpkgs,
   }: let
     # unsure if we need to include darwin but no harm in doing so
-    systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
-    forAllSystems = f:
-      nixpkgs.lib.genAttrs systems (
-        system:
-          f (import nixpkgs {inherit system;})
-      );
+    systems = [
+      "x86_64-linux"
+      "aarch64-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ];
+    forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f (import nixpkgs {inherit system;}));
   in {
     packages = forAllSystems (pkgs: rec {
       # you may test these themes with `nix run .#default.test`
