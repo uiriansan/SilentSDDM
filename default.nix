@@ -48,7 +48,8 @@ in
 
     installPhase = let
       basePath = "$out/share/sddm/themes/${final.pname}";
-      overrides = toINI {} theme-overrides;
+      overrides' = toINI {} theme-overrides;
+      overrides = builtins.replaceStrings ["="] [" = "] overrides';
     in ''
       mkdir -p ${basePath}
       cp -r $src/* ${basePath}
