@@ -746,6 +746,15 @@
       "possible": "",
       "desc": "Distance of the password field/login button from the username.",
       "property": "passwordInputMarginTop"
+    },
+    {
+      "category": "LoginScreen.LoginArea.PasswordInput",
+      "option": "masked-character",
+      "type": "string",
+      "default": "●",
+      "possible": "",
+      "desc":"Customized masked character of the password",
+      "property":"passwordMaskedCharacter"
     }
   ],
   "LoginScreen.LoginArea.LoginButton": [

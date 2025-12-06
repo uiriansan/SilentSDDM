@@ -3804,6 +3804,27 @@ File in `icons/`
 <td>Possible values</td>
 <td>
 
+</td>
+</tr>
+</table>
+</details>
+<details name="passwordmaskedcharacter">
+<summary><strong>masked-character</strong></summary><br/>
+<p>Customized masked character of the password</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>string</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>●</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
 
 
 </td>

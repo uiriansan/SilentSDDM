@@ -107,7 +107,8 @@ QtObject {
     property int passwordInputBorderRadiusLeft: config.intValue("LoginScreen.LoginArea.PasswordInput/border-radius-left") // @desc:Left border radius of the password field.
     property int passwordInputBorderRadiusRight: config.intValue("LoginScreen.LoginArea.PasswordInput/border-radius-right") // @desc:Right border radius of the password field.
     property int passwordInputMarginTop: config.intValue("LoginScreen.LoginArea.PasswordInput/margin-top") // @desc:Distance of the password field/login button from the username.
-
+    property string passwordInputMaskedCharacter: config.stringValue("LoginScreen.LoginArea.PasswordInput/masked-character") || "●" // @desc:Customized masked character of the password.
+    
     // [LoginScreen.LoginArea.LoginButton]
     property color loginButtonBackgroundColor: config.stringValue("LoginScreen.LoginArea.LoginButton/background-color") || "#FFFFFF" // @desc:Background color of the login button.
     property real loginButtonBackgroundOpacity: config.realValue("LoginScreen.LoginArea.LoginButton/background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the login button.

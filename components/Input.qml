@@ -25,6 +25,7 @@ Item {
         color: Config.passwordInputContentColor
         enabled: input.enabled
         echoMode: input.isPassword ? TextInput.Password : TextInput.Normal
+        passwordCharacter: Config.passwordInputMaskedCharacter
         activeFocusOnTab: true
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
