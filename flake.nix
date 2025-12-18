@@ -1,22 +1,14 @@
 {
   description = "A very customizable SDDM theme that actually looks good";
-
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-  };
+  inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
   outputs = {
     self,
     nixpkgs,
   }: let
-    # unsure if we need to include darwin but no harm in doing so
-    systems = [
-      "x86_64-linux"
-      "aarch64-linux"
-      "x86_64-darwin"
-      "aarch64-darwin"
-    ];
-    forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f (import nixpkgs {inherit system;}));
+    inherit (nixpkgs) lib legacyPackages;
+    systems = ["x86_64-linux" "aarch64-linux"];
+    forAllSystems = fn: lib.genAttrs systems (system: fn legacyPackages.${system});
   in {
     packages = forAllSystems (pkgs: rec {
       # you may test these themes with `nix run .#default.test`
