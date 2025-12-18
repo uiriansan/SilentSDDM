@@ -34,6 +34,13 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 </details>
 
 <details>
+  <summary>configs/everforest.conf</summary>
+
+
+
+</details>
+
+<details>
   <summary>configs/catppuccin-latte.conf</summary>
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-latte.png" width="100%" />
 </details>
