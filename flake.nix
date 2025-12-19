@@ -10,6 +10,8 @@
     systems = ["x86_64-linux" "aarch64-linux"];
     forAllSystems = fn: lib.genAttrs systems (system: fn legacyPackages.${system});
   in {
+    nixosModules.default = ./nix/module.nix;
+
     packages = forAllSystems (pkgs: rec {
       # you may test these themes with `nix run .#default.test`
       # similiarly `nix run .#example.test` will work too
@@ -21,6 +23,10 @@
       # here to not break the old test package
       test = default.test;
 
+      # NOTE
+      # please use the nixosModule instead
+      # this is preserved for historical and educational reasons.
+      #
       # an exhaustive example illustrating how themes can be configured
       example = let
         zero-bg = pkgs.fetchurl {
