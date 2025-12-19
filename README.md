@@ -115,43 +115,29 @@ inputs = {
    };
 };
 ```
-Then you may configure sddm like so to use the theme:
+
+Next, import the default nixosModule and set the enable option
 ```nix
 {
-  pkgs,
   inputs,
   ...
-}: let
-   # an exhaustive example can be found in flake.nix
-   sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
-      theme = "rei"; # select the config of your choice
-   };
-in  {
-   # include the test package which can be run using test-sddm-silent
-   environment.systemPackages = [sddm-theme sddm-theme.test];
-   qt.enable = true;
-   services.displayManager.sddm = {
-      package = pkgs.kdePackages.sddm; # use qt6 version of sddm
-      enable = true;
-      theme = sddm-theme.pname;
-      # the following changes will require sddm to be restarted to take
-      # effect correctly. It is recomend to reboot after this
-      extraPackages = sddm-theme.propagatedBuildInputs;
-      settings = {
-        # required for styling the virtual keyboard
-        General = {
-          GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
-          InputMethod = "qtvirtualkeyboard";
-        };
-      };
-   };
+}: {
+    imports = [inputs.silentSDDM.nixosModules.default];
+    programs.silentSDDM = {
+        enable = true;
+        theme = "rei";
+        # settings = { ... }; see example in module
+    };
 }
 ```
-The above example includes the test script (`sddm-theme.test`) into your
-systemPackages, which lets you test the theme by running `test-sddm-silent`.
-However, it is optional and can be omitted
 
-> For a more exhaustive example look at the example package in [flake.nix](https://github.com/uiriansan/SilentSDDM/blob/main/flake.nix).
+That's it! SilentSDDM should now be installed and configured.
+You may now run the `test-sddm-silent` executable for testing.
+For further configuration read the [module](./nix/module.nix) option descriptions and examples.
+
+> [!NOTE]
+> Since the module adds extra dependencies to SDDM, 
+> you may need to restart for the theme to work correctly.
 
 ### Local development and testing under nix
 First git clone the repository and cd into the resulting directory
