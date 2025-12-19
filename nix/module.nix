@@ -4,18 +4,21 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption pipe mkOption literalExpression;
+  inherit (lib) map pipe flatten flip elem assertMsg;
+  inherit (lib) mkIf mkEnableOption mkOption literalExpression;
   inherit (lib.types) enum attrsWith path attrs package;
   inherit (lib.strings) removeSuffix;
-  inherit (lib.attrsets) attrValues;
+  inherit (lib.attrsets) attrNames attrValues mapAttrs filterAttrs;
   inherit (lib.filesystem) listFilesRecursive;
 
+  users = attrNames config.users.users;
   configs = pipe (listFilesRecursive ../configs) [
     (map builtins.baseNameOf)
     (map (removeSuffix ".conf"))
   ];
 
   # TODO pass gitRev somehow? (maybe like quickshell?)
+  # this is done this way to be independent of the flake
   silent = pkgs.callPackage ./package.nix {};
   cfg = config.programs.silentSDDM;
   silent' = cfg.package'; # silent with configuration applied
@@ -56,6 +59,25 @@ in {
       description = "attrset containing drvs or absolute path to wallpapers";
     };
 
+    profileIcons = mkOption {
+      type = attrsWith {
+        placeholder = "image";
+        elemType = path;
+      };
+      default = {};
+      example = literalExpression ''
+        {
+          # <username> = <path / drv>
+          kokomi = "/images/kokomi/kokomi96024.png";
+          rexies = fetchurl {
+            url = "https://upload-os-bbs.hoyolab.com/upload/2021/09/22/84300862/129d3f6ded12d26d20ea4e4fa3e098d7_9177972037247649366.jpg";
+            hash = ""
+          };
+        }
+      '';
+      description = "attrset containing <username>, <profile-img> map";
+    };
+
     settings = mkOption {
       type = attrs;
       default = {};
@@ -91,6 +113,23 @@ in {
       };
       description = "silentSDDM package with configuration applied. INTERNAL USE ONLY";
     };
+
+    profileIcons' = mkOption {
+      internal = true;
+      readOnly = true;
+      visible = false;
+      default = cfg.profileIcons;
+      apply = flip pipe [
+        (filterAttrs (user: _: assertMsg (elem user users) "programs.silentSDDM.profileIcons: '${user}' is not a valid user"))
+        (mapAttrs (user: icon: [
+          "f+ /var/lib/AccountsService/users/${user}  0600 root root -  [User]\\nIcon=/var/lib/AccountsService/icons/${user}\\n"
+          "L+ /var/lib/AccountsService/icons/${user}  -    -    -    -  ${icon}"
+        ]))
+        attrValues
+        flatten
+      ];
+      description = "converts profileIcons attrset into systemd tmpfiles expressions";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -112,5 +151,8 @@ in {
         };
       };
     };
+
+    # setup profile pictures
+    systemd.tmpfiles.rules = mkIf (cfg.profileIcons != {}) cfg.profileIcons';
   };
 }
