@@ -40,6 +40,15 @@ in {
     basePath = "$out/share/sddm/themes/${final.pname}";
     overrides' = toINI {} theme-overrides;
     overrides = builtins.replaceStrings ["="] [" = "] overrides';
+
+    # no, using baseNameOf on derivations don't do the right thing :/
+    # so we have have this to not break things
+    copyBg = bg: let
+      name =
+        if lib.isDerivation bg
+        then bg.name
+        else builtins.baseNameOf bg;
+    in "cp ${bg} ${basePath}/backgrounds/${name}";
   in ''
     mkdir -p ${basePath}
     cp -r $src/* ${basePath}
@@ -51,7 +60,7 @@ in {
     echo '${overrides}' >> ${basePath}/configs/${theme}.conf
 
     chmod -R +w ${basePath}/backgrounds
-    ${concatStringsSep "\n" (map (bg: "cp ${bg} ${basePath}/backgrounds/${bg.name}") extraBackgrounds)}
+    ${concatStringsSep "\n" (map copyBg extraBackgrounds)}
   '';
 
   passthru.test = callPackage ./test-package.nix {silent = final.finalPackage;};
