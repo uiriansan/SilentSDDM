@@ -19,6 +19,7 @@ ConfigFile=configs/default.conf
 ; ConfigFile=configs/rei.conf
 ; ConfigFile=configs/ken.conf
 ; ConfigFile=configs/silvia.conf
+; ConfigFile=configs/everforest.conf
 ; ConfigFile=configs/catppuccin-latte.conf
 ; ConfigFile=configs/catppuccin-frappe.conf
 ; ConfigFile=configs/catppuccin-macchiato.conf
