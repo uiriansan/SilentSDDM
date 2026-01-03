@@ -69,24 +69,28 @@ Categories are defined between `[brackets]`, followed by their respective option
 ```ini
 [LockScreen.Date]
 display = true
-format = dddd, MMMM dd, yyyy
-font-family = RedHatDisplay
+format = "dddd, MMMM dd, yyyy"
+font-family = "RedHatDisplay"
 font-size = 14
 font-weight = 600
-color = #FFFFFF
+color = "#FFFFFF"
 margin-top = -15
 
 [LoginScreen.LoginArea.Avatar]
-shape = circle
+shape = "circle"
 border-radius = 35
 active-size = 120
 inactive-size = 80
 inactive-opacity = 0.35
 active-border-size = 0
 inactive-border-size = 0
-active-border-color = #FFFFFF
-inactive-border-color = #FFFFFF
+active-border-color = "#FFFFFF"
+inactive-border-color = "#FFFFFF"
 ```
+
+> [!NOTE]
+> Although not required in most cases, it is recommended to surround strings with double quotes (`""`).
+
 
 <a href="https://github.com/uiriansan/SilentSDDM/wiki/Options">Here's the list of all available options.</a> This list includes default values and brief descriptions for every option. You can also use the <a href="https://github.com/uiriansan/SilentSDDM/blob/main/configs/default.conf">default config</a> for reference.
 
