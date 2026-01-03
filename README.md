@@ -1,6 +1,9 @@
 > [!WARNING]
 > This theme requires **SDDM v0.21.0 or newer**. Make sure your distro provides the correct version before installing.
 
+> [!IMPORTANT]
+> Want SilentSDDM to also be available as a lockscreen service? Take a look into [this discussion](https://github.com/uiriansan/SilentSDDM/discussions/78).
+
 https://github.com/user-attachments/assets/dd63c526-34d6-45ec-8a7d-5c29bf08c702
 
 # Presets
