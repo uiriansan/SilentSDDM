@@ -64,6 +64,11 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-mocha.png" width="100%" />
 </details>
 
+<details>
+  <summary>configs/nord.conf</summary>
+<img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/nord.png" width="100%" />
+</details>
+
 [`Customization guide`](#Customizing)
 
 # Dependencies
