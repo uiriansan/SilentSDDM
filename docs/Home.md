@@ -1,6 +1,9 @@
 > [!WARNING]
 > This theme requires **SDDM v0.21.0 or newer**. Make sure your distro provides the correct version before installing.
 
+> [!IMPORTANT]
+> Want SilentSDDM to also be available as a lockscreen service? Take a look into [this discussion](https://github.com/uiriansan/SilentSDDM/discussions/78).
+
 https://github.com/user-attachments/assets/dd63c526-34d6-45ec-8a7d-5c29bf08c702
 
 # Presets
@@ -34,6 +37,14 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 </details>
 
 <details>
+  <summary>configs/everforest.conf</summary>
+
+<img width="1920" height="1080" alt="everforest" src="https://github.com/user-attachments/assets/36d64bf2-b05e-44cf-8bcc-f055381b216f" />
+
+
+</details>
+
+<details>
   <summary>configs/catppuccin-latte.conf</summary>
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-latte.png" width="100%" />
 </details>
@@ -53,7 +64,7 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 <img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/catppuccin-mocha.png" width="100%" />
 </details>
 
-[`Customization guide`](https://github.com/uiriansan/SilentSDDM/wiki/Customizing)
+[`Customization guide`](#Customizing)
 
 # Dependencies
 
@@ -64,7 +75,7 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 - qt6-multimedia
 
 # Installation
-[`Install script`](#Install-script) [`AUR packages for Arch`](#AUR-packages-for-arch) [`NixOS flake`](#NixOS-flake) [`Manual installation`](#Manual-installation)
+[`Install script`](#Install-script) [`AUR packages for Arch`](#AUR-packages-for-arch) [`NixOS flake`](#NixOS-flake) [`Manual installation`](#Manual-installation) [`Pling/KDE Store`](#plingkde-store)
 
 ## Install script
 Just clone the repo and run the script:
@@ -78,10 +89,13 @@ git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM && cd Silent
 
 ## AUR packages for Arch
 If you run Arch Linux, consider installing one of the AUR packages:
+
+##### [`Stable version`](https://aur.archlinux.org/packages/sddm-silent-theme):
 ```bash
-# stable version
 yay -S sddm-silent-theme
-# git version
+```
+##### [`Git version`](https://aur.archlinux.org/packages/sddm-silent-theme-git):
+```bash
 yay -S sddm-silent-theme-git
 ```
 Then, replace the current theme and set the environment variables in `/etc/sddm.conf`:
@@ -115,43 +129,29 @@ inputs = {
    };
 };
 ```
-Then you may configure sddm like so to use the theme:
+
+Next, import the default nixosModule and set the enable option
 ```nix
 {
-  pkgs,
   inputs,
   ...
-}: let
-   # an exhaustive example can be found in flake.nix
-   sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
-      theme = "rei"; # select the config of your choice
-   };
-in  {
-   # include the test package which can be run using test-sddm-silent
-   environment.systemPackages = [sddm-theme sddm-theme.test];
-   qt.enable = true;
-   services.displayManager.sddm = {
-      package = pkgs.kdePackages.sddm; # use qt6 version of sddm
-      enable = true;
-      theme = sddm-theme.pname;
-      # the following changes will require sddm to be restarted to take
-      # effect correctly. It is recomend to reboot after this
-      extraPackages = sddm-theme.propagatedBuildInputs;
-      settings = {
-        # required for styling the virtual keyboard
-        General = {
-          GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
-          InputMethod = "qtvirtualkeyboard";
-        };
-      };
-   };
+}: {
+    imports = [inputs.silentSDDM.nixosModules.default];
+    programs.silentSDDM = {
+        enable = true;
+        theme = "rei";
+        # settings = { ... }; see example in module
+    };
 }
 ```
-The above example includes the test script (`sddm-theme.test`) into your
-systemPackages, which lets you test the theme by running `test-sddm-silent`.
-However, it is optional and can be omitted
 
-> For a more exhaustive example look at the example package in [flake.nix](https://github.com/uiriansan/SilentSDDM/blob/main/flake.nix).
+That's it! SilentSDDM should now be installed and configured.
+You may now run the `test-sddm-silent` executable for testing.
+For further configuration read the [module](./nix/module.nix) option descriptions and examples.
+
+> [!NOTE]
+> Since the module adds extra dependencies to SDDM, 
+> you may need to restart for the theme to work correctly.
 
 ### Local development and testing under nix
 First git clone the repository and cd into the resulting directory
@@ -238,12 +238,36 @@ sudoedit /etc/sddm.conf
     Current=silent
 ```
 
+## Pling/KDE Store
+The theme is also available in [Planet Linux'ing Groups](https://www.pling.com/p/2298627/) & [KDE Store](https://store.kde.org/p/2298627).
+
+# Customizing
+
+The preset configs are located in `./configs/`. To change the active config, edit `./metadata.desktop` and replace the value of `ConfigFile=`:
+
+```bash
+ConfigFile=configs/<your_preferred_config>.conf
+```
+
+> [!NOTE]
+> Changes to the login screen will only take effect when made in `/usr/share/sddm/themes/silent/`. If you've changed things in the cloned directory, copy them with `sudo cp -rf SilentSDDM/. /usr/share/sddm/themes/silent/`
+
+<br/>
+
+You can also create your own config file. There's a guide with the list of available options (there are more than 200 of them xD) in the [wiki](https://github.com/uiriansan/SilentSDDM/wiki/Customizing).
+
+> [!IMPORTANT]
+> Don't forget to test the theme after every change by running `./test.sh`, otherwise you might end up with a broken login screen.
+
+There are some extra tips on how to customize the theme on the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets).
+
 # Acknowledgements
 
 - [Keyitdev/sddm-astronaut-theme](https://github.com/Keyitdev/sddm-astronaut-theme): inspiration and code reference;
 - [Match-Yang/sddm-deepin](https://github.com/Match-Yang/sddm-deepin): inspiration and code reference;
 - [qt/qtvirtualkeyboard](https://github.com/qt/qtvirtualkeyboard): code reference;
 - [Joyston Judah](https://www.pexels.com/photo/white-and-black-mountain-wallpaper-933054/): background;
+- [DesktopHut](https://www.desktophut.com/blue-light-anime-girl-6794): background;
+- [MoeWalls](https://moewalls.com/anime/ken-kaneki-tokyo-ghoul-re-3-live-wallpaper/): background;
+- [MoeWalls](https://moewalls.com/anime/anime-girl-nissan-silvia-live-wallpaper/): background;
 - [iconify.design](https://iconify.design/): icons
-
-I couldn't find the source for some of the images used here. [E-mail me](mailto:uiriansan@gmail.com?subject=Background%20image%20in%20SilentSDDM) if you are the creator and want it removed or acknowledged.

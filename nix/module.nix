@@ -139,7 +139,7 @@ in {
     services.displayManager.sddm = {
       wayland.enable = ! config.services.xserver.enable;
       enable = true;
-      package = pkgs.kdePackages.sddm;
+      package = lib.mkDefault pkgs.kdePackages.sddm;
       theme = "silent";
       # requires reboot to take effect
       extraPackages = silent'.propagatedBuildInputs;
