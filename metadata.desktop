@@ -25,3 +25,4 @@ ConfigFile=configs/default.conf
 # ConfigFile=configs/catppuccin-macchiato.conf
 # ConfigFile=configs/catppuccin-mocha.conf
 # ConfigFile=configs/nord.conf
+# ConfigFile=configs/itachi.conf
