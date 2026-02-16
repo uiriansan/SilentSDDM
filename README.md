@@ -71,7 +71,7 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 
 <details>
   <summary>configs/itachi.conf</summary>
-<img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/nord.png" width="100%" />
+<img src="https://github.com/uiriansan/SilentSDDM/blob/main/docs/previews/itachi.png" width="100%" />
 </details>
 
 [`Customization guide`](#Customizing)
