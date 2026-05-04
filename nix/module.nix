@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  callPackage,
   ...
 }: let
   inherit (lib) map pipe flatten flip elem assertMsg;
@@ -151,6 +152,10 @@ in {
         };
       };
     };
+    fonts.packages = [
+      (pkgs.callPackage
+        ./fonts.nix {})
+    ];
 
     # setup profile pictures
     systemd.tmpfiles.rules = mkIf (cfg.profileIcons != {}) cfg.profileIcons';
