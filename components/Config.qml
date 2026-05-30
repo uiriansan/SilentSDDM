@@ -83,6 +83,7 @@ QtObject {
     property int avatarInactiveBorderSize: config.intValue("LoginScreen.LoginArea.Avatar/inactive-border-size") // @desc:Border size of the non-selected avatars.
     property color avatarActiveBorderColor: config.stringValue("LoginScreen.LoginArea.Avatar/active-border-color") || "#FFFFFF" // @desc:Border color of the selected user's avatar.
     property color avatarInactiveBorderColor: config.stringValue("LoginScreen.LoginArea.Avatar/inactive-border-color") || "#FFFFFF" // @desc:Border color of the non-selected avatars.
+    property bool avatarAlwaysActive: config['LoginScreen.LoginArea.Avatar/always-active'] === "true" ? true : false // @desc:Whether or not to always show the user selector. @default:false
 
     // [LoginScreen.LoginArea.Username]
     property string usernameFontFamily: config.stringValue("LoginScreen.LoginArea.Username/font-family") || "RedHatDisplay" // @desc:Font family used for the username.
