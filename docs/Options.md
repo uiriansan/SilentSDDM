@@ -466,7 +466,7 @@ File in `backgrounds/`
 
 
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="9" align="right"><a href="#loginscreenloginareaavatar">[LoginScreen.LoginArea.Avatar]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="10" align="right"><a href="#loginscreenloginareaavatar">[LoginScreen.LoginArea.Avatar]</a></td><td align="left">
 <a href="#avatarshape">shape</a>
 </td>
 <td align="center">string</td>
@@ -546,6 +546,15 @@ File in `backgrounds/`
 <td align="left">
 
 <a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
+
+</td></tr><tr><td align="left">
+<a href="#avataralwaysactive">always-active</a>
+</td>
+<td align="center">bool</td>
+<td align="center">false</td>
+<td align="left">
+
+`true`   `false`
 
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="5" align="right"><a href="#loginscreenloginareausername">[LoginScreen.LoginArea.Username]</a></td><td align="left">
 <a href="#usernamefontfamily">font-family</a>
@@ -3375,6 +3384,28 @@ File in `backgrounds/`
 <td>
 
 <a href="https://doc.qt.io/qt-6/qml-color.html#details">QColor</a>
+
+</td>
+</tr>
+</table>
+</details>
+<details name="avataralwaysactive">
+<summary><strong>always-active</strong></summary><br/>
+<p>Whether or not to always show the user selector.</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
 
 </td>
 </tr>
