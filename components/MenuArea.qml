@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.VirtualKeyboard.Settings
 
 Item {
     id: menuArea
@@ -193,7 +194,6 @@ Item {
                 LayoutSelector {
                     focus: popup.focus
                     onLayoutChanged: function (index) {
-                        // FIX: Array bounds checking for keyboard layouts
                         layoutButton.label = showLabel ? (keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : "";
                         VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName : "");
                     }
