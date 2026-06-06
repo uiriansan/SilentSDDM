@@ -182,25 +182,25 @@ nix run .#test
 #### Arch Linux
 
 ```bash
-sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
+sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg qt6-imageformats
 ```
 
 #### Void Linux
 
 ```bash
-sudo xbps-install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
+sudo xbps-install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia qt6-imageformats
 ```
 
 #### Fedora
 
 ```bash
-sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard qt6-qtmultimedia
+sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard qt6-qtmultimedia qt6-qtimageformats
 ```
 
 #### OpenSUSE
 
 ```bash
-sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimedia qt6-multimedia-imports
+sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimedia qt6-multimedia-imports qt6-imageformats
 ```
 
 ### 2. Clone this repo:

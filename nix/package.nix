@@ -31,7 +31,7 @@ in {
   };
 
   propagatedBuildInputs = attrValues {
-    inherit (kdePackages) qtmultimedia qtsvg qtvirtualkeyboard;
+    inherit (kdePackages) qtmultimedia qtsvg qtvirtualkeyboard qtimageformats;
   };
 
   dontWrapQtApps = true;
