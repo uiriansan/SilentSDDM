@@ -78,6 +78,7 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 - qt6-svg;
 - qt6-virtualkeyboard
 - qt6-multimedia
+- qt6-imageformats
 
 # Installation
 [`Install script`](#Install-script) [`AUR packages for Arch`](#AUR-packages-for-arch) [`NixOS flake`](#NixOS-flake) [`Manual installation`](#Manual-installation) [`Pling/KDE Store`](#plingkde-store)
