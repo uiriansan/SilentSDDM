@@ -81,7 +81,7 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 - qt6-imageformats
 
 # Installation
-[`Install script`](#Install-script) [`AUR packages for Arch`](#AUR-packages-for-arch) [`NixOS flake`](#NixOS-flake) [`Manual installation`](#Manual-installation) [`Pling/KDE Store`](#plingkde-store)
+[`Install script`](#Install-script) [`AUR packages for Arch`](#AUR-packages-for-arch) [`GURU package for Gentoo`](#GURU-package-for-gentoo) [`NixOS flake`](#NixOS-flake) [`Manual installation`](#Manual-installation) [`Pling/KDE Store`](#plingkde-store)
 
 ## Install script
 Just clone the repo and run the script:
@@ -124,6 +124,37 @@ cd /usr/share/sddm/themes/silent/
 > [!IMPORTANT]
 > Refer to the [snippets page](https://github.com/uiriansan/SilentSDDM/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/uiriansan/SilentSDDM/issues/new/choose) if you don't find the solution there.
 
+## GURU package for Gentoo
+If you run Gentoo linux, consider installing the GURU package
+
+1. Enable the GURU repository
+```bash
+emerge -av eselect-repository
+eselect repository enable guru
+emaint sync -r guru
+```
+
+2. Unmask the required packages. Add this to your packages.accept_keywords:
+```
+# for the git version use
+# x11-misc/silent-sddm-theme **
+x11-misc/silent-sddm-theme ~amd64
+media-fonts/redhat ~amd64
+```
+
+3. Install SilentSDDM
+```bash
+emerge -av x11-misc/silent-sddm-theme
+```
+
+4. Add the following to /etc/sddm.conf and restart SDDM
+```
+[General]
+InputMethod=qtvirtualkeyboard
+GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard
+[Theme]
+Current=silent
+```
 
 ## NixOS flake
 For NixOS with flakes enabled, first include this flake into your flake inputs:
