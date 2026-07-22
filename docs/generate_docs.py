@@ -19,8 +19,6 @@ def parse_config():
 
         for line in file:
             line = line.strip()
-            if "@internal" in line:
-                continue
             if line.startswith("property"):
                 spaced_line = line.split(" ")
                 type = spaced_line[1]

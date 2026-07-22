@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls
@@ -14,7 +15,7 @@ Item {
         Text {
             id: time
             visible: Config.clockDisplay
-            font.pixelSize: Config.clockFontSize * Config.generalScale
+            font.pixelSize: Config.clockFontSize * Config.automaticScale(Screen.devicePixelRatio)
             font.weight: Config.clockFontWeight
             font.family: Config.clockFontFamily
             color: Config.clockColor
@@ -29,7 +30,7 @@ Item {
             id: date
             Layout.alignment: Config.clockAlign === "left" ? Qt.AlignLeft : (Config.clockAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
             visible: Config.dateDisplay
-            font.pixelSize: Config.dateFontSize * Config.generalScale
+            font.pixelSize: Config.dateFontSize * Config.automaticScale(Screen.devicePixelRatio)
             font.family: Config.dateFontFamily
             font.weight: Config.dateFontWeight
             color: Config.dateColor
@@ -82,7 +83,7 @@ Item {
             Image {
                 id: lockIcon
                 source: Config.getIcon(Config.lockMessageIcon)
-                width: Config.lockMessageIconSize * Config.generalScale
+                width: Config.lockMessageIconSize * Config.automaticScale(Screen.devicePixelRatio)
                 height: width
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
@@ -101,7 +102,7 @@ Item {
         Text {
             id: lockMessage
             Layout.alignment: Config.lockMessageAlign === "left" ? Qt.AlignLeft : (Config.lockMessageAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
-            font.pixelSize: Config.lockMessageFontSize * Config.generalScale
+            font.pixelSize: Config.lockMessageFontSize * Config.automaticScale(Screen.devicePixelRatio)
             font.family: Config.lockMessageFontFamily
             font.weight: Config.lockMessageFontWeight
             color: Config.lockMessageColor

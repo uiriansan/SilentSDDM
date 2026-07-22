@@ -9,17 +9,6 @@ Item {
     id: root
     state: Config.lockScreenDisplay ? "lockState" : "loginState"
 
-    Repeater {
-        model: screenModel
-
-        delegate: Item {
-            Component.onCompleted: {
-                if (index === screenModel.primary)
-                    Config.activeMonitorName = model.name;
-            }
-        }
-    }
-
     // TODO: Add own translations: https://github.com/sddm/sddm/wiki/Localization
     TextConstants {
         id: textConstants
