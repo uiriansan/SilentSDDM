@@ -2021,7 +2021,7 @@ File in `icons/`
 ## [General]
 <details name="generalscale">
 <summary><strong>scale</strong></summary><br/>
-<p>Overall scale of the UI. This option can cause the UI to break, so it is recommended to use the individual width/height/size options instead.</p></br></br>
+<p>Overall scale of the UI. A positive value in the [PerMonitorScale] section for the active monitor takes precedence. This option can cause the UI to break, so it is recommended to use the individual width/height/size options instead.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
