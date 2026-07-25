@@ -223,7 +223,15 @@ Item {
                 anchors.fill: parent
                 focus: root.state === "lockState"
                 enabled: root.state === "lockState"
-                onLoginRequested: {
+                onLoginRequested: (key_text, shift) => {
+                    if (Config.lockScreenIgnoreShift && shift)
+                        return;
+
+                    if (Config.lockScreenInputKeystroke && key_text && key_text.length === 1) {
+                        // Ignore enter, backspace, tab, delete and other escape sequences:
+                        if (!["\b", "\n", "\r", "\t"].some(es => key_text.includes(es)) && key_text.charCodeAt(0) !== 127)
+                            loginScreen.password.text = key_text;
+                    }
                     root.state = "loginState";
                     loginScreen.resetFocus();
                 }

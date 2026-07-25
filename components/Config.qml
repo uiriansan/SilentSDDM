@@ -29,6 +29,8 @@ QtObject {
     property int lockScreenBlur: config.intValue("LockScreen/blur") // @desc:Amount of blur to be applied to the background of the lock screen. 0 means no blur.
     property real lockScreenBrightness: config.realValue("LockScreen/brightness") // @possible:-1.0 ≤ R ≤ 1.0 @desc:Brightness of the background of the lock screen. 0.0 leaves unchanged, -1.0 makes it black and 1.0 white.
     property real lockScreenSaturation: config.realValue("LockScreen/saturation") // @possible:-1.0 ≤ R ≤ 1.0 @desc:Saturation of the background of the lock screen. 0.0 leaves unchanged, -1.0 makes it grayscale and 1.0 very saturated.
+    property bool lockScreenInputKeystroke: config.boolValue('LockScreen/input-keystroke') // @desc:If `true`, the key press used to unlock the screen will be registered in the password input.
+    property bool lockScreenIgnoreShift: config.boolValue('LockScreen/ignore-shift-key') // @desc:If enabled, the [shift] key will not unlock the screen. Useful with `input-keystroke` set to `true`, if your password's first character is uppercase or a symbol.
 
     // [LockScreen.Clock]
     property bool clockDisplay: config['LockScreen.Clock/display'] === "false" ? false : true // @desc:Whether or not to display the clock in the lock screen.

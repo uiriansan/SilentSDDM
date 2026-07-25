@@ -6,7 +6,7 @@ import QtQuick.Controls
 
 Item {
     id: lockScreen
-    signal loginRequested
+    signal loginRequested (key_text: string, shift: bool)
 
     // TODO: Support for weather info?
     ColumnLayout {
@@ -164,7 +164,7 @@ Item {
         hoverEnabled: true
         z: -1
         anchors.fill: lockScreen
-        onClicked: lockScreen.loginRequested()
+        onClicked: lockScreen.loginRequested(null, false)
     }
 
     Keys.onPressed: function (event) {
@@ -176,7 +176,7 @@ Item {
             event.accepted = false;
             return;
         } else {
-            lockScreen.loginRequested();
+            lockScreen.loginRequested(event.text, event.key === Qt.Key_Shift);
         }
         event.accepted = true;
     }

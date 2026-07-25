@@ -34,7 +34,7 @@ File in `backgrounds/`
 
 `fill`   `fit`   `stretch`
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="11" align="right"><a href="#lockscreen">[LockScreen]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="13" align="right"><a href="#lockscreen">[LockScreen]</a></td><td align="left">
 <a href="#lockscreendisplay">display</a>
 </td>
 <td align="center">bool</td>
@@ -132,6 +132,24 @@ File in `backgrounds/`
 <td align="left">
 
 -1.0 ≤ R ≤ 1.0
+
+</td></tr><tr><td align="left">
+<a href="#lockscreeninputkeystroke">input-keystroke</a>
+</td>
+<td align="center">bool</td>
+<td align="center">false</td>
+<td align="left">
+
+`true`   `false`
+
+</td></tr><tr><td align="left">
+<a href="#lockscreenignoreshift">ignore-shift-key</a>
+</td>
+<td align="center">bool</td>
+<td align="center">false</td>
+<td align="left">
+
+`true`   `false`
 
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="8" align="right"><a href="#lockscreenclock">[LockScreen.Clock]</a></td><td align="left">
 <a href="#clockdisplay">display</a>
@@ -2348,6 +2366,50 @@ File in `backgrounds/`
 <td>
 
 -1.0 ≤ R ≤ 1.0
+
+</td>
+</tr>
+</table>
+</details>
+<details name="lockscreeninputkeystroke">
+<summary><strong>input-keystroke</strong></summary><br/>
+<p>If `true`, the key press used to unlock the screen will be registered in the password input.</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="lockscreenignoreshift">
+<summary><strong>ignore-shift-key</strong></summary><br/>
+<p>If enabled, the [shift] key will not unlock the screen. Useful with `input-keystroke` set to `true`, if your password's first character is uppercase or a symbol.</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
 
 </td>
 </tr>
