@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
@@ -31,18 +32,18 @@ Item {
     property color borderColor: isActive ? iconButton.activeContentColor : iconButton.contentColor
     property int preferredWidth: -1
 
-    width: preferredWidth !== -1 ? (preferredWidth * Config.generalScale) : buttonContentRow.width // childrenRect doesn't update for some reason
-    height: iconSize * 2 * Config.generalScale
+    width: preferredWidth !== -1 ? (preferredWidth * Config.automaticScale(Screen.devicePixelRatio)) : buttonContentRow.width // childrenRect doesn't update for some reason
+    height: iconSize * 2 * Config.automaticScale(Screen.devicePixelRatio)
 
     Rectangle {
         id: buttonBackground
         anchors.fill: parent
         color: iconButton.isActive ? iconButton.activeBackgroundColor : iconButton.backgroundColor
         opacity: iconButton.isActive ? iconButton.activeBackgroundOpacity : iconButton.backgroundOpacity
-        topLeftRadius: iconButton.borderRadiusLeft * Config.generalScale
-        topRightRadius: iconButton.borderRadiusRight * Config.generalScale
-        bottomLeftRadius: iconButton.borderRadiusLeft * Config.generalScale
-        bottomRightRadius: iconButton.borderRadiusRight * Config.generalScale
+        topLeftRadius: iconButton.borderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
+        topRightRadius: iconButton.borderRadiusRight * Config.automaticScale(Screen.devicePixelRatio)
+        bottomLeftRadius: iconButton.borderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
+        bottomRightRadius: iconButton.borderRadiusRight * Config.automaticScale(Screen.devicePixelRatio)
 
         Behavior on opacity {
             enabled: Config.enableAnimations
@@ -55,15 +56,15 @@ Item {
     Rectangle {
         id: buttonBorder
         color: "transparent"
-        topLeftRadius: iconButton.borderRadiusLeft * Config.generalScale
-        topRightRadius: iconButton.borderRadiusRight * Config.generalScale
-        bottomLeftRadius: iconButton.borderRadiusLeft * Config.generalScale
-        bottomRightRadius: iconButton.borderRadiusRight * Config.generalScale
+        topLeftRadius: iconButton.borderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
+        topRightRadius: iconButton.borderRadiusRight * Config.automaticScale(Screen.devicePixelRatio)
+        bottomLeftRadius: iconButton.borderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
+        bottomRightRadius: iconButton.borderRadiusRight * Config.automaticScale(Screen.devicePixelRatio)
         anchors.fill: parent
         visible: iconButton.borderSize > 0 || iconButton.focus
         border {
             color: iconButton.borderColor
-            width: iconButton.focus ? (iconButton.borderSize * Config.generalScale) || 2 : (iconButton.borderSize > 0 ? (iconButton.borderSize * Config.generalScale) : 0)
+            width: iconButton.focus ? (iconButton.borderSize * Config.automaticScale(Screen.devicePixelRatio)) || 2 : (iconButton.borderSize > 0 ? (iconButton.borderSize * Config.automaticScale(Screen.devicePixelRatio)) : 0)
         }
     }
 
@@ -82,7 +83,7 @@ Item {
                 id: buttonIcon
                 source: iconButton.icon
                 anchors.centerIn: parent
-                width: iconButton.iconSize * Config.generalScale
+                width: iconButton.iconSize * Config.automaticScale(Screen.devicePixelRatio)
                 height: width
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
@@ -122,7 +123,7 @@ Item {
             text: iconButton.label
             visible: iconButton.showLabel && text !== ""
             font.family: iconButton.fontFamily
-            font.pixelSize: iconButton.fontSize * Config.generalScale
+            font.pixelSize: iconButton.fontSize * Config.automaticScale(Screen.devicePixelRatio)
             font.weight: iconButton.fontWeight
             rightPadding: 10
             color: iconButton.isActive ? iconButton.activeContentColor : iconButton.contentColor
@@ -161,7 +162,7 @@ Item {
             contentItem: Text {
                 id: tooltipTextElement
                 font.family: Config.tooltipsFontFamily
-                font.pixelSize: Config.tooltipsFontSize * Config.generalScale
+                font.pixelSize: Config.tooltipsFontSize * Config.automaticScale(Screen.devicePixelRatio)
                 text: iconButton.tooltipText
                 color: Config.tooltipsContentColor
             }
@@ -172,7 +173,7 @@ Item {
                 color: Config.tooltipsBackgroundColor
                 opacity: Config.tooltipsBackgroundOpacity
                 border.width: 0
-                radius: Config.tooltipsBorderRadius * Config.generalScale
+                radius: Config.tooltipsBorderRadius * Config.automaticScale(Screen.devicePixelRatio)
             }
         }
     }

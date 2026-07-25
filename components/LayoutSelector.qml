@@ -1,10 +1,11 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Layouts
 import QtQuick.Controls
 
 ColumnLayout {
     id: selector
-    width: (Config.layoutPopupWidth - Config.menuAreaPopupsPadding * 2) * Config.generalScale
+    width: (Config.layoutPopupWidth - Config.menuAreaPopupsPadding * 2) * Config.automaticScale(Screen.devicePixelRatio)
 
     signal layoutChanged(layoutIndex: int)
     signal close
@@ -36,7 +37,7 @@ ColumnLayout {
         wrapMode: Text.Wrap
         horizontalAlignment: Text.AlignHCenter
         color: Config.menuAreaPopupsContentColor
-        font.pixelSize: Config.menuAreaPopupsFontSize * Config.generalScale
+        font.pixelSize: Config.menuAreaPopupsFontSize * Config.automaticScale(Screen.devicePixelRatio)
         font.family: Config.menuAreaPopupsFontFamily
         padding: 10
     }
@@ -45,7 +46,7 @@ ColumnLayout {
         id: layoutList
         visible: !noLayoutMessage.visible
         Layout.preferredWidth: parent.width
-        Layout.preferredHeight: Math.min((keyboard && keyboard.layouts ? keyboard.layouts.length : 0) * ((Config.menuAreaPopupsItemHeight * Config.generalScale) + 5 + spacing) - spacing, Config.menuAreaPopupsMaxHeight * Config.generalScale)
+        Layout.preferredHeight: Math.min((keyboard && keyboard.layouts ? keyboard.layouts.length : 0) * ((Config.menuAreaPopupsItemHeight * Config.automaticScale(Screen.devicePixelRatio)) + 5 + spacing) - spacing, Config.menuAreaPopupsMaxHeight * Config.automaticScale(Screen.devicePixelRatio))
         orientation: ListView.Vertical
         interactive: true
         clip: true
@@ -54,14 +55,14 @@ ColumnLayout {
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 0
 
-        contentHeight: (keyboard && keyboard.layouts ? keyboard.layouts.length : 0) * ((Config.menuAreaPopupsItemHeight * Config.generalScale) + 5 + spacing) - spacing
+        contentHeight: (keyboard && keyboard.layouts ? keyboard.layouts.length : 0) * ((Config.menuAreaPopupsItemHeight * Config.automaticScale(Screen.devicePixelRatio)) + 5 + spacing) - spacing
 
         ScrollBar.vertical: ScrollBar {
             id: scrollbar
             policy: Config.menuAreaPopupsDisplayScrollbar && layoutList.contentHeight > layoutList.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
             contentItem: Rectangle {
-                implicitWidth: 5 * Config.generalScale
-                radius: 5 * Config.generalScale
+                implicitWidth: 5 * Config.automaticScale(Screen.devicePixelRatio)
+                radius: 5 * Config.automaticScale(Screen.devicePixelRatio)
                 color: Config.menuAreaPopupsContentColor
                 opacity: Config.menuAreaPopupsActiveOptionBackgroundOpacity
             }
@@ -83,7 +84,7 @@ ColumnLayout {
 
             RowLayout {
                 width: parent.width
-                height: (Config.menuAreaPopupsItemHeight * Config.generalScale) + 5
+                height: (Config.menuAreaPopupsItemHeight * Config.automaticScale(Screen.devicePixelRatio)) + 5
                 spacing: 0
 
                 Rectangle {
@@ -95,7 +96,7 @@ ColumnLayout {
                     Image {
                         anchors.centerIn: parent
                         source: shortName && shortName.length > 0 ? `/usr/share/sddm/flags/${shortName}.png` : Config.getIcon("language")
-                        width: Config.menuAreaPopupsIconSize * Config.generalScale
+                        width: Config.menuAreaPopupsIconSize * Config.automaticScale(Screen.devicePixelRatio)
                         height: width
                         sourceSize: Qt.size(width, height)
                         fillMode: Image.PreserveAspectFit
@@ -111,7 +112,7 @@ ColumnLayout {
                         text: Languages.getLabelFor(shortName)
                         visible: text && text.length > 0
                         color: index === currentLayoutIndex || mouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
-                        font.pixelSize: Config.menuAreaPopupsFontSize * Config.generalScale
+                        font.pixelSize: Config.menuAreaPopupsFontSize * Config.automaticScale(Screen.devicePixelRatio)
                         font.family: Config.menuAreaPopupsFontFamily
                         elide: Text.ElideRight
                         rightPadding: 10
@@ -122,7 +123,7 @@ ColumnLayout {
                         text: longName
                         color: index === currentLayoutIndex || mouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
                         opacity: 0.75
-                        font.pixelSize: (Config.menuAreaPopupsFontSize * Config.generalScale) - 2
+                        font.pixelSize: (Config.menuAreaPopupsFontSize * Config.automaticScale(Screen.devicePixelRatio)) - 2
                         font.family: Config.menuAreaPopupsFontFamily
                         elide: Text.ElideRight
                         rightPadding: 10

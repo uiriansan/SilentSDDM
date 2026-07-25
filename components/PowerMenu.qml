@@ -1,10 +1,11 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Layouts
 import QtQuick.Controls
 
 ColumnLayout {
     id: selector
-    width: Config.powerPopupWidth * Config.generalScale
+    width: Config.powerPopupWidth * Config.automaticScale(Screen.devicePixelRatio)
     spacing: 2
 
     signal close
@@ -16,8 +17,8 @@ ColumnLayout {
         id: suspendButton
 
         preferredWidth: Layout.preferredWidth
-        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
-        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
+        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.automaticScale(Screen.devicePixelRatio)
+        Layout.preferredWidth: Config.powerPopupWidth * Config.automaticScale(Screen.devicePixelRatio)
 
         focus: selector.visible
         width: Layout.preferredWidth
@@ -45,8 +46,8 @@ ColumnLayout {
         id: rebootButton
 
         preferredWidth: Layout.preferredWidth
-        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
-        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
+        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.automaticScale(Screen.devicePixelRatio)
+        Layout.preferredWidth: Config.powerPopupWidth * Config.automaticScale(Screen.devicePixelRatio)
 
         focus: selector.visible
         width: Layout.preferredWidth
@@ -74,8 +75,8 @@ ColumnLayout {
         id: shutdownButton
 
         preferredWidth: Layout.preferredWidth
-        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
-        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
+        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.automaticScale(Screen.devicePixelRatio)
+        Layout.preferredWidth: Config.powerPopupWidth * Config.automaticScale(Screen.devicePixelRatio)
 
         focus: selector.visible
         width: Layout.preferredWidth

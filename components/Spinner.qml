@@ -1,11 +1,12 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.Effects
 
 Item {
     id: spinnerContainer
-    width: (spinner.width + Config.spinnerSpacing + spinnerText.width) * Config.generalScale
-    height: childrenRect.height * Config.generalScale
+    width: (spinner.width + Config.spinnerSpacing + spinnerText.width) * Config.automaticScale(Screen.devicePixelRatio)
+    height: childrenRect.height * Config.automaticScale(Screen.devicePixelRatio)
 
     Behavior on opacity {
         enabled: Config.enableAnimations
@@ -38,7 +39,7 @@ Item {
     Image {
         id: spinner
         source: Config.getIcon(Config.spinnerIcon)
-        width: Config.spinnerIconSize * Config.generalScale
+        width: Config.spinnerIconSize * Config.automaticScale(Screen.devicePixelRatio)
         height: width
         sourceSize.width: width
         sourceSize.height: height
@@ -80,7 +81,7 @@ Item {
         visible: Config.spinnerDisplayText
         text: Config.spinnerText
         color: Config.spinnerColor
-        font.pixelSize: Config.spinnerFontSize * Config.generalScale
+        font.pixelSize: Config.spinnerFontSize * Config.automaticScale(Screen.devicePixelRatio)
         font.weight: Config.spinnerFontWeight
         font.family: Config.spinnerFontFamily
 

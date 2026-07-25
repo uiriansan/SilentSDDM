@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Effects
@@ -17,8 +18,8 @@ Item {
     property bool enabled: true
     property int inputMethodHints: Qt.ImhNone
 
-    width: Config.passwordInputWidth * Config.generalScale
-    height: Config.passwordInputHeight * Config.generalScale
+    width: Config.passwordInputWidth * Config.automaticScale(Screen.devicePixelRatio)
+    height: Config.passwordInputHeight * Config.automaticScale(Screen.devicePixelRatio)
 
     TextField {
         id: textField
@@ -32,15 +33,15 @@ Item {
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
         font.family: Config.passwordInputFontFamily
-        font.pixelSize: Math.max(8, Config.passwordInputFontSize * Config.generalScale)
+        font.pixelSize: Math.max(8, Config.passwordInputFontSize * Config.automaticScale(Screen.devicePixelRatio))
         background: Rectangle {
             anchors.fill: parent
             color: Config.passwordInputBackgroundColor
             opacity: Config.passwordInputBackgroundOpacity
-            topLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
-            bottomLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
-            topRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
-            bottomRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
+            topLeftRadius: Config.passwordInputBorderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
+            bottomLeftRadius: Config.passwordInputBorderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
+            topRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.automaticScale(Screen.devicePixelRatio) : Config.passwordInputBorderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
+            bottomRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.automaticScale(Screen.devicePixelRatio) : Config.passwordInputBorderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
         }
         leftPadding: placeholderLabel.x
         rightPadding: 10
@@ -48,13 +49,13 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            border.width: Config.passwordInputBorderSize * Config.generalScale
+            border.width: Config.passwordInputBorderSize * Config.automaticScale(Screen.devicePixelRatio)
             border.color: Config.passwordInputBorderColor
             color: "transparent"
-            topLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
-            bottomLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
-            topRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
-            bottomRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
+            topLeftRadius: Config.passwordInputBorderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
+            bottomLeftRadius: Config.passwordInputBorderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
+            topRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.automaticScale(Screen.devicePixelRatio) : Config.passwordInputBorderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
+            bottomRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.automaticScale(Screen.devicePixelRatio) : Config.passwordInputBorderRadiusLeft * Config.automaticScale(Screen.devicePixelRatio)
         }
 
         Row {
@@ -73,7 +74,7 @@ Item {
                     id: icon
                     source: input.icon
                     anchors.centerIn: parent
-                    width: Math.max(1, Config.passwordInputIconSize * Config.generalScale)
+                    width: Math.max(1, Config.passwordInputIconSize * Config.automaticScale(Screen.devicePixelRatio))
                     height: width
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit

@@ -1,11 +1,12 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Effects
 
 ColumnLayout {
     id: selector
-    width: (Config.sessionPopupWidth - Config.menuAreaPopupsPadding * 2) * Config.generalScale
+    width: (Config.sessionPopupWidth - Config.menuAreaPopupsPadding * 2) * Config.automaticScale(Screen.devicePixelRatio)
 
     signal sessionChanged(sessionIndex: int, iconPath: string, label: string)
     signal close
@@ -26,7 +27,7 @@ ColumnLayout {
     ListView {
         id: sessionList
         Layout.preferredWidth: parent.width
-        Layout.preferredHeight: Math.min((sessionModel ? sessionModel.rowCount() : 0) * (Config.menuAreaPopupsItemHeight * Config.generalScale + spacing), Config.menuAreaPopupsMaxHeight * Config.generalScale)
+        Layout.preferredHeight: Math.min((sessionModel ? sessionModel.rowCount() : 0) * (Config.menuAreaPopupsItemHeight * Config.automaticScale(Screen.devicePixelRatio) + spacing), Config.menuAreaPopupsMaxHeight * Config.automaticScale(Screen.devicePixelRatio))
         orientation: ListView.Vertical
         interactive: true
         clip: true
@@ -34,15 +35,15 @@ ColumnLayout {
         spacing: Config.menuAreaPopupsSpacing
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 0
-        contentHeight: sessionModel.rowCount() * (Config.menuAreaPopupsItemHeight * Config.generalScale + spacing)
+        contentHeight: sessionModel.rowCount() * (Config.menuAreaPopupsItemHeight * Config.automaticScale(Screen.devicePixelRatio) + spacing)
 
         ScrollBar.vertical: ScrollBar {
             id: scrollbar
             policy: Config.menuAreaPopupsDisplayScrollbar && sessionList.contentHeight > sessionList.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
             contentItem: Rectangle {
                 id: scrollbarBackground
-                implicitWidth: 5 * Config.generalScale
-                radius: 5 * Config.generalScale
+                implicitWidth: 5 * Config.automaticScale(Screen.devicePixelRatio)
+                radius: 5 * Config.automaticScale(Screen.devicePixelRatio)
                 color: Config.menuAreaPopupsContentColor
                 opacity: Config.menuAreaPopupsActiveOptionBackgroundOpacity
             }
@@ -60,15 +61,15 @@ ColumnLayout {
 
         delegate: Rectangle {
             width: scrollbar.visible ? parent.width - Config.menuAreaPopupsPadding - scrollbar.width : parent.width
-            height: Config.menuAreaPopupsItemHeight * Config.generalScale
+            height: Config.menuAreaPopupsItemHeight * Config.automaticScale(Screen.devicePixelRatio)
             color: "transparent"
-            radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
+            radius: Config.menuAreaButtonsBorderRadius * Config.automaticScale(Screen.devicePixelRatio)
 
             Rectangle {
                 anchors.fill: parent
                 color: Config.menuAreaPopupsActiveOptionBackgroundColor
                 opacity: index === selector.currentSessionIndex ? Config.menuAreaPopupsActiveOptionBackgroundOpacity : (itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveOptionBackgroundOpacity : 0.0)
-                radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
+                radius: Config.menuAreaButtonsBorderRadius * Config.automaticScale(Screen.devicePixelRatio)
             }
 
             RowLayout {
@@ -84,8 +85,8 @@ ColumnLayout {
                         id: sessionIcon
                         anchors.centerIn: parent
                         source: selector.getSessionIcon(name)
-                        width: Config.menuAreaPopupsIconSize * Config.generalScale
-                        height: Config.menuAreaPopupsIconSize * Config.generalScale
+                        width: Config.menuAreaPopupsIconSize * Config.automaticScale(Screen.devicePixelRatio)
+                        height: Config.menuAreaPopupsIconSize * Config.automaticScale(Screen.devicePixelRatio)
                         sourceSize: Qt.size(width, height)
                         fillMode: Image.PreserveAspectFit
                         visible: false
@@ -112,7 +113,7 @@ ColumnLayout {
                         width: parent.width - 5
                         text: name
                         color: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? Config.menuAreaPopupsActiveContentColor : Config.menuAreaPopupsContentColor
-                        font.pixelSize: Config.menuAreaPopupsFontSize * Config.generalScale
+                        font.pixelSize: Config.menuAreaPopupsFontSize * Config.automaticScale(Screen.devicePixelRatio)
                         font.family: Config.menuAreaPopupsFontFamily
                     }
                 }
