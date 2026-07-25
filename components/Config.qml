@@ -279,6 +279,40 @@ QtObject {
     property bool tooltipsDisableUser: config.boolValue("Tooltips/disable-user") // @desc:If false, disables only the tooltip for the user selector.
     property bool tooltipsDisableLoginButton: config.boolValue("Tooltips/disable-login-button") // @desc:If false, disabled only the tooltip for the login button.
 
+    // [User.*]
+    property var usersOptions: ({
+        // @UserOption:preferred-session @type:string @desc:Set the name of the preferred session for this user. The session will be selected automatically when the user is changed.<br/><strong>Example:</strong><br/>preferred-session = "Hyprland (uwsm-managed)"
+    })
+
+    Component.onCompleted: {
+        // Parse users options:
+        for (const header of Object.keys(config)) {
+            if (header.startsWith("User.")) {
+                const usernameIndex = header.indexOf(".") + 1;
+                const optionIndex = header.indexOf("/") + 1;
+                
+                const username = header.slice(usernameIndex, optionIndex - 1);
+                const option = header.substring(optionIndex).trim();
+
+                if (!usersOptions[username])
+                    usersOptions[username] = {};
+
+                usersOptions[username][option] = config[header].toLowerCase();
+            }
+        }
+    }
+
+    function getUserOption(username, option) {
+        if (username in usersOptions) {
+            if (option in usersOptions[username]) {
+                return usersOptions[username][option];
+            }
+        }
+        return null;
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     function sortMenuButtons() {
         var menus = [];
         var available_positions = ["top-left", "top-center", "top-right", "center-left", "center-right", "bottom-left", "bottom-center", "bottom-right"];

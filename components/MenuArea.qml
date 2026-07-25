@@ -7,6 +7,8 @@ Item {
     id: menuArea
     anchors.fill: parent
 
+    property int customSessionIndex: -1
+
     Component {
         id: sessionMenuComponent
 
@@ -81,9 +83,12 @@ Item {
                 focus: visible
 
                 SessionSelector {
+                    id: sessionSelector
                     focus: popup.focus
+                    customSessionIndex: menuArea.customSessionIndex
                     onSessionChanged: function (newSessionIndex, sessionIcon, sessionLabel) {
-                        loginScreen.sessionIndex = newSessionIndex;
+                        if (loginScreen.sessionIndex !== newSessionIndex)
+                            loginScreen.sessionIndex = newSessionIndex;
                         sessionButton.icon = sessionIcon;
                         sessionButton.label = sessionButton.showLabel ? sessionLabel : "";
                     }
@@ -132,7 +137,6 @@ Item {
                 }
             }
             tooltipText: "Change keyboard layout"
-            // FIX: Array bounds checking for keyboard layouts
             label: showLabel ? (keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
 
             Connections {
@@ -447,7 +451,6 @@ Item {
         }
     }
 
-    // FIX: Critical createObject memory leak prevention
     property var createdObjects: []
 
     Component.onCompleted: {
@@ -483,14 +486,15 @@ Item {
             }
 
             var createdObject;
-            if (menus[i].name === "session")
+            if (menus[i].name === "session") {
                 createdObject = sessionMenuComponent.createObject(pos, {});
-            else if (menus[i].name === "layout")
+            } else if (menus[i].name === "layout") {
                 createdObject = layoutMenuComponent.createObject(pos, {});
-            else if (menus[i].name === "keyboard")
+            } else if (menus[i].name === "keyboard") {
                 createdObject = keyboardMenuComponent.createObject(pos, {});
-            else if (menus[i].name === "power")
+            } else if (menus[i].name === "power") {
                 createdObject = powerMenuComponent.createObject(pos, {});
+            }
 
             if (createdObject) {
                 createdObjects.push(createdObject);
@@ -499,7 +503,6 @@ Item {
     }
 
     Component.onDestruction: {
-        // FIX: Critical createObject memory leak cleanup
         for (var i = 0; i < createdObjects.length; i++) {
             if (createdObjects[i]) {
                 createdObjects[i].destroy();

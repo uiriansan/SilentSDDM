@@ -11,6 +11,7 @@ ColumnLayout {
     signal sessionChanged(sessionIndex: int, iconPath: string, label: string)
     signal close
 
+    property int customSessionIndex: -1
     property int currentSessionIndex: (sessionModel && sessionModel.lastIndex >= 0) ? sessionModel.lastIndex : 0
     property string sessionName: ""
     property string sessionIconPath: ""
@@ -50,7 +51,7 @@ ColumnLayout {
         }
 
         model: sessionModel
-        currentIndex: selector.currentSessionIndex
+        currentIndex: selector.customSessionIndex !== -1 ? selector.customSessionIndex : selector.currentSessionIndex
         onCurrentIndexChanged: {
             var session_name = sessionModel.data(sessionModel.index(currentIndex, 0), 260);
 
@@ -125,7 +126,6 @@ ColumnLayout {
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
                 onClicked: {
-                    // FIXME: Some clicks seem to be ignored
                     sessionList.currentIndex = index;
                 }
             }

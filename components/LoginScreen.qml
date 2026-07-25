@@ -226,6 +226,17 @@ Item {
                     loginScreen.userRealName = realName;
                     loginScreen.userIcon = icon;
                     loginScreen.userNeedsPassword = needsPassword;
+
+                    const prefSession = Config.getUserOption(name, "preferred-session");
+
+                    if (prefSession) {
+                        for (var i = 0; i < sessionModel.count; ++i) {
+                            const sessionName = sessionModel.data(sessionModel.index(i, 0), 260).toLowerCase();
+                            if (sessionName === prefSession) {
+                                menuArea.customSessionIndex = i;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -434,7 +445,9 @@ Item {
         }
     }
 
-    MenuArea {}
+    MenuArea {
+        id: menuArea
+    }
     CVKeyboard {}
 
     Keys.onPressed: function (event) {

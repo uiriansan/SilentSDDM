@@ -13,52 +13,77 @@ JSON_FILE = "options.json"
 MD_FILE = "Options.md"
 HELP_FILE = "help.html"
 
+def extract_option_data(line, p_type, property):
+    default = ""
+    if "@default:" in line:
+        default = line.split("@default:")[1].split("@")[0].strip()
+    elif "||" in line:
+        default = line.split("||")[1].strip().replace('"', "").split("//")[0].strip()
+    elif p_type == "bool" and "config[" in line:
+        default = "true"
+    elif p_type == "bool":
+        default = "false"
+    elif p_type == "int":
+        default = "0"
+    elif p_type == "real":
+        default = "0.0"
+    possible = ""
+    if "@possible:" in line:
+        possible = line.split("@possible:")[1].split("@")[0].strip()
+    elif p_type == "color":
+        possible = "QColor"
+    elif p_type == "bool":
+        possible = "'true' | 'false'"
+    elif p_type == "string" and "clock" in property.lower() and "format" in property.lower():
+        possible = "QTime"
+    elif p_type == "string" and "date" in property.lower() and "format" in property.lower():
+        possible = "QDate"
+    desc = line.split("@desc:")[1].split("@")[0].strip() if "@desc:" in line else ""
+
+    return (default, possible, desc)
+
 def parse_config():
     with open(CONFIG_FILE, "r") as file:
         json_output = {}
 
         for line in file:
             line = line.strip()
-            if line.startswith("property"):
+            if line.startswith("property") and not line.startswith("property var"):
                 spaced_line = line.split(" ")
-                type = spaced_line[1]
+                p_type = spaced_line[1]
                 property = spaced_line[2].replace(":", "")
                 quoted_line = re.findall('["|\'](.+?)["|\']', line)[0]
                 split_quoted_line = quoted_line.split("/")
                 category = split_quoted_line[0] if "/" in quoted_line else "General"
                 option = split_quoted_line[1] if "/" in quoted_line else split_quoted_line[0]
-                default = ""
-                if "@default:" in line:
-                    default = line.split("@default:")[1].split("@")[0].strip()
-                elif "||" in line:
-                    default = line.split("||")[1].strip().replace('"', "").split("//")[0].strip()
-                elif type == "bool" and "config[" in line:
-                    default = "true"
-                elif type == "bool":
-                    default = "false"
-                elif type == "int":
-                    default = "0"
-                elif type == "real":
-                    default = "0.0"
-                possible = ""
-                if "@possible:" in line:
-                    possible = line.split("@possible:")[1].split("@")[0].strip()
-                elif type == "color":
-                    possible = "QColor"
-                elif type == "bool":
-                    possible = "'true' | 'false'"
-                elif type == "string" and "clock" in property.lower() and "format" in property.lower():
-                    possible = "QTime"
-                elif type == "string" and "date" in property.lower() and "format" in property.lower():
-                    possible = "QDate"
-                desc = line.split("@desc:")[1].split("@")[0].strip() if "@desc:" in line else ""
+                
+                (default, possible, desc) = extract_option_data(line, p_type, property)
 
                 if category not in json_output:
                     json_output[category] = []
                 json_output[category].append({
                     "category": category,
                     "option": option,
-                    "type": type,
+                    "p_type": p_type,
+                    "default": default,
+                    "possible": possible,
+                    "desc": desc,
+                    "property": property
+                })
+            elif line.startswith("// @UserOption:") or line.startswith("//@UserOption:"):
+                p_type = line.split("@type:")[1].split("@")[0].strip() if "@type:" in line else "string"
+                category = "User.<username>"
+                option = line.replace("// ", "//").replace("//", "").split(" ")[0].replace("@UserOption:", "")
+                property = f"userOption{"".join([w.title() for w in option.split("-")])}"
+
+                (default, possible, desc) = extract_option_data(line, p_type, property)
+
+                if category not in json_output:
+                    json_output[category] = []
+                json_output[category].append({
+                    "category": category,
+                    "option": option,
+                    "p_type": p_type,
                     "default": default,
                     "possible": possible,
                     "desc": desc,
@@ -80,13 +105,13 @@ def generate_md_file(json_output):
 
     for i, (category, options) in enumerate(json_output.items()):
         # category title
-        ref.append(f'\n## [{category}]')
+        ref.append(f'\n## <a name="{category.lower().replace(".", "").replace("user<username>", "userOptions")}"></a> [{category.replace("<", "&lt;").replace(">", "&gt;")}]')
 
         for j, option in enumerate(options):
             # TABLE
             table.append("<tr>")
             if j == 0:
-                table.append(f'<td rowspan="{len(options)}" align="right"><a href="#{category.lower().replace(".", "")}">[{category}]</a></td>')
+                table.append(f'<td rowspan="{len(options)}" align="right"><a href="#{category.lower().replace(".", "").replace("user<username>", "userOptions")}">[{category.replace("<", "&lt;").replace(">", "&gt;")}]</a></td>')
 
             formated_possible = ""
             if option["possible"] == "QColor":
@@ -100,7 +125,7 @@ def generate_md_file(json_output):
             table.append(f'''<td align="left">
 <a href="#{option["property"].lower()}">{option["option"]}</a>
 </td>
-<td align="center">{option["type"]}</td>
+<td align="center">{option["p_type"]}</td>
 <td align="center">{option["default"]}</td>
 <td align="left">
 
@@ -117,7 +142,7 @@ def generate_md_file(json_output):
 <table>
 <tr>
 <td>Type</td></br>
-<td>{option["type"]}</td>
+<td>{option["p_type"]}</td>
 </tr>
 <tr>
 <td>Default value</td>
