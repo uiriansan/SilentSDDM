@@ -1,9 +1,0 @@
-git/                    export-ignore
-.gitignore              export-ignore
-.gitattributes          export-ignore
-change_avatar.sh        export-ignore
-default.nix             export-ignore
-flake.lock              export-ignore
-flake.nix               export-ignore
-install.sh              export-ignore
-nix/                    export-ignore
