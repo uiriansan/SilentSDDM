@@ -19,6 +19,9 @@ install_dependencies () {
     elif command -v dnf &>/dev/null; then
         echo -e "${grey}Installing dependencies with 'dnf'...${reset}"
         sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard qt6-qtmultimedia qt6-qtimageformats
+    elif command -v emerge &>/dev/null; then
+        echo -e "${grey}Installing dependencies with 'emerge'...${reset}"
+        USE=ffmpeg emerge -avu qtsvg qtvirtualkeyboard qtmultimedia qtimageformats sddm
     elif command -v zypper &>/dev/null; then
         echo -e "${grey}Installing dependencies with 'zypper'...${reset}"
         sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimedia qt6-multimedia-imports qt6-imageformats
