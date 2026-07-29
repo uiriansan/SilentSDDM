@@ -34,7 +34,7 @@ File in `backgrounds/`
 
 `fill`   `fit`   `stretch`
 
-</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="11" align="right"><a href="#lockscreen">[LockScreen]</a></td><td align="left">
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="13" align="right"><a href="#lockscreen">[LockScreen]</a></td><td align="left">
 <a href="#lockscreendisplay">display</a>
 </td>
 <td align="center">bool</td>
@@ -132,6 +132,24 @@ File in `backgrounds/`
 <td align="left">
 
 -1.0 ≤ R ≤ 1.0
+
+</td></tr><tr><td align="left">
+<a href="#lockscreeninputkeystroke">input-keystroke</a>
+</td>
+<td align="center">bool</td>
+<td align="center">false</td>
+<td align="left">
+
+`true`   `false`
+
+</td></tr><tr><td align="left">
+<a href="#lockscreenignoreshift">ignore-shift-key</a>
+</td>
+<td align="center">bool</td>
+<td align="center">false</td>
+<td align="left">
+
+`true`   `false`
 
 </td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="8" align="right"><a href="#lockscreenclock">[LockScreen.Clock]</a></td><td align="left">
 <a href="#clockdisplay">display</a>
@@ -2014,14 +2032,23 @@ File in `icons/`
 
 `true`   `false`
 
+</td></tr><tr><td colspan="5">&nbsp;</td></tr><tr><th align="right">Category</th><th align="left">Option</th><th>Type</th><th>Default value</th><th align="left">Possible values</th></tr><tr><td rowspan="1" align="right"><a href="#userOptions">[User.&lt;username&gt;]</a></td><td align="left">
+<a href="#useroptionpreferredsession">preferred-session</a>
+</td>
+<td align="center">string</td>
+<td align="center"></td>
+<td align="left">
+
+
+
 </td></tr></table>
 
 -- --
 
-## [General]
+## <a name="general"></a> [General]
 <details name="generalscale">
 <summary><strong>scale</strong></summary><br/>
-<p>Overall scale of the UI. This option can cause the UI to break, so it is recommended to use the individual width/height/size options instead.</p></br></br>
+<p>Overall UI scale multiplier applied after Qt's automatic per-display high-DPI scale. This option can cause the UI to break, so it is recommended to use the individual width/height/size options instead.</p></br></br>
 <table>
 <tr>
 <td>Type</td></br>
@@ -2110,7 +2137,7 @@ File in `backgrounds/`
 
 -- --
 
-## [LockScreen]
+## <a name="lockscreen"></a> [LockScreen]
 <details name="lockscreendisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the lock screen. If false, the theme will load straight to the login screen.</p></br></br>
@@ -2353,10 +2380,54 @@ File in `backgrounds/`
 </tr>
 </table>
 </details>
+<details name="lockscreeninputkeystroke">
+<summary><strong>input-keystroke</strong></summary><br/>
+<p>If `true`, the key press used to unlock the screen will be registered in the password input.</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
+
+</td>
+</tr>
+</table>
+</details>
+<details name="lockscreenignoreshift">
+<summary><strong>ignore-shift-key</strong></summary><br/>
+<p>If enabled, the [shift] key will not unlock the screen. Useful with `input-keystroke` set to `true`, if your password's first character is uppercase or a symbol.</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>bool</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+`true`   `false`
+
+</td>
+</tr>
+</table>
+</details>
 
 -- --
 
-## [LockScreen.Clock]
+## <a name="lockscreenclock"></a> [LockScreen.Clock]
 <details name="clockdisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the clock in the lock screen.</p></br></br>
@@ -2536,7 +2607,7 @@ File in `backgrounds/`
 
 -- --
 
-## [LockScreen.Date]
+## <a name="lockscreendate"></a> [LockScreen.Date]
 <details name="datedisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the date in the lock screen.</p></br></br>
@@ -2716,7 +2787,7 @@ File in `backgrounds/`
 
 -- --
 
-## [LockScreen.Message]
+## <a name="lockscreenmessage"></a> [LockScreen.Message]
 <details name="lockmessagedisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the custom message in the lock screen.</p></br></br>
@@ -3006,7 +3077,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen]
+## <a name="loginscreen"></a> [LoginScreen]
 <details name="loginscreenbackground">
 <summary><strong>background</strong></summary><br/>
 <p>Background of the login screen.<br/>Supported formats: jpg, png, avi, mp4, mov, mkv, m4v, webm. <strong>.gifs are not supported as they may cause SDDM to crash.</strong> <br/>See also: <a href="#animatedbackgroundplaceholder">animated-background-placeholder</a></p></br></br>
@@ -3142,7 +3213,7 @@ File in `backgrounds/`
 
 -- --
 
-## [LoginScreen.LoginArea]
+## <a name="loginscreenloginarea"></a> [LoginScreen.LoginArea]
 <details name="loginareaposition">
 <summary><strong>position</strong></summary><br/>
 <p>Position of the login area.</p></br></br>
@@ -3190,7 +3261,7 @@ File in `backgrounds/`
 
 -- --
 
-## [LoginScreen.LoginArea.Avatar]
+## <a name="loginscreenloginareaavatar"></a> [LoginScreen.LoginArea.Avatar]
 <details name="avatarshape">
 <summary><strong>shape</strong></summary><br/>
 <p>Shape of the avatar. <br/>See also: <a href="#avatarborderradius">border-radius<a></p></br></br>
@@ -3414,7 +3485,7 @@ File in `backgrounds/`
 
 -- --
 
-## [LoginScreen.LoginArea.Username]
+## <a name="loginscreenloginareausername"></a> [LoginScreen.LoginArea.Username]
 <details name="usernamefontfamily">
 <summary><strong>font-family</strong></summary><br/>
 <p>Font family used for the username.</p></br></br>
@@ -3528,7 +3599,7 @@ File in `backgrounds/`
 
 -- --
 
-## [LoginScreen.LoginArea.PasswordInput]
+## <a name="loginscreenloginareapasswordinput"></a> [LoginScreen.LoginArea.PasswordInput]
 <details name="passwordinputwidth">
 <summary><strong>width</strong></summary><br/>
 <p>Width of the password field.</p></br></br>
@@ -3884,7 +3955,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen.LoginArea.LoginButton]
+## <a name="loginscreenloginarealoginbutton"></a> [LoginScreen.LoginArea.LoginButton]
 <details name="loginbuttonbackgroundcolor">
 <summary><strong>background-color</strong></summary><br/>
 <p>Background color of the login button.</p></br></br>
@@ -4284,7 +4355,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen.LoginArea.Spinner]
+## <a name="loginscreenloginareaspinner"></a> [LoginScreen.LoginArea.Spinner]
 <details name="spinnerdisplaytext">
 <summary><strong>display-text</strong></summary><br/>
 <p>Whether or not to display the text with the spinning icon.</p></br></br>
@@ -4486,7 +4557,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen.LoginArea.WarningMessage]
+## <a name="loginscreenloginareawarningmessage"></a> [LoginScreen.LoginArea.WarningMessage]
 <details name="warningmessagefontfamily">
 <summary><strong>font-family</strong></summary><br/>
 <p>Font family of the warning message.</p></br></br>
@@ -4644,7 +4715,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen.MenuArea.Buttons]
+## <a name="loginscreenmenuareabuttons"></a> [LoginScreen.MenuArea.Buttons]
 <details name="menuareabuttonsmargintop">
 <summary><strong>margin-top</strong></summary><br/>
 <p>Top margin of the menu buttons.</p></br></br>
@@ -4824,7 +4895,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen.MenuArea.Popups]
+## <a name="loginscreenmenuareapopups"></a> [LoginScreen.MenuArea.Popups]
 <details name="menuareapopupsmaxheight">
 <summary><strong>max-height</strong></summary><br/>
 <p>Max height of the popups.</p></br></br>
@@ -5202,7 +5273,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen.MenuArea.Session]
+## <a name="loginscreenmenuareasession"></a> [LoginScreen.MenuArea.Session]
 <details name="sessiondisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the session button.</p></br></br>
@@ -5558,7 +5629,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen.MenuArea.Layout]
+## <a name="loginscreenmenuarealayout"></a> [LoginScreen.MenuArea.Layout]
 <details name="layoutdisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the layout button.</p></br></br>
@@ -5914,7 +5985,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen.MenuArea.Keyboard]
+## <a name="loginscreenmenuareakeyboard"></a> [LoginScreen.MenuArea.Keyboard]
 <details name="keyboarddisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the virtual keyboard toggle button.</p></br></br>
@@ -6160,7 +6231,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen.MenuArea.Power]
+## <a name="loginscreenmenuareapower"></a> [LoginScreen.MenuArea.Power]
 <details name="powerdisplay">
 <summary><strong>display</strong></summary><br/>
 <p>Whether or not to display the power button.</p></br></br>
@@ -6472,7 +6543,7 @@ File in `icons/`
 
 -- --
 
-## [LoginScreen.VirtualKeyboard]
+## <a name="loginscreenvirtualkeyboard"></a> [LoginScreen.VirtualKeyboard]
 <details name="virtualkeyboardscale">
 <summary><strong>scale</strong></summary><br/>
 <p>Scale of the virtual keyboard.</p></br></br>
@@ -6828,7 +6899,7 @@ File in `icons/`
 
 -- --
 
-## [Tooltips]
+## <a name="tooltips"></a> [Tooltips]
 <details name="tooltipsenable">
 <summary><strong>enable</strong></summary><br/>
 <p>Whether or not to show tooltips when hovering over buttons.</p></br></br>
@@ -7022,6 +7093,32 @@ File in `icons/`
 <td>
 
 `true`   `false`
+
+</td>
+</tr>
+</table>
+</details>
+
+-- --
+
+## <a name="userOptions"></a> [User.&lt;username&gt;]
+<details name="useroptionpreferredsession">
+<summary><strong>preferred-session</strong></summary><br/>
+<p>Set the name of the preferred session for this user. The session will be selected automatically when the user is changed.<br/><strong>Example:</strong><br/>`preferred-session = "Hyprland (uwsm-managed)"`</p></br></br>
+<table>
+<tr>
+<td>Type</td></br>
+<td>string</td>
+</tr>
+<tr>
+<td>Default value</td>
+<td></td>
+</tr>
+<tr>
+<td>Possible values</td>
+<td>
+
+
 
 </td>
 </tr>

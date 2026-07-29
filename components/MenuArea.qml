@@ -1,10 +1,13 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.VirtualKeyboard.Settings
 
 Item {
     id: menuArea
     anchors.fill: parent
+
+    property int customSessionIndex: -1
 
     Component {
         id: sessionMenuComponent
@@ -13,7 +16,7 @@ Item {
             id: sessionButton
             property bool showLabel: Config.sessionDisplaySessionName
             preferredWidth: showLabel ? (Config.sessionButtonWidth === -1 ? undefined : Config.sessionButtonWidth) : Config.menuAreaButtonsSize
-            height: Config.menuAreaButtonsSize * Config.generalScale
+            height: Config.menuAreaButtonsSize * Config.automaticScale(Screen.devicePixelRatio)
             iconSize: Config.sessionIconSize
             fontSize: Config.sessionFontSize
             enabled: loginScreen.state === "normal" || popup.visible
@@ -45,7 +48,7 @@ Item {
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
                     opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
+                    radius: Config.menuAreaButtonsBorderRadius * Config.automaticScale(Screen.devicePixelRatio)
 
                     Rectangle {
                         anchors.fill: parent
@@ -54,7 +57,7 @@ Item {
                         color: "transparent"
                         border {
                             color: Config.menuAreaPopupsBorderColor
-                            width: Config.menuAreaPopupsBorderSize * Config.generalScale
+                            width: Config.menuAreaPopupsBorderSize * Config.automaticScale(Screen.devicePixelRatio)
                         }
                     }
                 }
@@ -80,9 +83,12 @@ Item {
                 focus: visible
 
                 SessionSelector {
+                    id: sessionSelector
                     focus: popup.focus
+                    customSessionIndex: menuArea.customSessionIndex
                     onSessionChanged: function (newSessionIndex, sessionIcon, sessionLabel) {
-                        loginScreen.sessionIndex = newSessionIndex;
+                        if (loginScreen.sessionIndex !== newSessionIndex)
+                            loginScreen.sessionIndex = newSessionIndex;
                         sessionButton.icon = sessionIcon;
                         sessionButton.label = sessionButton.showLabel ? sessionLabel : "";
                     }
@@ -106,7 +112,7 @@ Item {
 
             property bool showLabel: Config.layoutDisplayLayoutName
 
-            height: Config.menuAreaButtonsSize * Config.generalScale
+            height: Config.menuAreaButtonsSize * Config.automaticScale(Screen.devicePixelRatio)
             icon: Config.getIcon(Config.layoutIcon)
             active: popup.visible
             borderRadius: Config.menuAreaButtonsBorderRadius
@@ -131,7 +137,6 @@ Item {
                 }
             }
             tooltipText: "Change keyboard layout"
-            // FIX: Array bounds checking for keyboard layouts
             label: showLabel ? (keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
 
             Connections {
@@ -158,7 +163,7 @@ Item {
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
                     opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
+                    radius: Config.menuAreaButtonsBorderRadius * Config.automaticScale(Screen.devicePixelRatio)
 
                     Rectangle {
                         anchors.fill: parent
@@ -167,7 +172,7 @@ Item {
                         color: "transparent"
                         border {
                             color: Config.menuAreaPopupsBorderColor
-                            width: Config.menuAreaPopupsBorderSize * Config.generalScale
+                            width: Config.menuAreaPopupsBorderSize * Config.automaticScale(Screen.devicePixelRatio)
                         }
                     }
                 }
@@ -215,8 +220,8 @@ Item {
         IconButton {
             id: keyboardButton
 
-            height: Config.menuAreaButtonsSize * Config.generalScale
-            width: Config.menuAreaButtonsSize * Config.generalScale
+            height: Config.menuAreaButtonsSize * Config.automaticScale(Screen.devicePixelRatio)
+            width: Config.menuAreaButtonsSize * Config.automaticScale(Screen.devicePixelRatio)
             icon: Config.getIcon(Config.keyboardIcon)
             iconSize: Config.keyboardIconSize
             backgroundColor: Config.keyboardBackgroundColor
@@ -245,8 +250,8 @@ Item {
         IconButton {
             id: powerButton
 
-            height: Config.menuAreaButtonsSize * Config.generalScale
-            width: Config.menuAreaButtonsSize * Config.generalScale
+            height: Config.menuAreaButtonsSize * Config.automaticScale(Screen.devicePixelRatio)
+            width: Config.menuAreaButtonsSize * Config.automaticScale(Screen.devicePixelRatio)
             icon: Config.getIcon(Config.powerIcon)
             iconSize: Config.powerIconSize
             contentColor: Config.powerContentColor
@@ -273,7 +278,7 @@ Item {
                 background: Rectangle {
                     color: Config.menuAreaPopupsBackgroundColor
                     opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
+                    radius: Config.menuAreaButtonsBorderRadius * Config.automaticScale(Screen.devicePixelRatio)
 
                     Rectangle {
                         anchors.fill: parent
@@ -282,7 +287,7 @@ Item {
                         color: "transparent"
                         border {
                             color: Config.menuAreaPopupsBorderColor
-                            width: Config.menuAreaPopupsBorderSize * Config.generalScale
+                            width: Config.menuAreaPopupsBorderSize * Config.automaticScale(Screen.devicePixelRatio)
                         }
                     }
                 }
@@ -446,7 +451,6 @@ Item {
         }
     }
 
-    // FIX: Critical createObject memory leak prevention
     property var createdObjects: []
 
     Component.onCompleted: {
@@ -482,14 +486,15 @@ Item {
             }
 
             var createdObject;
-            if (menus[i].name === "session")
+            if (menus[i].name === "session") {
                 createdObject = sessionMenuComponent.createObject(pos, {});
-            else if (menus[i].name === "layout")
+            } else if (menus[i].name === "layout") {
                 createdObject = layoutMenuComponent.createObject(pos, {});
-            else if (menus[i].name === "keyboard")
+            } else if (menus[i].name === "keyboard") {
                 createdObject = keyboardMenuComponent.createObject(pos, {});
-            else if (menus[i].name === "power")
+            } else if (menus[i].name === "power") {
                 createdObject = powerMenuComponent.createObject(pos, {});
+            }
 
             if (createdObject) {
                 createdObjects.push(createdObject);
@@ -498,7 +503,6 @@ Item {
     }
 
     Component.onDestruction: {
-        // FIX: Critical createObject memory leak cleanup
         for (var i = 0; i < createdObjects.length; i++) {
             if (createdObjects[i]) {
                 createdObjects[i].destroy();

@@ -8,8 +8,12 @@ import QtQuick
 */
 QtObject {
     // [General]
-    property real generalScale: config.realValue("scale") || 1.0 // @desc:Overall scale of the UI. This option can cause the UI to break, so it is recommended to use the individual width/height/size options instead.
+    property real generalScale: config.realValue("scale") || 1.0 // @desc:Overall UI scale multiplier applied after Qt's automatic per-display high-DPI scale. This option can cause the UI to break, so it is recommended to use the individual width/height/size options instead.
     property bool enableAnimations: config['enable-animations'] === "false" ? false : true // @desc:Enable or disable all animations.
+
+    function automaticScale(devicePixelRatio) {
+        return generalScale * devicePixelRatio;
+    }
     property string animatedBackgroundPlaceholder: config.stringValue("animated-background-placeholder") // @possible:File in `backgrounds/` @desc:An image file to be used as a placeholder for the animated background while it loads.
     property string backgroundFillMode: config.stringValue("background-fill-mode") || "fill" // @possible:'fill' | 'fit' | 'stretch' @desc:Fill mode for <a href="#lockscreenbackground">LockScreen/background</a> and <a href="#loginscreenbackground">LoginScreen/background</a>.<br/><table><tr><th>Value</th><th>QML equivalent</th><th>Description</th></tr><tr><td>fit</td><td><a href="https://doc.qt.io/qt-6/qml-qtquick-image.html#fillMode-prop">Image.PreserveAspectFit</a> and <a href="https://doc.qt.io/qt-6/qml-qtmultimedia-video.html#fillMode-prop">VideoOutput.PreserveAspectFit</a></td><td>The image/video is scaled uniformly to fit without cropping.</td></tr><tr><td>fill</td><td><a href="https://doc.qt.io/qt-6/qml-qtquick-image.html#fillMode-prop">Image.PreserveAspectCrop</a> and <a href="https://doc.qt.io/qt-6/qml-qtmultimedia-video.html#fillMode-prop">VideoOutput.PreserveAspectCrop</a></td><td>The image/video is scaled uniformly to fill, cropping if necessary.</td></tr><tr><td>stretch</td><td><a href="https://doc.qt.io/qt-6/qml-qtquick-image.html#fillMode-prop">Image.Stretch</a> and <a href="https://doc.qt.io/qt-6/qml-qtmultimedia-video.html#fillMode-prop">VideoOutput.Stretch</a></td><td>The image/video is scaled to fit, stretching if necessary.</td></tr></table>
 
@@ -25,6 +29,8 @@ QtObject {
     property int lockScreenBlur: config.intValue("LockScreen/blur") // @desc:Amount of blur to be applied to the background of the lock screen. 0 means no blur.
     property real lockScreenBrightness: config.realValue("LockScreen/brightness") // @possible:-1.0 ≤ R ≤ 1.0 @desc:Brightness of the background of the lock screen. 0.0 leaves unchanged, -1.0 makes it black and 1.0 white.
     property real lockScreenSaturation: config.realValue("LockScreen/saturation") // @possible:-1.0 ≤ R ≤ 1.0 @desc:Saturation of the background of the lock screen. 0.0 leaves unchanged, -1.0 makes it grayscale and 1.0 very saturated.
+    property bool lockScreenInputKeystroke: config.boolValue('LockScreen/input-keystroke') // @desc:If `true`, the key press used to unlock the screen will be registered in the password input.
+    property bool lockScreenIgnoreShift: config.boolValue('LockScreen/ignore-shift-key') // @desc:If enabled, the [shift] key will not unlock the screen. Useful with `input-keystroke` set to `true`, if your password's first character is uppercase or a symbol.
 
     // [LockScreen.Clock]
     property bool clockDisplay: config['LockScreen.Clock/display'] === "false" ? false : true // @desc:Whether or not to display the clock in the lock screen.
@@ -272,6 +278,40 @@ QtObject {
     property int tooltipsBorderRadius: config.intValue("Tooltips/border-radius") || 5 // @desc:Border radius of the tooltips.
     property bool tooltipsDisableUser: config.boolValue("Tooltips/disable-user") // @desc:If false, disables only the tooltip for the user selector.
     property bool tooltipsDisableLoginButton: config.boolValue("Tooltips/disable-login-button") // @desc:If false, disabled only the tooltip for the login button.
+
+    // [User.*]
+    property var usersOptions: ({
+        // @UserOption:preferred-session @type:string @desc:Set the name of the preferred session for this user. The session will be selected automatically when the user is changed.<br/><strong>Example:</strong><br/>preferred-session = "Hyprland (uwsm-managed)"
+    })
+
+    Component.onCompleted: {
+        // Parse users options:
+        for (const header of Object.keys(config)) {
+            if (header.startsWith("User.")) {
+                const usernameIndex = header.indexOf(".") + 1;
+                const optionIndex = header.indexOf("/") + 1;
+                
+                const username = header.slice(usernameIndex, optionIndex - 1);
+                const option = header.substring(optionIndex).trim();
+
+                if (!usersOptions[username])
+                    usersOptions[username] = {};
+
+                usersOptions[username][option] = config[header].toLowerCase();
+            }
+        }
+    }
+
+    function getUserOption(username, option) {
+        if (username in usersOptions) {
+            if (option in usersOptions[username]) {
+                return usersOptions[username][option];
+            }
+        }
+        return null;
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     function sortMenuButtons() {
         var menus = [];
