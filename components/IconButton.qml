@@ -155,6 +155,10 @@ Item {
             enabled: Config.tooltipsEnable
             property bool shouldShow: enabled && mouseArea.containsMouse && iconButton.tooltipText !== "" || enabled && iconButton.focus && iconButton.tooltipText !== ""
             visible: shouldShow
+            topPadding: 5 * Config.automaticScale(Screen.devicePixelRatio)
+            bottomPadding: 5 * Config.automaticScale(Screen.devicePixelRatio)
+            leftPadding: 10 * Config.automaticScale(Screen.devicePixelRatio)
+            rightPadding: 10 * Config.automaticScale(Screen.devicePixelRatio)
             delay: 300
             y: -height - 10
             x: (parent.width - width) / 2

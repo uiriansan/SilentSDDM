@@ -77,8 +77,8 @@ Item {
         spacing: Config.lockMessageSpacing
         Item {
             Layout.alignment: Config.lockMessageAlign === "left" ? Qt.AlignLeft : (Config.lockMessageAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
-            Layout.preferredWidth: Config.lockMessageIconSize
-            Layout.preferredHeight: Config.lockMessageIconSize
+            Layout.preferredWidth: Config.lockMessageIconSize * Config.automaticScale(Screen.devicePixelRatio)
+            Layout.preferredHeight: Config.lockMessageIconSize * Config.automaticScale(Screen.devicePixelRatio)
 
             Image {
                 id: lockIcon
