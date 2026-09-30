@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  callPackage,
   ...
 }: let
   inherit (lib) map pipe flatten flip elem assertMsg;
@@ -38,6 +37,17 @@ in {
       default = "rei";
       example = "ken";
       description = "the builtin theme to use";
+    };
+
+    wayland = mkOption {
+      type = attrs;
+      default = {
+        enable = !config.services.xserver.enable;
+        # Default configured by the plasma6 NixOS module as well. Setting it to
+        # kwin will prevent issues with mouse cursors not appearing on minimal
+        # installs that do not install the enable plasma6 suite.
+        compositor = "kwin";
+      };
     };
 
     backgrounds = mkOption {
@@ -138,7 +148,7 @@ in {
     qt.enable = true;
     systemd.services.display-manager.enable = true;
     services.displayManager.sddm = {
-      wayland.enable = ! config.services.xserver.enable;
+      wayland = cfg.wayland;
       enable = true;
       package = lib.mkDefault pkgs.kdePackages.sddm;
       theme = "silent";
