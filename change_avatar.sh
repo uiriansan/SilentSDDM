@@ -38,5 +38,6 @@ sudo mogrify -gravity center -crop 1:1 +repage "/usr/share/sddm/faces/tmp_face"
 # Resize face to 256x256:
 sudo mogrify -resize 256x256 "/usr/share/sddm/faces/tmp_face"
 sudo mv "/usr/share/sddm/faces/tmp_face" "/usr/share/sddm/faces/$USERNAME.face.icon"
+sudo chmod 644 "/usr/share/sddm/faces/$USERNAME.face.icon"
 
 echo -e "\n${green}Avatar updated for user '$USERNAME'!${reset}"
